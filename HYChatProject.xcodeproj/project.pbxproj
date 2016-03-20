@@ -167,6 +167,10 @@
 		EADD1D931C9EE3F500E22D2B /* libidn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EADD1D901C9EE3F500E22D2B /* libidn.a */; };
 		EADD1D9C1C9EE95700E22D2B /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EADD1D9A1C9EE95700E22D2B /* Login.storyboard */; };
 		EADD1D9F1C9EED6B00E22D2B /* HYBaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD1D9E1C9EED6B00E22D2B /* HYBaseNavigationController.m */; };
+		EADD1DA31C9EEF1100E22D2B /* UIImage+SW.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD1DA21C9EEF1100E22D2B /* UIImage+SW.m */; };
+		EADD1DA81C9EF0A700E22D2B /* NSArray+format.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD1DA51C9EF0A700E22D2B /* NSArray+format.m */; };
+		EADD1DA91C9EF0A700E22D2B /* NSDictionary+format.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD1DA71C9EF0A700E22D2B /* NSDictionary+format.m */; };
+		EADD1DAC1C9EF2A600E22D2B /* NSString+size.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD1DAB1C9EF2A600E22D2B /* NSString+size.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -516,6 +520,14 @@
 		EADD1D9B1C9EE95700E22D2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
 		EADD1D9D1C9EED6B00E22D2B /* HYBaseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYBaseNavigationController.h; sourceTree = "<group>"; };
 		EADD1D9E1C9EED6B00E22D2B /* HYBaseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYBaseNavigationController.m; sourceTree = "<group>"; };
+		EADD1DA11C9EEF1100E22D2B /* UIImage+SW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SW.h"; sourceTree = "<group>"; };
+		EADD1DA21C9EEF1100E22D2B /* UIImage+SW.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SW.m"; sourceTree = "<group>"; };
+		EADD1DA41C9EF0A700E22D2B /* NSArray+format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+format.h"; sourceTree = "<group>"; };
+		EADD1DA51C9EF0A700E22D2B /* NSArray+format.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+format.m"; sourceTree = "<group>"; };
+		EADD1DA61C9EF0A700E22D2B /* NSDictionary+format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+format.h"; sourceTree = "<group>"; };
+		EADD1DA71C9EF0A700E22D2B /* NSDictionary+format.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+format.m"; sourceTree = "<group>"; };
+		EADD1DAA1C9EF2A600E22D2B /* NSString+size.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+size.h"; sourceTree = "<group>"; };
+		EADD1DAB1C9EF2A600E22D2B /* NSString+size.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+size.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -551,6 +563,7 @@
 			children = (
 				EADD19711C9EDDAD00E22D2B /* Frameworks */,
 				EADD175D1C9EDCFF00E22D2B /* Vendor */,
+				EADD1DA01C9EEEC400E22D2B /* Category */,
 				EADD16F01C9ED2E100E22D2B /* HYChat */,
 				EADD170A1C9ED2E100E22D2B /* HYChatProjectTests */,
 				EADD17151C9ED2E100E22D2B /* HYChatProjectUITests */,
@@ -614,7 +627,6 @@
 		EADD17341C9ED64300E22D2B /* Main(主要) */ = {
 			isa = PBXGroup;
 			children = (
-				EADD1D971C9EE90000E22D2B /* Tool */,
 				EADD1D961C9EE8F000E22D2B /* BaseViewController */,
 			);
 			path = "Main(主要)";
@@ -1637,11 +1649,20 @@
 			name = BaseViewController;
 			sourceTree = "<group>";
 		};
-		EADD1D971C9EE90000E22D2B /* Tool */ = {
+		EADD1DA01C9EEEC400E22D2B /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				EADD1DA41C9EF0A700E22D2B /* NSArray+format.h */,
+				EADD1DA51C9EF0A700E22D2B /* NSArray+format.m */,
+				EADD1DA61C9EF0A700E22D2B /* NSDictionary+format.h */,
+				EADD1DA71C9EF0A700E22D2B /* NSDictionary+format.m */,
+				EADD1DAA1C9EF2A600E22D2B /* NSString+size.h */,
+				EADD1DAB1C9EF2A600E22D2B /* NSString+size.m */,
+				EADD1DA11C9EEF1100E22D2B /* UIImage+SW.h */,
+				EADD1DA21C9EEF1100E22D2B /* UIImage+SW.m */,
 			);
-			name = Tool;
+			name = Category;
+			path = HYChatProject/Category;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1823,6 +1844,7 @@
 				EADD1D351C9EE1D300E22D2B /* XMPPMessage+XEP0045.m in Sources */,
 				EADD1D1E1C9EE1D300E22D2B /* XMPPUserCoreDataStorageObject.m in Sources */,
 				EADD1D621C9EE1D300E22D2B /* XMPPMessageDeliveryReceipts.m in Sources */,
+				EADD1DA81C9EF0A700E22D2B /* NSArray+format.m in Sources */,
 				EADD1D591C9EE1D300E22D2B /* XMPPMessageArchiving_Contact_CoreDataObject.m in Sources */,
 				EADD1D051C9EE1D300E22D2B /* XMPPXOAuth2Google.m in Sources */,
 				EADD1D531C9EE1D300E22D2B /* XMPPCapabilities.xcdatamodel in Sources */,
@@ -1845,6 +1867,8 @@
 				EADD1D3E1C9EE1D300E22D2B /* XMPPvCardTempAdr.m in Sources */,
 				EADD1D771C9EE1D300E22D2B /* RFImageToDataTransformer.m in Sources */,
 				EADD1D5A1C9EE1D300E22D2B /* XMPPMessageArchiving_Message_CoreDataObject.m in Sources */,
+				EADD1DAC1C9EF2A600E22D2B /* NSString+size.m in Sources */,
+				EADD1DA91C9EF0A700E22D2B /* NSDictionary+format.m in Sources */,
 				EADD1D171C9EE1D300E22D2B /* XMPPGoogleSharedStatus.m in Sources */,
 				EADD1D541C9EE1D300E22D2B /* XMPPCapabilitiesCoreDataStorage.m in Sources */,
 				EADD1D5D1C9EE1D300E22D2B /* XMPPURI.m in Sources */,
@@ -1854,6 +1878,7 @@
 				EADD1D561C9EE1D300E22D2B /* XMPPCapsResourceCoreDataStorageObject.m in Sources */,
 				EADD17591C9ED8A000E22D2B /* HYContactsViewController.m in Sources */,
 				EADD1D311C9EE1D300E22D2B /* XMPPRoomOccupantHybridMemoryStorageObject.m in Sources */,
+				EADD1DA31C9EEF1100E22D2B /* UIImage+SW.m in Sources */,
 				EADD1D761C9EE1D300E22D2B /* GCDMulticastDelegate.m in Sources */,
 				EADD1D231C9EE1D300E22D2B /* XMPPSystemInputActivityMonitor.m in Sources */,
 				EADD1D601C9EE1D300E22D2B /* XMPPPresence+XEP_0172.m in Sources */,
