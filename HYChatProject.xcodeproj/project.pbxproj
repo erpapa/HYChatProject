@@ -7,14 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EADD16F31C9ED2E100E22D2B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD16F21C9ED2E100E22D2B /* main.m */; };
-		EADD16F61C9ED2E100E22D2B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD16F51C9ED2E100E22D2B /* AppDelegate.m */; };
-		EADD16F91C9ED2E100E22D2B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD16F81C9ED2E100E22D2B /* ViewController.m */; };
 		EADD16FC1C9ED2E100E22D2B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EADD16FA1C9ED2E100E22D2B /* Main.storyboard */; };
 		EADD16FE1C9ED2E100E22D2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EADD16FD1C9ED2E100E22D2B /* Assets.xcassets */; };
 		EADD17011C9ED2E100E22D2B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EADD16FF1C9ED2E100E22D2B /* LaunchScreen.storyboard */; };
 		EADD170C1C9ED2E100E22D2B /* HYChatProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD170B1C9ED2E100E22D2B /* HYChatProjectTests.m */; };
 		EADD17171C9ED2E100E22D2B /* HYChatProjectUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD17161C9ED2E100E22D2B /* HYChatProjectUITests.m */; };
+		EADD17431C9ED64300E22D2B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD17371C9ED64300E22D2B /* AppDelegate.m */; };
+		EADD17441C9ED64300E22D2B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD17381C9ED64300E22D2B /* main.m */; };
+		EADD17471C9ED67D00E22D2B /* HYLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD17461C9ED67D00E22D2B /* HYLoginViewController.m */; };
+		EADD174A1C9ED7A200E22D2B /* HYRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD17491C9ED7A200E22D2B /* HYRegisterViewController.m */; };
+		EADD17501C9ED85400E22D2B /* HYTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD174F1C9ED85400E22D2B /* HYTabBarController.m */; };
+		EADD17531C9ED87D00E22D2B /* HYSingleChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD17521C9ED87D00E22D2B /* HYSingleChatViewController.m */; };
+		EADD17561C9ED88F00E22D2B /* HYGroupChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD17551C9ED88F00E22D2B /* HYGroupChatViewController.m */; };
+		EADD17591C9ED8A000E22D2B /* HYContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD17581C9ED8A000E22D2B /* HYContactsViewController.m */; };
+		EADD175C1C9ED8B100E22D2B /* HYRecentContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD175B1C9ED8B100E22D2B /* HYRecentContactsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,11 +42,6 @@
 
 /* Begin PBXFileReference section */
 		EADD16EE1C9ED2E100E22D2B /* HYChatProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HYChatProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		EADD16F21C9ED2E100E22D2B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		EADD16F41C9ED2E100E22D2B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		EADD16F51C9ED2E100E22D2B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		EADD16F71C9ED2E100E22D2B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		EADD16F81C9ED2E100E22D2B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		EADD16FB1C9ED2E100E22D2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EADD16FD1C9ED2E100E22D2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EADD17001C9ED2E100E22D2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +52,23 @@
 		EADD17121C9ED2E100E22D2B /* HYChatProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HYChatProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EADD17161C9ED2E100E22D2B /* HYChatProjectUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HYChatProjectUITests.m; sourceTree = "<group>"; };
 		EADD17181C9ED2E100E22D2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EADD17361C9ED64300E22D2B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		EADD17371C9ED64300E22D2B /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		EADD17381C9ED64300E22D2B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		EADD17451C9ED67D00E22D2B /* HYLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYLoginViewController.h; sourceTree = "<group>"; };
+		EADD17461C9ED67D00E22D2B /* HYLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYLoginViewController.m; sourceTree = "<group>"; };
+		EADD17481C9ED7A200E22D2B /* HYRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYRegisterViewController.h; sourceTree = "<group>"; };
+		EADD17491C9ED7A200E22D2B /* HYRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYRegisterViewController.m; sourceTree = "<group>"; };
+		EADD174E1C9ED85400E22D2B /* HYTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTabBarController.h; sourceTree = "<group>"; };
+		EADD174F1C9ED85400E22D2B /* HYTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTabBarController.m; sourceTree = "<group>"; };
+		EADD17511C9ED87D00E22D2B /* HYSingleChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYSingleChatViewController.h; sourceTree = "<group>"; };
+		EADD17521C9ED87D00E22D2B /* HYSingleChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYSingleChatViewController.m; sourceTree = "<group>"; };
+		EADD17541C9ED88F00E22D2B /* HYGroupChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYGroupChatViewController.h; sourceTree = "<group>"; };
+		EADD17551C9ED88F00E22D2B /* HYGroupChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYGroupChatViewController.m; sourceTree = "<group>"; };
+		EADD17571C9ED8A000E22D2B /* HYContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYContactsViewController.h; sourceTree = "<group>"; };
+		EADD17581C9ED8A000E22D2B /* HYContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYContactsViewController.m; sourceTree = "<group>"; };
+		EADD175A1C9ED8B100E22D2B /* HYRecentContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYRecentContactsViewController.h; sourceTree = "<group>"; };
+		EADD175B1C9ED8B100E22D2B /* HYRecentContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYRecentContactsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,10 +119,9 @@
 		EADD16F01C9ED2E100E22D2B /* HYChatProject */ = {
 			isa = PBXGroup;
 			children = (
-				EADD16F41C9ED2E100E22D2B /* AppDelegate.h */,
-				EADD16F51C9ED2E100E22D2B /* AppDelegate.m */,
-				EADD16F71C9ED2E100E22D2B /* ViewController.h */,
-				EADD16F81C9ED2E100E22D2B /* ViewController.m */,
+				EADD17341C9ED64300E22D2B /* Main(主要) */,
+				EADD17351C9ED64300E22D2B /* Other(其它) */,
+				EADD17391C9ED64300E22D2B /* UI */,
 				EADD16FA1C9ED2E100E22D2B /* Main.storyboard */,
 				EADD16FD1C9ED2E100E22D2B /* Assets.xcassets */,
 				EADD16FF1C9ED2E100E22D2B /* LaunchScreen.storyboard */,
@@ -117,7 +134,6 @@
 		EADD16F11C9ED2E100E22D2B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				EADD16F21C9ED2E100E22D2B /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -138,6 +154,116 @@
 				EADD17181C9ED2E100E22D2B /* Info.plist */,
 			);
 			path = HYChatProjectUITests;
+			sourceTree = "<group>";
+		};
+		EADD17341C9ED64300E22D2B /* Main(主要) */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Main(主要)";
+			sourceTree = "<group>";
+		};
+		EADD17351C9ED64300E22D2B /* Other(其它) */ = {
+			isa = PBXGroup;
+			children = (
+				EADD17361C9ED64300E22D2B /* AppDelegate.h */,
+				EADD17371C9ED64300E22D2B /* AppDelegate.m */,
+				EADD17381C9ED64300E22D2B /* main.m */,
+			);
+			path = "Other(其它)";
+			sourceTree = "<group>";
+		};
+		EADD17391C9ED64300E22D2B /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				EADD17421C9ED64300E22D2B /* TabVC(视图切换) */,
+				EADD173E1C9ED64300E22D2B /* recentContacts(最近联系人) */,
+				EADD173A1C9ED64300E22D2B /* Contacts(通讯录) */,
+				EADD17411C9ED64300E22D2B /* SingleChat(单聊) */,
+				EADD173B1C9ED64300E22D2B /* GroupChat(群聊) */,
+				EADD173C1C9ED64300E22D2B /* Login(登录) */,
+				EADD173F1C9ED64300E22D2B /* register(注册) */,
+				EADD17401C9ED64300E22D2B /* Setting(设置) */,
+				EADD173D1C9ED64300E22D2B /* Me(我) */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		EADD173A1C9ED64300E22D2B /* Contacts(通讯录) */ = {
+			isa = PBXGroup;
+			children = (
+				EADD17571C9ED8A000E22D2B /* HYContactsViewController.h */,
+				EADD17581C9ED8A000E22D2B /* HYContactsViewController.m */,
+			);
+			path = "Contacts(通讯录)";
+			sourceTree = "<group>";
+		};
+		EADD173B1C9ED64300E22D2B /* GroupChat(群聊) */ = {
+			isa = PBXGroup;
+			children = (
+				EADD17541C9ED88F00E22D2B /* HYGroupChatViewController.h */,
+				EADD17551C9ED88F00E22D2B /* HYGroupChatViewController.m */,
+			);
+			path = "GroupChat(群聊)";
+			sourceTree = "<group>";
+		};
+		EADD173C1C9ED64300E22D2B /* Login(登录) */ = {
+			isa = PBXGroup;
+			children = (
+				EADD17451C9ED67D00E22D2B /* HYLoginViewController.h */,
+				EADD17461C9ED67D00E22D2B /* HYLoginViewController.m */,
+			);
+			path = "Login(登录)";
+			sourceTree = "<group>";
+		};
+		EADD173D1C9ED64300E22D2B /* Me(我) */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Me(我)";
+			sourceTree = "<group>";
+		};
+		EADD173E1C9ED64300E22D2B /* recentContacts(最近联系人) */ = {
+			isa = PBXGroup;
+			children = (
+				EADD175A1C9ED8B100E22D2B /* HYRecentContactsViewController.h */,
+				EADD175B1C9ED8B100E22D2B /* HYRecentContactsViewController.m */,
+			);
+			path = "recentContacts(最近联系人)";
+			sourceTree = "<group>";
+		};
+		EADD173F1C9ED64300E22D2B /* register(注册) */ = {
+			isa = PBXGroup;
+			children = (
+				EADD17481C9ED7A200E22D2B /* HYRegisterViewController.h */,
+				EADD17491C9ED7A200E22D2B /* HYRegisterViewController.m */,
+			);
+			path = "register(注册)";
+			sourceTree = "<group>";
+		};
+		EADD17401C9ED64300E22D2B /* Setting(设置) */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Setting(设置)";
+			sourceTree = "<group>";
+		};
+		EADD17411C9ED64300E22D2B /* SingleChat(单聊) */ = {
+			isa = PBXGroup;
+			children = (
+				EADD17511C9ED87D00E22D2B /* HYSingleChatViewController.h */,
+				EADD17521C9ED87D00E22D2B /* HYSingleChatViewController.m */,
+			);
+			path = "SingleChat(单聊)";
+			sourceTree = "<group>";
+		};
+		EADD17421C9ED64300E22D2B /* TabVC(视图切换) */ = {
+			isa = PBXGroup;
+			children = (
+				EADD174E1C9ED85400E22D2B /* HYTabBarController.h */,
+				EADD174F1C9ED85400E22D2B /* HYTabBarController.m */,
+			);
+			path = "TabVC(视图切换)";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,6 +328,7 @@
 		EADD16E61C9ED2E100E22D2B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = HY;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = erpapa;
 				TargetAttributes = {
@@ -270,9 +397,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EADD16F91C9ED2E100E22D2B /* ViewController.m in Sources */,
-				EADD16F61C9ED2E100E22D2B /* AppDelegate.m in Sources */,
-				EADD16F31C9ED2E100E22D2B /* main.m in Sources */,
+				EADD17441C9ED64300E22D2B /* main.m in Sources */,
+				EADD17531C9ED87D00E22D2B /* HYSingleChatViewController.m in Sources */,
+				EADD17501C9ED85400E22D2B /* HYTabBarController.m in Sources */,
+				EADD17561C9ED88F00E22D2B /* HYGroupChatViewController.m in Sources */,
+				EADD17591C9ED8A000E22D2B /* HYContactsViewController.m in Sources */,
+				EADD17431C9ED64300E22D2B /* AppDelegate.m in Sources */,
+				EADD174A1C9ED7A200E22D2B /* HYRegisterViewController.m in Sources */,
+				EADD175C1C9ED8B100E22D2B /* HYRecentContactsViewController.m in Sources */,
+				EADD17471C9ED67D00E22D2B /* HYLoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

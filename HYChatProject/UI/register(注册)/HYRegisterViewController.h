@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  HYRegisterViewController.h
 //  HYChatProject
 //
 //  Created by erpapa on 16/3/20.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface HYRegisterViewController : UIViewController
 
 @end
-
