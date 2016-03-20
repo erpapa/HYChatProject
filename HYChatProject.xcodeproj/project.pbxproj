@@ -165,6 +165,8 @@
 		EADD1D891C9EE1D300E22D2B /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD1CF51C9EE1D300E22D2B /* DDXMLNode.m */; };
 		EADD1D921C9EE3F500E22D2B /* build-libidn.sh in Resources */ = {isa = PBXBuildFile; fileRef = EADD1D8E1C9EE3F500E22D2B /* build-libidn.sh */; };
 		EADD1D931C9EE3F500E22D2B /* libidn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EADD1D901C9EE3F500E22D2B /* libidn.a */; };
+		EADD1D9C1C9EE95700E22D2B /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EADD1D9A1C9EE95700E22D2B /* Login.storyboard */; };
+		EADD1D9F1C9EED6B00E22D2B /* HYBaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD1D9E1C9EED6B00E22D2B /* HYBaseNavigationController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -511,6 +513,9 @@
 		EADD1D8F1C9EE3F500E22D2B /* idn-int.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "idn-int.h"; sourceTree = "<group>"; };
 		EADD1D901C9EE3F500E22D2B /* libidn.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libidn.a; sourceTree = "<group>"; };
 		EADD1D911C9EE3F500E22D2B /* stringprep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringprep.h; sourceTree = "<group>"; };
+		EADD1D9B1C9EE95700E22D2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
+		EADD1D9D1C9EED6B00E22D2B /* HYBaseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYBaseNavigationController.h; sourceTree = "<group>"; };
+		EADD1D9E1C9EED6B00E22D2B /* HYBaseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYBaseNavigationController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -570,6 +575,7 @@
 				EADD17351C9ED64300E22D2B /* Other(其它) */,
 				EADD17391C9ED64300E22D2B /* UI */,
 				EADD16FA1C9ED2E100E22D2B /* Main.storyboard */,
+				EADD1D9A1C9EE95700E22D2B /* Login.storyboard */,
 				EADD16FF1C9ED2E100E22D2B /* LaunchScreen.storyboard */,
 				EADD16F11C9ED2E100E22D2B /* Supporting Files */,
 			);
@@ -608,6 +614,8 @@
 		EADD17341C9ED64300E22D2B /* Main(主要) */ = {
 			isa = PBXGroup;
 			children = (
+				EADD1D971C9EE90000E22D2B /* Tool */,
+				EADD1D961C9EE8F000E22D2B /* BaseViewController */,
 			);
 			path = "Main(主要)";
 			sourceTree = "<group>";
@@ -627,7 +635,7 @@
 			children = (
 				EADD17421C9ED64300E22D2B /* TabVC(视图切换) */,
 				EADD173E1C9ED64300E22D2B /* recentContacts(最近联系人) */,
-				EADD173A1C9ED64300E22D2B /* Contacts(通讯录) */,
+				EADD173A1C9ED64300E22D2B /* Contacts(联系人) */,
 				EADD17411C9ED64300E22D2B /* SingleChat(单聊) */,
 				EADD173B1C9ED64300E22D2B /* GroupChat(群聊) */,
 				EADD173C1C9ED64300E22D2B /* Login(登录) */,
@@ -638,12 +646,13 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
-		EADD173A1C9ED64300E22D2B /* Contacts(通讯录) */ = {
+		EADD173A1C9ED64300E22D2B /* Contacts(联系人) */ = {
 			isa = PBXGroup;
 			children = (
 				EADD17571C9ED8A000E22D2B /* HYContactsViewController.h */,
 				EADD17581C9ED8A000E22D2B /* HYContactsViewController.m */,
 			);
+			name = "Contacts(联系人)";
 			path = "Contacts(通讯录)";
 			sourceTree = "<group>";
 		};
@@ -1619,6 +1628,22 @@
 			path = libidn;
 			sourceTree = "<group>";
 		};
+		EADD1D961C9EE8F000E22D2B /* BaseViewController */ = {
+			isa = PBXGroup;
+			children = (
+				EADD1D9D1C9EED6B00E22D2B /* HYBaseNavigationController.h */,
+				EADD1D9E1C9EED6B00E22D2B /* HYBaseNavigationController.m */,
+			);
+			name = BaseViewController;
+			sourceTree = "<group>";
+		};
+		EADD1D971C9EE90000E22D2B /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Tool;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1726,6 +1751,7 @@
 			files = (
 				EADD1D921C9EE3F500E22D2B /* build-libidn.sh in Resources */,
 				EADD17011C9ED2E100E22D2B /* LaunchScreen.storyboard in Resources */,
+				EADD1D9C1C9EE95700E22D2B /* Login.storyboard in Resources */,
 				EADD16FE1C9ED2E100E22D2B /* Assets.xcassets in Resources */,
 				EADD1D851C9EE1D300E22D2B /* README.txt in Resources */,
 				EADD16FC1C9ED2E100E22D2B /* Main.storyboard in Resources */,
@@ -1783,6 +1809,7 @@
 				EADD17441C9ED64300E22D2B /* main.m in Sources */,
 				EADD17531C9ED87D00E22D2B /* HYSingleChatViewController.m in Sources */,
 				EADD1D7A1C9EE1D300E22D2B /* XMPPStringPrep.m in Sources */,
+				EADD1D9F1C9EED6B00E22D2B /* HYBaseNavigationController.m in Sources */,
 				EADD1D421C9EE1D300E22D2B /* XMPPvCardTempLabel.m in Sources */,
 				EADD1D581C9EE1D300E22D2B /* XMPPMessageArchiving.xcdatamodeld in Sources */,
 				EADD1D201C9EE1D300E22D2B /* XMPPRosterMemoryStorage.m in Sources */,
@@ -1950,6 +1977,14 @@
 				EADD17001C9ED2E100E22D2B /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		EADD1D9A1C9EE95700E22D2B /* Login.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EADD1D9B1C9EE95700E22D2B /* Base */,
+			);
+			name = Login.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
