@@ -58,11 +58,6 @@
 		EAC05B411CC50DF900ABA3C5 /* ONOXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B3A1CC50DF900ABA3C5 /* ONOXMLDocument.m */; };
 		EAC05B431CC50F3400ABA3C5 /* WebP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC05B421CC50F3400ABA3C5 /* WebP.framework */; };
 		EAC05B451CC5109600ABA3C5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC05B441CC5109600ABA3C5 /* libz.tbd */; };
-		EAC05B531CC5231E00ABA3C5 /* amrFileCodec.mm in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B481CC5231E00ABA3C5 /* amrFileCodec.mm */; };
-		EAC05B541CC5231E00ABA3C5 /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC05B4D1CC5231E00ABA3C5 /* libopencore-amrnb.a */; };
-		EAC05B551CC5231E00ABA3C5 /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC05B4E1CC5231E00ABA3C5 /* libopencore-amrwb.a */; };
-		EAC05B561CC5231E00ABA3C5 /* VoiceConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B501CC5231E00ABA3C5 /* VoiceConverter.mm */; };
-		EAC05B571CC5231E00ABA3C5 /* wav.mm in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B521CC5231E00ABA3C5 /* wav.mm */; };
 		EAC05B5B1CC5236300ABA3C5 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B5A1CC5236300ABA3C5 /* Base64.m */; };
 		EAC05B881CC5297C00ABA3C5 /* GJCFFileDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B5F1CC5297C00ABA3C5 /* GJCFFileDownloadManager.m */; };
 		EAC05B891CC5297C00ABA3C5 /* GJCFFileDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B611CC5297C00ABA3C5 /* GJCFFileDownloadTask.m */; };
@@ -80,13 +75,6 @@
 		EAC05B951CC5297C00ABA3C5 /* GJCFAudioRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B841CC5297C00ABA3C5 /* GJCFAudioRecord.m */; };
 		EAC05B961CC5297C00ABA3C5 /* GJCFAudioRecordSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B871CC5297C00ABA3C5 /* GJCFAudioRecordSettings.m */; };
 		EAC05B9A1CC52A1D00ABA3C5 /* GJCFCachePathManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B991CC52A1D00ABA3C5 /* GJCFCachePathManager.m */; };
-		EAC05BBA1CC52CFC00ABA3C5 /* GJCFDateUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B9E1CC52CFC00ABA3C5 /* GJCFDateUitil.m */; };
-		EAC05BBB1CC52CFC00ABA3C5 /* GJCFDispatchCenterUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BA31CC52CFC00ABA3C5 /* GJCFDispatchCenterUitil.m */; };
-		EAC05BBC1CC52CFC00ABA3C5 /* GJCFQuickCacheUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BAA1CC52CFC00ABA3C5 /* GJCFQuickCacheUitil.m */; };
-		EAC05BBD1CC52CFC00ABA3C5 /* GJCFQuickUIUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BAE1CC52CFC00ABA3C5 /* GJCFQuickUIUitil.m */; };
-		EAC05BBE1CC52CFC00ABA3C5 /* GJCFStringUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BB21CC52CFC00ABA3C5 /* GJCFStringUitil.m */; };
-		EAC05BBF1CC52CFC00ABA3C5 /* GJCFSystemUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BB61CC52CFC00ABA3C5 /* GJCFSystemUitil.m */; };
-		EAC05BC01CC52CFC00ABA3C5 /* UIView+GJCFViewFrameUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BB91CC52CFC00ABA3C5 /* UIView+GJCFViewFrameUitil.m */; };
 		EAC05BD51CC52E3F00ABA3C5 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BC31CC52E3F00ABA3C5 /* AFHTTPRequestOperation.m */; };
 		EAC05BD61CC52E3F00ABA3C5 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BC51CC52E3F00ABA3C5 /* AFHTTPRequestOperationManager.m */; };
 		EAC05BD71CC52E3F00ABA3C5 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BC71CC52E3F00ABA3C5 /* AFHTTPSessionManager.m */; };
@@ -382,18 +370,6 @@
 		EAC05B3A1CC50DF900ABA3C5 /* ONOXMLDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ONOXMLDocument.m; sourceTree = "<group>"; };
 		EAC05B421CC50F3400ABA3C5 /* WebP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebP.framework; sourceTree = "<group>"; };
 		EAC05B441CC5109600ABA3C5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		EAC05B471CC5231E00ABA3C5 /* amrFileCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amrFileCodec.h; sourceTree = "<group>"; };
-		EAC05B481CC5231E00ABA3C5 /* amrFileCodec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = amrFileCodec.mm; sourceTree = "<group>"; };
-		EAC05B491CC5231E00ABA3C5 /* dec_if.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dec_if.h; sourceTree = "<group>"; };
-		EAC05B4A1CC5231E00ABA3C5 /* if_rom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = if_rom.h; sourceTree = "<group>"; };
-		EAC05B4B1CC5231E00ABA3C5 /* interf_dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interf_dec.h; sourceTree = "<group>"; };
-		EAC05B4C1CC5231E00ABA3C5 /* interf_enc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interf_enc.h; sourceTree = "<group>"; };
-		EAC05B4D1CC5231E00ABA3C5 /* libopencore-amrnb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrnb.a"; sourceTree = "<group>"; };
-		EAC05B4E1CC5231E00ABA3C5 /* libopencore-amrwb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libopencore-amrwb.a"; sourceTree = "<group>"; };
-		EAC05B4F1CC5231E00ABA3C5 /* VoiceConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceConverter.h; sourceTree = "<group>"; };
-		EAC05B501CC5231E00ABA3C5 /* VoiceConverter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VoiceConverter.mm; sourceTree = "<group>"; };
-		EAC05B511CC5231E00ABA3C5 /* wav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wav.h; sourceTree = "<group>"; };
-		EAC05B521CC5231E00ABA3C5 /* wav.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = wav.mm; sourceTree = "<group>"; };
 		EAC05B591CC5236300ABA3C5 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
 		EAC05B5A1CC5236300ABA3C5 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
 		EAC05B5E1CC5297C00ABA3C5 /* GJCFFileDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFFileDownloadManager.h; sourceTree = "<group>"; };
@@ -431,27 +407,6 @@
 		EAC05B871CC5297C00ABA3C5 /* GJCFAudioRecordSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioRecordSettings.m; sourceTree = "<group>"; };
 		EAC05B981CC52A1D00ABA3C5 /* GJCFCachePathManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFCachePathManager.h; sourceTree = "<group>"; };
 		EAC05B991CC52A1D00ABA3C5 /* GJCFCachePathManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFCachePathManager.m; sourceTree = "<group>"; };
-		EAC05B9D1CC52CFC00ABA3C5 /* GJCFDateUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFDateUitil.h; sourceTree = "<group>"; };
-		EAC05B9E1CC52CFC00ABA3C5 /* GJCFDateUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFDateUitil.m; sourceTree = "<group>"; };
-		EAC05B9F1CC52CFC00ABA3C5 /* GJCFDateUitilMacrocDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFDateUitilMacrocDefine.h; sourceTree = "<group>"; };
-		EAC05BA21CC52CFC00ABA3C5 /* GJCFDispatchCenterUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFDispatchCenterUitil.h; sourceTree = "<group>"; };
-		EAC05BA31CC52CFC00ABA3C5 /* GJCFDispatchCenterUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFDispatchCenterUitil.m; sourceTree = "<group>"; };
-		EAC05BA41CC52CFC00ABA3C5 /* GJCFDispatchMacrocDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFDispatchMacrocDefine.h; sourceTree = "<group>"; };
-		EAC05BA51CC52CFC00ABA3C5 /* GJCFUitils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFUitils.h; sourceTree = "<group>"; };
-		EAC05BA81CC52CFC00ABA3C5 /* GJCFQuickCacheMacrocDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFQuickCacheMacrocDefine.h; sourceTree = "<group>"; };
-		EAC05BA91CC52CFC00ABA3C5 /* GJCFQuickCacheUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFQuickCacheUitil.h; sourceTree = "<group>"; };
-		EAC05BAA1CC52CFC00ABA3C5 /* GJCFQuickCacheUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFQuickCacheUitil.m; sourceTree = "<group>"; };
-		EAC05BAC1CC52CFC00ABA3C5 /* GJCFQuickUIMacrocDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFQuickUIMacrocDefine.h; sourceTree = "<group>"; };
-		EAC05BAD1CC52CFC00ABA3C5 /* GJCFQuickUIUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFQuickUIUitil.h; sourceTree = "<group>"; };
-		EAC05BAE1CC52CFC00ABA3C5 /* GJCFQuickUIUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFQuickUIUitil.m; sourceTree = "<group>"; };
-		EAC05BB01CC52CFC00ABA3C5 /* GJCFStringMacrocDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFStringMacrocDefine.h; sourceTree = "<group>"; };
-		EAC05BB11CC52CFC00ABA3C5 /* GJCFStringUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFStringUitil.h; sourceTree = "<group>"; };
-		EAC05BB21CC52CFC00ABA3C5 /* GJCFStringUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFStringUitil.m; sourceTree = "<group>"; };
-		EAC05BB41CC52CFC00ABA3C5 /* GJCFSystemMacrocDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFSystemMacrocDefine.h; sourceTree = "<group>"; };
-		EAC05BB51CC52CFC00ABA3C5 /* GJCFSystemUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFSystemUitil.h; sourceTree = "<group>"; };
-		EAC05BB61CC52CFC00ABA3C5 /* GJCFSystemUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFSystemUitil.m; sourceTree = "<group>"; };
-		EAC05BB81CC52CFC00ABA3C5 /* UIView+GJCFViewFrameUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+GJCFViewFrameUitil.h"; sourceTree = "<group>"; };
-		EAC05BB91CC52CFC00ABA3C5 /* UIView+GJCFViewFrameUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+GJCFViewFrameUitil.m"; sourceTree = "<group>"; };
 		EAC05BC21CC52E3F00ABA3C5 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		EAC05BC31CC52E3F00ABA3C5 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		EAC05BC41CC52E3F00ABA3C5 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -817,10 +772,8 @@
 			files = (
 				EAC05B451CC5109600ABA3C5 /* libz.tbd in Frameworks */,
 				EAC05B431CC50F3400ABA3C5 /* WebP.framework in Frameworks */,
-				EAC05B551CC5231E00ABA3C5 /* libopencore-amrwb.a in Frameworks */,
 				EAC05A8B1CC50B5700ABA3C5 /* libsqlite3.tbd in Frameworks */,
 				EADD1D931C9EE3F500E22D2B /* libidn.a in Frameworks */,
-				EAC05B541CC5231E00ABA3C5 /* libopencore-amrnb.a in Frameworks */,
 				EADD19751C9EDE0B00E22D2B /* libresolv.tbd in Frameworks */,
 				EADD19731C9EDDD300E22D2B /* libxml2.tbd in Frameworks */,
 			);
@@ -1057,25 +1010,6 @@
 			path = Ono;
 			sourceTree = "<group>";
 		};
-		EAC05B461CC5231E00ABA3C5 /* AudioCoder */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05B471CC5231E00ABA3C5 /* amrFileCodec.h */,
-				EAC05B481CC5231E00ABA3C5 /* amrFileCodec.mm */,
-				EAC05B491CC5231E00ABA3C5 /* dec_if.h */,
-				EAC05B4A1CC5231E00ABA3C5 /* if_rom.h */,
-				EAC05B4B1CC5231E00ABA3C5 /* interf_dec.h */,
-				EAC05B4C1CC5231E00ABA3C5 /* interf_enc.h */,
-				EAC05B4D1CC5231E00ABA3C5 /* libopencore-amrnb.a */,
-				EAC05B4E1CC5231E00ABA3C5 /* libopencore-amrwb.a */,
-				EAC05B4F1CC5231E00ABA3C5 /* VoiceConverter.h */,
-				EAC05B501CC5231E00ABA3C5 /* VoiceConverter.mm */,
-				EAC05B511CC5231E00ABA3C5 /* wav.h */,
-				EAC05B521CC5231E00ABA3C5 /* wav.mm */,
-			);
-			path = AudioCoder;
-			sourceTree = "<group>";
-		};
 		EAC05B581CC5236300ABA3C5 /* Base64 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1088,7 +1022,6 @@
 		EAC05B5C1CC5297C00ABA3C5 /* ZYChat */ = {
 			isa = PBXGroup;
 			children = (
-				EAC05B9B1CC52CFC00ABA3C5 /* GJCFUitils */,
 				EAC05B971CC52A1D00ABA3C5 /* GJCFCachePathManager */,
 				EAC05B691CC5297C00ABA3C5 /* GJCFAudioManager */,
 				EAC05B5D1CC5297C00ABA3C5 /* DownloadManager */,
@@ -1214,106 +1147,6 @@
 				EAC05B991CC52A1D00ABA3C5 /* GJCFCachePathManager.m */,
 			);
 			path = GJCFCachePathManager;
-			sourceTree = "<group>";
-		};
-		EAC05B9B1CC52CFC00ABA3C5 /* GJCFUitils */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05BA51CC52CFC00ABA3C5 /* GJCFUitils.h */,
-				EAC05B9C1CC52CFC00ABA3C5 /* DateUitil */,
-				EAC05BA01CC52CFC00ABA3C5 /* DeviceInfoUitil */,
-				EAC05BA11CC52CFC00ABA3C5 /* DispatchCenterUitil */,
-				EAC05BA61CC52CFC00ABA3C5 /* KeychainUitil */,
-				EAC05BA71CC52CFC00ABA3C5 /* QuickCacheUitil */,
-				EAC05BAB1CC52CFC00ABA3C5 /* QuickUIUitil */,
-				EAC05BAF1CC52CFC00ABA3C5 /* StringUitil */,
-				EAC05BB31CC52CFC00ABA3C5 /* SystemUitil */,
-				EAC05BB71CC52CFC00ABA3C5 /* UitilCategory */,
-			);
-			path = GJCFUitils;
-			sourceTree = "<group>";
-		};
-		EAC05B9C1CC52CFC00ABA3C5 /* DateUitil */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05B9D1CC52CFC00ABA3C5 /* GJCFDateUitil.h */,
-				EAC05B9E1CC52CFC00ABA3C5 /* GJCFDateUitil.m */,
-				EAC05B9F1CC52CFC00ABA3C5 /* GJCFDateUitilMacrocDefine.h */,
-			);
-			path = DateUitil;
-			sourceTree = "<group>";
-		};
-		EAC05BA01CC52CFC00ABA3C5 /* DeviceInfoUitil */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DeviceInfoUitil;
-			sourceTree = "<group>";
-		};
-		EAC05BA11CC52CFC00ABA3C5 /* DispatchCenterUitil */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05BA21CC52CFC00ABA3C5 /* GJCFDispatchCenterUitil.h */,
-				EAC05BA31CC52CFC00ABA3C5 /* GJCFDispatchCenterUitil.m */,
-				EAC05BA41CC52CFC00ABA3C5 /* GJCFDispatchMacrocDefine.h */,
-			);
-			path = DispatchCenterUitil;
-			sourceTree = "<group>";
-		};
-		EAC05BA61CC52CFC00ABA3C5 /* KeychainUitil */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = KeychainUitil;
-			sourceTree = "<group>";
-		};
-		EAC05BA71CC52CFC00ABA3C5 /* QuickCacheUitil */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05BA81CC52CFC00ABA3C5 /* GJCFQuickCacheMacrocDefine.h */,
-				EAC05BA91CC52CFC00ABA3C5 /* GJCFQuickCacheUitil.h */,
-				EAC05BAA1CC52CFC00ABA3C5 /* GJCFQuickCacheUitil.m */,
-			);
-			path = QuickCacheUitil;
-			sourceTree = "<group>";
-		};
-		EAC05BAB1CC52CFC00ABA3C5 /* QuickUIUitil */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05BAC1CC52CFC00ABA3C5 /* GJCFQuickUIMacrocDefine.h */,
-				EAC05BAD1CC52CFC00ABA3C5 /* GJCFQuickUIUitil.h */,
-				EAC05BAE1CC52CFC00ABA3C5 /* GJCFQuickUIUitil.m */,
-			);
-			path = QuickUIUitil;
-			sourceTree = "<group>";
-		};
-		EAC05BAF1CC52CFC00ABA3C5 /* StringUitil */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05BB01CC52CFC00ABA3C5 /* GJCFStringMacrocDefine.h */,
-				EAC05BB11CC52CFC00ABA3C5 /* GJCFStringUitil.h */,
-				EAC05BB21CC52CFC00ABA3C5 /* GJCFStringUitil.m */,
-			);
-			path = StringUitil;
-			sourceTree = "<group>";
-		};
-		EAC05BB31CC52CFC00ABA3C5 /* SystemUitil */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05BB41CC52CFC00ABA3C5 /* GJCFSystemMacrocDefine.h */,
-				EAC05BB51CC52CFC00ABA3C5 /* GJCFSystemUitil.h */,
-				EAC05BB61CC52CFC00ABA3C5 /* GJCFSystemUitil.m */,
-			);
-			path = SystemUitil;
-			sourceTree = "<group>";
-		};
-		EAC05BB71CC52CFC00ABA3C5 /* UitilCategory */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05BB81CC52CFC00ABA3C5 /* UIView+GJCFViewFrameUitil.h */,
-				EAC05BB91CC52CFC00ABA3C5 /* UIView+GJCFViewFrameUitil.m */,
-			);
-			path = UitilCategory;
 			sourceTree = "<group>";
 		};
 		EAC05BC11CC52E3F00ABA3C5 /* AFNetworking */ = {
@@ -1525,7 +1358,6 @@
 			children = (
 				EAC05B5C1CC5297C00ABA3C5 /* ZYChat */,
 				EAC05B581CC5236300ABA3C5 /* Base64 */,
-				EAC05B461CC5231E00ABA3C5 /* AudioCoder */,
 				EAC05ACB1CC50B7900ABA3C5 /* YYModel */,
 				EAC05AD11CC50B7900ABA3C5 /* YYWebImage */,
 				EAC05B371CC50DF900ABA3C5 /* Ono */,
@@ -2630,12 +2462,10 @@
 				EADD1D2F1C9EE1D300E22D2B /* XMPPRoomHybridStorage.m in Sources */,
 				EAC05B111CC50B7900ABA3C5 /* MJRefreshConst.m in Sources */,
 				EADD1D681C9EE1D300E22D2B /* XMPPPing.m in Sources */,
-				EAC05BBC1CC52CFC00ABA3C5 /* GJCFQuickCacheUitil.m in Sources */,
 				EADD1D661C9EE1D300E22D2B /* XMPPStreamManagement.m in Sources */,
 				EAC05B231CC50B7900ABA3C5 /* YYImage.m in Sources */,
 				EADD1D2E1C9EE1D300E22D2B /* XMPPRoomHybrid.xcdatamodeld in Sources */,
 				EADD1D871C9EE1D300E22D2B /* DDXMLDocument.m in Sources */,
-				EAC05BBB1CC52CFC00ABA3C5 /* GJCFDispatchCenterUitil.m in Sources */,
 				EAC05B1F1CC50B7900ABA3C5 /* UIImage+YYWebImage.m in Sources */,
 				EADD1D861C9EE1D300E22D2B /* NSString+DDXML.m in Sources */,
 				EADD1D0E1C9EE1D300E22D2B /* XMPPModule.m in Sources */,
@@ -2663,10 +2493,8 @@
 				EAC05BD81CC52E3F00ABA3C5 /* AFNetworkReachabilityManager.m in Sources */,
 				EADD1D1C1C9EE1D300E22D2B /* XMPPRoster.xcdatamodel in Sources */,
 				EADD1D351C9EE1D300E22D2B /* XMPPMessage+XEP0045.m in Sources */,
-				EAC05BC01CC52CFC00ABA3C5 /* UIView+GJCFViewFrameUitil.m in Sources */,
 				EAC05B881CC5297C00ABA3C5 /* GJCFFileDownloadManager.m in Sources */,
 				EADD1D1E1C9EE1D300E22D2B /* XMPPUserCoreDataStorageObject.m in Sources */,
-				EAC05BBF1CC52CFC00ABA3C5 /* GJCFSystemUitil.m in Sources */,
 				EADD1D621C9EE1D300E22D2B /* XMPPMessageDeliveryReceipts.m in Sources */,
 				EADD1DA81C9EF0A700E22D2B /* NSArray+format.m in Sources */,
 				EAC05B1E1CC50B7900ABA3C5 /* UIButton+YYWebImage.m in Sources */,
@@ -2703,7 +2531,6 @@
 				EADD1D5A1C9EE1D300E22D2B /* XMPPMessageArchiving_Message_CoreDataObject.m in Sources */,
 				EADD1DAC1C9EF2A600E22D2B /* NSString+size.m in Sources */,
 				EAC05B1D1CC50B7900ABA3C5 /* MKAnnotationView+YYWebImage.m in Sources */,
-				EAC05BBA1CC52CFC00ABA3C5 /* GJCFDateUitil.m in Sources */,
 				EADD1DA91C9EF0A700E22D2B /* NSDictionary+format.m in Sources */,
 				EADD1D171C9EE1D300E22D2B /* XMPPGoogleSharedStatus.m in Sources */,
 				EADD1D541C9EE1D300E22D2B /* XMPPCapabilitiesCoreDataStorage.m in Sources */,
@@ -2716,7 +2543,6 @@
 				EADD17591C9ED8A000E22D2B /* HYContactsViewController.m in Sources */,
 				EADD1D311C9EE1D300E22D2B /* XMPPRoomOccupantHybridMemoryStorageObject.m in Sources */,
 				EAC05B251CC50B7900ABA3C5 /* YYSpriteSheetImage.m in Sources */,
-				EAC05BBD1CC52CFC00ABA3C5 /* GJCFQuickUIUitil.m in Sources */,
 				EADD1DA31C9EEF1100E22D2B /* UIImage+SW.m in Sources */,
 				EADD1D761C9EE1D300E22D2B /* GCDMulticastDelegate.m in Sources */,
 				EAC05BD71CC52E3F00ABA3C5 /* AFHTTPSessionManager.m in Sources */,
@@ -2728,7 +2554,6 @@
 				EADD1D641C9EE1D300E22D2B /* XMPPStreamManagementMemoryStorage.m in Sources */,
 				EADD1D461C9EE1D300E22D2B /* XMPPResultSet.m in Sources */,
 				EAC05B931CC5297C00ABA3C5 /* GJCFFileUploadTask+GJCFAudioUpload.m in Sources */,
-				EAC05BBE1CC52CFC00ABA3C5 /* GJCFStringUitil.m in Sources */,
 				EAC05B221CC50B7900ABA3C5 /* YYFrameImage.m in Sources */,
 				EADD1D5B1C9EE1D300E22D2B /* XMPPMessageArchivingCoreDataStorage.m in Sources */,
 				EADD1D831C9EE1D300E22D2B /* DDDispatchQueueLogFormatter.m in Sources */,
@@ -2737,7 +2562,6 @@
 				EADD1D4F1C9EE1D300E22D2B /* XMPPMessage+XEP_0085.m in Sources */,
 				EADD1D401C9EE1D300E22D2B /* XMPPvCardTempBase.m in Sources */,
 				EAC05B901CC5297C00ABA3C5 /* GJCFAudioModel.m in Sources */,
-				EAC05B561CC5231E00ABA3C5 /* VoiceConverter.mm in Sources */,
 				EADD1D4A1C9EE1D300E22D2B /* XMPPIQ+XEP_0066.m in Sources */,
 				EAC05B151CC50B7900ABA3C5 /* NSObject+YYModel.m in Sources */,
 				EADD1D6B1C9EE1D300E22D2B /* NSXMLElement+XEP_0203.m in Sources */,
@@ -2763,7 +2587,6 @@
 				EAC05B5B1CC5236300ABA3C5 /* Base64.m in Sources */,
 				EADD1D571C9EE1D300E22D2B /* XMPPCapabilities.m in Sources */,
 				EADD1D221C9EE1D300E22D2B /* XMPPRoster.m in Sources */,
-				EAC05B531CC5231E00ABA3C5 /* amrFileCodec.mm in Sources */,
 				EADD1D511C9EE1D300E22D2B /* XMPPTransports.m in Sources */,
 				EADD1D701C9EE1D300E22D2B /* XMPPMessageCarbons.m in Sources */,
 				EADD1D4C1C9EE1D300E22D2B /* XMPPRegistration.m in Sources */,
@@ -2775,7 +2598,6 @@
 				EAC05B0C1CC50B7900ABA3C5 /* MJRefreshBackStateFooter.m in Sources */,
 				EAC05B0B1CC50B7900ABA3C5 /* MJRefreshBackNormalFooter.m in Sources */,
 				EADD1D481C9EE1D300E22D2B /* XMPPPubSub.m in Sources */,
-				EAC05B571CC5231E00ABA3C5 /* wav.mm in Sources */,
 				EADD1D391C9EE1D300E22D2B /* XMPPvCardAvatarCoreDataStorageObject.m in Sources */,
 				EAC05B081CC50B7900ABA3C5 /* MJRefreshAutoNormalFooter.m in Sources */,
 				EAC05BDD1CC52E3F00ABA3C5 /* AFURLSessionManager.m in Sources */,
