@@ -1,0 +1,24 @@
+{
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "c1b34985-89f7-4ad2-b6ed-32456ccb691a++5725" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "c1b34985-89f7-4ad2-b6ed-32456ccb691a++5725" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "13F49742-1CEC-47B2-8BBD-BA600A1D71E3",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "c1b34985-89f7-4ad2-b6ed-32456ccb691a++5725" : "HYChatProject\/HYChatProject\/Vendor\/ZYChat\/GJCFUitils\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "HYChatProject",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "HYChatProject.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/192.168.64.5:8888\/svn\/Mobile",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "c1b34985-89f7-4ad2-b6ed-32456ccb691a++5725"
+    }
+  ]
+}
