@@ -1,5 +1,6 @@
-// AFURLResponseSerialization.m
-// Copyright (c) 2011–2016 Alamofire Software Foundation ( http://alamofire.org/ )
+// AFSerialization.h
+//
+// Copyright (c) 2013-2014 AFNetworking (http://afnetworking.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -7,10 +8,10 @@
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-//
+// 
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-//
+// 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,12 +22,8 @@
 
 #import "AFURLResponseSerialization.h"
 
-#import <TargetConditionals.h>
-
-#if TARGET_OS_IOS
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
 #import <UIKit/UIKit.h>
-#elif TARGET_OS_WATCH
-#import <WatchKit/WatchKit.h>
 #elif defined(__MAC_OS_X_VERSION_MIN_REQUIRED)
 #import <Cocoa/Cocoa.h>
 #endif
@@ -71,11 +68,11 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
     } else if ([JSONObject isKindOfClass:[NSDictionary class]]) {
         NSMutableDictionary *mutableDictionary = [NSMutableDictionary dictionaryWithDictionary:JSONObject];
         for (id <NSCopying> key in [(NSDictionary *)JSONObject allKeys]) {
-            id value = (NSDictionary *)JSONObject[key];
+            id value = [(NSDictionary *)JSONObject objectForKey:key];
             if (!value || [value isEqual:[NSNull null]]) {
                 [mutableDictionary removeObjectForKey:key];
             } else if ([value isKindOfClass:[NSArray class]] || [value isKindOfClass:[NSDictionary class]]) {
-                mutableDictionary[key] = AFJSONObjectByRemovingKeysWithNullValues(value, readingOptions);
+                [mutableDictionary setObject:AFJSONObjectByRemovingKeysWithNullValues(value, readingOptions) forKey:key];
             }
         }
 
@@ -115,10 +112,8 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
     NSError *validationError = nil;
 
     if (response && [response isKindOfClass:[NSHTTPURLResponse class]]) {
-        if (self.acceptableContentTypes && ![self.acceptableContentTypes containsObject:[response MIMEType]] &&
-            !([response MIMEType] == nil && [data length] == 0)) {
-
-            if ([data length] > 0 && [response URL]) {
+        if (self.acceptableContentTypes && ![self.acceptableContentTypes containsObject:[response MIMEType]]) {
+            if ([data length] > 0) {
                 NSMutableDictionary *mutableUserInfo = [@{
                                                           NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedStringFromTable(@"Request failed: unacceptable content-type: %@", @"AFNetworking", nil), [response MIMEType]],
                                                           NSURLErrorFailingURLErrorKey:[response URL],
@@ -134,7 +129,7 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
             responseIsValid = NO;
         }
 
-        if (self.acceptableStatusCodes && ![self.acceptableStatusCodes containsIndex:(NSUInteger)response.statusCode] && [response URL]) {
+        if (self.acceptableStatusCodes && ![self.acceptableStatusCodes containsIndex:(NSUInteger)response.statusCode]) {
             NSMutableDictionary *mutableUserInfo = [@{
                                                NSLocalizedDescriptionKey: [NSString stringWithFormat:NSLocalizedStringFromTable(@"Request failed: %@ (%ld)", @"AFNetworking", nil), [NSHTTPURLResponse localizedStringForStatusCode:response.statusCode], (long)response.statusCode],
                                                NSURLErrorFailingURLErrorKey:[response URL],
@@ -175,7 +170,7 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
     return YES;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)decoder {
+- (id)initWithCoder:(NSCoder *)decoder {
     self = [self init];
     if (!self) {
         return nil;
@@ -194,7 +189,7 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
 
 #pragma mark - NSCopying
 
-- (instancetype)copyWithZone:(NSZone *)zone {
+- (id)copyWithZone:(NSZone *)zone {
     AFHTTPResponseSerializer *serializer = [[[self class] allocWithZone:zone] init];
     serializer.acceptableStatusCodes = [self.acceptableStatusCodes copyWithZone:zone];
     serializer.acceptableContentTypes = [self.acceptableContentTypes copyWithZone:zone];
@@ -242,31 +237,56 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
         }
     }
 
-    id responseObject = nil;
-    NSError *serializationError = nil;
     // Workaround for behavior of Rails to return a single space for `head :ok` (a workaround for a bug in Safari), which is not interpreted as valid input by NSJSONSerialization.
     // See https://github.com/rails/rails/issues/1742
-    BOOL isSpace = [data isEqualToData:[NSData dataWithBytes:" " length:1]];
-    if (data.length > 0 && !isSpace) {
-        responseObject = [NSJSONSerialization JSONObjectWithData:data options:self.readingOptions error:&serializationError];
-    } else {
-        return nil;
+    NSStringEncoding stringEncoding = self.stringEncoding;
+    if (response.textEncodingName) {
+        CFStringEncoding encoding = CFStringConvertIANACharSetNameToEncoding((CFStringRef)response.textEncodingName);
+        if (encoding != kCFStringEncodingInvalidId) {
+            stringEncoding = CFStringConvertEncodingToNSStringEncoding(encoding);
+        }
+    }
+
+    id responseObject = nil;
+    NSError *serializationError = nil;
+    @autoreleasepool {
+        NSString *responseString = [[NSString alloc] initWithData:data encoding:stringEncoding];
+        if (responseString && ![responseString isEqualToString:@" "]) {
+            // Workaround for a bug in NSJSONSerialization when Unicode character escape codes are used instead of the actual character
+            // See http://stackoverflow.com/a/12843465/157142
+            data = [responseString dataUsingEncoding:NSUTF8StringEncoding];
+
+            if (data) {
+                if ([data length] > 0) {
+                    responseObject = [NSJSONSerialization JSONObjectWithData:data options:self.readingOptions error:&serializationError];
+                } else {
+                    return nil;
+                }
+            } else {
+                NSDictionary *userInfo = @{
+                                           NSLocalizedDescriptionKey: NSLocalizedStringFromTable(@"Data failed decoding as a UTF-8 string", @"AFNetworking", nil),
+                                           NSLocalizedFailureReasonErrorKey: [NSString stringWithFormat:NSLocalizedStringFromTable(@"Could not decode string: %@", @"AFNetworking", nil), responseString]
+                                           };
+
+                serializationError = [NSError errorWithDomain:AFURLResponseSerializationErrorDomain code:NSURLErrorCannotDecodeContentData userInfo:userInfo];
+            }
+        }
     }
 
     if (self.removesKeysWithNullValues && responseObject) {
         responseObject = AFJSONObjectByRemovingKeysWithNullValues(responseObject, self.readingOptions);
     }
-
+    
     if (error) {
         *error = AFErrorWithUnderlyingError(serializationError, *error);
     }
-
+    
     return responseObject;
 }
 
 #pragma mark - NSSecureCoding
 
-- (instancetype)initWithCoder:(NSCoder *)decoder {
+- (id)initWithCoder:(NSCoder *)decoder {
     self = [super initWithCoder:decoder];
     if (!self) {
         return nil;
@@ -287,7 +307,7 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
 
 #pragma mark - NSCopying
 
-- (instancetype)copyWithZone:(NSZone *)zone {
+- (id)copyWithZone:(NSZone *)zone {
     AFJSONResponseSerializer *serializer = [[[self class] allocWithZone:zone] init];
     serializer.readingOptions = self.readingOptions;
     serializer.removesKeysWithNullValues = self.removesKeysWithNullValues;
@@ -387,7 +407,7 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
 
 #pragma mark - NSSecureCoding
 
-- (instancetype)initWithCoder:(NSCoder *)decoder {
+- (id)initWithCoder:(NSCoder *)decoder {
     self = [super initWithCoder:decoder];
     if (!self) {
         return nil;
@@ -406,7 +426,7 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
 
 #pragma mark - NSCopying
 
-- (instancetype)copyWithZone:(NSZone *)zone {
+- (id)copyWithZone:(NSZone *)zone {
     AFXMLDocumentResponseSerializer *serializer = [[[self class] allocWithZone:zone] init];
     serializer.options = self.options;
 
@@ -474,13 +494,13 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
 
 #pragma mark - NSSecureCoding
 
-- (instancetype)initWithCoder:(NSCoder *)decoder {
+- (id)initWithCoder:(NSCoder *)decoder {
     self = [super initWithCoder:decoder];
     if (!self) {
         return nil;
     }
 
-    self.format = (NSPropertyListFormat)[[decoder decodeObjectOfClass:[NSNumber class] forKey:NSStringFromSelector(@selector(format))] unsignedIntegerValue];
+    self.format = [[decoder decodeObjectOfClass:[NSNumber class] forKey:NSStringFromSelector(@selector(format))] unsignedIntegerValue];
     self.readOptions = [[decoder decodeObjectOfClass:[NSNumber class] forKey:NSStringFromSelector(@selector(readOptions))] unsignedIntegerValue];
 
     return self;
@@ -495,7 +515,7 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
 
 #pragma mark - NSCopying
 
-- (instancetype)copyWithZone:(NSZone *)zone {
+- (id)copyWithZone:(NSZone *)zone {
     AFPropertyListResponseSerializer *serializer = [[[self class] allocWithZone:zone] init];
     serializer.format = self.format;
     serializer.readOptions = self.readOptions;
@@ -507,39 +527,12 @@ static id AFJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingO
 
 #pragma mark -
 
-#if TARGET_OS_IOS || TARGET_OS_TV || TARGET_OS_WATCH
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
 #import <CoreGraphics/CoreGraphics.h>
-#import <UIKit/UIKit.h>
-
-@interface UIImage (AFNetworkingSafeImageLoading)
-+ (UIImage *)af_safeImageWithData:(NSData *)data;
-@end
-
-static NSLock* imageLock = nil;
-
-@implementation UIImage (AFNetworkingSafeImageLoading)
-
-+ (UIImage *)af_safeImageWithData:(NSData *)data {
-    UIImage* image = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        imageLock = [[NSLock alloc] init];
-    });
-    
-    [imageLock lock];
-    image = [UIImage imageWithData:data];
-    [imageLock unlock];
-    return image;
-}
-
-@end
 
 static UIImage * AFImageWithDataAtScale(NSData *data, CGFloat scale) {
-    UIImage *image = [UIImage af_safeImageWithData:data];
-    if (image.images) {
-        return image;
-    }
-    
+    UIImage *image = [[UIImage alloc] initWithData:data];
+
     return [[UIImage alloc] initWithCGImage:[image CGImage] scale:scale orientation:image.imageOrientation];
 }
 
@@ -556,11 +549,10 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
     } else if ([response.MIMEType isEqualToString:@"image/jpeg"]) {
         imageRef = CGImageCreateWithJPEGDataProvider(dataProvider, NULL, true, kCGRenderingIntentDefault);
 
+        // CGImageCreateWithJPEGDataProvider does not properly handle CMKY, so if so, fall back to AFImageWithDataAtScale
         if (imageRef) {
             CGColorSpaceRef imageColorSpace = CGImageGetColorSpace(imageRef);
             CGColorSpaceModel imageColorSpaceModel = CGColorSpaceGetModel(imageColorSpace);
-
-            // CGImageCreateWithJPEGDataProvider does not properly handle CMKY, so fall back to AFImageWithDataAtScale
             if (imageColorSpaceModel == kCGColorSpaceModelCMYK) {
                 CGImageRelease(imageRef);
                 imageRef = NULL;
@@ -592,8 +584,7 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
         return image;
     }
 
-    // CGImageGetBytesPerRow() calculates incorrectly in iOS 5.0, so defer to CGBitmapContextCreate
-    size_t bytesPerRow = 0;
+    size_t bytesPerRow = 0; // CGImageGetBytesPerRow() calculates incorrectly in iOS 5.0, so defer to CGBitmapContextCreate
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGColorSpaceModel colorSpaceModel = CGColorSpaceGetModel(colorSpace);
     CGBitmapInfo bitmapInfo = CGImageGetBitmapInfo(imageRef);
@@ -631,7 +622,7 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
 
     CGImageRelease(inflatedImageRef);
     CGImageRelease(imageRef);
-
+    
     return inflatedImage;
 }
 #endif
@@ -647,11 +638,8 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
 
     self.acceptableContentTypes = [[NSSet alloc] initWithObjects:@"image/tiff", @"image/jpeg", @"image/gif", @"image/png", @"image/ico", @"image/x-icon", @"image/bmp", @"image/x-bmp", @"image/x-xbitmap", @"image/x-win-bitmap", nil];
 
-#if TARGET_OS_IOS || TARGET_OS_TV
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
     self.imageScale = [[UIScreen mainScreen] scale];
-    self.automaticallyInflatesResponseImage = YES;
-#elif TARGET_OS_WATCH
-    self.imageScale = [[WKInterfaceDevice currentDevice] screenScale];
     self.automaticallyInflatesResponseImage = YES;
 #endif
 
@@ -670,13 +658,13 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
         }
     }
 
-#if TARGET_OS_IOS || TARGET_OS_TV || TARGET_OS_WATCH
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
     if (self.automaticallyInflatesResponseImage) {
         return AFInflatedImageFromResponseWithDataAtScale((NSHTTPURLResponse *)response, data, self.imageScale);
     } else {
         return AFImageWithDataAtScale(data, self.imageScale);
     }
-#else
+#elif defined(__MAC_OS_X_VERSION_MIN_REQUIRED)
     // Ensure that the image is set to it's correct pixel width and height
     NSBitmapImageRep *bitimage = [[NSBitmapImageRep alloc] initWithData:data];
     NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize([bitimage pixelsWide], [bitimage pixelsHigh])];
@@ -690,13 +678,13 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
 
 #pragma mark - NSSecureCoding
 
-- (instancetype)initWithCoder:(NSCoder *)decoder {
+- (id)initWithCoder:(NSCoder *)decoder {
     self = [super initWithCoder:decoder];
     if (!self) {
         return nil;
     }
 
-#if TARGET_OS_IOS  || TARGET_OS_TV || TARGET_OS_WATCH
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
     NSNumber *imageScale = [decoder decodeObjectOfClass:[NSNumber class] forKey:NSStringFromSelector(@selector(imageScale))];
 #if CGFLOAT_IS_DOUBLE
     self.imageScale = [imageScale doubleValue];
@@ -713,7 +701,7 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
 - (void)encodeWithCoder:(NSCoder *)coder {
     [super encodeWithCoder:coder];
 
-#if TARGET_OS_IOS || TARGET_OS_TV || TARGET_OS_WATCH
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
     [coder encodeObject:@(self.imageScale) forKey:NSStringFromSelector(@selector(imageScale))];
     [coder encodeBool:self.automaticallyInflatesResponseImage forKey:NSStringFromSelector(@selector(automaticallyInflatesResponseImage))];
 #endif
@@ -721,10 +709,10 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
 
 #pragma mark - NSCopying
 
-- (instancetype)copyWithZone:(NSZone *)zone {
+- (id)copyWithZone:(NSZone *)zone {
     AFImageResponseSerializer *serializer = [[[self class] allocWithZone:zone] init];
 
-#if TARGET_OS_IOS || TARGET_OS_TV || TARGET_OS_WATCH
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
     serializer.imageScale = self.imageScale;
     serializer.automaticallyInflatesResponseImage = self.automaticallyInflatesResponseImage;
 #endif
@@ -770,13 +758,13 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
             return responseObject;
         }
     }
-
+    
     return [super responseObjectForResponse:response data:data error:error];
 }
 
 #pragma mark - NSSecureCoding
 
-- (instancetype)initWithCoder:(NSCoder *)decoder {
+- (id)initWithCoder:(NSCoder *)decoder {
     self = [super initWithCoder:decoder];
     if (!self) {
         return nil;
@@ -795,7 +783,7 @@ static UIImage * AFInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
 
 #pragma mark - NSCopying
 
-- (instancetype)copyWithZone:(NSZone *)zone {
+- (id)copyWithZone:(NSZone *)zone {
     AFCompoundResponseSerializer *serializer = [[[self class] allocWithZone:zone] init];
     serializer.responseSerializers = self.responseSerializers;
 
