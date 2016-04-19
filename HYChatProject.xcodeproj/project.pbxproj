@@ -14,6 +14,10 @@
 		EA8230C71CC5F0E70003DF11 /* GJCFStringUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8230BB1CC5F0E70003DF11 /* GJCFStringUitil.m */; };
 		EA8230C81CC5F0E70003DF11 /* GJCFSystemUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8230BF1CC5F0E70003DF11 /* GJCFSystemUitil.m */; };
 		EA8230C91CC5F0E70003DF11 /* UIView+GJCFViewFrameUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8230C21CC5F0E70003DF11 /* UIView+GJCFViewFrameUitil.m */; };
+		EA8230D31CC5F3D20003DF11 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8230CC1CC5F3D20003DF11 /* SVIndefiniteAnimatedView.m */; };
+		EA8230D41CC5F3D20003DF11 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EA8230CE1CC5F3D20003DF11 /* SVProgressHUD.bundle */; };
+		EA8230D51CC5F3D20003DF11 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8230D01CC5F3D20003DF11 /* SVProgressHUD.m */; };
+		EA8230D61CC5F3D20003DF11 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8230D21CC5F3D20003DF11 /* SVRadialGradientLayer.m */; };
 		EAC05A8B1CC50B5700ABA3C5 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC05A8A1CC50B5700ABA3C5 /* libsqlite3.tbd */; };
 		EAC05AFA1CC50B7900ABA3C5 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05A8E1CC50B7800ABA3C5 /* FMDatabase.m */; };
 		EAC05AFB1CC50B7900ABA3C5 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05A901CC50B7800ABA3C5 /* FMDatabaseAdditions.m */; };
@@ -301,6 +305,14 @@
 		EA8230BF1CC5F0E70003DF11 /* GJCFSystemUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFSystemUitil.m; sourceTree = "<group>"; };
 		EA8230C11CC5F0E70003DF11 /* UIView+GJCFViewFrameUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+GJCFViewFrameUitil.h"; sourceTree = "<group>"; };
 		EA8230C21CC5F0E70003DF11 /* UIView+GJCFViewFrameUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+GJCFViewFrameUitil.m"; sourceTree = "<group>"; };
+		EA8230CB1CC5F3D20003DF11 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		EA8230CC1CC5F3D20003DF11 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		EA8230CD1CC5F3D20003DF11 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
+		EA8230CE1CC5F3D20003DF11 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		EA8230CF1CC5F3D20003DF11 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		EA8230D01CC5F3D20003DF11 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		EA8230D11CC5F3D20003DF11 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
+		EA8230D21CC5F3D20003DF11 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
 		EAC05A8A1CC50B5700ABA3C5 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		EAC05A8D1CC50B7800ABA3C5 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		EAC05A8E1CC50B7800ABA3C5 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
@@ -943,9 +955,25 @@
 			path = UitilCategory;
 			sourceTree = "<group>";
 		};
+		EA8230CA1CC5F3D20003DF11 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				EA8230CF1CC5F3D20003DF11 /* SVProgressHUD.h */,
+				EA8230D01CC5F3D20003DF11 /* SVProgressHUD.m */,
+				EA8230CB1CC5F3D20003DF11 /* SVIndefiniteAnimatedView.h */,
+				EA8230CC1CC5F3D20003DF11 /* SVIndefiniteAnimatedView.m */,
+				EA8230CD1CC5F3D20003DF11 /* SVProgressHUD-Prefix.pch */,
+				EA8230CE1CC5F3D20003DF11 /* SVProgressHUD.bundle */,
+				EA8230D11CC5F3D20003DF11 /* SVRadialGradientLayer.h */,
+				EA8230D21CC5F3D20003DF11 /* SVRadialGradientLayer.m */,
+			);
+			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
 		EAC05A8C1CC50B7800ABA3C5 /* FMDB */ = {
 			isa = PBXGroup;
 			children = (
+				EAC05A951CC50B7800ABA3C5 /* FMDB.h */,
 				EAC05A8D1CC50B7800ABA3C5 /* FMDatabase.h */,
 				EAC05A8E1CC50B7800ABA3C5 /* FMDatabase.m */,
 				EAC05A8F1CC50B7800ABA3C5 /* FMDatabaseAdditions.h */,
@@ -954,7 +982,6 @@
 				EAC05A921CC50B7800ABA3C5 /* FMDatabasePool.m */,
 				EAC05A931CC50B7800ABA3C5 /* FMDatabaseQueue.h */,
 				EAC05A941CC50B7800ABA3C5 /* FMDatabaseQueue.m */,
-				EAC05A951CC50B7800ABA3C5 /* FMDB.h */,
 				EAC05A961CC50B7800ABA3C5 /* FMResultSet.h */,
 				EAC05A971CC50B7800ABA3C5 /* FMResultSet.m */,
 			);
@@ -1530,6 +1557,7 @@
 				EAD7BED31CC539F30089873C /* AudioCoder */,
 				EAC05B371CC50DF900ABA3C5 /* Ono */,
 				EAC05A8C1CC50B7800ABA3C5 /* FMDB */,
+				EA8230CA1CC5F3D20003DF11 /* SVProgressHUD */,
 				EAC05A981CC50B7800ABA3C5 /* MBProgressHUD */,
 				EAC05A9E1CC50B7800ABA3C5 /* MJRefresh */,
 				EAC05BC11CC52E3F00ABA3C5 /* AFNetworking */,
@@ -2567,6 +2595,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EADD1D921C9EE3F500E22D2B /* build-libidn.sh in Resources */,
+				EA8230D41CC5F3D20003DF11 /* SVProgressHUD.bundle in Resources */,
 				EADD17011C9ED2E100E22D2B /* LaunchScreen.storyboard in Resources */,
 				EADD1D9C1C9EE95700E22D2B /* Login.storyboard in Resources */,
 				EADD16FE1C9ED2E100E22D2B /* Assets.xcassets in Resources */,
@@ -2661,6 +2690,7 @@
 				EAC05B091CC50B7900ABA3C5 /* MJRefreshAutoStateFooter.m in Sources */,
 				EAC05BD51CC52E3F00ABA3C5 /* AFHTTPRequestOperation.m in Sources */,
 				EADD1D5C1C9EE1D300E22D2B /* XMPPMessageArchiving.m in Sources */,
+				EA8230D61CC5F3D20003DF11 /* SVRadialGradientLayer.m in Sources */,
 				EAC05B0E1CC50B7900ABA3C5 /* MJRefreshNormalHeader.m in Sources */,
 				EAC05BD81CC52E3F00ABA3C5 /* AFNetworkReachabilityManager.m in Sources */,
 				EADD1D1C1C9EE1D300E22D2B /* XMPPRoster.xcdatamodel in Sources */,
@@ -2673,6 +2703,7 @@
 				EAC05B1E1CC50B7900ABA3C5 /* UIButton+YYWebImage.m in Sources */,
 				EAC05B011CC50B7900ABA3C5 /* MBProgressHUD.m in Sources */,
 				EADD1D591C9EE1D300E22D2B /* XMPPMessageArchiving_Contact_CoreDataObject.m in Sources */,
+				EA8230D31CC5F3D20003DF11 /* SVIndefiniteAnimatedView.m in Sources */,
 				EADD1D051C9EE1D300E22D2B /* XMPPXOAuth2Google.m in Sources */,
 				EAC05BD61CC52E3F00ABA3C5 /* AFHTTPRequestOperationManager.m in Sources */,
 				EAC05AFE1CC50B7900ABA3C5 /* FMResultSet.m in Sources */,
@@ -2833,6 +2864,7 @@
 				EAC05B911CC5297C00ABA3C5 /* GJCFAudioNetwork.m in Sources */,
 				EAC05AFD1CC50B7900ABA3C5 /* FMDatabaseQueue.m in Sources */,
 				EADD1D1F1C9EE1D300E22D2B /* XMPPResourceMemoryStorageObject.m in Sources */,
+				EA8230D51CC5F3D20003DF11 /* SVProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
