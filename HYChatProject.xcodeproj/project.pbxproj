@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA8230C31CC5F0E70003DF11 /* GJCFDateUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8230A71CC5F0E70003DF11 /* GJCFDateUitil.m */; };
+		EA8230C41CC5F0E70003DF11 /* GJCFDispatchCenterUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8230AC1CC5F0E70003DF11 /* GJCFDispatchCenterUitil.m */; };
+		EA8230C51CC5F0E70003DF11 /* GJCFQuickCacheUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8230B31CC5F0E70003DF11 /* GJCFQuickCacheUitil.m */; };
+		EA8230C61CC5F0E70003DF11 /* GJCFQuickUIUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8230B71CC5F0E70003DF11 /* GJCFQuickUIUitil.m */; };
+		EA8230C71CC5F0E70003DF11 /* GJCFStringUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8230BB1CC5F0E70003DF11 /* GJCFStringUitil.m */; };
+		EA8230C81CC5F0E70003DF11 /* GJCFSystemUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8230BF1CC5F0E70003DF11 /* GJCFSystemUitil.m */; };
+		EA8230C91CC5F0E70003DF11 /* UIView+GJCFViewFrameUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA8230C21CC5F0E70003DF11 /* UIView+GJCFViewFrameUitil.m */; };
 		EAC05A8B1CC50B5700ABA3C5 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC05A8A1CC50B5700ABA3C5 /* libsqlite3.tbd */; };
 		EAC05AFA1CC50B7900ABA3C5 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05A8E1CC50B7800ABA3C5 /* FMDatabase.m */; };
 		EAC05AFB1CC50B7900ABA3C5 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05A901CC50B7800ABA3C5 /* FMDatabaseAdditions.m */; };
@@ -273,6 +280,27 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EA8230A61CC5F0E70003DF11 /* GJCFDateUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFDateUitil.h; sourceTree = "<group>"; };
+		EA8230A71CC5F0E70003DF11 /* GJCFDateUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFDateUitil.m; sourceTree = "<group>"; };
+		EA8230A81CC5F0E70003DF11 /* GJCFDateUitilMacrocDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFDateUitilMacrocDefine.h; sourceTree = "<group>"; };
+		EA8230AB1CC5F0E70003DF11 /* GJCFDispatchCenterUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFDispatchCenterUitil.h; sourceTree = "<group>"; };
+		EA8230AC1CC5F0E70003DF11 /* GJCFDispatchCenterUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFDispatchCenterUitil.m; sourceTree = "<group>"; };
+		EA8230AD1CC5F0E70003DF11 /* GJCFDispatchMacrocDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFDispatchMacrocDefine.h; sourceTree = "<group>"; };
+		EA8230AE1CC5F0E70003DF11 /* GJCFUitils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFUitils.h; sourceTree = "<group>"; };
+		EA8230B11CC5F0E70003DF11 /* GJCFQuickCacheMacrocDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFQuickCacheMacrocDefine.h; sourceTree = "<group>"; };
+		EA8230B21CC5F0E70003DF11 /* GJCFQuickCacheUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFQuickCacheUitil.h; sourceTree = "<group>"; };
+		EA8230B31CC5F0E70003DF11 /* GJCFQuickCacheUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFQuickCacheUitil.m; sourceTree = "<group>"; };
+		EA8230B51CC5F0E70003DF11 /* GJCFQuickUIMacrocDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFQuickUIMacrocDefine.h; sourceTree = "<group>"; };
+		EA8230B61CC5F0E70003DF11 /* GJCFQuickUIUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFQuickUIUitil.h; sourceTree = "<group>"; };
+		EA8230B71CC5F0E70003DF11 /* GJCFQuickUIUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFQuickUIUitil.m; sourceTree = "<group>"; };
+		EA8230B91CC5F0E70003DF11 /* GJCFStringMacrocDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFStringMacrocDefine.h; sourceTree = "<group>"; };
+		EA8230BA1CC5F0E70003DF11 /* GJCFStringUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFStringUitil.h; sourceTree = "<group>"; };
+		EA8230BB1CC5F0E70003DF11 /* GJCFStringUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFStringUitil.m; sourceTree = "<group>"; };
+		EA8230BD1CC5F0E70003DF11 /* GJCFSystemMacrocDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFSystemMacrocDefine.h; sourceTree = "<group>"; };
+		EA8230BE1CC5F0E70003DF11 /* GJCFSystemUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFSystemUitil.h; sourceTree = "<group>"; };
+		EA8230BF1CC5F0E70003DF11 /* GJCFSystemUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFSystemUitil.m; sourceTree = "<group>"; };
+		EA8230C11CC5F0E70003DF11 /* UIView+GJCFViewFrameUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+GJCFViewFrameUitil.h"; sourceTree = "<group>"; };
+		EA8230C21CC5F0E70003DF11 /* UIView+GJCFViewFrameUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+GJCFViewFrameUitil.m"; sourceTree = "<group>"; };
 		EAC05A8A1CC50B5700ABA3C5 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		EAC05A8D1CC50B7800ABA3C5 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		EAC05A8E1CC50B7800ABA3C5 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
@@ -818,8 +846,101 @@
 		EA8230A41CC5EE1B0003DF11 /* GJCFUitils */ = {
 			isa = PBXGroup;
 			children = (
+				EA8230AE1CC5F0E70003DF11 /* GJCFUitils.h */,
+				EA8230A51CC5F0E70003DF11 /* DateUitil */,
+				EA8230A91CC5F0E70003DF11 /* DeviceInfoUitil */,
+				EA8230AA1CC5F0E70003DF11 /* DispatchCenterUitil */,
+				EA8230AF1CC5F0E70003DF11 /* KeychainUitil */,
+				EA8230B01CC5F0E70003DF11 /* QuickCacheUitil */,
+				EA8230B41CC5F0E70003DF11 /* QuickUIUitil */,
+				EA8230B81CC5F0E70003DF11 /* StringUitil */,
+				EA8230BC1CC5F0E70003DF11 /* SystemUitil */,
+				EA8230C01CC5F0E70003DF11 /* UitilCategory */,
 			);
 			path = GJCFUitils;
+			sourceTree = "<group>";
+		};
+		EA8230A51CC5F0E70003DF11 /* DateUitil */ = {
+			isa = PBXGroup;
+			children = (
+				EA8230A61CC5F0E70003DF11 /* GJCFDateUitil.h */,
+				EA8230A71CC5F0E70003DF11 /* GJCFDateUitil.m */,
+				EA8230A81CC5F0E70003DF11 /* GJCFDateUitilMacrocDefine.h */,
+			);
+			path = DateUitil;
+			sourceTree = "<group>";
+		};
+		EA8230A91CC5F0E70003DF11 /* DeviceInfoUitil */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DeviceInfoUitil;
+			sourceTree = "<group>";
+		};
+		EA8230AA1CC5F0E70003DF11 /* DispatchCenterUitil */ = {
+			isa = PBXGroup;
+			children = (
+				EA8230AB1CC5F0E70003DF11 /* GJCFDispatchCenterUitil.h */,
+				EA8230AC1CC5F0E70003DF11 /* GJCFDispatchCenterUitil.m */,
+				EA8230AD1CC5F0E70003DF11 /* GJCFDispatchMacrocDefine.h */,
+			);
+			path = DispatchCenterUitil;
+			sourceTree = "<group>";
+		};
+		EA8230AF1CC5F0E70003DF11 /* KeychainUitil */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = KeychainUitil;
+			sourceTree = "<group>";
+		};
+		EA8230B01CC5F0E70003DF11 /* QuickCacheUitil */ = {
+			isa = PBXGroup;
+			children = (
+				EA8230B11CC5F0E70003DF11 /* GJCFQuickCacheMacrocDefine.h */,
+				EA8230B21CC5F0E70003DF11 /* GJCFQuickCacheUitil.h */,
+				EA8230B31CC5F0E70003DF11 /* GJCFQuickCacheUitil.m */,
+			);
+			path = QuickCacheUitil;
+			sourceTree = "<group>";
+		};
+		EA8230B41CC5F0E70003DF11 /* QuickUIUitil */ = {
+			isa = PBXGroup;
+			children = (
+				EA8230B51CC5F0E70003DF11 /* GJCFQuickUIMacrocDefine.h */,
+				EA8230B61CC5F0E70003DF11 /* GJCFQuickUIUitil.h */,
+				EA8230B71CC5F0E70003DF11 /* GJCFQuickUIUitil.m */,
+			);
+			path = QuickUIUitil;
+			sourceTree = "<group>";
+		};
+		EA8230B81CC5F0E70003DF11 /* StringUitil */ = {
+			isa = PBXGroup;
+			children = (
+				EA8230B91CC5F0E70003DF11 /* GJCFStringMacrocDefine.h */,
+				EA8230BA1CC5F0E70003DF11 /* GJCFStringUitil.h */,
+				EA8230BB1CC5F0E70003DF11 /* GJCFStringUitil.m */,
+			);
+			path = StringUitil;
+			sourceTree = "<group>";
+		};
+		EA8230BC1CC5F0E70003DF11 /* SystemUitil */ = {
+			isa = PBXGroup;
+			children = (
+				EA8230BD1CC5F0E70003DF11 /* GJCFSystemMacrocDefine.h */,
+				EA8230BE1CC5F0E70003DF11 /* GJCFSystemUitil.h */,
+				EA8230BF1CC5F0E70003DF11 /* GJCFSystemUitil.m */,
+			);
+			path = SystemUitil;
+			sourceTree = "<group>";
+		};
+		EA8230C01CC5F0E70003DF11 /* UitilCategory */ = {
+			isa = PBXGroup;
+			children = (
+				EA8230C11CC5F0E70003DF11 /* UIView+GJCFViewFrameUitil.h */,
+				EA8230C21CC5F0E70003DF11 /* UIView+GJCFViewFrameUitil.m */,
+			);
+			path = UitilCategory;
 			sourceTree = "<group>";
 		};
 		EAC05A8C1CC50B7800ABA3C5 /* FMDB */ = {
@@ -2479,6 +2600,7 @@
 			files = (
 				EAC05B8C1CC5297C00ABA3C5 /* GJCFUploadFileModel.m in Sources */,
 				EADD1D801C9EE1D300E22D2B /* DDLog.m in Sources */,
+				EA8230C41CC5F0E70003DF11 /* GJCFDispatchCenterUitil.m in Sources */,
 				EADD1D001C9EE1D300E22D2B /* XMPPDeprecatedPlainAuthentication.m in Sources */,
 				EADD1D3C1C9EE1D300E22D2B /* XMPPvCardTempCoreDataStorageObject.m in Sources */,
 				EADD1D3F1C9EE1D300E22D2B /* XMPPvCardTempAdrTypes.m in Sources */,
@@ -2492,12 +2614,14 @@
 				EADD1D301C9EE1D300E22D2B /* XMPPRoomMessageHybridCoreDataStorageObject.m in Sources */,
 				EAC05B061CC50B7900ABA3C5 /* MJRefreshHeader.m in Sources */,
 				EADD1D6E1C9EE1D300E22D2B /* XMPPMessage+XEP_0224.m in Sources */,
+				EA8230C71CC5F0E70003DF11 /* GJCFStringUitil.m in Sources */,
 				EADD1D501C9EE1D300E22D2B /* XMPPSoftwareVersion.m in Sources */,
 				EAC05B261CC50B7900ABA3C5 /* YYImageCache.m in Sources */,
 				EADD1D371C9EE1D300E22D2B /* XMPPRoom.m in Sources */,
 				EAC05B8E1CC5297C00ABA3C5 /* GJCFAudioFileUitil.m in Sources */,
 				EADD1D491C9EE1D300E22D2B /* TURNSocket.m in Sources */,
 				EAC05B141CC50B7900ABA3C5 /* UIView+MJExtension.m in Sources */,
+				EA8230C51CC5F0E70003DF11 /* GJCFQuickCacheUitil.m in Sources */,
 				EADD1D4B1C9EE1D300E22D2B /* XMPPMessage+XEP_0066.m in Sources */,
 				EADD1D7F1C9EE1D300E22D2B /* DDFileLogger.m in Sources */,
 				EADD1D361C9EE1D300E22D2B /* XMPPMUC.m in Sources */,
@@ -2526,6 +2650,7 @@
 				EAC05B961CC5297C00ABA3C5 /* GJCFAudioRecordSettings.m in Sources */,
 				EADD1D421C9EE1D300E22D2B /* XMPPvCardTempLabel.m in Sources */,
 				EADD1D581C9EE1D300E22D2B /* XMPPMessageArchiving.xcdatamodeld in Sources */,
+				EA8230C81CC5F0E70003DF11 /* GJCFSystemUitil.m in Sources */,
 				EADD1D201C9EE1D300E22D2B /* XMPPRosterMemoryStorage.m in Sources */,
 				EADD1D651C9EE1D300E22D2B /* XMPPStreamManagementStanzas.m in Sources */,
 				EADD1D691C9EE1D300E22D2B /* XMPPAutoTime.m in Sources */,
@@ -2540,6 +2665,7 @@
 				EAC05BD81CC52E3F00ABA3C5 /* AFNetworkReachabilityManager.m in Sources */,
 				EADD1D1C1C9EE1D300E22D2B /* XMPPRoster.xcdatamodel in Sources */,
 				EADD1D351C9EE1D300E22D2B /* XMPPMessage+XEP0045.m in Sources */,
+				EA8230C61CC5F0E70003DF11 /* GJCFQuickUIUitil.m in Sources */,
 				EAC05B881CC5297C00ABA3C5 /* GJCFFileDownloadManager.m in Sources */,
 				EADD1D1E1C9EE1D300E22D2B /* XMPPUserCoreDataStorageObject.m in Sources */,
 				EADD1D621C9EE1D300E22D2B /* XMPPMessageDeliveryReceipts.m in Sources */,
@@ -2581,6 +2707,7 @@
 				EADD1DA91C9EF0A700E22D2B /* NSDictionary+format.m in Sources */,
 				EADD1D171C9EE1D300E22D2B /* XMPPGoogleSharedStatus.m in Sources */,
 				EADD1D541C9EE1D300E22D2B /* XMPPCapabilitiesCoreDataStorage.m in Sources */,
+				EA8230C91CC5F0E70003DF11 /* UIView+GJCFViewFrameUitil.m in Sources */,
 				EADD1D5D1C9EE1D300E22D2B /* XMPPURI.m in Sources */,
 				EADD1D6C1C9EE1D300E22D2B /* XEP_0223.m in Sources */,
 				EADD1D261C9EE1D300E22D2B /* XMPPJabberRPCModule.m in Sources */,
@@ -2687,6 +2814,7 @@
 				EADD1D0A1C9EE1D300E22D2B /* XMPPElement.m in Sources */,
 				EADD1D841C9EE1D300E22D2B /* DDMultiFormatter.m in Sources */,
 				EAC05B9A1CC52A1D00ABA3C5 /* GJCFCachePathManager.m in Sources */,
+				EA8230C31CC5F0E70003DF11 /* GJCFDateUitil.m in Sources */,
 				EADD1D131C9EE1D300E22D2B /* XMPPCoreDataStorage.m in Sources */,
 				EAC05AFC1CC50B7900ABA3C5 /* FMDatabasePool.m in Sources */,
 				EADD1D2D1C9EE1D300E22D2B /* XMPPRoomOccupantCoreDataStorageObject.m in Sources */,
