@@ -6,11 +6,11 @@
 //  Copyright © 2016年 erpapa. All rights reserved.
 //
 
-#import "HYUserInfo.h"
+#import "HYLoginInfo.h"
 
-@implementation HYUserInfo
+@implementation HYLoginInfo
 
-static HYUserInfo *instance;
+static HYLoginInfo *instance;
 
 + (id)allocWithZone:(struct _NSZone *)zone
 {
@@ -28,16 +28,15 @@ static HYUserInfo *instance;
 /**
  *  单例
  */
-+ (instancetype)sharedUserInfo
++ (instancetype)sharedInstance
 {
     if (instance == nil) {
         instance = [[self alloc] init];
         instance.user = @"";
         instance.password = @"";
-        instance.hostName = domain;
-        instance.hostPort = hostPort;
+        instance.hostName = kDomain;
+        instance.hostPort = 5222;
         instance.logon = NO;
-        instance.registerMark = NO;
     }
     return instance;
 }
@@ -73,7 +72,4 @@ static HYUserInfo *instance;
     }
 }
 
-- (XMPPJID *)jid{
-    return [XMPPJID jidWithUser:_user domain:domain resource:resource];
-}
 @end

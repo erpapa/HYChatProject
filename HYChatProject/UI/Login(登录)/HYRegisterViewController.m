@@ -8,7 +8,7 @@
 
 #import "HYRegisterViewController.h"
 #import "HYXMPPManager.h"
-#import "HYUserInfo.h"
+#import "HYLoginInfo.h"
 #import "HYUtils.h"
 
 @interface HYRegisterViewController ()<UITextFieldDelegate>
@@ -84,13 +84,12 @@
 
 - (IBAction)registerClick:(UIButton *)sender {
     [self.view endEditing:YES];
-    HYUserInfo *userInfo = [HYUserInfo sharedUserInfo];
+    HYLoginInfo *userInfo = [HYLoginInfo sharedInstance];
     // 删除两端空格
     userInfo.user = [self.userTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     userInfo.password = [self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    userInfo.registerMark = YES; // 非注册
     __weak typeof(self) weakSelf = self;
-    [[HYXMPPManager sharedManager] xmppUserLogin:^(HYXMPPConnectStatus status) {
+    [[HYXMPPManager sharedInstance] xmppUserRegister:^(HYXMPPConnectStatus status) {
         [weakSelf handleResultType:status];
     }];
 }

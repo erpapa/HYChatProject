@@ -7,6 +7,7 @@
 //
 
 #import "NSString+SW.h"
+#import "XMPPJID.h"
 
 @implementation NSString (SW)
 
@@ -136,6 +137,11 @@
                                    @(7):@"六",
                                    };
     NSString *weekName = [weekNameDict objectForKey:@(weekDay)];
-    return [NSString stringWithFormat:@"周%@",weekName];
+    return [NSString stringWithFormat:@"星期%@",weekName];
+}
+
+- (XMPPJID *)JID
+{
+    return [XMPPJID jidWithUser:self domain:kDomain resource:kResource];
 }
 @end

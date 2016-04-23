@@ -11,8 +11,9 @@
 
 @interface HYRecentChatModel : NSObject
 @property (strong, nonatomic) NSData *icon; // 头像
-@property (strong, nonatomic) XMPPJID *jid; // 好友/群组jid
-@property (copy, nonatomic) NSString *body; // 消息内容
-@property (copy, nonatomic) NSString *time; // 时间
-@property (assign, nonatomic) NSInteger badgeValue; // 未读消息数
+@property (strong, nonatomic) NSString *jid; // 好友/群组jid
+@property (copy, nonatomic) NSString *message; // 消息内容
+@property (copy, nonatomic) NSString *timeString; // 时间
+@property (assign, nonatomic) BOOL isGroup; // 是否是群组
+@property (assign, nonatomic) NSInteger unreadCount; // 未读消息数
 @end

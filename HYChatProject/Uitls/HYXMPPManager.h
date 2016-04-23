@@ -29,7 +29,7 @@ typedef void(^HYSuccessBlock)(BOOL success);//操作成功/失败
 
 
 /********************* 单例 ********************************/
-+ (instancetype)sharedManager;
++ (instancetype)sharedInstance;
 /**
  *  用户登录
  */

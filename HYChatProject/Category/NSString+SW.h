@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#define kDomain @"erpapa.cn" // 域名
+#define kResource @"iPhone" //resource 标识用户登录的客户端 iphone android
+@class XMPPJID;
 @interface NSString (SW)
 /**
  *  计算字符串Size
@@ -20,4 +23,9 @@
  */
 - (NSString *)timeStringForExpress;
 - (NSString *)timeStringForExpress1;
+
+/**
+ *  返回jid
+ */
+- (XMPPJID *)JID;
 @end

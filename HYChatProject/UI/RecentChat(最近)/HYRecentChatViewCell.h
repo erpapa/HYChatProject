@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MGSwipeTableCell.h"
 
-@interface HYRecentChatViewCell : UITableViewCell
+@interface HYRecentChatViewCell : MGSwipeTableCell
 
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 

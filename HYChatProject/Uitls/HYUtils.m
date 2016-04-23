@@ -7,7 +7,7 @@
 //
 
 #import "HYUtils.h"
-#import "HYUserInfo.h"
+#import "HYLoginInfo.h"
 #import "HYXMPPManager.h"
 #import "SVProgressHUD.h"
 #import "HYFirstLoginViewController.h"
@@ -21,16 +21,16 @@
 + (void)initRootViewController
 {
     // 1.从沙盒里加载用户的数据到单例
-    [[HYUserInfo sharedUserInfo] loadUserInfoFromSanbox];
-    if ([HYUserInfo sharedUserInfo].user.length) {
-        // 2.判断用户的登录状态,logoff == YES 直接来到主界面
-        if([HYUserInfo sharedUserInfo].logon){
+    [[HYLoginInfo sharedInstance] loadUserInfoFromSanbox];
+    if ([HYLoginInfo sharedInstance].user.length) {
+        // 2.判断用户的登录状态,logon == YES 直接来到主界面
+        if([HYLoginInfo sharedInstance].logon){
             // 2.1. 设置根控制器
             [UIApplication sharedApplication].delegate.window.rootViewController = [HYTabBarController tabBarController];
         }else{
             [UIApplication sharedApplication].delegate.window.rootViewController = [HYCurrentLoginViewController currentLoginViewController];
         }
-    } else { // 第一次安装
+    } else { // 没有用户信息
         [UIApplication sharedApplication].delegate.window.rootViewController = [HYFirstLoginViewController firstLoginViewController];
     }
     

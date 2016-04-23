@@ -10,7 +10,7 @@
 #import "HYActionSheetController.h"
 #import "HYLoginViewController.h"
 #import "HYRegisterViewController.h"
-#import "HYUserInfo.h"
+#import "HYLoginInfo.h"
 #import "HYXMPPManager.h"
 #import "HYUtils.h"
 #import "YYWebImage.h"
@@ -96,9 +96,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    HYUserInfo *userInfo = [HYUserInfo sharedUserInfo];
+    HYLoginInfo *loginInfo = [HYLoginInfo sharedInstance];
 //    [self.iconView yy_setImageWithURL:nil placeholder:nil];
-    self.userLabel.text = userInfo.user.length ? userInfo.user : @"用户名";
+    self.userLabel.text = loginInfo.user.length ? loginInfo.user : @"用户名";
     
 }
 - (void)viewDidAppear:(BOOL)animated
@@ -172,12 +172,11 @@
 - (void)loginClick:(UIButton *)sender
 {
     [self.view endEditing:YES];
-    HYUserInfo *userInfo = [HYUserInfo sharedUserInfo];
+    HYLoginInfo *loginInfo = [HYLoginInfo sharedInstance];
     // 删除两端空格
-    userInfo.password = [self.pwdTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    userInfo.registerMark = NO; // 非注册
+    loginInfo.password = [self.pwdTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     __weak typeof(self) weakSelf = self;
-    [[HYXMPPManager sharedManager] xmppUserLogin:^(HYXMPPConnectStatus status) {
+    [[HYXMPPManager sharedInstance] xmppUserLogin:^(HYXMPPConnectStatus status) {
         [weakSelf handleResultType:status];
     }];
 }
@@ -228,9 +227,9 @@
 
 - (void)enterMainPage{
     // 更改用户的登录状态为YES
-    [HYUserInfo sharedUserInfo].logon = YES;
+    [HYLoginInfo sharedInstance].logon = YES;
     // 把用户登录成功的数据，保存到沙盒
-    [[HYUserInfo sharedUserInfo] saveUserInfoToSanbox];
+    [[HYLoginInfo sharedInstance] saveUserInfoToSanbox];
     // 登录成功来到主界面
     [HYUtils initRootViewController];
 }

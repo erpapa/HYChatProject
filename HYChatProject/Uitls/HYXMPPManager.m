@@ -7,7 +7,7 @@
 //
 
 #import "HYXMPPManager.h"
-#import "HYUserInfo.h"
+#import "HYLoginInfo.h"
 #import "HYUtils.h"
 
 NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChangeNotification"; // 连接状态变更通知
@@ -23,7 +23,7 @@ NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChang
     XMPPMessageArchiving *_messageArchiving;//信息
     XMPPMessageArchivingCoreDataStorage *_messageArchivingStorage;//信息数据存储
 }
-
+@property (assign, nonatomic) BOOL registerUser;
 @property (strong, nonatomic) NSMutableDictionary *vCardBlockDict; // 名片block数组
 @property (copy, nonatomic) HYXMPPConnectStatusBlock connectStatusBlock; // 连接状态
 @property (copy, nonatomic) HYSuccessBlock successBlock; // 操作成功/失败
@@ -50,7 +50,7 @@ static HYXMPPManager *instance;
 /**
  *  单例
  */
-+ (instancetype)sharedManager
++ (instancetype)sharedInstance
 {
     if (instance == nil) {
         instance = [[self alloc] init];
@@ -73,32 +73,36 @@ static HYXMPPManager *instance;
 -(void)setupXMPPStream{
     
     _xmppStream = [[XMPPStream alloc] init];
-#warning 每一个模块添加后都要激活
+    _xmppStream.enableBackgroundingOnSocket = YES; // 允许设备在后台运行
+
     //添加自动连接模块
     _xmppReconnect = [[XMPPReconnect alloc] init];
-    [_xmppReconnect activate:_xmppStream];
-    
+
     //添加电子名片模块
     _vCardStorage = [XMPPvCardCoreDataStorage sharedInstance];
     _vCardTempModule = [[XMPPvCardTempModule alloc] initWithvCardStorage:_vCardStorage];
-    [_vCardTempModule activate:_xmppStream];
-    
     //添加头像模块
     _vCardAvatarModule = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:_vCardTempModule];
-    [_vCardAvatarModule activate:_xmppStream];
-    
     
     // 添加花名册模块【获取好友列表】
     _rosterStorage = [[XMPPRosterCoreDataStorage alloc] init];
+    // 不用每次都重新创建数据库，否则会导致未读消息数丢失，good idea
+    _rosterStorage.autoRemovePreviousDatabaseFile = NO;
+    _rosterStorage.autoRecreateDatabaseFile = NO;
     _roster = [[XMPPRoster alloc] initWithRosterStorage:_rosterStorage];
-    [_roster activate:_xmppStream];
+    _roster.autoFetchRoster = YES;
+    _roster.autoAcceptKnownPresenceSubscriptionRequests = YES;
     
     // 添加聊天模块
     _messageArchivingStorage = [[XMPPMessageArchivingCoreDataStorage alloc] init];
     _messageArchiving = [[XMPPMessageArchiving alloc] initWithMessageArchivingStorage:_messageArchivingStorage];
-    [_messageArchiving activate:_xmppStream];
     
-    _xmppStream.enableBackgroundingOnSocket = YES; // 允许设备在后台运行
+    // 激活模块
+    [_xmppReconnect activate:_xmppStream];
+    [_vCardTempModule activate:_xmppStream];
+    [_vCardAvatarModule activate:_xmppStream];
+    [_roster activate:_xmppStream];
+    [_messageArchiving activate:_xmppStream];
     
     // 设置代理
     [_xmppStream addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
@@ -106,6 +110,32 @@ static HYXMPPManager *instance;
     [_vCardTempModule addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
     [_vCardAvatarModule addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
     [_messageArchiving addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
+}
+
+- (void)dealloc
+{
+    [_xmppStream        removeDelegate:self];
+    [_roster            removeDelegate:self];
+    [_vCardTempModule   removeDelegate:self];
+    [_vCardAvatarModule removeDelegate:self];
+    [_messageArchiving  removeDelegate:self];
+    
+    [_xmppReconnect       deactivate];
+    [_vCardTempModule     deactivate];
+    [_vCardAvatarModule   deactivate];
+    [_roster              deactivate];
+    [_messageArchiving    deactivate];
+    
+    [_xmppStream disconnect];
+    _xmppStream = nil;
+    _xmppReconnect = nil;
+    _vCardStorage = nil;
+    _vCardTempModule = nil;
+    _vCardAvatarModule = nil;
+    _roster = nil;
+    _rosterStorage = nil;
+    _messageArchiving = nil;
+    _messageArchivingStorage = nil;
 }
 
 #pragma mark -公共方法
@@ -120,15 +150,15 @@ static HYXMPPManager *instance;
     [_xmppStream disconnect];
     
     // 3.更新用户的登录状态
-    [HYUserInfo sharedUserInfo].logon = NO;
-    [[HYUserInfo sharedUserInfo] saveUserInfoToSanbox];
+    [HYLoginInfo sharedInstance].logon = NO;
+    [[HYLoginInfo sharedInstance] saveUserInfoToSanbox];
     
     // 4.切换根控制器
     [HYUtils initRootViewController];
 }
 // 登录
 -(void)xmppUserLogin:(HYXMPPConnectStatusBlock)resultBlock{
-    
+    self.registerUser = NO;
     // 先把block存起来
     self.connectStatusBlock = resultBlock;
     
@@ -141,6 +171,7 @@ static HYXMPPManager *instance;
 }
 // 注册
 -(void)xmppUserRegister:(HYXMPPConnectStatusBlock)resultBlock{
+    self.registerUser = YES;
     // 先把block存起来
     self.connectStatusBlock = resultBlock;
     
@@ -159,7 +190,7 @@ static HYXMPPManager *instance;
     if (vCardtemp) {
         myvCardBlock(vCardtemp); // 返回我的名片
     } else {
-        [self.vCardBlockDict setObject:[myvCardBlock copy] forKey:[HYUserInfo sharedUserInfo].jid];
+        [self.vCardBlockDict setObject:[myvCardBlock copy] forKey:[[HYLoginInfo sharedInstance].user JID]];
     }
 }
 /**
@@ -189,9 +220,9 @@ static HYXMPPManager *instance;
     if (!_xmppStream) {//如果_xmppStream为空，则初始化_xmppStream
         [self setupXMPPStream];
     }
-    HYUserInfo *userInfo = [HYUserInfo sharedUserInfo];
+    HYLoginInfo *userInfo = [HYLoginInfo sharedInstance];
     // 设置登录用户JID
-    _xmppStream.myJID = userInfo.jid;
+    _xmppStream.myJID = [userInfo.user JID];
     // 设置服务器域名
     _xmppStream.hostName = userInfo.hostName;
     // 设置端口 默认是5222
@@ -244,8 +275,8 @@ static HYXMPPManager *instance;
     if (self.connectStatusBlock) {
         self.connectStatusBlock(HYXMPPConnectStatusDidConnect);
     }
-    NSString *pwd = [HYUserInfo sharedUserInfo].password;
-    if ([HYUserInfo sharedUserInfo].registerMark) {//注册操作，发送注册的密码
+    NSString *pwd = [HYLoginInfo sharedInstance].password;
+    if (self.registerUser == YES) {//注册操作，发送注册的密码
         [_xmppStream registerWithPassword:pwd error:nil];
     }else{  //登录操作
         [_xmppStream authenticateWithPassword:pwd error:nil];

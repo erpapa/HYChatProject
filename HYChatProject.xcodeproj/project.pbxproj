@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		EA0F22751CC7BEE9007AB887 /* HYUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0F22741CC7BEE9007AB887 /* HYUtils.m */; };
 		EA139F331CC9D0F600E1E085 /* HYFirstLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA139F321CC9D0F600E1E085 /* HYFirstLoginViewController.m */; };
-		EA412BDA1CCA2F1D009C071B /* HYUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EA412BD81CCA2F1D009C071B /* HYUserInfo.m */; };
+		EA412BDA1CCA2F1D009C071B /* HYLoginInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EA412BD81CCA2F1D009C071B /* HYLoginInfo.m */; };
 		EA412BDE1CCA64B8009C071B /* HYMyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA412BDD1CCA64B8009C071B /* HYMyViewController.m */; };
 		EA412BE81CCA65B0009C071B /* HYContactsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA412BE71CCA65B0009C071B /* HYContactsViewCell.m */; };
 		EA412BFA1CCA6E17009C071B /* HYRecentChatViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA412BF71CCA6E17009C071B /* HYRecentChatViewCell.m */; };
@@ -101,6 +101,9 @@
 		EAC05BDB1CC52E3F00ABA3C5 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BD01CC52E3F00ABA3C5 /* AFURLRequestSerialization.m */; };
 		EAC05BDC1CC52E3F00ABA3C5 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BD21CC52E3F00ABA3C5 /* AFURLResponseSerialization.m */; };
 		EAC05BDD1CC52E3F00ABA3C5 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BD41CC52E3F00ABA3C5 /* AFURLSessionManager.m */; };
+		EAC1988A1CCB8C3900A45C1A /* MGSwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC198871CCB8C3900A45C1A /* MGSwipeButton.m */; };
+		EAC1988B1CCB8C3900A45C1A /* MGSwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC198891CCB8C3900A45C1A /* MGSwipeTableCell.m */; };
+		EACED1671CCBD0E300BA4064 /* HYDatabaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EACED1661CCBD0E300BA4064 /* HYDatabaseHandler.m */; };
 		EAD7BEE01CC539F30089873C /* amrFileCodec.mm in Sources */ = {isa = PBXBuildFile; fileRef = EAD7BED51CC539F30089873C /* amrFileCodec.mm */; };
 		EAD7BEE11CC539F30089873C /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD7BEDA1CC539F30089873C /* libopencore-amrnb.a */; };
 		EAD7BEE21CC539F30089873C /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD7BEDB1CC539F30089873C /* libopencore-amrwb.a */; };
@@ -300,8 +303,8 @@
 		EA0F22741CC7BEE9007AB887 /* HYUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYUtils.m; sourceTree = "<group>"; };
 		EA139F311CC9D0F600E1E085 /* HYFirstLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYFirstLoginViewController.h; sourceTree = "<group>"; };
 		EA139F321CC9D0F600E1E085 /* HYFirstLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYFirstLoginViewController.m; sourceTree = "<group>"; };
-		EA412BD71CCA2F1D009C071B /* HYUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYUserInfo.h; sourceTree = "<group>"; };
-		EA412BD81CCA2F1D009C071B /* HYUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYUserInfo.m; sourceTree = "<group>"; };
+		EA412BD71CCA2F1D009C071B /* HYLoginInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYLoginInfo.h; sourceTree = "<group>"; };
+		EA412BD81CCA2F1D009C071B /* HYLoginInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYLoginInfo.m; sourceTree = "<group>"; };
 		EA412BDC1CCA64B8009C071B /* HYMyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYMyViewController.h; sourceTree = "<group>"; };
 		EA412BDD1CCA64B8009C071B /* HYMyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYMyViewController.m; sourceTree = "<group>"; };
 		EA412BE61CCA65B0009C071B /* HYContactsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYContactsViewCell.h; sourceTree = "<group>"; };
@@ -495,6 +498,12 @@
 		EAC05BD21CC52E3F00ABA3C5 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		EAC05BD31CC52E3F00ABA3C5 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		EAC05BD41CC52E3F00ABA3C5 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		EAC198861CCB8C3900A45C1A /* MGSwipeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeButton.h; sourceTree = "<group>"; };
+		EAC198871CCB8C3900A45C1A /* MGSwipeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeButton.m; sourceTree = "<group>"; };
+		EAC198881CCB8C3900A45C1A /* MGSwipeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeTableCell.h; sourceTree = "<group>"; };
+		EAC198891CCB8C3900A45C1A /* MGSwipeTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeTableCell.m; sourceTree = "<group>"; };
+		EACED1651CCBD0E300BA4064 /* HYDatabaseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYDatabaseHandler.h; sourceTree = "<group>"; };
+		EACED1661CCBD0E300BA4064 /* HYDatabaseHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYDatabaseHandler.m; sourceTree = "<group>"; };
 		EAD7BED41CC539F30089873C /* amrFileCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amrFileCodec.h; sourceTree = "<group>"; };
 		EAD7BED51CC539F30089873C /* amrFileCodec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = amrFileCodec.mm; sourceTree = "<group>"; };
 		EAD7BED61CC539F30089873C /* dec_if.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dec_if.h; sourceTree = "<group>"; };
@@ -912,8 +921,8 @@
 		EA412BD41CCA2E35009C071B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				EA412BD71CCA2F1D009C071B /* HYUserInfo.h */,
-				EA412BD81CCA2F1D009C071B /* HYUserInfo.m */,
+				EA412BD71CCA2F1D009C071B /* HYLoginInfo.h */,
+				EA412BD81CCA2F1D009C071B /* HYLoginInfo.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -985,6 +994,8 @@
 		EA5EF0501CC7348A00FE5654 /* Uitls */ = {
 			isa = PBXGroup;
 			children = (
+				EACED1651CCBD0E300BA4064 /* HYDatabaseHandler.h */,
+				EACED1661CCBD0E300BA4064 /* HYDatabaseHandler.m */,
 				EA5EF0511CC7364500FE5654 /* HYXMPPManager.h */,
 				EA5EF0521CC7364600FE5654 /* HYXMPPManager.m */,
 				EA0F22731CC7BEE9007AB887 /* HYUtils.h */,
@@ -1474,6 +1485,17 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
+		EAC198851CCB8C3900A45C1A /* MGSwipeTableCell */ = {
+			isa = PBXGroup;
+			children = (
+				EAC198881CCB8C3900A45C1A /* MGSwipeTableCell.h */,
+				EAC198891CCB8C3900A45C1A /* MGSwipeTableCell.m */,
+				EAC198861CCB8C3900A45C1A /* MGSwipeButton.h */,
+				EAC198871CCB8C3900A45C1A /* MGSwipeButton.m */,
+			);
+			path = MGSwipeTableCell;
+			sourceTree = "<group>";
+		};
 		EAD7BED31CC539F30089873C /* AudioCoder */ = {
 			isa = PBXGroup;
 			children = (
@@ -1659,6 +1681,7 @@
 		EADD175D1C9EDCFF00E22D2B /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				EAC198851CCB8C3900A45C1A /* MGSwipeTableCell */,
 				EAC05B5C1CC5297C00ABA3C5 /* ZYChat */,
 				EAC05B581CC5236300ABA3C5 /* Base64 */,
 				EAC05ACB1CC50B7900ABA3C5 /* YYModel */,
@@ -2765,6 +2788,7 @@
 				EADD1D061C9EE1D300E22D2B /* NSData+XMPP.m in Sources */,
 				EAC05B1A1CC50B7900ABA3C5 /* YYMemoryCache.m in Sources */,
 				EAC05B891CC5297C00ABA3C5 /* GJCFFileDownloadTask.m in Sources */,
+				EAC1988B1CCB8C3900A45C1A /* MGSwipeTableCell.m in Sources */,
 				EADD1D301C9EE1D300E22D2B /* XMPPRoomMessageHybridCoreDataStorageObject.m in Sources */,
 				EAC05B061CC50B7900ABA3C5 /* MJRefreshHeader.m in Sources */,
 				EADD1D6E1C9EE1D300E22D2B /* XMPPMessage+XEP_0224.m in Sources */,
@@ -2885,6 +2909,7 @@
 				EAC05BD71CC52E3F00ABA3C5 /* AFHTTPSessionManager.m in Sources */,
 				EAC05B921CC5297C00ABA3C5 /* GJCFFileDownloadTask+GJCFAudioDownload.m in Sources */,
 				EAD7BEE01CC539F30089873C /* amrFileCodec.mm in Sources */,
+				EACED1671CCBD0E300BA4064 /* HYDatabaseHandler.m in Sources */,
 				EADD1D231C9EE1D300E22D2B /* XMPPSystemInputActivityMonitor.m in Sources */,
 				EADD1D601C9EE1D300E22D2B /* XMPPPresence+XEP_0172.m in Sources */,
 				EADD1D011C9EE1D300E22D2B /* XMPPDigestMD5Authentication.m in Sources */,
@@ -2936,7 +2961,7 @@
 				EADD1D251C9EE1D300E22D2B /* XMPPIQ+JabberRPCResonse.m in Sources */,
 				EAC05B0C1CC50B7900ABA3C5 /* MJRefreshBackStateFooter.m in Sources */,
 				EAC05B0B1CC50B7900ABA3C5 /* MJRefreshBackNormalFooter.m in Sources */,
-				EA412BDA1CCA2F1D009C071B /* HYUserInfo.m in Sources */,
+				EA412BDA1CCA2F1D009C071B /* HYLoginInfo.m in Sources */,
 				EADD1D481C9EE1D300E22D2B /* XMPPPubSub.m in Sources */,
 				EADD1D391C9EE1D300E22D2B /* XMPPvCardAvatarCoreDataStorageObject.m in Sources */,
 				EAC05B081CC50B7900ABA3C5 /* MJRefreshAutoNormalFooter.m in Sources */,
@@ -2991,6 +3016,7 @@
 				EADD17471C9ED67D00E22D2B /* HYLoginViewController.m in Sources */,
 				EAC05B271CC50B7900ABA3C5 /* YYWebImageManager.m in Sources */,
 				EADD1D751C9EE1D300E22D2B /* DDList.m in Sources */,
+				EAC1988A1CCB8C3900A45C1A /* MGSwipeButton.m in Sources */,
 				EADD1D3A1C9EE1D300E22D2B /* XMPPvCardCoreDataStorage.m in Sources */,
 				EADD1D031C9EE1D300E22D2B /* XMPPSCRAMSHA1Authentication.m in Sources */,
 				EADD1D411C9EE1D300E22D2B /* XMPPvCardTempEmail.m in Sources */,

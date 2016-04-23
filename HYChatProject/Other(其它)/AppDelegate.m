@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "HYUtils.h"
-#import "HYUserInfo.h"
 
 @interface AppDelegate ()
 
