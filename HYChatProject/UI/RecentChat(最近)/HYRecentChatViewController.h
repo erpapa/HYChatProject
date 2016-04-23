@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HYRecentContactsViewController : UIViewController
+@interface HYRecentChatViewController : UIViewController
 
 @end

@@ -512,7 +512,7 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
                 [subview removeFromSuperview];
             }
         }
-        
+#if 0
         if(SVProgressHUDBackgroundColor != [UIColor clearColor]){
             // Create blur effect
             UIBlurEffectStyle blurEffectStyle = self.style == SVProgressHUDStyleDark ? UIBlurEffectStyleDark : UIBlurEffectStyleLight;
@@ -530,6 +530,7 @@ static const CGFloat SVProgressHUDUndefinedProgress = -1;
             
             [self.hudView insertSubview:blurEffectView atIndex:0];
         }
+#endif
     }
 #endif
 }

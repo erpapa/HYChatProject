@@ -1,43 +1,44 @@
 //
-//  HYLoginViewController.m
+//  HYRegisterViewController.m
 //  HYChatProject
 //
-//  Created by erpapa on 16/3/20.
+//  Created by erpapa on 16/4/21.
 //  Copyright © 2016年 erpapa. All rights reserved.
 //
 
-#import "HYLoginViewController.h"
-#import "HYUserInfo.h"
+#import "HYRegisterViewController.h"
 #import "HYXMPPManager.h"
+#import "HYUserInfo.h"
 #import "HYUtils.h"
 
-@interface HYLoginViewController ()<UITextFieldDelegate>
-@property (weak, nonatomic) IBOutlet UIButton *cancelBtn;
+@interface HYRegisterViewController ()<UITextFieldDelegate>
+
 @property (weak, nonatomic) IBOutlet UITextField *userTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
-@property (weak, nonatomic) IBOutlet UIButton *loginBtn;
-
+@property (weak, nonatomic) IBOutlet UIButton *registerButton;
 @end
 
-@implementation HYLoginViewController
-
-+ (instancetype)loginViewController{
+@implementation HYRegisterViewController
+/**
+ *  从storyBord加载
+ */
++ (instancetype)registerViewController{
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-    HYLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"loginVC"];
-    return loginVC;
+    HYRegisterViewController *registerVC = [storyboard instantiateViewControllerWithIdentifier:@"registerVC"];
+    return registerVC;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // Do any additional setup after loading the view.
     // 设置圆角
-    self.loginBtn.layer.cornerRadius = 4;
-    self.loginBtn.layer.masksToBounds = YES;
-    self.loginBtn.enabled = NO;
-    self.loginBtn.alpha = 0.8;
+    self.registerButton.layer.cornerRadius = 4;
+    self.registerButton.layer.masksToBounds = YES;
+    self.registerButton.enabled = NO;
+    self.registerButton.alpha = 0.8;
     self.userTextField.delegate = self;
     self.passwordTextField.delegate = self;
 }
-
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -57,12 +58,12 @@
 {
     NSString *userStr = [self.userTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString *pwdStr = [self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if (userStr.length && pwdStr.length) {
-        self.loginBtn.enabled = YES;
-        self.loginBtn.alpha = 1.0;
+    if (userStr.length && pwdStr.length >= 6) {
+        self.registerButton.enabled = YES;
+        self.registerButton.alpha = 1.0;
     } else {
-        self.loginBtn.enabled = NO;
-        self.loginBtn.alpha = 0.8;
+        self.registerButton.enabled = NO;
+        self.registerButton.alpha = 0.8;
     }
     return YES;
 }
@@ -72,22 +73,22 @@
     if (textField == self.userTextField) { //next
         [self.passwordTextField becomeFirstResponder];
     } else { // done
-        [self loginClick:nil];
+        [self registerClick:nil];
     }
     return YES;
 }
+
 - (IBAction)cancelClick:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - 登录
-- (IBAction)loginClick:(UIButton *)sender {
+- (IBAction)registerClick:(UIButton *)sender {
     [self.view endEditing:YES];
     HYUserInfo *userInfo = [HYUserInfo sharedUserInfo];
     // 删除两端空格
     userInfo.user = [self.userTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     userInfo.password = [self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    userInfo.registerMark = NO; // 非注册
+    userInfo.registerMark = YES; // 非注册
     __weak typeof(self) weakSelf = self;
     [[HYXMPPManager sharedManager] xmppUserLogin:^(HYXMPPConnectStatus status) {
         [weakSelf handleResultType:status];
@@ -118,15 +119,15 @@
                 [HYUtils alertWithErrorMsg:@"网络连接超时"];
                 break;
             }
-            case HYXMPPConnectStatusAuthSuccess:
+            case HYXMPPConnectStatusRegisterSuccess:
             {
-                [HYUtils clearWaitingMsg]; // 隐藏
-                [self enterMainPage];
+                [HYUtils alertWithSuccessMsg:@"注册成功!"];
+                [self dismissViewControllerAnimated:YES completion:nil];
                 break;
             }
-            case HYXMPPConnectStatusAuthFailure:
+            case HYXMPPConnectStatusRegisterFailure:
             {
-                [HYUtils alertWithTitle:@"用户名或者密码不正确"];
+                [HYUtils alertWithTitle:@"注册失败!"];
                 break;
             }
             default:{
@@ -138,15 +139,6 @@
     
 }
 
-- (void)enterMainPage{
-    // 更改用户的登录状态为YES
-    [HYUserInfo sharedUserInfo].logon = YES;
-    // 把用户登录成功的数据，保存到沙盒
-    [[HYUserInfo sharedUserInfo] saveUserInfoToSanbox];
-    // 登录成功来到主界面
-    [HYUtils initRootViewController];
-}
-
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
@@ -156,5 +148,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 @end

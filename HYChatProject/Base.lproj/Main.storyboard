@@ -5,10 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
-        <!--联系人-->
+        <!--好友-->
         <scene sceneID="vcD-9z-r3g">
             <objects>
-                <viewController id="pxq-42-GVD" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ContactsVC" id="pxq-42-GVD" customClass="HYContactsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hNk-TG-aGJ"/>
                         <viewControllerLayoutGuide type="bottom" id="Qle-OD-E5f"/>
@@ -18,16 +18,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="联系人" id="BMb-mg-Mrn"/>
+                    <navigationItem key="navigationItem" title="好友" id="BMb-mg-Mrn"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KWG-fJ-9JA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1603" y="153"/>
         </scene>
-        <!--最近联系人-->
+        <!--最近-->
         <scene sceneID="Nq9-5k-Pid">
             <objects>
-                <viewController id="aTy-tr-W8g" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RecentChatVC" id="aTy-tr-W8g" customClass="HYRecentChatViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Boe-Cz-goM"/>
                         <viewControllerLayoutGuide type="bottom" id="Bgb-gh-omL"/>
@@ -37,7 +37,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="最近联系人" id="8Wq-mu-mhu"/>
+                    <navigationItem key="navigationItem" title="最近" id="8Wq-mu-mhu"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g7R-IG-8Zb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -46,7 +46,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="Ala-5I-I9t">
             <objects>
-                <tabBarController id="7HJ-UI-sSO" customClass="HYTabBarController" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabBarVC" id="7HJ-UI-sSO" customClass="HYTabBarController" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="HGO-59-egp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -62,11 +62,11 @@
             </objects>
             <point key="canvasLocation" x="10" y="292"/>
         </scene>
-        <!--消息-->
+        <!--最近-->
         <scene sceneID="uM4-8i-lfS">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="SJs-FX-fkl" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="消息" id="Geu-uh-NTd"/>
+                    <tabBarItem key="tabBarItem" title="最近" id="Geu-uh-NTd"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="w3F-l7-0q1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -81,11 +81,11 @@
             </objects>
             <point key="canvasLocation" x="795" y="-528"/>
         </scene>
-        <!--联系人-->
+        <!--好友-->
         <scene sceneID="hag-oz-7Mq">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4MV-Zs-oBB" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="联系人" id="yLo-gO-0be"/>
+                    <tabBarItem key="tabBarItem" title="好友" id="yLo-gO-0be"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="fkF-dB-pI5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -100,10 +100,10 @@
             </objects>
             <point key="canvasLocation" x="795" y="153"/>
         </scene>
-        <!--我的-->
+        <!--我-->
         <scene sceneID="DFF-lL-WrL">
             <objects>
-                <viewController id="1fC-8Y-rZq" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MyVC" id="1fC-8Y-rZq" customClass="HYMyViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JOy-If-HAt"/>
                         <viewControllerLayoutGuide type="bottom" id="UXN-KT-hwF"/>
@@ -113,17 +113,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="我的" id="i9V-iU-zFJ"/>
+                    <navigationItem key="navigationItem" title="我" id="i9V-iU-zFJ"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YyH-eT-B8D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1603" y="794"/>
         </scene>
-        <!--动态-->
+        <!--我-->
         <scene sceneID="yTL-Yd-Kgo">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7n5-L5-Pyq" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="动态" id="c9l-oN-RGi"/>
+                    <tabBarItem key="tabBarItem" title="我" id="c9l-oN-RGi"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="qwV-cC-0kZ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

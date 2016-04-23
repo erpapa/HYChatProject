@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface HYLoginViewController : UIViewController
-
+/**
+ *  从storyBord加载
+ */
++ (instancetype)loginViewController;
 @end

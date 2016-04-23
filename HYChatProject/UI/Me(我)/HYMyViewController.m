@@ -1,18 +1,18 @@
 //
-//  HYContactsViewController.m
+//  HYMyViewController.m
 //  HYChatProject
 //
-//  Created by erpapa on 16/3/20.
+//  Created by erpapa on 16/4/22.
 //  Copyright © 2016年 erpapa. All rights reserved.
 //
 
-#import "HYContactsViewController.h"
+#import "HYMyViewController.h"
 
-@interface HYContactsViewController ()
+@interface HYMyViewController ()
 
 @end
 
-@implementation HYContactsViewController
+@implementation HYMyViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -23,6 +23,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 @end

@@ -12,7 +12,7 @@
 
 #ifdef __OBJC__
 #import "UIImage+SW.h"
-#import "NSString+size.h"
+#import "NSString+SW.h"
 
 // 1.得到系统版本
 #define kSystemVersion [[UIDevice currentDevice].systemVersion floatValue]

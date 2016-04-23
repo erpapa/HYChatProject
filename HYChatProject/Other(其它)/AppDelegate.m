@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "HYUtils.h"
+#import "HYUserInfo.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +19,18 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    // 1.创建窗口
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    // 2.设置rootViewController
+    [HYUtils initRootViewController];
+    // 3.注册应用接收通知
+    if ([[UIDevice currentDevice].systemVersion doubleValue] > 8.0){
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil];
+        [application registerUserNotificationSettings:settings];
+    }
+    // 5.设置keyWindow并显示窗口
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
