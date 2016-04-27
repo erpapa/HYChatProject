@@ -7,7 +7,6 @@
 //
 
 #import "NSString+SW.h"
-#import "XMPPJID.h"
 
 @implementation NSString (SW)
 
@@ -41,7 +40,8 @@
     } else if (minutes < 60) {
         return [NSString stringWithFormat:@"%ld分钟前", (long)minutes];
     } else if (hours < 24 && days == 0) {
-        return [NSString stringWithFormat:@"%ld小时前", (long)hours];
+        [dateFormatter setDateFormat:@"HH:mm"];
+        return [dateFormatter stringFromDate:date];
     } else if (hours < 48 && days == 1) {
         [dateFormatter setDateFormat:@"昨天 HH:mm"];
         return [dateFormatter stringFromDate:date];
@@ -83,7 +83,6 @@
         return [dateFormatter stringFromDate:date];
     }
 }
-
 
 - (NSDate *)dateFromCreateAt:(NSString *)dateStr
 {
@@ -140,8 +139,4 @@
     return [NSString stringWithFormat:@"星期%@",weekName];
 }
 
-- (XMPPJID *)JID
-{
-    return [XMPPJID jidWithUser:self domain:kDomain resource:kResource];
-}
 @end

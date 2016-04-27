@@ -15,19 +15,14 @@
  */
 
 /**
- *  相对布局可以使用
- */
-#import "UIView+GJCFViewFrameUitil.h"
-
-/**
  *  GCD工具
  */
-#import "GJCFDispatchCenterUitil.h"
+//#import "GJCFDispatchCenterUitil.h"
 
 /**
  *  GJCD工具宏定义
  */
-#import "GJCFDispatchMacrocDefine.h"
+//#import "GJCFDispatchMacrocDefine.h"
 
 /**
  *  字符串工具
@@ -40,16 +35,6 @@
 #import "GJCFStringMacrocDefine.h"
 
 /**
- *  系统相关工具
- */
-#import "GJCFSystemUitil.h"
-
-/**
- *  系统相关工具宏定义
- */
-#import "GJCFSystemMacrocDefine.h"
-
-/**
  *  快速存取工具
  */
 #import "GJCFQuickCacheUitil.h"
@@ -58,11 +43,6 @@
  *  快速存取工具宏定义
  */
 #import "GJCFQuickCacheMacrocDefine.h"
-
-/**
- *  UI相关工具宏
- */
-#import "GJCFQuickUIMacrocDefine.h"
 
 /**
  *  NSDate相关工具宏

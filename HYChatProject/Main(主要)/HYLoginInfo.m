@@ -72,4 +72,9 @@ static HYLoginInfo *instance;
     }
 }
 
+- (XMPPJID *)jid
+{
+    return [XMPPJID jidWithUser:_user domain:kDomain resource:kResource];
+}
+
 @end

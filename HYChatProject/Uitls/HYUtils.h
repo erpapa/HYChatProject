@@ -31,4 +31,23 @@
 + (NSString *)stringFromColor:(UIColor*)aColor;
 + (UIColor *)colorFromString:(NSString*)aString;
 
+/**
+ *  路径
+ */
++ (NSString *)localPath:(NSString *)key;
++ (NSString *)bundlePath:(NSString *)fileName;
+
+/**
+ *  badgeValue
+ */
++ (NSString *)stringFromUnreadCount:(int)count;
+/**
+ *  在线、忙碌、离线
+ */
++ (NSString *)stringFromSectionNum:(NSInteger)sectionNum;
+/**
+ *  时间
+ */
++ (NSString *)timeStringSince1970:(double)secs;
+
 @end

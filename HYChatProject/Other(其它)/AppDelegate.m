@@ -26,6 +26,7 @@
     if ([[UIDevice currentDevice].systemVersion doubleValue] > 8.0){
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil];
         [application registerUserNotificationSettings:settings];
+        [application registerForRemoteNotifications];
     }
     // 5.设置keyWindow并显示窗口
     [self.window makeKeyAndVisible];

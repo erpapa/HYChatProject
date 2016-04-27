@@ -9,6 +9,7 @@
 #import "HYUtils.h"
 #import "HYLoginInfo.h"
 #import "HYXMPPManager.h"
+#import "NSFileManager+SW.h"
 #import "SVProgressHUD.h"
 #import "HYFirstLoginViewController.h"
 #import "HYCurrentLoginViewController.h"
@@ -134,4 +135,67 @@
     return color;
 }
 
+/**
+ *  路径
+ */
++ (NSString *)localPath:(NSString *)key
+{
+    return [[NSFileManager defaultManager] localPath:key];
+}
+
++ (NSString *)bundlePath:(NSString *)fileName
+{
+    return [[NSFileManager defaultManager] bundlePath:fileName];
+}
+
+/**
+ *  badgeValue
+ */
++ (NSString *)stringFromUnreadCount:(int)count
+{
+    NSString *badgeValue = nil;
+    if (count == 0) {
+    } else if (count > 99) {
+        badgeValue = @"99+";
+    } else {
+        badgeValue = [NSString stringWithFormat:@"%d",count];
+    }
+    return badgeValue;
+}
+/**
+ *  在线、忙碌、离线
+ */
++ (NSString *)stringFromSectionNum:(NSInteger)sectionNum
+{
+    NSString *sectionStr = @"[在线]";
+    switch (sectionNum) {
+        case 0:{
+            sectionStr = @"[在线]";
+            break;
+        }
+        case 1:{
+            sectionStr = @"[忙碌]"; // 隐身/离开
+            break;
+        }
+        case 2:{
+            sectionStr = @"[离线]";
+            break;
+        }
+        default:
+            break;
+    }
+    return sectionStr;
+}
+
+/**
+ *  时间
+ */
++ (NSString *)timeStringSince1970:(double)secs
+{
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:secs];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *dateStr = [formatter stringFromDate:date];
+    return [dateStr timeStringForExpress1];
+}
 @end

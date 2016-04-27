@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "MGSwipeTableCell.h"
-
+#define kContactsViewCellHeight 54.0
+@class HYContactsModel;
 @interface HYContactsViewCell : MGSwipeTableCell
-
+@property (nonatomic, strong) HYContactsModel *model;
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 
 @end

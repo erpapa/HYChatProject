@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "MGSwipeTableCell.h"
 
+#define kRecentChatViewCellHeight 66.0
+@class HYRecentChatModel;
 @interface HYRecentChatViewCell : MGSwipeTableCell
 
+@property (nonatomic, strong) HYRecentChatModel *chatModel;
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 
 @end

@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
-        <!--好友-->
+        <!--通讯录-->
         <scene sceneID="vcD-9z-r3g">
             <objects>
                 <viewController storyboardIdentifier="ContactsVC" id="pxq-42-GVD" customClass="HYContactsViewController" sceneMemberID="viewController">
@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="好友" id="BMb-mg-Mrn"/>
+                    <navigationItem key="navigationItem" title="通讯录" id="BMb-mg-Mrn"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KWG-fJ-9JA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -81,11 +81,11 @@
             </objects>
             <point key="canvasLocation" x="795" y="-528"/>
         </scene>
-        <!--好友-->
+        <!--通讯录-->
         <scene sceneID="hag-oz-7Mq">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4MV-Zs-oBB" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="好友" id="yLo-gO-0be"/>
+                    <tabBarItem key="tabBarItem" title="通讯录" id="yLo-gO-0be"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="fkF-dB-pI5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

@@ -21,10 +21,11 @@ typedef NS_ENUM(NSInteger, HYXMPPConnectStatus) {
 extern NSString *const HYConnectStatusDidChangeNotification;
 typedef void (^HYXMPPConnectStatusBlock)(HYXMPPConnectStatus status);// XMPP登录请求结果的block
 typedef void(^HYvCardBlock)(XMPPvCardTemp *vCardTemp);//返回名片信息
+typedef void(^HYAvatarBlock)(NSData *avatar);//返回头像信息
 typedef void(^HYSuccessBlock)(BOOL success);//操作成功/失败
 
 @interface HYXMPPManager : NSObject
-@property (nonatomic, strong,readonly)XMPPStream *xmppStream; // 最主要的xmpp流
+@property (nonatomic, strong,readonly)XMPPStream *xmppStream; // xmpp基础服务类
 @property (nonatomic, assign,readonly)HYXMPPConnectStatus status; // 连接状态
 
 
@@ -56,5 +57,12 @@ typedef void(^HYSuccessBlock)(BOOL success);//操作成功/失败
 /**
  *  获得好友名片
  */
-- (void)getvCardFromJID:(XMPPJID *)jid vCardBlock:(HYvCardBlock)vCardBlock;
+- (void)getvCardFromJID:(XMPPJID *)jid shouldRefresh:(BOOL)shouldRefresh vCardBlock:(HYvCardBlock)vCardBlock;
+/**
+ *  CoreData
+ */
+- (NSManagedObjectContext *)managedObjectContext_roster;
+- (NSManagedObjectContext *)managedObjectContext_capabilities;
+- (NSManagedObjectContext *)managedObjectContext_messageArchiving;
+- (NSManagedObjectContext *)managedObjectContext_room;
 @end

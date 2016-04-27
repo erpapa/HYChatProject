@@ -23,7 +23,7 @@ static NSString *  GJCFAudioFileCacheSubTempEncodeFileDirectory = @"GJCFAudioFil
 {
     static GJCFCachePathManager *_pathManager = nil;
     static dispatch_once_t onceToken;
-    GJCFDispatchOnce(onceToken, ^{
+    dispatch_once(&onceToken, ^{
         _pathManager = [[self alloc]init];
     });
     return _pathManager;

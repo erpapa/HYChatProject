@@ -13,6 +13,8 @@
 #ifdef __OBJC__
 #import "UIImage+SW.h"
 #import "NSString+SW.h"
+#import "HYConstant.h"
+#import "XMPPJID.h"
 
 // 1.得到系统版本
 #define kSystemVersion [[UIDevice currentDevice].systemVersion floatValue]
@@ -43,5 +45,6 @@
 // 7.强引用、弱引用
 
 // 8.发送通知、监听通知、移除通知
+#define HYNotification [NSNotificationCenter defaultCenter]
 
 #endif /* HYChat_Prefix_pch */

@@ -13,6 +13,8 @@
 #define kHostName @"hostName"
 #define kHostPort @"hostPort"
 #define kLogon @"logon"
+#define kDomain @"erpapa.cn" // 域名
+#define kResource @"iPhone" //resource
 
 @interface HYLoginInfo : NSObject
 @property (nonatomic, strong) NSString *user;//用户名
@@ -20,6 +22,7 @@
 @property (nonatomic, copy) NSString *hostName;//服务器ip
 @property (nonatomic, assign) NSInteger hostPort;//端口
 @property (nonatomic, assign) BOOL logon;// 未注销(在线)
+@property (strong, nonatomic) XMPPJID *jid;
 /**
  *  单例
  */
