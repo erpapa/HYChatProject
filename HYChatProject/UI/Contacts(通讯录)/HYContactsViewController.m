@@ -9,12 +9,15 @@
 #import <CoreData/CoreData.h>
 #import "HYContactsViewController.h"
 #import "HYContactsViewCell.h"
+#import "HYContactsHeaderView.h"
 #import "HYContacts.h"
 #import "HYContactsModel.h"
+#import "HYSearchBar.h"
 #import "HYXMPPManager.h"
 #import "HYLoginInfo.h"
+#import "HYSingleChatViewController.h"
 
-@interface HYContactsViewController ()<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
+@interface HYContactsViewController ()<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate,HYSearchBarDelegate>
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray *dataSource;
 @property (nonatomic,strong) NSFetchedResultsController *resultController;//查询结果集合
@@ -26,10 +29,80 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor whiteColor];
     // 1.tableView
+    self.tableView.tableHeaderView = [self tableHeaderView];
     [self.view addSubview:self.tableView];
-    // 2.加载好友列表
-    [self loadContacts];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (self.dataSource.count == 0) {
+        // 加载好友列表
+        [self loadContacts];
+        [self.tableView reloadData]; // 刷新数据
+    }
+}
+
+- (UIView *)tableHeaderView
+{
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 44 + kContactsViewCellHeight * 2)];
+    headerView.backgroundColor = [UIColor whiteColor];
+    // 1.搜索
+    HYSearchBar *searchBar = [[HYSearchBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 44)];
+    searchBar.delegate = self;
+    [headerView addSubview:searchBar];
+    
+    CGFloat margin = 6.0;
+    CGFloat panding = 8.0;
+    CGFloat iconViewW = kContactsViewCellHeight - margin * 2;
+    // 2.新朋友
+    UIImageView *iconView0 = [[UIImageView alloc] initWithFrame:CGRectMake(panding, CGRectGetMaxY(searchBar.frame) + margin, iconViewW, iconViewW)];
+    iconView0.layer.cornerRadius = iconViewW * 0.5;
+    iconView0.layer.masksToBounds = YES;
+    [headerView addSubview:iconView0];
+    
+    CGFloat labelX = CGRectGetMaxX(iconView0.frame) + panding;
+    UILabel *label0 = [[UILabel alloc] initWithFrame:CGRectMake(labelX, CGRectGetMaxY(searchBar.frame), kScreenW - labelX, kContactsViewCellHeight)];
+    label0.font = [UIFont systemFontOfSize:18];
+    label0.text = @"新朋友";
+    [headerView addSubview:label0];
+    
+    UIButton *button0 = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetMinY(label0.frame), kScreenW, kContactsViewCellHeight)];
+    button0.tag = 0;
+    [button0 setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:200/255.0 green:200/255.0 blue:212/255.0 alpha:0.2f]] forState:UIControlStateHighlighted];
+    [button0 addTarget:self action:@selector(headerButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [headerView addSubview:button0];
+    
+    UIView *line0 = [[UIView alloc] initWithFrame:CGRectMake(labelX, CGRectGetMaxY(label0.frame) - 1, kScreenW - labelX, 1)];
+    line0.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:244/255.0 alpha:1.0f];
+    [headerView addSubview:line0];
+    
+    // 3.群聊
+    UIImageView *iconView1 = [[UIImageView alloc] initWithFrame:CGRectMake(panding, CGRectGetMaxY(line0.frame) + margin, iconViewW, iconViewW)];
+    iconView1.layer.cornerRadius = iconViewW * 0.5;
+    iconView1.layer.masksToBounds = YES;
+    [headerView addSubview:iconView1];
+    
+    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(labelX, CGRectGetMaxY(line0.frame), kScreenW - labelX, kContactsViewCellHeight)];
+    label1.font = [UIFont systemFontOfSize:18];
+    label1.text = @"群聊";
+    [headerView addSubview:label1];
+    
+    UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetMinY(label1.frame), kScreenW, kContactsViewCellHeight)];
+    button1.tag = 1;
+    [button1 setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:200/255.0 green:200/255.0 blue:212/255.0 alpha:0.2f]] forState:UIControlStateHighlighted];
+    [button1 addTarget:self action:@selector(headerButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [headerView addSubview:button1];
+    
+    return headerView;
+}
+
+#pragma mark - 搜索 - HYSearchBarDelegate
+- (void)searchBarDidClicked:(HYSearchBar *)searchBar
+{
+    
 }
 
 #pragma mark - UITableViewDatasource
@@ -54,15 +127,32 @@
     cell.model = model;
     return cell;
 }
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+
+#pragma mark - section头部
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    HYContacts *contact = [self.dataSource objectAtIndex:section];
-    return contact.title;
+    static NSString *headerIdentifier = @"headerIdentifier";
+    HYContactsHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:headerIdentifier];
+    if (headerView == nil) {
+        headerView = [[HYContactsHeaderView alloc] initWithReuseIdentifier:headerIdentifier];
+    }
+    HYContacts *contacts = [self.dataSource objectAtIndex:section];
+    headerView.title = contacts.title;
+    return headerView;
 }
 
-/**
- *  返回索引数组
- */
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return kContactsHeaderViewHeight;
+}
+
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//{
+//    HYContacts *contact = [self.dataSource objectAtIndex:section];
+//    return contact.title;
+//}
+
+#pragma mark - 返回索引数组
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
     NSMutableArray *array = [NSMutableArray array];
@@ -100,7 +190,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    
+    HYContacts *contacts = [self.dataSource objectAtIndex:indexPath.section];
+    HYContactsModel *model = [contacts.infoArray objectAtIndex:indexPath.row];
+    HYSingleChatViewController *singleVC = [[HYSingleChatViewController alloc] init];
+    singleVC.chatJid = model.jid;
+    singleVC.hidesBottomBarWhenPushed = YES; // 隐藏tabBar
+    [self.navigationController pushViewController:singleVC animated:YES];
 }
 
 
@@ -124,10 +219,13 @@
 {
     //1.上下文   XMPPRoster.xcdatamodel
     NSManagedObjectContext *context = [[HYXMPPManager sharedInstance] managedObjectContext_roster];
+    if (context == nil) { // 防止xmppStream没有连接会崩溃
+        return;
+    }
     //2.Fetch请求
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"XMPPUserCoreDataStorageObject"];
 //    //3.排序和过滤
-    NSPredicate *pre=[NSPredicate predicateWithFormat:@"streamBareJidStr=%@",[HYLoginInfo sharedInstance].jid.bare];
+    NSPredicate *pre=[NSPredicate predicateWithFormat:@"streamBareJidStr == %@",[HYLoginInfo sharedInstance].jid.bare];
     fetchRequest.predicate=pre;
     //
     NSSortDescriptor *sort=[NSSortDescriptor sortDescriptorWithKey:@"displayName" ascending:YES];
@@ -141,6 +239,7 @@
     if(![_resultController performFetch:&error]){
         HYLog(@"%s---%@",__func__,error);
     } else {
+        [self.dataSource removeAllObjects];
         [_resultController.fetchedObjects enumerateObjectsUsingBlock:^(XMPPUserCoreDataStorageObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
             [self addContacsObject:object];
         }];
@@ -216,26 +315,58 @@
 /**
  *  数据更新
  */
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(nullable NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(nullable NSIndexPath *)newIndexPath
 {
-    XMPPUserCoreDataStorageObject *object = [controller.fetchedObjects lastObject];
-    for (NSInteger i = 0; i < self.dataSource.count; i++) {// 查找当前联系人，如果找到就更新
-        HYContacts *contact = [self.dataSource objectAtIndex:i];
-        for (NSInteger j = 0; j < contact.infoArray.count; j++) {
-            HYContactsModel *model = [contact.infoArray objectAtIndex:j];
-            if ([model.jid.bare isEqualToString:object.jid.bare]) {
-                HYContactsModel *currentModel = [self modelWithStorageObject:object];
-                [contact.infoArray removeObjectAtIndex:j];
-                [contact.infoArray insertObject:currentModel atIndex:j];
-                [self.tableView reloadData];
-                return;
-            }
+    XMPPUserCoreDataStorageObject *object = anObject; // 当前改变的object
+    switch (type) {
+        case NSFetchedResultsChangeInsert:{
+            // 插入数据
+            [self addContacsObject:object];
+            [self sortWithContacts];
+            [self.tableView reloadData];
+            break;
         }
+        case NSFetchedResultsChangeDelete:{
+            // 删除数据
+            for (NSInteger i = 0; i < self.dataSource.count; i++) {// 查找当前联系人
+                HYContacts *contact = [self.dataSource objectAtIndex:i];
+                for (NSInteger j = 0; j < contact.infoArray.count; j++) {
+                    HYContactsModel *model = [contact.infoArray objectAtIndex:j];
+                    if ([model.jid.bare isEqualToString:object.jid.bare]) {
+                        [contact.infoArray removeObjectAtIndex:j];
+                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
+                        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                        return;
+                    }
+                }
+            }
+            break;
+        }
+        case NSFetchedResultsChangeMove:{
+            
+            break;
+        }
+        case NSFetchedResultsChangeUpdate:{
+            // 更新当前联系人
+            for (NSInteger i = 0; i < self.dataSource.count; i++) {
+                HYContacts *contact = [self.dataSource objectAtIndex:i];
+                for (NSInteger j = 0; j < contact.infoArray.count; j++) {
+                    HYContactsModel *model = [contact.infoArray objectAtIndex:j];
+                    if ([model.jid.bare isEqualToString:object.jid.bare]) {
+                        HYContactsModel *currentModel = [self modelWithStorageObject:object];
+                        [contact.infoArray removeObjectAtIndex:j];
+                        [contact.infoArray insertObject:currentModel atIndex:j];
+                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
+                        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                        return;
+                    }
+                }
+            }
+            break;
+        }
+        default:
+            break;
     }
-    // 如果没有找到，就插入数据
-    [self addContacsObject:object];
-    [self sortWithContacts];
-    [self.tableView reloadData];
 }
 
 - (HYContactsModel *)modelWithStorageObject:(XMPPUserCoreDataStorageObject *)object
@@ -256,6 +387,15 @@
     contactsModel.sectionNum = [object.sectionNum integerValue];
     contactsModel.isGroup = NO;
     return contactsModel;
+}
+
+- (void)headerButtonClick:(UIButton *)sender
+{
+    if (sender.tag == 0) {
+        
+    } else if (sender.tag == 1) {
+        
+    }
 }
 
 #pragma mark - 懒加载

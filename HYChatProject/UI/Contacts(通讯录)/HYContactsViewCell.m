@@ -47,8 +47,9 @@
 
 - (void)initSubviews
 {
-    CGFloat margin = 6.0;
-    CGFloat iconViewX = margin;
+    CGFloat margin = 6.0; // 上下间隔
+    CGFloat panding = 8.0; // 左右间隔
+    CGFloat iconViewX = panding;
     CGFloat iconViewY = margin;
     CGFloat iconViewW = kContactsViewCellHeight - iconViewY * 2;
     // 1.头像
@@ -65,17 +66,17 @@
     self.netView = [[UIImageView alloc] initWithFrame:CGRectMake(netViewX, netViewY, netViewlH, netViewlH)];
     [self.contentView addSubview:self.netView];
     
-    // 2.昵称
+    // 3.昵称
     CGFloat nameLabelX = CGRectGetMaxX(self.iconView.frame) + iconViewX;
     CGFloat nameLabelY = iconViewY;
     CGFloat nameLabelW = CGRectGetMinX(self.netView.frame) - nameLabelX;
     CGFloat nameLabelH = netViewlH;
     self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH)];
     self.nameLabel.textColor = [UIColor blackColor];
-    self.nameLabel.font = [UIFont systemFontOfSize:20];
+    self.nameLabel.font = [UIFont systemFontOfSize:18];
     [self.contentView addSubview:self.nameLabel];
     
-    // 3.[状态] 签名
+    // 4.[状态] 签名
     CGFloat detailLabelX = nameLabelX;
     CGFloat detailLabelY = CGRectGetMaxY(self.nameLabel.frame);
     CGFloat detailLabelW = nameLabelW + 20;
@@ -85,7 +86,7 @@
     self.detailLabel.font = [UIFont systemFontOfSize:14];
     [self.contentView addSubview:self.detailLabel];
     
-    // 4.分割线
+    // 5.分割线
     self.line = [[UIView alloc] initWithFrame:CGRectMake(nameLabelX, kContactsViewCellHeight - 1, kScreenW - nameLabelX, 1)];
     self.line.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:244/255.0 alpha:1.0f];
     [self.contentView addSubview:self.line];

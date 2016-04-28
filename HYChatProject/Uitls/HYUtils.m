@@ -27,7 +27,7 @@
         // 2.判断用户的登录状态,logon == YES 直接来到主界面
         if([HYLoginInfo sharedInstance].logon){
             // 2.1. 设置根控制器
-            [UIApplication sharedApplication].delegate.window.rootViewController = [HYTabBarController tabBarController];
+            [UIApplication sharedApplication].delegate.window.rootViewController = [[HYTabBarController alloc] init];
         }else{
             [UIApplication sharedApplication].delegate.window.rootViewController = [HYCurrentLoginViewController currentLoginViewController];
         }

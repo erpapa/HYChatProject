@@ -49,8 +49,9 @@
 
 - (void)initSubviews
 {
-    CGFloat margin = 8.0;
-    CGFloat iconViewX = margin;
+    CGFloat margin = 6.0; // 上下间隔
+    CGFloat panding = 10.0; // 左右间隔
+    CGFloat iconViewX = panding;
     CGFloat iconViewY = margin;
     CGFloat iconViewW = kRecentChatViewCellHeight - iconViewY * 2;
     // 1.头像
@@ -63,7 +64,7 @@
     // 2.日期
     CGFloat timeLabelW = 60;
     CGFloat timeLabelH = iconViewW * 0.5;
-    CGFloat timeLabelX = kScreenW - timeLabelW - margin;
+    CGFloat timeLabelX = kScreenW - timeLabelW - panding;
     CGFloat timeLabelY = iconViewY;
     self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(timeLabelX, timeLabelY, timeLabelW, timeLabelH)];
     self.timeLabel.textColor = [UIColor grayColor];
@@ -93,7 +94,7 @@
     
     // 4.未读数
     CGFloat badgeViewW = 20;
-    CGFloat badgeViewX = kScreenW - badgeViewW - margin;
+    CGFloat badgeViewX = kScreenW - badgeViewW - panding;
     CGFloat badgeViewY = detailLabelY + (detailLabelH - badgeViewW) * 0.5;
     
     self.badgeView = [[UIImageView alloc] initWithFrame:CGRectMake(badgeViewX, badgeViewY, badgeViewW, badgeViewW)];

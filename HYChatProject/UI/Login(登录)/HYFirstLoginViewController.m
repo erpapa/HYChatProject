@@ -38,16 +38,6 @@
     self.registerBtn.layer.masksToBounds = YES;
 }
 
-- (IBAction)loginClick:(UIButton *)sender {
-    HYLoginViewController *loginVC = [HYLoginViewController loginViewController];
-    [self presentViewController:loginVC animated:YES completion:nil];
-}
-
-- (IBAction)registerClick:(UIButton *)sender {
-    HYRegisterViewController *registerVC = [HYRegisterViewController registerViewController];
-    [self presentViewController:registerVC animated:YES completion:nil];
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

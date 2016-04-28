@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface HYSingleChatViewController : UIViewController
-
+@property (nonatomic, strong) XMPPJID *chatJid; // 当前联系人
 @end

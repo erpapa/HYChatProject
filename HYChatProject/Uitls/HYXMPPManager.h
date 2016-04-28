@@ -43,6 +43,10 @@ typedef void(^HYSuccessBlock)(BOOL success);//操作成功/失败
  *  用户注销
  */
 - (void)xmppUserlogout;
+/**
+ *  更改密码
+ */
+- (void)xmppUserChangePassword:(NSString *)password;
 
 /********************* 个人中心 ********************************/
 

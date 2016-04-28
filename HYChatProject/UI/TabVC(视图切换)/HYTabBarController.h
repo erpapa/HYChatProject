@@ -9,8 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface HYTabBarController : UITabBarController
-/**
- *  从storyBord加载
- */
-+ (instancetype)tabBarController;
+
 @end

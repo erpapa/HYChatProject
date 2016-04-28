@@ -110,7 +110,7 @@
     
     UIGraphicsBeginImageContext(self.size);
     
-    CGContextRef context =UIGraphicsGetCurrentContext();
+    CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGRect rect = CGRectMake(0, 0, self.size.width, self.size.height);
     
@@ -126,6 +126,22 @@
     UIGraphicsEndImageContext();
     return newimg;
     
+}
+
++ (UIImage *)circleImageWithColor:(UIColor *)color size:(CGSize)size
+{
+    CGRect rect = CGRectMake(0.0f, 0.0f, size.width, size.height);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextAddEllipseInRect(context, rect);// 在矩形内画圆
+    CGContextClip(context);//裁剪多余的部分
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect); // 矩形内填充颜色
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
 }
 
 /**

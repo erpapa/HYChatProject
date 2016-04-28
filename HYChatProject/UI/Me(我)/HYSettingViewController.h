@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HYMyViewController : UIViewController
+@interface HYSettingViewController : UIViewController
 
 @end

@@ -35,6 +35,7 @@
  *  返回圆形图片
  */
 - (UIImage *)circleImage;
++ (UIImage *)circleImageWithColor:(UIColor *)color size:(CGSize)size;
 /**
  *  旋转图片
  */

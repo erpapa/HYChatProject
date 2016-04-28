@@ -128,10 +128,11 @@ static HYXMPPManager *instance;
     _xmppStream.enableBackgroundingOnSocket = YES;// 允许在后台运行
     
     // 设置代理
-    [_xmppStream addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
-    [_roster addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
-    [_vCardTempModule addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
-    [_vCardAvatarModule addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
+    [_xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()]; // 主线程调用代理
+    [_roster addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    [_vCardTempModule addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    [_vCardAvatarModule addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    [_messageArchiving addDelegate:self delegateQueue:dispatch_get_main_queue()];
 }
 
 - (void)dealloc
@@ -190,8 +191,22 @@ static HYXMPPManager *instance;
     return [_roomStorage mainThreadManagedObjectContext];
 }
 
+// 更改密码
+- (void)xmppUserChangePassword:(NSString *)password
+{
+    NSXMLElement *query =[NSXMLElement elementWithName:@"query" xmlns:@"jabber:iq:register"];
+    NSXMLElement *username =[NSXMLElement elementWithName:@"username" stringValue:[HYLoginInfo sharedInstance].user];
+    NSXMLElement *changePassword =[NSXMLElement elementWithName:@"password" stringValue:password];
+    [query addChild:username];
+    [query addChild:changePassword];
+    
+    XMPPIQ *iq =[XMPPIQ iqWithType:@"set" elementID:[XMPPStream generateUUID] child:query];
+    [iq addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"%@",kDomain]];
+    [_xmppStream sendElement:iq];
+}
+
 // 注销
--(void)xmppUserlogout
+- (void)xmppUserlogout
 {
     // 1." 发送 "离线" 消息"
     XMPPPresence *offline = [XMPPPresence presenceWithType:@"unavailable"];
@@ -208,7 +223,7 @@ static HYXMPPManager *instance;
     [HYUtils initRootViewController];
 }
 // 登录
--(void)xmppUserLogin:(HYXMPPConnectStatusBlock)resultBlock{
+- (void)xmppUserLogin:(HYXMPPConnectStatusBlock)resultBlock{
     self.registerUser = NO;
     // 先把block存起来
     self.connectStatusBlock = resultBlock;
@@ -221,7 +236,7 @@ static HYXMPPManager *instance;
     [self connectToHost];
 }
 // 注册
--(void)xmppUserRegister:(HYXMPPConnectStatusBlock)resultBlock{
+- (void)xmppUserRegister:(HYXMPPConnectStatusBlock)resultBlock{
     self.registerUser = YES;
     // 先把block存起来
     self.connectStatusBlock = resultBlock;
@@ -610,7 +625,7 @@ static HYXMPPManager *instance;
 - (void)xmppvCardTempModule:(XMPPvCardTempModule *)vCardTempModule failedToUpdateMyvCard:(NSXMLElement *)error
 {
     if (self.successBlock) {
-        self.successBlock(YES);
+        self.successBlock(NO);
         self.successBlock = nil;
     }
 }

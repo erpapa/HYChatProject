@@ -201,7 +201,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="huR-hg-Qrt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1494" y="329"/>
+            <point key="canvasLocation" x="1499" y="614"/>
         </scene>
         <!--First Login View Controller-->
         <scene sceneID="0I6-Az-Fob">
@@ -228,7 +228,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="loginClick:" destination="AVg-E5-A2H" eventType="touchUpInside" id="Slq-om-kvs"/>
+                                    <segue destination="Et2-Ad-Qjg" kind="presentation" id="UEa-wn-oTy"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6dL-K0-Ln3">
@@ -241,7 +241,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="registerClick:" destination="AVg-E5-A2H" eventType="touchUpInside" id="clJ-FW-C47"/>
+                                    <segue destination="9gQ-2i-Wsb" kind="presentation" id="DK3-dc-fGv"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -262,7 +262,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ThV-xz-An1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1494" y="1013"/>
+            <point key="canvasLocation" x="34" y="329"/>
         </scene>
         <!--Register View Controller-->
         <scene sceneID="Vzs-Jk-vgs">
@@ -411,7 +411,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5KO-RB-JC8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="845" y="1013"/>
+            <point key="canvasLocation" x="845" y="1103"/>
         </scene>
     </scenes>
 </document>

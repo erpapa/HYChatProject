@@ -9,14 +9,16 @@
 #import "HYRecentChatViewController.h"
 #import "HYRecentChatViewCell.h"
 #import "HYRecentChatModel.h"
+#import "HYSearchBar.h"
 #import "HYXMPPManager.h"
 #import "HYDatabaseHandler+HY.h"
 #import "HYUtils.h"
+#import "HYSingleChatViewController.h"
+#import "HYGroupChatViewController.h"
 
-@interface HYRecentChatViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface HYRecentChatViewController ()<UITableViewDataSource, UITableViewDelegate, HYSearchBarDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
-@property (nonatomic, copy) NSString *chatBare; // 当前联系人
 @property (nonatomic, assign) NSInteger unreadCount; // 消息未读数
 @end
 
@@ -25,7 +27,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor whiteColor];
     // tableView
+    HYSearchBar *searchBar = [[HYSearchBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 44)];
+    searchBar.delegate = self;
+    self.tableView.tableHeaderView = searchBar;
     [self.view addSubview:self.tableView];
     // 加载最近联系人
     [self loadRecentChatDataSource];
@@ -43,6 +49,12 @@
     } else {
         [[HYXMPPManager sharedInstance] xmppUserLogin:nil];
     }
+}
+
+#pragma mark - 搜索 - HYSearchBarDelegate
+- (void)searchBarDidClicked:(HYSearchBar *)searchBar
+{
+    
 }
 
 #pragma mark - UITableViewDatasource
@@ -73,9 +85,15 @@
     chatModel.unreadCount = 0;
     [self updateChatModel:chatModel atIndexPath:indexPath]; // 更新数据
     if (chatModel.isGroup) { // 群聊
-        
+        HYGroupChatViewController *groupVC = [[HYGroupChatViewController alloc] init];
+        groupVC.chatJid = [chatModel.jid bareJID];
+        groupVC.hidesBottomBarWhenPushed = YES; // 隐藏tabBar
+        [self.navigationController pushViewController:groupVC animated:YES];
     }else{
-        
+        HYSingleChatViewController *singleVC = [[HYSingleChatViewController alloc] init];
+        singleVC.chatJid = chatModel.jid;
+        singleVC.hidesBottomBarWhenPushed = YES; // 隐藏tabBar
+        [self.navigationController pushViewController:singleVC animated:YES];
     }
 }
 
@@ -115,32 +133,31 @@
  */
 - (void)receiveMessage:(NSNotification *)noti
 {
-    MAIN(^{
-        HYRecentChatModel *chatModel = noti.object;
-        HYLog(@"%s---%@---%@",__func__,[NSThread currentThread],chatModel.body);
-        NSInteger count = self.dataSource.count;
-        for (NSInteger index = 0; index < count; index++) {
-            HYRecentChatModel *model = [self.dataSource objectAtIndex:index];
-            if (self.chatBare.length && [[model.jid bare] isEqualToString:self.chatBare]) {
-                chatModel.unreadCount = 0;
-                NSIndexPath *currentIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
-                NSIndexPath *toIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                [self moveChatModel:chatModel fromIndexPath:currentIndexPath toIndexPath:toIndexPath]; // 更新数据
-                break;
-            } else if ([[model.jid bare] isEqualToString:[chatModel.jid bare]]) { // 已在列表中
-                self.unreadCount += 1; // 未读数+1
-                NSIndexPath *currentIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
-                NSIndexPath *toIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-                [self moveChatModel:chatModel fromIndexPath:currentIndexPath toIndexPath:toIndexPath]; // 更新数据
-                break;
-            }
-            if (index == count - 1) {
-                self.unreadCount += 1; // 未读数+1
-                [self insertChatModel:chatModel atIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];// 插入数据
-            }
+    HYRecentChatModel *chatModel = noti.object;
+    NSInteger count = self.dataSource.count;
+    NSInteger found = NSNotFound;
+    for (NSInteger index = 0; index < count; index++) {
+        HYRecentChatModel *model = [self.dataSource objectAtIndex:index];
+        if (self.chatBare.length && [[model.jid bare] isEqualToString:self.chatBare]) {
+            found = index;
+            chatModel.unreadCount = 0;
+            NSIndexPath *currentIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
+            NSIndexPath *toIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self moveChatModel:chatModel fromIndexPath:currentIndexPath toIndexPath:toIndexPath]; // 更新数据
+            break;
+        } else if ([[model.jid bare] isEqualToString:[chatModel.jid bare]]) { // 已在列表中
+            found = index;
+            self.unreadCount += 1; // 未读数+1
+            NSIndexPath *currentIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
+            NSIndexPath *toIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+            [self moveChatModel:chatModel fromIndexPath:currentIndexPath toIndexPath:toIndexPath]; // 更新数据
+            break;
         }
-        
-    });
+    }
+    if (found == NSNotFound) {
+        self.unreadCount += 1; // 未读数+1
+        [self insertChatModel:chatModel atIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];// 插入数据
+    }
     
 }
 
