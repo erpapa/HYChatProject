@@ -13,7 +13,7 @@
 #import "HYUtils.h"
 
 @interface HYContactsViewCell()
-@property (nonatomic, strong) UIImageView *iconView;
+@property (nonatomic, strong) UIImageView *headView;
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *detailLabel;
 @property (nonatomic, strong) UIImageView *netView;
@@ -37,7 +37,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        [self initSubviews];
+        [self setupContentView];
         UIView *selectedBGView = [[UIView alloc] init];
         selectedBGView.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:244/255.0 alpha:1.0f];
         self.selectedBackgroundView = selectedBGView;
@@ -45,30 +45,31 @@
     return self;
 }
 
-- (void)initSubviews
+- (void)setupContentView
 {
     CGFloat margin = 6.0; // 上下间隔
     CGFloat panding = 8.0; // 左右间隔
-    CGFloat iconViewX = panding;
-    CGFloat iconViewY = margin;
-    CGFloat iconViewW = kContactsViewCellHeight - iconViewY * 2;
+    CGFloat headViewX = panding;
+    CGFloat headViewY = margin;
+    CGFloat headViewW = kContactsViewCellHeight - headViewY * 2;
     // 1.头像
-    self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(iconViewX, iconViewY, iconViewW, iconViewW)];
-    self.iconView.contentMode = UIViewContentModeScaleAspectFill;
-    self.iconView.layer.cornerRadius = iconViewW * 0.5;
-    self.iconView.layer.masksToBounds = YES;
-    [self.contentView addSubview:self.iconView];
+    self.headView = [[UIImageView alloc] initWithFrame:CGRectMake(headViewX, headViewY, headViewW, headViewW)];
+    self.headView.image = [UIImage imageNamed:@"defaultHead"];
+    self.headView.contentMode = UIViewContentModeScaleAspectFill;
+    self.headView.layer.cornerRadius = headViewW * 0.5;
+    self.headView.layer.masksToBounds = YES;
+    [self.contentView addSubview:self.headView];
     
     // 2.网络状况
-    CGFloat netViewlH = iconViewW * 0.5;
+    CGFloat netViewlH = headViewW * 0.5;
     CGFloat netViewX = kScreenW - netViewlH - margin;
-    CGFloat netViewY = iconViewY;
+    CGFloat netViewY = headViewY;
     self.netView = [[UIImageView alloc] initWithFrame:CGRectMake(netViewX, netViewY, netViewlH, netViewlH)];
     [self.contentView addSubview:self.netView];
     
     // 3.昵称
-    CGFloat nameLabelX = CGRectGetMaxX(self.iconView.frame) + iconViewX;
-    CGFloat nameLabelY = iconViewY;
+    CGFloat nameLabelX = CGRectGetMaxX(self.headView.frame) + headViewX;
+    CGFloat nameLabelY = headViewY;
     CGFloat nameLabelW = CGRectGetMinX(self.netView.frame) - nameLabelX;
     CGFloat nameLabelH = netViewlH;
     self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH)];
@@ -99,10 +100,10 @@
     NSString *sectionNum = [HYUtils stringFromSectionNum:model.sectionNum];
     self.detailLabel.text = [NSString stringWithFormat:@"%@ %@",sectionNum, model.signature];
     __weak typeof(self) weakSelf = self;
-    [[HYXMPPManager sharedInstance] getvCardFromJID:model.jid shouldRefresh:NO vCardBlock:^(XMPPvCardTemp *vCardTemp) {
+    [[HYXMPPManager sharedInstance] getvCardFromJID:model.jid vCardBlock:^(XMPPvCardTemp *vCardTemp) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (vCardTemp.photo) {
-            strongSelf.iconView.image = [UIImage imageWithData:vCardTemp.photo];
+            strongSelf.headView.image = [UIImage imageWithData:vCardTemp.photo];
         }
         if (vCardTemp.nickname.length) {
             strongSelf.nameLabel.text = vCardTemp.nickname;

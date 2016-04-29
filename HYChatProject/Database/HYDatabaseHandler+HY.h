@@ -7,7 +7,5 @@
 //
 
 #import "HYDatabaseHandler.h"
-#import "HYDatabaseHandler+User.h"
 #import "HYDatabaseHandler+RecentChat.h"
-#import "HYDatabaseHandler+Contacts.h"
 #import "HYDatabaseHandler+Room.h"

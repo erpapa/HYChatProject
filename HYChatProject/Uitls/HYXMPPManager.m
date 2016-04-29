@@ -270,10 +270,10 @@ static HYXMPPManager *instance;
 /**
  *  获得好友名片
  */
-- (void)getvCardFromJID:(XMPPJID *)jid shouldRefresh:(BOOL)shouldRefresh vCardBlock:(HYvCardBlock)vCardBlock
+- (void)getvCardFromJID:(XMPPJID *)jid vCardBlock:(HYvCardBlock)vCardBlock
 {
     // 如果本地为空，自动从网络获取好友名片
-    XMPPvCardTemp *vCardTemp = [_vCardTempModule vCardTempForJID:jid shouldFetch:!shouldRefresh];
+    XMPPvCardTemp *vCardTemp = [_vCardTempModule vCardTempForJID:jid shouldFetch:YES];
     if (vCardTemp) {
         vCardBlock(vCardTemp);
     } else {

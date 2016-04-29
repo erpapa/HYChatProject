@@ -40,37 +40,11 @@ static HYDatabaseHandler *instance;
         _dbQueue = [FMDatabaseQueue databaseQueueWithPath:databasePath];
         // 3.创表
         [_dbQueue inDatabase:^(FMDatabase *db) {
-            [db createUserTable];
-            [db createRecentChatTable];
+            [db createRecentChatTable]; // 创建最近联系人列表
         }];
     }
     return self;
 }
-
-- (void)refreshUsersCache
-{
-    NSMutableArray *records = [NSMutableArray array];
-    if([self users:records])
-    {
-        [_userLocker lock];
-        [_usersCache removeAllObjects];
-        [_usersCache addObjectsFromArray:_usersCache];
-        [_userLocker unlock];
-    }
-}
-         
-- (NSArray *)usersCache
-{
-    NSMutableArray *records = [NSMutableArray array];
-    [_userLocker lock];
-    [records addObjectsFromArray:_usersCache];
-    [_userLocker unlock];
-    return records;
-}
-
-@end
-
-@implementation FMDatabase(HY)
 
 @end
 

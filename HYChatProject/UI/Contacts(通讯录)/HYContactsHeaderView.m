@@ -20,12 +20,12 @@
 {
     self = [super initWithReuseIdentifier:reuseIdentifier];
     if (self) {
-        [self initSubviews];
+        [self setupContentView];
     }
     return self;
 }
 
-- (void)initSubviews
+- (void)setupContentView
 {
     self.bgView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, kScreenW, kContactsHeaderViewHeight)];
     self.bgView.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:244/255.0 alpha:1.0f];

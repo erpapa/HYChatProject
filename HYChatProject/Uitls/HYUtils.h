@@ -49,5 +49,6 @@
  *  时间
  */
 + (NSString *)timeStringSince1970:(double)secs;
++ (NSString *)timeStringFromDate:(NSDate *)date;
 
 @end

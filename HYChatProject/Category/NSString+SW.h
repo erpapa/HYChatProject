@@ -20,5 +20,4 @@
  *  日期
  */
 - (NSString *)timeStringForExpress;
-- (NSString *)timeStringForExpress1;
 @end

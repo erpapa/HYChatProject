@@ -23,17 +23,16 @@
 }
 
 #pragma mark - 日期字符串转换
-
 - (NSString *)timeStringForExpress
 {
-    NSDictionary *dic = [self timeIntervalFromString:self];
-    NSInteger years = [[dic objectForKey:@"years"] integerValue];
-    //    NSInteger months = [[dic objectForKey:@"keyMonths"] integerValue];
-    NSInteger days = [[dic objectForKey:@"days"] integerValue];
-    NSInteger hours = [[dic objectForKey:@"hours"] integerValue];
-    NSInteger minutes = [[dic objectForKey:@"minutes"] integerValue];
-    
     NSDate *date = [self dateFromCreateAt:self];
+    NSDictionary *dict = [self timeIntervalFromDate:date];
+    NSInteger years = [[dict objectForKey:@"years"] integerValue];
+    //    NSInteger months = [[dic objectForKey:@"keyMonths"] integerValue];
+    NSInteger days = [[dict objectForKey:@"days"] integerValue];
+    NSInteger hours = [[dict objectForKey:@"hours"] integerValue];
+    NSInteger minutes = [[dict objectForKey:@"minutes"] integerValue];
+    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     if (minutes < 1) {
         return @"刚刚";
@@ -53,37 +52,6 @@
         return [dateFormatter stringFromDate:date];
     }
 }
-- (NSString *)timeStringForExpress1
-{
-    NSDictionary *dic = [self timeIntervalFromString:self];
-    NSInteger years = [[dic objectForKey:@"years"] integerValue];
-    //    NSInteger months = [[dic objectForKey:@"keyMonths"] integerValue];
-    NSInteger days = [[dic objectForKey:@"days"] integerValue];
-    NSInteger hours = [[dic objectForKey:@"hours"] integerValue];
-    //    NSInteger minutes = [[dic objectForKey:@"minutes"] integerValue];
-    
-    NSDate *date = [self dateFromCreateAt:self];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    if (hours < 24 && days == 0) {
-        [dateFormatter setDateFormat:@"HH:mm"];
-        return [dateFormatter stringFromDate:date];
-    } else if (hours < 48 && days == 1) {
-        [dateFormatter setDateFormat:@"昨天"];
-        return [dateFormatter stringFromDate:date];
-    } else if (hours < 72 && days == 2) {
-        [dateFormatter setDateFormat:@"前天"];
-        return [dateFormatter stringFromDate:date];
-    } else if (hours < 24 * 7 && days <= 7) { // 周几
-        return [self weekDayFromDate:date];
-    } else if (years < 1){
-        [dateFormatter setDateFormat:@"MM-dd"];
-        return [dateFormatter stringFromDate:date];
-    } else {
-        [dateFormatter setDateFormat:@"yy-MM-dd"];
-        return [dateFormatter stringFromDate:date];
-    }
-}
-
 - (NSDate *)dateFromCreateAt:(NSString *)dateStr
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -92,9 +60,8 @@
     return [dateFormatter dateFromString:dateStr];
 }
 
-- (NSDictionary *)timeIntervalFromString:(NSString *)dateStr
+- (NSDictionary *)timeIntervalFromDate:(NSDate *)date
 {
-    NSDate *date = [self dateFromCreateAt:dateStr];
     NSUInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitWeekOfYear | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute;
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *compsPast = [calendar components:unitFlags fromDate:date];

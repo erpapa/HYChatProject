@@ -9,20 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "FMDB.h"
 
-@interface HYDatabaseHandler : NSObject
-{
+@interface HYDatabaseHandler : NSObject{
     FMDatabaseQueue *_dbQueue;
-    NSLock *_userLocker;
-    NSMutableArray *_usersCache;
 }
-/**
- *  单例
- */
+
 + (instancetype)sharedInstance;
-- (void)refreshUsersCache;
-- (NSArray *)usersCache;
-@end
-
-@interface FMDatabase(HY)
-
 @end

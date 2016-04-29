@@ -61,7 +61,7 @@ typedef void(^HYSuccessBlock)(BOOL success);//操作成功/失败
 /**
  *  获得好友名片
  */
-- (void)getvCardFromJID:(XMPPJID *)jid shouldRefresh:(BOOL)shouldRefresh vCardBlock:(HYvCardBlock)vCardBlock;
+- (void)getvCardFromJID:(XMPPJID *)jid vCardBlock:(HYvCardBlock)vCardBlock;
 /**
  *  CoreData
  */

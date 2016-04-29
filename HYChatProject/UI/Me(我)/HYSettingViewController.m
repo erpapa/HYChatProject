@@ -67,13 +67,6 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
     
 }
 
-#pragma mark - UITableViewDelegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
@@ -84,12 +77,17 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    if (section == 0) {
+        return 12.0;
+    }
     return 22.0;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 1.0f;
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
 #pragma mark - 懒加载
@@ -99,6 +97,7 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
         _tableView.showsHorizontalScrollIndicator = NO;
         _tableView.showsVerticalScrollIndicator = NO;
+        _tableView.sectionFooterHeight = 0.0f;
         _tableView.dataSource = self;
         _tableView.delegate = self;
     }

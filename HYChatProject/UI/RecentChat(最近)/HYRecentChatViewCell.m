@@ -13,7 +13,7 @@
 #import "XMPPvCardTemp.h"
 
 @interface HYRecentChatViewCell()
-@property (nonatomic, strong) UIImageView *iconView;
+@property (nonatomic, strong) UIImageView *headView;
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *detailLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
@@ -38,7 +38,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        [self initSubviews];
+        [self setupContentView];
         UIView *selectedBGView = [[UIView alloc] init];
         selectedBGView.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:244/255.0 alpha:1.0f];
         self.selectedBackgroundView = selectedBGView;
@@ -47,25 +47,26 @@
 }
 
 
-- (void)initSubviews
+- (void)setupContentView
 {
     CGFloat margin = 6.0; // 上下间隔
     CGFloat panding = 10.0; // 左右间隔
-    CGFloat iconViewX = panding;
-    CGFloat iconViewY = margin;
-    CGFloat iconViewW = kRecentChatViewCellHeight - iconViewY * 2;
+    CGFloat headViewX = panding;
+    CGFloat headViewY = margin;
+    CGFloat headViewW = kRecentChatViewCellHeight - headViewY * 2;
     // 1.头像
-    self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(iconViewX, iconViewY, iconViewW, iconViewW)];
-    self.iconView.contentMode = UIViewContentModeScaleAspectFill;
-    self.iconView.layer.cornerRadius = iconViewW * 0.5;
-    self.iconView.layer.masksToBounds = YES;
-    [self.contentView addSubview:self.iconView];
+    self.headView = [[UIImageView alloc] initWithFrame:CGRectMake(headViewX, headViewY, headViewW, headViewW)];
+    self.headView.image = [UIImage imageNamed:@"defaultHead"];
+    self.headView.contentMode = UIViewContentModeScaleAspectFill;
+    self.headView.layer.cornerRadius = headViewW * 0.5;
+    self.headView.layer.masksToBounds = YES;
+    [self.contentView addSubview:self.headView];
     
     // 2.日期
     CGFloat timeLabelW = 60;
-    CGFloat timeLabelH = iconViewW * 0.5;
+    CGFloat timeLabelH = headViewW * 0.5;
     CGFloat timeLabelX = kScreenW - timeLabelW - panding;
-    CGFloat timeLabelY = iconViewY;
+    CGFloat timeLabelY = headViewY;
     self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(timeLabelX, timeLabelY, timeLabelW, timeLabelH)];
     self.timeLabel.textColor = [UIColor grayColor];
     self.timeLabel.font = [UIFont systemFontOfSize:13];
@@ -73,8 +74,8 @@
     [self.contentView addSubview:self.timeLabel];
     
     // 2.昵称
-    CGFloat nameLabelX = CGRectGetMaxX(self.iconView.frame) + iconViewX;
-    CGFloat nameLabelY = iconViewY;
+    CGFloat nameLabelX = CGRectGetMaxX(self.headView.frame) + headViewX;
+    CGFloat nameLabelY = headViewY;
     CGFloat nameLabelW = CGRectGetMinX(self.timeLabel.frame) - nameLabelX;
     CGFloat nameLabelH = timeLabelH;
     self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH)];
@@ -124,12 +125,11 @@
     NSString *badgeValue = [HYUtils stringFromUnreadCount:chatModel.unreadCount];
     self.badgeView.hidden = badgeValue.length ? NO : YES;
     self.badgeLabel.text = badgeValue;
-    BOOL shouldRefresh = chatModel.unreadCount == 1;
     __weak typeof(self) weakSelf = self;
-    [[HYXMPPManager sharedInstance] getvCardFromJID:chatModel.jid shouldRefresh:shouldRefresh vCardBlock:^(XMPPvCardTemp *vCardTemp) {
+    [[HYXMPPManager sharedInstance] getvCardFromJID:chatModel.jid vCardBlock:^(XMPPvCardTemp *vCardTemp) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (vCardTemp.photo) {
-            strongSelf.iconView.image = [UIImage imageWithData:vCardTemp.photo];
+            strongSelf.headView.image = [UIImage imageWithData:vCardTemp.photo];
         }
         if (vCardTemp.nickname.length) {
             strongSelf.nameLabel.text = vCardTemp.nickname;

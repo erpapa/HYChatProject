@@ -41,7 +41,6 @@
     if (self.dataSource.count == 0) {
         // 加载好友列表
         [self loadContacts];
-        [self.tableView reloadData]; // 刷新数据
     }
 }
 
@@ -131,19 +130,14 @@
 #pragma mark - section头部
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    static NSString *headerIdentifier = @"headerIdentifier";
-    HYContactsHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:headerIdentifier];
+    static NSString *kContactsHeaderIdentifier = @"kContactsHeaderIdentifier";
+    HYContactsHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:kContactsHeaderIdentifier];
     if (headerView == nil) {
-        headerView = [[HYContactsHeaderView alloc] initWithReuseIdentifier:headerIdentifier];
+        headerView = [[HYContactsHeaderView alloc] initWithReuseIdentifier:kContactsHeaderIdentifier];
     }
     HYContacts *contacts = [self.dataSource objectAtIndex:section];
     headerView.title = contacts.title;
     return headerView;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return kContactsHeaderViewHeight;
 }
 
 //- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -239,11 +233,17 @@
     if(![_resultController performFetch:&error]){
         HYLog(@"%s---%@",__func__,error);
     } else {
-        [self.dataSource removeAllObjects];
-        [_resultController.fetchedObjects enumerateObjectsUsingBlock:^(XMPPUserCoreDataStorageObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
-            [self addContacsObject:object];
-        }];
-        [self sortWithContacts]; // 排序
+        BACK(^{ // 后台处理数据
+            [self.dataSource removeAllObjects];
+            [_resultController.fetchedObjects enumerateObjectsUsingBlock:^(XMPPUserCoreDataStorageObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
+                [self addContacsObject:object];
+            }];
+            [self sortWithContacts]; // 排序
+            MAIN(^{
+                [self.tableView reloadData]; // 刷新数据
+            });
+        });
+        
     }
     
 }
@@ -408,6 +408,8 @@
         _tableView.showsHorizontalScrollIndicator = NO;
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.rowHeight = kContactsViewCellHeight;
+        _tableView.sectionHeaderHeight = kContactsHeaderViewHeight;
+        _tableView.sectionFooterHeight = 0.0f;
         _tableView.sectionIndexColor = [UIColor grayColor]; // 索引文字颜色
         _tableView.sectionIndexBackgroundColor = [UIColor clearColor]; // 索引的背景色
         _tableView.sectionIndexTrackingBackgroundColor = [UIColor clearColor]; // 选中索引的背景色
