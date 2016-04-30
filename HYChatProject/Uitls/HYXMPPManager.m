@@ -382,6 +382,7 @@ static HYXMPPManager *instance;
     HYLog(@"授权成功，发送在线消息");
     XMPPPresence *presence = [XMPPPresence presence];
     [_xmppStream sendElement:presence];
+    [_vCardTempModule myvCardTemp]; // 获取自己的名片
     
     _status = HYXMPPConnectStatusAuthSuccess;
     [self postConnectStatus:HYXMPPConnectStatusAuthSuccess];
@@ -610,6 +611,11 @@ static HYXMPPManager *instance;
     if (vCardBlock) {
         vCardBlock(vCardTemp);
         [self.vCardBlockDict removeObjectForKey:[jid bare]]; // 删除该键值
+    }
+    
+    // 储存自己的名片
+    if ([jid.bare isEqualToString:[[HYLoginInfo sharedInstance].jid bare]]) {
+        [HYUtils saveCurrentUservCard:vCardTemp];
     }
     
 }

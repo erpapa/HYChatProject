@@ -7,12 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-
+@class XMPPvCardTemp;
 @interface HYUtils : NSObject
 /**
  *  切换控制器
  */
 + (void)initRootViewController;
+
+/**
+ *  当前用户的名片
+ */
++ (XMPPvCardTemp *)currentUservCard;
++ (void)saveCurrentUservCard:(XMPPvCardTemp *)vCard;
 
 /**
  *  hud

@@ -11,11 +11,12 @@
 #import "HYXMPPManager.h"
 #import "HYUtils.h"
 #import "XMPPvCardTemp.h"
+#import "YYText.h"
 
 @interface HYRecentChatViewCell()
 @property (nonatomic, strong) UIImageView *headView;
 @property (nonatomic, strong) UILabel *nameLabel;
-@property (nonatomic, strong) UILabel *detailLabel;
+@property (nonatomic, strong) YYLabel *detailLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UIImageView *badgeView;
 @property (nonatomic, strong) UILabel *badgeLabel;
@@ -88,9 +89,9 @@
     CGFloat detailLabelY = CGRectGetMaxY(self.nameLabel.frame);
     CGFloat detailLabelW = nameLabelW + 20;
     CGFloat detailLabelH = nameLabelH;
-    self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(detailLabelX, detailLabelY, detailLabelW, detailLabelH)];
-    self.detailLabel.textColor = [UIColor grayColor];
-    self.detailLabel.font = [UIFont systemFontOfSize:14];
+    self.detailLabel = [[YYLabel alloc] initWithFrame:CGRectMake(detailLabelX, detailLabelY, detailLabelW, detailLabelH)];
+    self.detailLabel.numberOfLines = 1; // 显示一行
+    self.detailLabel.textVerticalAlignment = YYTextVerticalAlignmentCenter; // 居中
     [self.contentView addSubview:self.detailLabel];
     
     // 4.未读数
@@ -120,7 +121,7 @@
 {
     _chatModel = chatModel;
     self.nameLabel.text = chatModel.jid.user;
-    self.detailLabel.text = chatModel.body;
+    self.detailLabel.attributedText = chatModel.attText; // 赋值属性字符串
     self.timeLabel.text = [HYUtils timeStringSince1970:chatModel.time];
     NSString *badgeValue = [HYUtils stringFromUnreadCount:chatModel.unreadCount];
     self.badgeView.hidden = badgeValue.length ? NO : YES;

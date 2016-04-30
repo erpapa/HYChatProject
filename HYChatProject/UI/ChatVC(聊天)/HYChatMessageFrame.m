@@ -21,33 +21,27 @@
         _timeLabelFrame = CGRectMake(0, 0, kScreenW, kTimeHeight);
     }
     // 2.头像
-    CGFloat headViewY = CGRectGetMaxY(_timeLabelFrame) + kMargin;
-    CGRect rightIconRect = CGRectMake(kScreenW - kHeadWidth - kMargin, headViewY, kHeadWidth, kHeadWidth);
-    CGRect leftIconRect = CGRectMake(kMargin, headViewY, kHeadWidth, kHeadWidth);
+    CGFloat headViewY = CGRectGetMaxY(_timeLabelFrame) + kContentMarginTop;
+    CGRect rightIconRect = CGRectMake(kScreenW - kHeadWidth - kHeadMargin, headViewY, kHeadWidth, kHeadWidth);
+    CGRect leftIconRect = CGRectMake(kHeadMargin, headViewY, kHeadWidth, kHeadWidth);
     _headViewFrame = chatMessage.isOutgoing ? rightIconRect : leftIconRect;
     
     // 3.文本
     CGSize textSize = chatMessage.textLayout.textBoundingSize;
-    _textViewFrame = CGRectMake(kTextPanding, kTextPanding, textSize.width, textSize.height);
+    _textViewFrame = CGRectMake(kTextPandingLeft, kTextPandingTop, textSize.width, textSize.height);
     
-    // 4.照片
-    
-    // 5.声音
-    
-    // 6.视频
-    
-    // 7.背景
+    // 4.背景
     CGRect rightContentRect,leftContentRect;
     switch (chatMessage.type) {
         case HYChatMessageTypeText:{
             CGFloat rightX = CGRectGetMinX(_headViewFrame) - kContentMargin - textSize.width;
             CGFloat leftX = CGRectGetMaxX(_headViewFrame) + kContentMargin;
             CGFloat contentY = CGRectGetMinY(_headViewFrame);
-            CGFloat contentWidth = CGRectGetWidth(_textViewFrame) + kTextPanding * 2;
-            CGFloat contentHeight = CGRectGetHeight(_textViewFrame) + kTextPanding * 2;
+            CGFloat contentWidth = CGRectGetWidth(_textViewFrame) + kTextPandingLeft + kTextPandingRight;
+            CGFloat contentHeight = CGRectGetHeight(_textViewFrame) + kTextPandingTop + kTextPandingBottom;
             rightContentRect = CGRectMake(rightX, contentY, contentWidth, contentHeight);
             leftContentRect = CGRectMake(leftX, contentY, contentWidth, contentHeight);
-            _textCellHeight = CGRectGetMaxY(leftContentRect);
+            
             break;
         }
         case HYChatMessageTypeImage:{
@@ -66,7 +60,8 @@
         default:
             break;
     }
-    _contentImageViewFrame = chatMessage.isOutgoing ? rightContentRect : leftContentRect;
+    _contentBgViewFrame = chatMessage.isOutgoing ? rightContentRect : leftContentRect;
+    _cellHeight = CGRectGetMaxY(_contentBgViewFrame) + kContentMarginBottom;
 }
 
 @end

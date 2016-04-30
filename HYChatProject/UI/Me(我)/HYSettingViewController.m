@@ -10,6 +10,7 @@
 #import "HYMeViewCell.h"
 #import "HYSettingViewCell.h"
 #import "XMPPvCardTemp.h"
+#import "HYUtils.h"
 #import "HYXMPPManager.h"
 
 static NSString *kMeViewCellIdentifier = @"kMeViewCellIdentifier";
@@ -26,11 +27,16 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.tableView];
-    __weak typeof(self) weakSelf = self;
-    [[HYXMPPManager sharedInstance] getMyvCard:^(XMPPvCardTemp *vCardTemp) { // 获取个人名片
-        weakSelf.vCard = vCardTemp;
-        [weakSelf.tableView reloadData];
-    }];
+    
+    self.vCard = [HYUtils currentUservCard]; // 从本地读取名片
+    if (self.vCard == nil) {
+        __weak typeof(self) weakSelf = self;
+        [[HYXMPPManager sharedInstance] getMyvCard:^(XMPPvCardTemp *vCardTemp) { // 获取个人名片
+            weakSelf.vCard = vCardTemp;
+            [weakSelf.tableView reloadData];
+        }];
+    }
+    
 }
 
 #pragma mark - UITableViewDataSource
@@ -88,6 +94,9 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+    if (indexPath.section == 0) {
+        [[HYXMPPManager sharedInstance] xmppUserlogout]; // 退出
+    }
 }
 
 #pragma mark - 懒加载

@@ -12,6 +12,7 @@
 #import "HYRegisterViewController.h"
 #import "HYLoginInfo.h"
 #import "HYXMPPManager.h"
+#import "XMPPvCardTemp.h"
 #import "HYUtils.h"
 #import "YYWebImage.h"
 #import "YYKeyboardManager.h"
@@ -48,8 +49,13 @@
     self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake((kScreenW - iconViewW) * 0.5, iconViewY, iconViewW, iconViewW)];
     self.iconView.layer.cornerRadius = iconViewW * 0.5;
     self.iconView.layer.masksToBounds = YES;
-    self.iconView.backgroundColor = [UIColor lightGrayColor];
     [self.scrollView addSubview:self.iconView];
+    XMPPvCardTemp *vCard = [HYUtils currentUservCard];
+    if (vCard) {
+        self.iconView.image = [UIImage imageWithData:vCard.photo];
+    } else {
+        self.iconView.image = [UIImage imageNamed:@"defaultHead"];
+    }
     
     // 2.用户名
     CGFloat userLabelX = 60;

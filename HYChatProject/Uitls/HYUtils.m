@@ -9,6 +9,7 @@
 #import "HYUtils.h"
 #import "HYLoginInfo.h"
 #import "HYXMPPManager.h"
+#import "XMPPvCardTemp.h"
 #import "NSFileManager+SW.h"
 #import "SVProgressHUD.h"
 #import "HYFirstLoginViewController.h"
@@ -37,7 +38,29 @@
     
     
 }
+/**
+ *  获取当前用户的vCard
+ */
++ (XMPPvCardTemp *)currentUservCard
+{
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:[[HYLoginInfo sharedInstance].jid full]];
+    if (data.length) {
+        return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    }
+    return nil;
+}
 
+/**
+ *  保存当前用户的vCard
+ */
++ (void)saveCurrentUservCard:(XMPPvCardTemp *)vCard
+{
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:vCard];
+    if (data.length) {
+        [[NSUserDefaults standardUserDefaults] setObject:data forKey:[[HYLoginInfo sharedInstance].jid full]];
+    }
+    
+}
 /**
  *  hud
  */

@@ -7,9 +7,10 @@
 //
 
 #import "HYSingleChatViewController.h"
+#import "HYChatMessageFrame.h"
+#import "HYChatInputPanel.h"
 #import "HYXMPPManager.h"
 #import "HYLoginInfo.h"
-#import "HYChatMessageFrame.h"
 #import "HYUtils.h"
 #import "HYBaseChatViewCell.h"
 #import "HYTextChatViewCell.h"
@@ -21,7 +22,7 @@ static NSString *kTextChatViewCellIdentifier = @"kTextChatViewCellIdentifier";
 static NSString *kImageChatViewCellIdentifier = @"kImageChatViewCellIdentifier";
 static NSString *kVoiceChatViewCellIdentifier = @"kVoiceChatViewCellIdentifier";
 static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
-@interface HYSingleChatViewController ()<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
+@interface HYSingleChatViewController ()<UITableViewDataSource, UITableViewDelegate,NSFetchedResultsControllerDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSFetchedResultsController *resultController;//查询结果集合
@@ -40,6 +41,10 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     [self.tableView registerClass:[HYVideoChatViewCell class] forCellReuseIdentifier:kVideoChatViewCellIdentifier];
     
     [self.view addSubview:self.tableView];
+    
+    // 2.聊天工具条
+    
+    
     // 2.获取聊天数据
     [self getChatHistory];
 }
@@ -88,29 +93,17 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     HYChatMessageFrame *messageFrame = [self.dataSource objectAtIndex:indexPath.row];
-    HYChatMessage *message = messageFrame.chatMessage;
-    CGFloat cellHeight = 44.0f;
-    switch (message.type) {
-        case HYChatMessageTypeText:{
-            cellHeight = messageFrame.textCellHeight;
-            break;
-        }
-        case HYChatMessageTypeImage:{
-            cellHeight = messageFrame.imageCellHeight;
-            break;
-        }
-        case HYChatMessageTypeVoice:{
-            cellHeight = messageFrame.voiceCellHeight;
-            break;
-        }
-        case HYChatMessageTypeVideo:{
-            cellHeight = messageFrame.videoCellHeight;
-            break;
-        }
-        default:
-            break;
+    return messageFrame.cellHeight;
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    UIMenuController *popMenu = [UIMenuController sharedMenuController];
+    if (popMenu.isMenuVisible) {
+        [popMenu setMenuVisible:NO animated:YES];
     }
-    return cellHeight;
 }
 
 #pragma mark - 获取聊天数据
@@ -198,6 +191,7 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     message.isOutgoing = object.isOutgoing;
     message.isComposing = object.isComposing;
     message.timeString = [HYUtils timeStringFromDate:object.timestamp];
+    message.textLayout = [message layout]; // 生成排版结果
     // 判断是否显示时间
     HYChatMessageFrame *lastMessageFrame = [self.dataSource lastObject];
     message.isHidenTime = [lastMessageFrame.chatMessage.timeString isEqualToString:message.timeString];
@@ -213,7 +207,6 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     if (_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _tableView.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0f blue:240/255.0 alpha:1.0f];
         _tableView.showsHorizontalScrollIndicator = NO;
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.dataSource = self;

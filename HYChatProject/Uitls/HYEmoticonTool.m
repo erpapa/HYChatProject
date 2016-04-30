@@ -31,24 +31,29 @@ static HYEmoticonTool *instance;
 {
     if (instance == nil) {
         instance = [[self alloc] init];
-        NSMutableDictionary *tempDict = [NSMutableDictionary dictionary];
-        NSArray *infoArray = [self loadInfoArray];
-        NSMutableArray *tempArray = [NSMutableArray array];
-        [infoArray enumerateObjectsUsingBlock:^(NSDictionary *dict, NSUInteger idx, BOOL * _Nonnull stop) {
-            [tempDict addEntriesFromDictionary:dict];
-            [tempArray addObjectsFromArray:[dict allValues]];
-        }];
-        instance.emoticonDict = tempDict;
-        instance.emoticonArray = tempArray;
-        instance.emoticonRegex = [NSRegularExpression regularExpressionWithPattern:@"\\[[^ \\[\\]]+?\\]" options:kNilOptions error:NULL];
+        [instance setupData]; // 初始化数据
     }
     return instance;
+}
+
+- (void)setupData
+{
+    NSMutableDictionary *tempDict = [NSMutableDictionary dictionary];
+    _emoticonArray = [self loadInfoArray];
+    for (NSInteger index = 0; index < _emoticonArray.count; index++) {
+        NSArray *array = [_emoticonArray objectAtIndex:index];
+        [array enumerateObjectsUsingBlock:^(NSDictionary *dict, NSUInteger idx, BOOL * _Nonnull stop) {
+            [tempDict addEntriesFromDictionary:dict]; // 将所有数据添加进字典
+        }];
+    }
+    _emoticonDict = tempDict;
+    _emoticonRegex = [NSRegularExpression regularExpressionWithPattern:@"\\[[^ \\[\\]]+?\\]" options:kNilOptions error:NULL];
 }
 
 - (NSString *)imagePathForkey:(NSString *)key
 {
     NSString *imageName = [NSString stringWithFormat:@"%@@2x.png",key];
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"EmoticonQQ" ofType:@"bundle"];
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"Emoticon" ofType:@"bundle"];
     NSString *imagePath = [bundlePath stringByAppendingPathComponent:imageName];
     return imagePath;
 }
@@ -56,17 +61,26 @@ static HYEmoticonTool *instance;
 - (NSString *)gifPathForKey:(NSString *)key
 {
     NSString *gifName = [NSString stringWithFormat:@"%@@2x.gif",key];
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"EmoticonQQ" ofType:@"bundle"];
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"Emoticon" ofType:@"bundle"];
     NSString *gifPath = [bundlePath stringByAppendingPathComponent:gifName];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:gifPath]) { // 如果gif文件不存在，就返回imagePath
+        return [self imagePathForkey:key];
+    }
     return gifPath;
 }
 
-+ (NSArray *)loadInfoArray
+- (NSArray *)loadInfoArray
 {
-    //使用bundle取出EmoticonQQ.bundle里边的info.plist数据
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"EmoticonQQ" ofType:@"bundle"];
-    NSString *plistPath = [bundlePath stringByAppendingPathComponent:@"info.plist"];
-    NSArray *array=[[NSArray alloc] initWithContentsOfFile:plistPath];
-    return array;
+    //使用bundle取出Emoticon.bundle里边的plist数据
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"Emoticon" ofType:@"bundle"];
+    NSString *qqPlistPath = [bundlePath stringByAppendingPathComponent:@"qq.plist"];
+    NSArray *qqArray=[[NSArray alloc] initWithContentsOfFile:qqPlistPath];
+    
+    NSString *weiboPlistPath = [bundlePath stringByAppendingPathComponent:@"weibo.plist"];
+    NSArray *weiboArray=[[NSArray alloc] initWithContentsOfFile:weiboPlistPath];
+    
+    NSArray *allArray = @[qqArray,weiboArray];
+    return allArray;
 }
 @end

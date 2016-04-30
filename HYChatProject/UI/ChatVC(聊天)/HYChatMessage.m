@@ -27,7 +27,6 @@
         if (error) { // 如果解析失败
             self.type = HYChatMessageTypeText;
             self.body = jsonString;
-            [self layoutText];
             return self;
         }
         HYChatMessageType type = [self typeFromString:dict[@"type"]]; // 默认返回HYChatMessageTypeText
@@ -35,7 +34,6 @@
         self.body = dict[@"body"];
         switch (type) {
             case HYChatMessageTypeText:{
-                [self layoutText];
                 break;
             }
             case HYChatMessageTypeImage:{
@@ -61,9 +59,14 @@
     return self;
 }
 
-- (void)layoutText
+- (YYTextLayout *)layout
 {
+    if (self.type != HYChatMessageTypeText || self.body.length == 0) {
+        return nil;
+    }
     NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:self.body];
+    text.yy_font = [UIFont systemFontOfSize:kTextFontSize]; // 字体
+    text.yy_color = self.isOutgoing ? kMyTextColor : kOtherTextColor; //字体颜色
     // 匹配 [表情]
     HYEmoticonTool *emoticonTool = [HYEmoticonTool sharedInstance];
     NSArray<NSTextCheckingResult *> *emoticonResults = [emoticonTool.emoticonRegex matchesInString:text.string options:kNilOptions range:NSMakeRange(0, text.length)];
@@ -77,15 +80,30 @@
         NSString *emoString = [text.string substringWithRange:range];
         NSString *imageKey = [emoticonTool.emoticonDict objectForKey:emoString];
         NSData *data = [NSData dataWithContentsOfFile:[emoticonTool gifPathForKey:imageKey]];
-        YYImage *image = [YYImage imageWithData:data];//修改表情大小
+        YYImage *image = [YYImage imageWithData:data scale:2.0];//由于是@2x的图片，设置其scale为2.0
         if (!image) continue;
-        NSAttributedString *emoText = [NSAttributedString yy_attachmentStringWithEmojiImage:image fontSize:kTextFontSize];
+        NSAttributedString *emoText = nil;
+        if (kFixedLineHeight) {
+            emoText = [NSAttributedString yy_attachmentStringWithEmojiImage:image fontSize:kTextFontSize];
+        } else {
+            YYAnimatedImageView *imageView = [[YYAnimatedImageView alloc] initWithImage:image];
+            emoText = [NSAttributedString yy_attachmentStringWithContent:imageView contentMode:UIViewContentModeCenter attachmentSize:imageView.bounds.size alignToFont:[UIFont systemFontOfSize:kTextFontSize] alignment:YYTextVerticalAlignmentCenter];
+        }
         [text replaceCharactersInRange:range withAttributedString:emoText];
         emoClipLength += range.length - 1;
     }
-    
-    CGSize size = CGSizeMake(kScreenW - kHeadWidth * 2 - (kMargin + kContentMargin) * 2, CGFLOAT_MAX);
-    self.textLayout = [YYTextLayout layoutWithContainerSize:size text:text];
+    CGSize maxSize = CGSizeMake(kScreenW - (kHeadMargin + kHeadWidth + kTextPandingLeft) * 2, CGFLOAT_MAX); // label的maxSize
+    // 设置固定行高
+    if (kFixedLineHeight) {
+        YYTextLinePositionSimpleModifier *modifier = [YYTextLinePositionSimpleModifier new];
+        modifier.fixedLineHeight = kTextLineHeight; // 设置固定行高
+        YYTextContainer *container = [YYTextContainer new]; // 容器
+        container.size = maxSize;
+        container.linePositionModifier = modifier;
+        return [YYTextLayout layoutWithContainer:container text:text];
+    }
+
+    return [YYTextLayout layoutWithContainerSize:maxSize text:text];
 }
 
 - (NSString *)jsonString

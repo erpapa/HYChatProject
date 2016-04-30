@@ -32,10 +32,15 @@
 		EA39F46F1CCDFDEC00CEBEDF /* HYDatabaseHandler+Room.m in Sources */ = {isa = PBXBuildFile; fileRef = EA39F46E1CCDFDEC00CEBEDF /* HYDatabaseHandler+Room.m */; };
 		EA3D9B4E1CD2F669004461C4 /* defaultHead@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA3D9B4D1CD2F669004461C4 /* defaultHead@2x.png */; };
 		EA3D9B591CD30653004461C4 /* HYEmoticonTool.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D9B581CD30653004461C4 /* HYEmoticonTool.m */; };
-		EA3D9B611CD3476A004461C4 /* chat_recive_nor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA3D9B5D1CD3476A004461C4 /* chat_recive_nor@2x.png */; };
-		EA3D9B621CD3476A004461C4 /* chat_recive_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA3D9B5E1CD3476A004461C4 /* chat_recive_press@2x.png */; };
-		EA3D9B631CD3476A004461C4 /* chat_send_nor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA3D9B5F1CD3476A004461C4 /* chat_send_nor@2x.png */; };
-		EA3D9B641CD3476A004461C4 /* chat_send_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA3D9B601CD3476A004461C4 /* chat_send_press@2x.png */; };
+		EA3D9B891CD36DA3004461C4 /* chat_receive_nor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA3D9B851CD36DA3004461C4 /* chat_receive_nor@2x.png */; };
+		EA3D9B8A1CD36DA3004461C4 /* chat_receive_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA3D9B861CD36DA3004461C4 /* chat_receive_press@2x.png */; };
+		EA3D9B8B1CD36DA3004461C4 /* chat_send_nor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA3D9B871CD36DA3004461C4 /* chat_send_nor@2x.png */; };
+		EA3D9B8C1CD36DA3004461C4 /* chat_send_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA3D9B881CD36DA3004461C4 /* chat_send_press@2x.png */; };
+		EA3D9B8F1CD36E5B004461C4 /* chat_bottom_keyboard_nor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA3D9B8D1CD36E5B004461C4 /* chat_bottom_keyboard_nor@2x.png */; };
+		EA3D9B901CD36E5B004461C4 /* chat_bottom_keyboard_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA3D9B8E1CD36E5B004461C4 /* chat_bottom_keyboard_press@2x.png */; };
+		EA3D9B931CD36E63004461C4 /* chat_bottom_voice_nor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA3D9B911CD36E63004461C4 /* chat_bottom_voice_nor@2x.png */; };
+		EA3D9B941CD36E63004461C4 /* chat_bottom_voice_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA3D9B921CD36E63004461C4 /* chat_bottom_voice_press@2x.png */; };
+		EA3D9B971CD3952F004461C4 /* HYChatInputPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = EA3D9B961CD3952F004461C4 /* HYChatInputPanel.m */; };
 		EA412BDA1CCA2F1D009C071B /* HYLoginInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EA412BD81CCA2F1D009C071B /* HYLoginInfo.m */; };
 		EA412BDE1CCA64B8009C071B /* HYSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA412BDD1CCA64B8009C071B /* HYSettingViewController.m */; };
 		EA412BE81CCA65B0009C071B /* HYContactsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA412BE71CCA65B0009C071B /* HYContactsViewCell.m */; };
@@ -88,15 +93,6 @@
 		EAC05B951CC5297C00ABA3C5 /* GJCFAudioRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B841CC5297C00ABA3C5 /* GJCFAudioRecord.m */; };
 		EAC05B961CC5297C00ABA3C5 /* GJCFAudioRecordSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B871CC5297C00ABA3C5 /* GJCFAudioRecordSettings.m */; };
 		EAC05B9A1CC52A1D00ABA3C5 /* GJCFCachePathManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B991CC52A1D00ABA3C5 /* GJCFCachePathManager.m */; };
-		EAC05BD51CC52E3F00ABA3C5 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BC31CC52E3F00ABA3C5 /* AFHTTPRequestOperation.m */; };
-		EAC05BD61CC52E3F00ABA3C5 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BC51CC52E3F00ABA3C5 /* AFHTTPRequestOperationManager.m */; };
-		EAC05BD71CC52E3F00ABA3C5 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BC71CC52E3F00ABA3C5 /* AFHTTPSessionManager.m */; };
-		EAC05BD81CC52E3F00ABA3C5 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BCA1CC52E3F00ABA3C5 /* AFNetworkReachabilityManager.m */; };
-		EAC05BD91CC52E3F00ABA3C5 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BCC1CC52E3F00ABA3C5 /* AFSecurityPolicy.m */; };
-		EAC05BDA1CC52E3F00ABA3C5 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BCE1CC52E3F00ABA3C5 /* AFURLConnectionOperation.m */; };
-		EAC05BDB1CC52E3F00ABA3C5 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BD01CC52E3F00ABA3C5 /* AFURLRequestSerialization.m */; };
-		EAC05BDC1CC52E3F00ABA3C5 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BD21CC52E3F00ABA3C5 /* AFURLResponseSerialization.m */; };
-		EAC05BDD1CC52E3F00ABA3C5 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05BD41CC52E3F00ABA3C5 /* AFURLSessionManager.m */; };
 		EAC1988A1CCB8C3900A45C1A /* MGSwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC198871CCB8C3900A45C1A /* MGSwipeButton.m */; };
 		EAC1988B1CCB8C3900A45C1A /* MGSwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC198891CCB8C3900A45C1A /* MGSwipeTableCell.m */; };
 		EAC6CB091CCD059B007D9E78 /* HYDatabaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC6CB071CCD059B007D9E78 /* HYDatabaseHandler.m */; };
@@ -279,15 +275,11 @@
 		EAE342DC1CD1E87A0020DF2B /* HYSingleChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE342D91CD1E87A0020DF2B /* HYSingleChatViewController.m */; };
 		EAE342DF1CD1E9510020DF2B /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE342DD1CD1E9510020DF2B /* Base64.m */; };
 		EAE342E61CD1FA680020DF2B /* HYChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE342E51CD1FA680020DF2B /* HYChatMessage.m */; };
-		EAE342F51CD214A40020DF2B /* chat_bottom_keyboard_nor@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAE342E81CD214A40020DF2B /* chat_bottom_keyboard_nor@3x.png */; };
-		EAE342F61CD214A40020DF2B /* chat_bottom_keyboard_press@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAE342E91CD214A40020DF2B /* chat_bottom_keyboard_press@3x.png */; };
 		EAE342F71CD214A40020DF2B /* chat_bottom_smile_nor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAE342EA1CD214A40020DF2B /* chat_bottom_smile_nor@2x.png */; };
 		EAE342F81CD214A40020DF2B /* chat_bottom_smile_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAE342EB1CD214A40020DF2B /* chat_bottom_smile_press@2x.png */; };
 		EAE342F91CD214A40020DF2B /* chat_bottom_textfield@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAE342EC1CD214A40020DF2B /* chat_bottom_textfield@2x.png */; };
 		EAE342FA1CD214A40020DF2B /* chat_bottom_up_nor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAE342ED1CD214A40020DF2B /* chat_bottom_up_nor@2x.png */; };
 		EAE342FB1CD214A40020DF2B /* chat_bottom_up_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAE342EE1CD214A40020DF2B /* chat_bottom_up_press@2x.png */; };
-		EAE342FC1CD214A40020DF2B /* chat_bottom_voice_nor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAE342EF1CD214A40020DF2B /* chat_bottom_voice_nor@2x.png */; };
-		EAE342FD1CD214A40020DF2B /* chat_bottom_voice_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAE342F01CD214A40020DF2B /* chat_bottom_voice_press@2x.png */; };
 		EAE343371CD2166B0020DF2B /* YYTextContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE343051CD2166B0020DF2B /* YYTextContainerView.m */; };
 		EAE343381CD2166B0020DF2B /* YYTextDebugOption.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE343071CD2166B0020DF2B /* YYTextDebugOption.m */; };
 		EAE343391CD2166B0020DF2B /* YYTextEffectWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE343091CD2166B0020DF2B /* YYTextEffectWindow.m */; };
@@ -312,12 +304,59 @@
 		EAE3434C1CD2166B0020DF2B /* YYTextWeakProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE343311CD2166B0020DF2B /* YYTextWeakProxy.m */; };
 		EAE3434D1CD2166B0020DF2B /* YYLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE343331CD2166B0020DF2B /* YYLabel.m */; };
 		EAE3434E1CD2166B0020DF2B /* YYTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE343361CD2166B0020DF2B /* YYTextView.m */; };
-		EAE343501CD21AA00020DF2B /* EmoticonQQ.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EAE3434F1CD21AA00020DF2B /* EmoticonQQ.bundle */; };
 		EAE343531CD21E260020DF2B /* HYTextChatViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE343521CD21E260020DF2B /* HYTextChatViewCell.m */; };
 		EAE343561CD21E720020DF2B /* HYImageChatViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE343551CD21E720020DF2B /* HYImageChatViewCell.m */; };
 		EAE343591CD21E880020DF2B /* HYVoiceChatViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE343581CD21E880020DF2B /* HYVoiceChatViewCell.m */; };
 		EAE3435C1CD21E990020DF2B /* HYVideoChatViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE3435B1CD21E990020DF2B /* HYVideoChatViewCell.m */; };
 		EAE343631CD251980020DF2B /* HYChatMessageFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = EAE343621CD251980020DF2B /* HYChatMessageFrame.m */; };
+		EAF4857D1CD466420096B1F1 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF4856B1CD466420096B1F1 /* AFHTTPRequestOperation.m */; };
+		EAF4857E1CD466420096B1F1 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF4856D1CD466420096B1F1 /* AFHTTPRequestOperationManager.m */; };
+		EAF4857F1CD466420096B1F1 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF4856F1CD466420096B1F1 /* AFHTTPSessionManager.m */; };
+		EAF485801CD466420096B1F1 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485721CD466420096B1F1 /* AFNetworkReachabilityManager.m */; };
+		EAF485811CD466420096B1F1 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485741CD466420096B1F1 /* AFSecurityPolicy.m */; };
+		EAF485821CD466420096B1F1 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485761CD466420096B1F1 /* AFURLConnectionOperation.m */; };
+		EAF485831CD466420096B1F1 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485781CD466420096B1F1 /* AFURLRequestSerialization.m */; };
+		EAF485841CD466420096B1F1 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF4857A1CD466420096B1F1 /* AFURLResponseSerialization.m */; };
+		EAF485851CD466420096B1F1 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF4857C1CD466420096B1F1 /* AFURLSessionManager.m */; };
+		EAF485BD1CD4664F0096B1F1 /* QN_GTM_Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485891CD4664F0096B1F1 /* QN_GTM_Base64.m */; };
+		EAF485BE1CD4664F0096B1F1 /* QNALAssetFile.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF4858B1CD4664F0096B1F1 /* QNALAssetFile.m */; };
+		EAF485BF1CD4664F0096B1F1 /* QNAsyncRun.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF4858D1CD4664F0096B1F1 /* QNAsyncRun.m */; };
+		EAF485C01CD4664F0096B1F1 /* QNCrc32.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF4858F1CD4664F0096B1F1 /* QNCrc32.m */; };
+		EAF485C11CD4664F0096B1F1 /* QNEtag.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485911CD4664F0096B1F1 /* QNEtag.m */; };
+		EAF485C21CD4664F0096B1F1 /* QNFile.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485931CD4664F0096B1F1 /* QNFile.m */; };
+		EAF485C31CD4664F0096B1F1 /* QNPHAssetFile.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485961CD4664F0096B1F1 /* QNPHAssetFile.m */; };
+		EAF485C41CD4664F0096B1F1 /* QNPHAssetResource.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485981CD4664F0096B1F1 /* QNPHAssetResource.m */; };
+		EAF485C51CD4664F0096B1F1 /* QNSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF4859A1CD4664F0096B1F1 /* QNSystem.m */; };
+		EAF485C61CD4664F0096B1F1 /* QNUrlSafeBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF4859C1CD4664F0096B1F1 /* QNUrlSafeBase64.m */; };
+		EAF485C71CD4664F0096B1F1 /* QNDns.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485A01CD4664F0096B1F1 /* QNDns.m */; };
+		EAF485C81CD4664F0096B1F1 /* QNHttpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485A31CD4664F0096B1F1 /* QNHttpManager.m */; };
+		EAF485C91CD4664F0096B1F1 /* QNResponseInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485A51CD4664F0096B1F1 /* QNResponseInfo.m */; };
+		EAF485CA1CD4664F0096B1F1 /* QNSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485A71CD4664F0096B1F1 /* QNSessionManager.m */; };
+		EAF485CB1CD4664F0096B1F1 /* QNUserAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485A91CD4664F0096B1F1 /* QNUserAgent.m */; };
+		EAF485CC1CD4664F0096B1F1 /* QNFileRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485AD1CD4664F0096B1F1 /* QNFileRecorder.m */; };
+		EAF485CD1CD4664F0096B1F1 /* QNConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485B11CD4664F0096B1F1 /* QNConfiguration.m */; };
+		EAF485CE1CD4664F0096B1F1 /* QNFormUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485B31CD4664F0096B1F1 /* QNFormUpload.m */; };
+		EAF485CF1CD4664F0096B1F1 /* QNResumeUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485B51CD4664F0096B1F1 /* QNResumeUpload.m */; };
+		EAF485D01CD4664F0096B1F1 /* QNUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485B71CD4664F0096B1F1 /* QNUploadManager.m */; };
+		EAF485D11CD4664F0096B1F1 /* QNUploadOption.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485BA1CD4664F0096B1F1 /* QNUploadOption.m */; };
+		EAF485D21CD4664F0096B1F1 /* QNUpToken.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485BC1CD4664F0096B1F1 /* QNUpToken.m */; };
+		EAF485F01CD466800096B1F1 /* QNDnsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485D61CD466800096B1F1 /* QNDnsManager.m */; };
+		EAF485F11CD466800096B1F1 /* QNDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485D81CD466800096B1F1 /* QNDomain.m */; };
+		EAF485F21CD466800096B1F1 /* QNNetworkInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485DA1CD466800096B1F1 /* QNNetworkInfo.m */; };
+		EAF485F31CD466800096B1F1 /* QNRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485DC1CD466800096B1F1 /* QNRecord.m */; };
+		EAF485F41CD466800096B1F1 /* QNDnspodEnterprise.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485E11CD466800096B1F1 /* QNDnspodEnterprise.m */; };
+		EAF485F51CD466800096B1F1 /* QNDnspodFree.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485E31CD466800096B1F1 /* QNDnspodFree.m */; };
+		EAF485F61CD466800096B1F1 /* QNHijackingDetectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485E61CD466800096B1F1 /* QNHijackingDetectWrapper.m */; };
+		EAF485F71CD466800096B1F1 /* QNHosts.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485E81CD466800096B1F1 /* QNHosts.m */; };
+		EAF485F81CD466800096B1F1 /* QNResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485EA1CD466800096B1F1 /* QNResolver.m */; };
+		EAF485F91CD466800096B1F1 /* QNDes.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485ED1CD466800096B1F1 /* QNDes.m */; };
+		EAF485FA1CD466800096B1F1 /* QNHex.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485EF1CD466800096B1F1 /* QNHex.m */; };
+		EAF485FD1CD47F280096B1F1 /* HYEmoticonKeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF485FC1CD47F280096B1F1 /* HYEmoticonKeyboardView.m */; };
+		EAF486001CD4820E0096B1F1 /* compose_emotion_delete_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAF485FE1CD4820E0096B1F1 /* compose_emotion_delete_highlighted@2x.png */; };
+		EAF486011CD4820E0096B1F1 /* compose_emotion_delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAF485FF1CD4820E0096B1F1 /* compose_emotion_delete@2x.png */; };
+		EAF486031CD49E5C0096B1F1 /* Emoticon.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EAF486021CD49E5C0096B1F1 /* Emoticon.bundle */; };
+		EAF486061CD4AB8F0096B1F1 /* HYInputKeyboardBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF486051CD4AB8F0096B1F1 /* HYInputKeyboardBar.m */; };
+		EAF486091CD4B0130096B1F1 /* HYExpandKeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF486081CD4B0130096B1F1 /* HYExpandKeyboardView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -379,10 +418,16 @@
 		EA3D9B4D1CD2F669004461C4 /* defaultHead@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "defaultHead@2x.png"; sourceTree = "<group>"; };
 		EA3D9B571CD30653004461C4 /* HYEmoticonTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYEmoticonTool.h; sourceTree = "<group>"; };
 		EA3D9B581CD30653004461C4 /* HYEmoticonTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYEmoticonTool.m; sourceTree = "<group>"; };
-		EA3D9B5D1CD3476A004461C4 /* chat_recive_nor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_recive_nor@2x.png"; sourceTree = "<group>"; };
-		EA3D9B5E1CD3476A004461C4 /* chat_recive_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_recive_press@2x.png"; sourceTree = "<group>"; };
-		EA3D9B5F1CD3476A004461C4 /* chat_send_nor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_send_nor@2x.png"; sourceTree = "<group>"; };
-		EA3D9B601CD3476A004461C4 /* chat_send_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_send_press@2x.png"; sourceTree = "<group>"; };
+		EA3D9B851CD36DA3004461C4 /* chat_receive_nor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_receive_nor@2x.png"; sourceTree = "<group>"; };
+		EA3D9B861CD36DA3004461C4 /* chat_receive_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_receive_press@2x.png"; sourceTree = "<group>"; };
+		EA3D9B871CD36DA3004461C4 /* chat_send_nor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_send_nor@2x.png"; sourceTree = "<group>"; };
+		EA3D9B881CD36DA3004461C4 /* chat_send_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_send_press@2x.png"; sourceTree = "<group>"; };
+		EA3D9B8D1CD36E5B004461C4 /* chat_bottom_keyboard_nor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_bottom_keyboard_nor@2x.png"; sourceTree = "<group>"; };
+		EA3D9B8E1CD36E5B004461C4 /* chat_bottom_keyboard_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_bottom_keyboard_press@2x.png"; sourceTree = "<group>"; };
+		EA3D9B911CD36E63004461C4 /* chat_bottom_voice_nor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_bottom_voice_nor@2x.png"; sourceTree = "<group>"; };
+		EA3D9B921CD36E63004461C4 /* chat_bottom_voice_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_bottom_voice_press@2x.png"; sourceTree = "<group>"; };
+		EA3D9B951CD3952F004461C4 /* HYChatInputPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYChatInputPanel.h; sourceTree = "<group>"; };
+		EA3D9B961CD3952F004461C4 /* HYChatInputPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYChatInputPanel.m; sourceTree = "<group>"; };
 		EA412BD71CCA2F1D009C071B /* HYLoginInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYLoginInfo.h; sourceTree = "<group>"; };
 		EA412BD81CCA2F1D009C071B /* HYLoginInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYLoginInfo.m; sourceTree = "<group>"; };
 		EA412BDC1CCA64B8009C071B /* HYSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYSettingViewController.h; sourceTree = "<group>"; };
@@ -490,25 +535,6 @@
 		EAC05B871CC5297C00ABA3C5 /* GJCFAudioRecordSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioRecordSettings.m; sourceTree = "<group>"; };
 		EAC05B981CC52A1D00ABA3C5 /* GJCFCachePathManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFCachePathManager.h; sourceTree = "<group>"; };
 		EAC05B991CC52A1D00ABA3C5 /* GJCFCachePathManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFCachePathManager.m; sourceTree = "<group>"; };
-		EAC05BC21CC52E3F00ABA3C5 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
-		EAC05BC31CC52E3F00ABA3C5 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
-		EAC05BC41CC52E3F00ABA3C5 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
-		EAC05BC51CC52E3F00ABA3C5 /* AFHTTPRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperationManager.m; sourceTree = "<group>"; };
-		EAC05BC61CC52E3F00ABA3C5 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
-		EAC05BC71CC52E3F00ABA3C5 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
-		EAC05BC81CC52E3F00ABA3C5 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
-		EAC05BC91CC52E3F00ABA3C5 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
-		EAC05BCA1CC52E3F00ABA3C5 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
-		EAC05BCB1CC52E3F00ABA3C5 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSecurityPolicy.h; sourceTree = "<group>"; };
-		EAC05BCC1CC52E3F00ABA3C5 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
-		EAC05BCD1CC52E3F00ABA3C5 /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLConnectionOperation.h; sourceTree = "<group>"; };
-		EAC05BCE1CC52E3F00ABA3C5 /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLConnectionOperation.m; sourceTree = "<group>"; };
-		EAC05BCF1CC52E3F00ABA3C5 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLRequestSerialization.h; sourceTree = "<group>"; };
-		EAC05BD01CC52E3F00ABA3C5 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLRequestSerialization.m; sourceTree = "<group>"; };
-		EAC05BD11CC52E3F00ABA3C5 /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLResponseSerialization.h; sourceTree = "<group>"; };
-		EAC05BD21CC52E3F00ABA3C5 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
-		EAC05BD31CC52E3F00ABA3C5 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
-		EAC05BD41CC52E3F00ABA3C5 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		EAC198861CCB8C3900A45C1A /* MGSwipeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeButton.h; sourceTree = "<group>"; };
 		EAC198871CCB8C3900A45C1A /* MGSwipeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeButton.m; sourceTree = "<group>"; };
 		EAC198881CCB8C3900A45C1A /* MGSwipeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeTableCell.h; sourceTree = "<group>"; };
@@ -886,15 +912,11 @@
 		EAE342DE1CD1E9510020DF2B /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
 		EAE342E41CD1FA680020DF2B /* HYChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYChatMessage.h; sourceTree = "<group>"; };
 		EAE342E51CD1FA680020DF2B /* HYChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYChatMessage.m; sourceTree = "<group>"; };
-		EAE342E81CD214A40020DF2B /* chat_bottom_keyboard_nor@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_bottom_keyboard_nor@3x.png"; sourceTree = "<group>"; };
-		EAE342E91CD214A40020DF2B /* chat_bottom_keyboard_press@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_bottom_keyboard_press@3x.png"; sourceTree = "<group>"; };
 		EAE342EA1CD214A40020DF2B /* chat_bottom_smile_nor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_bottom_smile_nor@2x.png"; sourceTree = "<group>"; };
 		EAE342EB1CD214A40020DF2B /* chat_bottom_smile_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_bottom_smile_press@2x.png"; sourceTree = "<group>"; };
 		EAE342EC1CD214A40020DF2B /* chat_bottom_textfield@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_bottom_textfield@2x.png"; sourceTree = "<group>"; };
 		EAE342ED1CD214A40020DF2B /* chat_bottom_up_nor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_bottom_up_nor@2x.png"; sourceTree = "<group>"; };
 		EAE342EE1CD214A40020DF2B /* chat_bottom_up_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_bottom_up_press@2x.png"; sourceTree = "<group>"; };
-		EAE342EF1CD214A40020DF2B /* chat_bottom_voice_nor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_bottom_voice_nor@2x.png"; sourceTree = "<group>"; };
-		EAE342F01CD214A40020DF2B /* chat_bottom_voice_press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chat_bottom_voice_press@2x.png"; sourceTree = "<group>"; };
 		EAE343041CD2166B0020DF2B /* YYTextContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYTextContainerView.h; sourceTree = "<group>"; };
 		EAE343051CD2166B0020DF2B /* YYTextContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYTextContainerView.m; sourceTree = "<group>"; };
 		EAE343061CD2166B0020DF2B /* YYTextDebugOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYTextDebugOption.h; sourceTree = "<group>"; };
@@ -944,7 +966,6 @@
 		EAE343341CD2166B0020DF2B /* YYText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYText.h; sourceTree = "<group>"; };
 		EAE343351CD2166B0020DF2B /* YYTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYTextView.h; sourceTree = "<group>"; };
 		EAE343361CD2166B0020DF2B /* YYTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYTextView.m; sourceTree = "<group>"; };
-		EAE3434F1CD21AA00020DF2B /* EmoticonQQ.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = EmoticonQQ.bundle; sourceTree = "<group>"; };
 		EAE343511CD21E260020DF2B /* HYTextChatViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYTextChatViewCell.h; sourceTree = "<group>"; };
 		EAE343521CD21E260020DF2B /* HYTextChatViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYTextChatViewCell.m; sourceTree = "<group>"; };
 		EAE343541CD21E720020DF2B /* HYImageChatViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYImageChatViewCell.h; sourceTree = "<group>"; };
@@ -955,6 +976,108 @@
 		EAE3435B1CD21E990020DF2B /* HYVideoChatViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYVideoChatViewCell.m; sourceTree = "<group>"; };
 		EAE343611CD251980020DF2B /* HYChatMessageFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYChatMessageFrame.h; sourceTree = "<group>"; };
 		EAE343621CD251980020DF2B /* HYChatMessageFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYChatMessageFrame.m; sourceTree = "<group>"; };
+		EAF4856A1CD466420096B1F1 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
+		EAF4856B1CD466420096B1F1 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
+		EAF4856C1CD466420096B1F1 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
+		EAF4856D1CD466420096B1F1 /* AFHTTPRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperationManager.m; sourceTree = "<group>"; };
+		EAF4856E1CD466420096B1F1 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
+		EAF4856F1CD466420096B1F1 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
+		EAF485701CD466420096B1F1 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
+		EAF485711CD466420096B1F1 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		EAF485721CD466420096B1F1 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		EAF485731CD466420096B1F1 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSecurityPolicy.h; sourceTree = "<group>"; };
+		EAF485741CD466420096B1F1 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
+		EAF485751CD466420096B1F1 /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLConnectionOperation.h; sourceTree = "<group>"; };
+		EAF485761CD466420096B1F1 /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLConnectionOperation.m; sourceTree = "<group>"; };
+		EAF485771CD466420096B1F1 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLRequestSerialization.h; sourceTree = "<group>"; };
+		EAF485781CD466420096B1F1 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLRequestSerialization.m; sourceTree = "<group>"; };
+		EAF485791CD466420096B1F1 /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLResponseSerialization.h; sourceTree = "<group>"; };
+		EAF4857A1CD466420096B1F1 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
+		EAF4857B1CD466420096B1F1 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
+		EAF4857C1CD466420096B1F1 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		EAF485881CD4664F0096B1F1 /* QN_GTM_Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QN_GTM_Base64.h; sourceTree = "<group>"; };
+		EAF485891CD4664F0096B1F1 /* QN_GTM_Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QN_GTM_Base64.m; sourceTree = "<group>"; };
+		EAF4858A1CD4664F0096B1F1 /* QNALAssetFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNALAssetFile.h; sourceTree = "<group>"; };
+		EAF4858B1CD4664F0096B1F1 /* QNALAssetFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNALAssetFile.m; sourceTree = "<group>"; };
+		EAF4858C1CD4664F0096B1F1 /* QNAsyncRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNAsyncRun.h; sourceTree = "<group>"; };
+		EAF4858D1CD4664F0096B1F1 /* QNAsyncRun.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNAsyncRun.m; sourceTree = "<group>"; };
+		EAF4858E1CD4664F0096B1F1 /* QNCrc32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNCrc32.h; sourceTree = "<group>"; };
+		EAF4858F1CD4664F0096B1F1 /* QNCrc32.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNCrc32.m; sourceTree = "<group>"; };
+		EAF485901CD4664F0096B1F1 /* QNEtag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNEtag.h; sourceTree = "<group>"; };
+		EAF485911CD4664F0096B1F1 /* QNEtag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNEtag.m; sourceTree = "<group>"; };
+		EAF485921CD4664F0096B1F1 /* QNFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNFile.h; sourceTree = "<group>"; };
+		EAF485931CD4664F0096B1F1 /* QNFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNFile.m; sourceTree = "<group>"; };
+		EAF485941CD4664F0096B1F1 /* QNFileDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNFileDelegate.h; sourceTree = "<group>"; };
+		EAF485951CD4664F0096B1F1 /* QNPHAssetFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNPHAssetFile.h; sourceTree = "<group>"; };
+		EAF485961CD4664F0096B1F1 /* QNPHAssetFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNPHAssetFile.m; sourceTree = "<group>"; };
+		EAF485971CD4664F0096B1F1 /* QNPHAssetResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNPHAssetResource.h; sourceTree = "<group>"; };
+		EAF485981CD4664F0096B1F1 /* QNPHAssetResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNPHAssetResource.m; sourceTree = "<group>"; };
+		EAF485991CD4664F0096B1F1 /* QNSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNSystem.h; sourceTree = "<group>"; };
+		EAF4859A1CD4664F0096B1F1 /* QNSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNSystem.m; sourceTree = "<group>"; };
+		EAF4859B1CD4664F0096B1F1 /* QNUrlSafeBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNUrlSafeBase64.h; sourceTree = "<group>"; };
+		EAF4859C1CD4664F0096B1F1 /* QNUrlSafeBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNUrlSafeBase64.m; sourceTree = "<group>"; };
+		EAF4859D1CD4664F0096B1F1 /* QNVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNVersion.h; sourceTree = "<group>"; };
+		EAF4859F1CD4664F0096B1F1 /* QNDns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDns.h; sourceTree = "<group>"; };
+		EAF485A01CD4664F0096B1F1 /* QNDns.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDns.m; sourceTree = "<group>"; };
+		EAF485A11CD4664F0096B1F1 /* QNHttpDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNHttpDelegate.h; sourceTree = "<group>"; };
+		EAF485A21CD4664F0096B1F1 /* QNHttpManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNHttpManager.h; sourceTree = "<group>"; };
+		EAF485A31CD4664F0096B1F1 /* QNHttpManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNHttpManager.m; sourceTree = "<group>"; };
+		EAF485A41CD4664F0096B1F1 /* QNResponseInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNResponseInfo.h; sourceTree = "<group>"; };
+		EAF485A51CD4664F0096B1F1 /* QNResponseInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNResponseInfo.m; sourceTree = "<group>"; };
+		EAF485A61CD4664F0096B1F1 /* QNSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNSessionManager.h; sourceTree = "<group>"; };
+		EAF485A71CD4664F0096B1F1 /* QNSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNSessionManager.m; sourceTree = "<group>"; };
+		EAF485A81CD4664F0096B1F1 /* QNUserAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNUserAgent.h; sourceTree = "<group>"; };
+		EAF485A91CD4664F0096B1F1 /* QNUserAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNUserAgent.m; sourceTree = "<group>"; };
+		EAF485AA1CD4664F0096B1F1 /* QiniuSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QiniuSDK.h; sourceTree = "<group>"; };
+		EAF485AC1CD4664F0096B1F1 /* QNFileRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNFileRecorder.h; sourceTree = "<group>"; };
+		EAF485AD1CD4664F0096B1F1 /* QNFileRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNFileRecorder.m; sourceTree = "<group>"; };
+		EAF485AE1CD4664F0096B1F1 /* QNRecorderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNRecorderDelegate.h; sourceTree = "<group>"; };
+		EAF485B01CD4664F0096B1F1 /* QNConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNConfiguration.h; sourceTree = "<group>"; };
+		EAF485B11CD4664F0096B1F1 /* QNConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNConfiguration.m; sourceTree = "<group>"; };
+		EAF485B21CD4664F0096B1F1 /* QNFormUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNFormUpload.h; sourceTree = "<group>"; };
+		EAF485B31CD4664F0096B1F1 /* QNFormUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNFormUpload.m; sourceTree = "<group>"; };
+		EAF485B41CD4664F0096B1F1 /* QNResumeUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNResumeUpload.h; sourceTree = "<group>"; };
+		EAF485B51CD4664F0096B1F1 /* QNResumeUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNResumeUpload.m; sourceTree = "<group>"; };
+		EAF485B61CD4664F0096B1F1 /* QNUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNUploadManager.h; sourceTree = "<group>"; };
+		EAF485B71CD4664F0096B1F1 /* QNUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNUploadManager.m; sourceTree = "<group>"; };
+		EAF485B81CD4664F0096B1F1 /* QNUploadOption+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "QNUploadOption+Private.h"; sourceTree = "<group>"; };
+		EAF485B91CD4664F0096B1F1 /* QNUploadOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNUploadOption.h; sourceTree = "<group>"; };
+		EAF485BA1CD4664F0096B1F1 /* QNUploadOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNUploadOption.m; sourceTree = "<group>"; };
+		EAF485BB1CD4664F0096B1F1 /* QNUpToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNUpToken.h; sourceTree = "<group>"; };
+		EAF485BC1CD4664F0096B1F1 /* QNUpToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNUpToken.m; sourceTree = "<group>"; };
+		EAF485D51CD466800096B1F1 /* QNDnsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDnsManager.h; sourceTree = "<group>"; };
+		EAF485D61CD466800096B1F1 /* QNDnsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDnsManager.m; sourceTree = "<group>"; };
+		EAF485D71CD466800096B1F1 /* QNDomain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDomain.h; sourceTree = "<group>"; };
+		EAF485D81CD466800096B1F1 /* QNDomain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDomain.m; sourceTree = "<group>"; };
+		EAF485D91CD466800096B1F1 /* QNNetworkInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNNetworkInfo.h; sourceTree = "<group>"; };
+		EAF485DA1CD466800096B1F1 /* QNNetworkInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNNetworkInfo.m; sourceTree = "<group>"; };
+		EAF485DB1CD466800096B1F1 /* QNRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNRecord.h; sourceTree = "<group>"; };
+		EAF485DC1CD466800096B1F1 /* QNRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNRecord.m; sourceTree = "<group>"; };
+		EAF485DD1CD466800096B1F1 /* QNResolverDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNResolverDelegate.h; sourceTree = "<group>"; };
+		EAF485DE1CD466800096B1F1 /* HappyDNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HappyDNS.h; sourceTree = "<group>"; };
+		EAF485E01CD466800096B1F1 /* QNDnspodEnterprise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDnspodEnterprise.h; sourceTree = "<group>"; };
+		EAF485E11CD466800096B1F1 /* QNDnspodEnterprise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDnspodEnterprise.m; sourceTree = "<group>"; };
+		EAF485E21CD466800096B1F1 /* QNDnspodFree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDnspodFree.h; sourceTree = "<group>"; };
+		EAF485E31CD466800096B1F1 /* QNDnspodFree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDnspodFree.m; sourceTree = "<group>"; };
+		EAF485E51CD466800096B1F1 /* QNHijackingDetectWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNHijackingDetectWrapper.h; sourceTree = "<group>"; };
+		EAF485E61CD466800096B1F1 /* QNHijackingDetectWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNHijackingDetectWrapper.m; sourceTree = "<group>"; };
+		EAF485E71CD466800096B1F1 /* QNHosts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNHosts.h; sourceTree = "<group>"; };
+		EAF485E81CD466800096B1F1 /* QNHosts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNHosts.m; sourceTree = "<group>"; };
+		EAF485E91CD466800096B1F1 /* QNResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNResolver.h; sourceTree = "<group>"; };
+		EAF485EA1CD466800096B1F1 /* QNResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNResolver.m; sourceTree = "<group>"; };
+		EAF485EC1CD466800096B1F1 /* QNDes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNDes.h; sourceTree = "<group>"; };
+		EAF485ED1CD466800096B1F1 /* QNDes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNDes.m; sourceTree = "<group>"; };
+		EAF485EE1CD466800096B1F1 /* QNHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QNHex.h; sourceTree = "<group>"; };
+		EAF485EF1CD466800096B1F1 /* QNHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QNHex.m; sourceTree = "<group>"; };
+		EAF485FB1CD47F280096B1F1 /* HYEmoticonKeyboardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYEmoticonKeyboardView.h; sourceTree = "<group>"; };
+		EAF485FC1CD47F280096B1F1 /* HYEmoticonKeyboardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYEmoticonKeyboardView.m; sourceTree = "<group>"; };
+		EAF485FE1CD4820E0096B1F1 /* compose_emotion_delete_highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose_emotion_delete_highlighted@2x.png"; sourceTree = "<group>"; };
+		EAF485FF1CD4820E0096B1F1 /* compose_emotion_delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compose_emotion_delete@2x.png"; sourceTree = "<group>"; };
+		EAF486021CD49E5C0096B1F1 /* Emoticon.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Emoticon.bundle; sourceTree = "<group>"; };
+		EAF486041CD4AB8F0096B1F1 /* HYInputKeyboardBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYInputKeyboardBar.h; sourceTree = "<group>"; };
+		EAF486051CD4AB8F0096B1F1 /* HYInputKeyboardBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYInputKeyboardBar.m; sourceTree = "<group>"; };
+		EAF486071CD4B0130096B1F1 /* HYExpandKeyboardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYExpandKeyboardView.h; sourceTree = "<group>"; };
+		EAF486081CD4B0130096B1F1 /* HYExpandKeyboardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYExpandKeyboardView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1043,7 +1166,7 @@
 		EA26ADB71CD0C67C000DB77C /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				EAE3434F1CD21AA00020DF2B /* EmoticonQQ.bundle */,
+				EAF486021CD49E5C0096B1F1 /* Emoticon.bundle */,
 				EAE342E71CD214A40020DF2B /* Chat */,
 				EA26ADB81CD0C67C000DB77C /* network */,
 				EA26ADC31CD0C67C000DB77C /* tabBar */,
@@ -1420,32 +1543,6 @@
 			path = GJCFCachePathManager;
 			sourceTree = "<group>";
 		};
-		EAC05BC11CC52E3F00ABA3C5 /* AFNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05BC81CC52E3F00ABA3C5 /* AFNetworking.h */,
-				EAC05BC21CC52E3F00ABA3C5 /* AFHTTPRequestOperation.h */,
-				EAC05BC31CC52E3F00ABA3C5 /* AFHTTPRequestOperation.m */,
-				EAC05BC41CC52E3F00ABA3C5 /* AFHTTPRequestOperationManager.h */,
-				EAC05BC51CC52E3F00ABA3C5 /* AFHTTPRequestOperationManager.m */,
-				EAC05BC61CC52E3F00ABA3C5 /* AFHTTPSessionManager.h */,
-				EAC05BC71CC52E3F00ABA3C5 /* AFHTTPSessionManager.m */,
-				EAC05BC91CC52E3F00ABA3C5 /* AFNetworkReachabilityManager.h */,
-				EAC05BCA1CC52E3F00ABA3C5 /* AFNetworkReachabilityManager.m */,
-				EAC05BCB1CC52E3F00ABA3C5 /* AFSecurityPolicy.h */,
-				EAC05BCC1CC52E3F00ABA3C5 /* AFSecurityPolicy.m */,
-				EAC05BCD1CC52E3F00ABA3C5 /* AFURLConnectionOperation.h */,
-				EAC05BCE1CC52E3F00ABA3C5 /* AFURLConnectionOperation.m */,
-				EAC05BCF1CC52E3F00ABA3C5 /* AFURLRequestSerialization.h */,
-				EAC05BD01CC52E3F00ABA3C5 /* AFURLRequestSerialization.m */,
-				EAC05BD11CC52E3F00ABA3C5 /* AFURLResponseSerialization.h */,
-				EAC05BD21CC52E3F00ABA3C5 /* AFURLResponseSerialization.m */,
-				EAC05BD31CC52E3F00ABA3C5 /* AFURLSessionManager.h */,
-				EAC05BD41CC52E3F00ABA3C5 /* AFURLSessionManager.m */,
-			);
-			path = AFNetworking;
-			sourceTree = "<group>";
-		};
 		EAC198851CCB8C3900A45C1A /* MGSwipeTableCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1655,7 +1752,9 @@
 				EAD7BED31CC539F30089873C /* AudioCoder */,
 				EAC05A8C1CC50B7800ABA3C5 /* FMDB */,
 				EAE054EA1CC8C2C500E57710 /* SVProgressHUD */,
-				EAC05BC11CC52E3F00ABA3C5 /* AFNetworking */,
+				EAF485D31CD466800096B1F1 /* HappyDNS */,
+				EAF485861CD4664F0096B1F1 /* QiniuSDK */,
+				EAF485691CD466420096B1F1 /* AFNetworking */,
 				EADD1B891C9EE1D200E22D2B /* XMPPFramework */,
 			);
 			name = Vendor;
@@ -2637,6 +2736,14 @@
 		EAE342E11CD1EACB0020DF2B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EA3D9B951CD3952F004461C4 /* HYChatInputPanel.h */,
+				EA3D9B961CD3952F004461C4 /* HYChatInputPanel.m */,
+				EAF485FB1CD47F280096B1F1 /* HYEmoticonKeyboardView.h */,
+				EAF485FC1CD47F280096B1F1 /* HYEmoticonKeyboardView.m */,
+				EAF486071CD4B0130096B1F1 /* HYExpandKeyboardView.h */,
+				EAF486081CD4B0130096B1F1 /* HYExpandKeyboardView.m */,
+				EAF486041CD4AB8F0096B1F1 /* HYInputKeyboardBar.h */,
+				EAF486051CD4AB8F0096B1F1 /* HYInputKeyboardBar.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2666,20 +2773,22 @@
 		EAE342E71CD214A40020DF2B /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				EAF485FE1CD4820E0096B1F1 /* compose_emotion_delete_highlighted@2x.png */,
+				EAF485FF1CD4820E0096B1F1 /* compose_emotion_delete@2x.png */,
 				EA3D9B4D1CD2F669004461C4 /* defaultHead@2x.png */,
-				EA3D9B5D1CD3476A004461C4 /* chat_recive_nor@2x.png */,
-				EA3D9B5E1CD3476A004461C4 /* chat_recive_press@2x.png */,
-				EA3D9B5F1CD3476A004461C4 /* chat_send_nor@2x.png */,
-				EA3D9B601CD3476A004461C4 /* chat_send_press@2x.png */,
-				EAE342E81CD214A40020DF2B /* chat_bottom_keyboard_nor@3x.png */,
-				EAE342E91CD214A40020DF2B /* chat_bottom_keyboard_press@3x.png */,
+				EA3D9B851CD36DA3004461C4 /* chat_receive_nor@2x.png */,
+				EA3D9B861CD36DA3004461C4 /* chat_receive_press@2x.png */,
+				EA3D9B871CD36DA3004461C4 /* chat_send_nor@2x.png */,
+				EA3D9B881CD36DA3004461C4 /* chat_send_press@2x.png */,
+				EAE342EC1CD214A40020DF2B /* chat_bottom_textfield@2x.png */,
 				EAE342EA1CD214A40020DF2B /* chat_bottom_smile_nor@2x.png */,
 				EAE342EB1CD214A40020DF2B /* chat_bottom_smile_press@2x.png */,
-				EAE342EC1CD214A40020DF2B /* chat_bottom_textfield@2x.png */,
 				EAE342ED1CD214A40020DF2B /* chat_bottom_up_nor@2x.png */,
 				EAE342EE1CD214A40020DF2B /* chat_bottom_up_press@2x.png */,
-				EAE342EF1CD214A40020DF2B /* chat_bottom_voice_nor@2x.png */,
-				EAE342F01CD214A40020DF2B /* chat_bottom_voice_press@2x.png */,
+				EA3D9B911CD36E63004461C4 /* chat_bottom_voice_nor@2x.png */,
+				EA3D9B921CD36E63004461C4 /* chat_bottom_voice_press@2x.png */,
+				EA3D9B8D1CD36E5B004461C4 /* chat_bottom_keyboard_nor@2x.png */,
+				EA3D9B8E1CD36E5B004461C4 /* chat_bottom_keyboard_press@2x.png */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -2762,6 +2871,184 @@
 				EAE343311CD2166B0020DF2B /* YYTextWeakProxy.m */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		EAF485691CD466420096B1F1 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				EAF485701CD466420096B1F1 /* AFNetworking.h */,
+				EAF4856A1CD466420096B1F1 /* AFHTTPRequestOperation.h */,
+				EAF4856B1CD466420096B1F1 /* AFHTTPRequestOperation.m */,
+				EAF4856C1CD466420096B1F1 /* AFHTTPRequestOperationManager.h */,
+				EAF4856D1CD466420096B1F1 /* AFHTTPRequestOperationManager.m */,
+				EAF4856E1CD466420096B1F1 /* AFHTTPSessionManager.h */,
+				EAF4856F1CD466420096B1F1 /* AFHTTPSessionManager.m */,
+				EAF485711CD466420096B1F1 /* AFNetworkReachabilityManager.h */,
+				EAF485721CD466420096B1F1 /* AFNetworkReachabilityManager.m */,
+				EAF485731CD466420096B1F1 /* AFSecurityPolicy.h */,
+				EAF485741CD466420096B1F1 /* AFSecurityPolicy.m */,
+				EAF485751CD466420096B1F1 /* AFURLConnectionOperation.h */,
+				EAF485761CD466420096B1F1 /* AFURLConnectionOperation.m */,
+				EAF485771CD466420096B1F1 /* AFURLRequestSerialization.h */,
+				EAF485781CD466420096B1F1 /* AFURLRequestSerialization.m */,
+				EAF485791CD466420096B1F1 /* AFURLResponseSerialization.h */,
+				EAF4857A1CD466420096B1F1 /* AFURLResponseSerialization.m */,
+				EAF4857B1CD466420096B1F1 /* AFURLSessionManager.h */,
+				EAF4857C1CD466420096B1F1 /* AFURLSessionManager.m */,
+			);
+			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		EAF485861CD4664F0096B1F1 /* QiniuSDK */ = {
+			isa = PBXGroup;
+			children = (
+				EAF485871CD4664F0096B1F1 /* Common */,
+				EAF4859E1CD4664F0096B1F1 /* Http */,
+				EAF485AA1CD4664F0096B1F1 /* QiniuSDK.h */,
+				EAF485AB1CD4664F0096B1F1 /* Recorder */,
+				EAF485AF1CD4664F0096B1F1 /* Storage */,
+			);
+			path = QiniuSDK;
+			sourceTree = "<group>";
+		};
+		EAF485871CD4664F0096B1F1 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				EAF485881CD4664F0096B1F1 /* QN_GTM_Base64.h */,
+				EAF485891CD4664F0096B1F1 /* QN_GTM_Base64.m */,
+				EAF4858A1CD4664F0096B1F1 /* QNALAssetFile.h */,
+				EAF4858B1CD4664F0096B1F1 /* QNALAssetFile.m */,
+				EAF4858C1CD4664F0096B1F1 /* QNAsyncRun.h */,
+				EAF4858D1CD4664F0096B1F1 /* QNAsyncRun.m */,
+				EAF4858E1CD4664F0096B1F1 /* QNCrc32.h */,
+				EAF4858F1CD4664F0096B1F1 /* QNCrc32.m */,
+				EAF485901CD4664F0096B1F1 /* QNEtag.h */,
+				EAF485911CD4664F0096B1F1 /* QNEtag.m */,
+				EAF485921CD4664F0096B1F1 /* QNFile.h */,
+				EAF485931CD4664F0096B1F1 /* QNFile.m */,
+				EAF485941CD4664F0096B1F1 /* QNFileDelegate.h */,
+				EAF485951CD4664F0096B1F1 /* QNPHAssetFile.h */,
+				EAF485961CD4664F0096B1F1 /* QNPHAssetFile.m */,
+				EAF485971CD4664F0096B1F1 /* QNPHAssetResource.h */,
+				EAF485981CD4664F0096B1F1 /* QNPHAssetResource.m */,
+				EAF485991CD4664F0096B1F1 /* QNSystem.h */,
+				EAF4859A1CD4664F0096B1F1 /* QNSystem.m */,
+				EAF4859B1CD4664F0096B1F1 /* QNUrlSafeBase64.h */,
+				EAF4859C1CD4664F0096B1F1 /* QNUrlSafeBase64.m */,
+				EAF4859D1CD4664F0096B1F1 /* QNVersion.h */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		EAF4859E1CD4664F0096B1F1 /* Http */ = {
+			isa = PBXGroup;
+			children = (
+				EAF4859F1CD4664F0096B1F1 /* QNDns.h */,
+				EAF485A01CD4664F0096B1F1 /* QNDns.m */,
+				EAF485A11CD4664F0096B1F1 /* QNHttpDelegate.h */,
+				EAF485A21CD4664F0096B1F1 /* QNHttpManager.h */,
+				EAF485A31CD4664F0096B1F1 /* QNHttpManager.m */,
+				EAF485A41CD4664F0096B1F1 /* QNResponseInfo.h */,
+				EAF485A51CD4664F0096B1F1 /* QNResponseInfo.m */,
+				EAF485A61CD4664F0096B1F1 /* QNSessionManager.h */,
+				EAF485A71CD4664F0096B1F1 /* QNSessionManager.m */,
+				EAF485A81CD4664F0096B1F1 /* QNUserAgent.h */,
+				EAF485A91CD4664F0096B1F1 /* QNUserAgent.m */,
+			);
+			path = Http;
+			sourceTree = "<group>";
+		};
+		EAF485AB1CD4664F0096B1F1 /* Recorder */ = {
+			isa = PBXGroup;
+			children = (
+				EAF485AC1CD4664F0096B1F1 /* QNFileRecorder.h */,
+				EAF485AD1CD4664F0096B1F1 /* QNFileRecorder.m */,
+				EAF485AE1CD4664F0096B1F1 /* QNRecorderDelegate.h */,
+			);
+			path = Recorder;
+			sourceTree = "<group>";
+		};
+		EAF485AF1CD4664F0096B1F1 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				EAF485B01CD4664F0096B1F1 /* QNConfiguration.h */,
+				EAF485B11CD4664F0096B1F1 /* QNConfiguration.m */,
+				EAF485B21CD4664F0096B1F1 /* QNFormUpload.h */,
+				EAF485B31CD4664F0096B1F1 /* QNFormUpload.m */,
+				EAF485B41CD4664F0096B1F1 /* QNResumeUpload.h */,
+				EAF485B51CD4664F0096B1F1 /* QNResumeUpload.m */,
+				EAF485B61CD4664F0096B1F1 /* QNUploadManager.h */,
+				EAF485B71CD4664F0096B1F1 /* QNUploadManager.m */,
+				EAF485B81CD4664F0096B1F1 /* QNUploadOption+Private.h */,
+				EAF485B91CD4664F0096B1F1 /* QNUploadOption.h */,
+				EAF485BA1CD4664F0096B1F1 /* QNUploadOption.m */,
+				EAF485BB1CD4664F0096B1F1 /* QNUpToken.h */,
+				EAF485BC1CD4664F0096B1F1 /* QNUpToken.m */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		EAF485D31CD466800096B1F1 /* HappyDNS */ = {
+			isa = PBXGroup;
+			children = (
+				EAF485D41CD466800096B1F1 /* Common */,
+				EAF485DE1CD466800096B1F1 /* HappyDNS.h */,
+				EAF485DF1CD466800096B1F1 /* Http */,
+				EAF485E41CD466800096B1F1 /* Local */,
+				EAF485EB1CD466800096B1F1 /* Util */,
+			);
+			path = HappyDNS;
+			sourceTree = "<group>";
+		};
+		EAF485D41CD466800096B1F1 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				EAF485D51CD466800096B1F1 /* QNDnsManager.h */,
+				EAF485D61CD466800096B1F1 /* QNDnsManager.m */,
+				EAF485D71CD466800096B1F1 /* QNDomain.h */,
+				EAF485D81CD466800096B1F1 /* QNDomain.m */,
+				EAF485D91CD466800096B1F1 /* QNNetworkInfo.h */,
+				EAF485DA1CD466800096B1F1 /* QNNetworkInfo.m */,
+				EAF485DB1CD466800096B1F1 /* QNRecord.h */,
+				EAF485DC1CD466800096B1F1 /* QNRecord.m */,
+				EAF485DD1CD466800096B1F1 /* QNResolverDelegate.h */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		EAF485DF1CD466800096B1F1 /* Http */ = {
+			isa = PBXGroup;
+			children = (
+				EAF485E01CD466800096B1F1 /* QNDnspodEnterprise.h */,
+				EAF485E11CD466800096B1F1 /* QNDnspodEnterprise.m */,
+				EAF485E21CD466800096B1F1 /* QNDnspodFree.h */,
+				EAF485E31CD466800096B1F1 /* QNDnspodFree.m */,
+			);
+			path = Http;
+			sourceTree = "<group>";
+		};
+		EAF485E41CD466800096B1F1 /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				EAF485E51CD466800096B1F1 /* QNHijackingDetectWrapper.h */,
+				EAF485E61CD466800096B1F1 /* QNHijackingDetectWrapper.m */,
+				EAF485E71CD466800096B1F1 /* QNHosts.h */,
+				EAF485E81CD466800096B1F1 /* QNHosts.m */,
+				EAF485E91CD466800096B1F1 /* QNResolver.h */,
+				EAF485EA1CD466800096B1F1 /* QNResolver.m */,
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
+		EAF485EB1CD466800096B1F1 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				EAF485EC1CD466800096B1F1 /* QNDes.h */,
+				EAF485ED1CD466800096B1F1 /* QNDes.m */,
+				EAF485EE1CD466800096B1F1 /* QNHex.h */,
+				EAF485EF1CD466800096B1F1 /* QNHex.m */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2870,35 +3157,37 @@
 			buildActionMask = 2147483647;
 			files = (
 				EADD1D921C9EE3F500E22D2B /* build-libidn.sh in Resources */,
+				EA3D9B901CD36E5B004461C4 /* chat_bottom_keyboard_press@2x.png in Resources */,
 				EA26ADC71CD0C67C000DB77C /* contacts_network_3g@2x.png in Resources */,
 				EA3D9B4E1CD2F669004461C4 /* defaultHead@2x.png in Resources */,
-				EAE343501CD21AA00020DF2B /* EmoticonQQ.bundle in Resources */,
 				EA26ADC51CD0C67C000DB77C /* contacts_network_2g@2x.png in Resources */,
 				EA26ADC61CD0C67C000DB77C /* contacts_network_2g_press@2x.png in Resources */,
-				EAE342F51CD214A40020DF2B /* chat_bottom_keyboard_nor@3x.png in Resources */,
+				EA3D9B8A1CD36DA3004461C4 /* chat_receive_press@2x.png in Resources */,
+				EAF486011CD4820E0096B1F1 /* compose_emotion_delete@2x.png in Resources */,
+				EAF486001CD4820E0096B1F1 /* compose_emotion_delete_highlighted@2x.png in Resources */,
 				EAE054F41CC8C2C500E57710 /* SVProgressHUD.bundle in Resources */,
 				EA26ADCE1CD0C67C000DB77C /* contacts_network_wifi_press@2x.png in Resources */,
 				EA26ADC91CD0C67C000DB77C /* contacts_network_4g@2x.png in Resources */,
+				EA3D9B891CD36DA3004461C4 /* chat_receive_nor@2x.png in Resources */,
+				EA3D9B8C1CD36DA3004461C4 /* chat_send_press@2x.png in Resources */,
 				EAE342F81CD214A40020DF2B /* chat_bottom_smile_press@2x.png in Resources */,
 				EADD17011C9ED2E100E22D2B /* LaunchScreen.storyboard in Resources */,
 				EAE342F71CD214A40020DF2B /* chat_bottom_smile_nor@2x.png in Resources */,
-				EAE342F61CD214A40020DF2B /* chat_bottom_keyboard_press@3x.png in Resources */,
-				EA3D9B641CD3476A004461C4 /* chat_send_press@2x.png in Resources */,
 				EA26ADC81CD0C67C000DB77C /* contacts_network_3g_press@2x.png in Resources */,
-				EA3D9B621CD3476A004461C4 /* chat_recive_press@2x.png in Resources */,
 				EADD1D9C1C9EE95700E22D2B /* Login.storyboard in Resources */,
+				EA3D9B8B1CD36DA3004461C4 /* chat_send_nor@2x.png in Resources */,
+				EA3D9B941CD36E63004461C4 /* chat_bottom_voice_press@2x.png in Resources */,
+				EA3D9B8F1CD36E5B004461C4 /* chat_bottom_keyboard_nor@2x.png in Resources */,
 				EAE342FA1CD214A40020DF2B /* chat_bottom_up_nor@2x.png in Resources */,
 				EADD16FE1C9ED2E100E22D2B /* Assets.xcassets in Resources */,
-				EAE342FC1CD214A40020DF2B /* chat_bottom_voice_nor@2x.png in Resources */,
-				EA3D9B631CD3476A004461C4 /* chat_send_nor@2x.png in Resources */,
-				EAE342FD1CD214A40020DF2B /* chat_bottom_voice_press@2x.png in Resources */,
+				EAF486031CD49E5C0096B1F1 /* Emoticon.bundle in Resources */,
+				EA3D9B931CD36E63004461C4 /* chat_bottom_voice_nor@2x.png in Resources */,
 				EA26ADCB1CD0C67C000DB77C /* contacts_network_pad@2x.png in Resources */,
 				EA26ADCA1CD0C67C000DB77C /* contacts_network_4g_press@2x.png in Resources */,
 				EA26ADCC1CD0C67C000DB77C /* contacts_network_pad_press@2x.png in Resources */,
 				EADD1D851C9EE1D300E22D2B /* README.txt in Resources */,
 				EA26ADCD1CD0C67C000DB77C /* contacts_network_wifi@2x.png in Resources */,
 				EAE342FB1CD214A40020DF2B /* chat_bottom_up_press@2x.png in Resources */,
-				EA3D9B611CD3476A004461C4 /* chat_recive_nor@2x.png in Resources */,
 				EAE342F91CD214A40020DF2B /* chat_bottom_textfield@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2925,6 +3214,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAC05B8C1CC5297C00ABA3C5 /* GJCFUploadFileModel.m in Sources */,
+				EAF485CE1CD4664F0096B1F1 /* QNFormUpload.m in Sources */,
 				EADD1D801C9EE1D300E22D2B /* DDLog.m in Sources */,
 				EADD1D001C9EE1D300E22D2B /* XMPPDeprecatedPlainAuthentication.m in Sources */,
 				EADD1D3C1C9EE1D300E22D2B /* XMPPvCardTempCoreDataStorageObject.m in Sources */,
@@ -2956,27 +3246,35 @@
 				EADD1D341C9EE1D300E22D2B /* XMPPRoomOccupantMemoryStorageObject.m in Sources */,
 				EAE054FA1CC908F400E57710 /* YYKeyboardManager.m in Sources */,
 				EAC6CB091CCD059B007D9E78 /* HYDatabaseHandler.m in Sources */,
+				EAF485C81CD4664F0096B1F1 /* QNHttpManager.m in Sources */,
 				EAE343531CD21E260020DF2B /* HYTextChatViewCell.m in Sources */,
+				EAF485C51CD4664F0096B1F1 /* QNSystem.m in Sources */,
 				EADD1D671C9EE1D300E22D2B /* XMPPAutoPing.m in Sources */,
 				EADD1D2F1C9EE1D300E22D2B /* XMPPRoomHybridStorage.m in Sources */,
 				EADD1D681C9EE1D300E22D2B /* XMPPPing.m in Sources */,
 				EADD1D661C9EE1D300E22D2B /* XMPPStreamManagement.m in Sources */,
+				EAF485CF1CD4664F0096B1F1 /* QNResumeUpload.m in Sources */,
 				EAC05B231CC50B7900ABA3C5 /* YYImage.m in Sources */,
 				EADD1D2E1C9EE1D300E22D2B /* XMPPRoomHybrid.xcdatamodeld in Sources */,
 				EADD1D871C9EE1D300E22D2B /* DDXMLDocument.m in Sources */,
+				EAF485F71CD466800096B1F1 /* QNHosts.m in Sources */,
 				EAC05B1F1CC50B7900ABA3C5 /* UIImage+YYWebImage.m in Sources */,
 				EADD1D861C9EE1D300E22D2B /* NSString+DDXML.m in Sources */,
 				EADD1D0E1C9EE1D300E22D2B /* XMPPModule.m in Sources */,
 				EADD17441C9ED64300E22D2B /* main.m in Sources */,
 				EA32FEAB1CCF70D000FE8D39 /* UITabBar+SW.m in Sources */,
+				EAF485851CD466420096B1F1 /* AFURLSessionManager.m in Sources */,
 				EA26ADB61CD0936D000DB77C /* HYSearchBar.m in Sources */,
 				EAC6CB0E1CCD0601007D9E78 /* HYDatabaseHandler+RecentChat.m in Sources */,
 				EA412BFA1CCA6E17009C071B /* HYRecentChatViewCell.m in Sources */,
+				EAF485C61CD4664F0096B1F1 /* QNUrlSafeBase64.m in Sources */,
 				EADD1D7A1C9EE1D300E22D2B /* XMPPStringPrep.m in Sources */,
 				EADD1D9F1C9EED6B00E22D2B /* HYNavigationController.m in Sources */,
 				EA26AD9C1CD05046000DB77C /* GJCFDateUitil.m in Sources */,
+				EAF485841CD466420096B1F1 /* AFURLResponseSerialization.m in Sources */,
 				EAE3433F1CD2166B0020DF2B /* YYTextSelectionView.m in Sources */,
 				EAC05AFA1CC50B7900ABA3C5 /* FMDatabase.m in Sources */,
+				EAF485F21CD466800096B1F1 /* QNNetworkInfo.m in Sources */,
 				EAE3434B1CD2166B0020DF2B /* YYTextUtilities.m in Sources */,
 				EAC05B961CC5297C00ABA3C5 /* GJCFAudioRecordSettings.m in Sources */,
 				EADD1D421C9EE1D300E22D2B /* XMPPvCardTempLabel.m in Sources */,
@@ -2992,12 +3290,11 @@
 				EADD1D791C9EE1D300E22D2B /* XMPPSRVResolver.m in Sources */,
 				EADD1D281C9EE1D300E22D2B /* XMPPLastActivity.m in Sources */,
 				EAC05B201CC50B7900ABA3C5 /* UIImageView+YYWebImage.m in Sources */,
-				EAC05BD51CC52E3F00ABA3C5 /* AFHTTPRequestOperation.m in Sources */,
 				EADD1D5C1C9EE1D300E22D2B /* XMPPMessageArchiving.m in Sources */,
 				EA5EF0531CC7364600FE5654 /* HYXMPPManager.m in Sources */,
-				EAC05BD81CC52E3F00ABA3C5 /* AFNetworkReachabilityManager.m in Sources */,
 				EADD1D1C1C9EE1D300E22D2B /* XMPPRoster.xcdatamodel in Sources */,
 				EADD1D351C9EE1D300E22D2B /* XMPPMessage+XEP0045.m in Sources */,
+				EAF485CD1CD4664F0096B1F1 /* QNConfiguration.m in Sources */,
 				EAC05B881CC5297C00ABA3C5 /* GJCFFileDownloadManager.m in Sources */,
 				EAE342DB1CD1E87A0020DF2B /* HYGroupChatViewController.m in Sources */,
 				EAE343431CD2166B0020DF2B /* YYTextRubyAnnotation.m in Sources */,
@@ -3010,12 +3307,14 @@
 				EAC05B1E1CC50B7900ABA3C5 /* UIButton+YYWebImage.m in Sources */,
 				EADD1D591C9EE1D300E22D2B /* XMPPMessageArchiving_Contact_CoreDataObject.m in Sources */,
 				EADD1D051C9EE1D300E22D2B /* XMPPXOAuth2Google.m in Sources */,
+				EAF485811CD466420096B1F1 /* AFSecurityPolicy.m in Sources */,
 				EA26AD9D1CD05046000DB77C /* GJCFQuickCacheUitil.m in Sources */,
-				EAC05BD61CC52E3F00ABA3C5 /* AFHTTPRequestOperationManager.m in Sources */,
+				EAF485F01CD466800096B1F1 /* QNDnsManager.m in Sources */,
 				EAC05AFE1CC50B7900ABA3C5 /* FMResultSet.m in Sources */,
 				EADD1D531C9EE1D300E22D2B /* XMPPCapabilities.xcdatamodel in Sources */,
 				EADD1D151C9EE1D300E22D2B /* XMPPIncomingFileTransfer.m in Sources */,
 				EADD1D021C9EE1D300E22D2B /* XMPPPlainAuthentication.m in Sources */,
+				EAF485F91CD466800096B1F1 /* QNDes.m in Sources */,
 				EADD1D6A1C9EE1D300E22D2B /* XMPPTime.m in Sources */,
 				EADD1D6F1C9EE1D300E22D2B /* XMPPMessage+XEP_0280.m in Sources */,
 				EADD1D4D1C9EE1D300E22D2B /* NSDate+XMPPDateTimeProfiles.m in Sources */,
@@ -3026,9 +3325,12 @@
 				EAC05B8D1CC5297C00ABA3C5 /* GJCFEncodeAndDecode.m in Sources */,
 				EADD1D1D1C9EE1D300E22D2B /* XMPPRosterCoreDataStorage.m in Sources */,
 				EAE3433C1CD2166B0020DF2B /* YYTextLayout.m in Sources */,
+				EAF485C21CD4664F0096B1F1 /* QNFile.m in Sources */,
 				EA3D9B591CD30653004461C4 /* HYEmoticonTool.m in Sources */,
 				EADD1D0D1C9EE1D300E22D2B /* XMPPMessage.m in Sources */,
+				EAF485D21CD4664F0096B1F1 /* QNUpToken.m in Sources */,
 				EA26ADB21CD08BB2000DB77C /* HYContactsHeaderView.m in Sources */,
+				EAF485821CD466420096B1F1 /* AFURLConnectionOperation.m in Sources */,
 				EA412C011CCA6EFA009C071B /* HYRecentChatModel.m in Sources */,
 				EAE343461CD2166B0020DF2B /* NSParagraphStyle+YYText.m in Sources */,
 				EAC05B8B1CC5297C00ABA3C5 /* GJCFFileUploadTask.m in Sources */,
@@ -3036,14 +3338,22 @@
 				EAE3433D1CD2166B0020DF2B /* YYTextLine.m in Sources */,
 				EADD1D071C9EE1D300E22D2B /* NSNumber+XMPP.m in Sources */,
 				EAC05B8F1CC5297C00ABA3C5 /* GJCFAudioManager.m in Sources */,
+				EAF485F11CD466800096B1F1 /* QNDomain.m in Sources */,
 				EADD1D2B1C9EE1D300E22D2B /* XMPPRoomCoreDataStorage.m in Sources */,
+				EAF485F81CD466800096B1F1 /* QNResolver.m in Sources */,
 				EADD1D1B1C9EE1D300E22D2B /* XMPPResourceCoreDataStorageObject.m in Sources */,
 				EADD1D7C1C9EE1D300E22D2B /* GCDAsyncSocket.m in Sources */,
+				EAF486091CD4B0130096B1F1 /* HYExpandKeyboardView.m in Sources */,
+				EAF485C91CD4664F0096B1F1 /* QNResponseInfo.m in Sources */,
 				EADD1D3E1C9EE1D300E22D2B /* XMPPvCardTempAdr.m in Sources */,
 				EADD1D771C9EE1D300E22D2B /* RFImageToDataTransformer.m in Sources */,
+				EAF485BE1CD4664F0096B1F1 /* QNALAssetFile.m in Sources */,
+				EAF485D01CD4664F0096B1F1 /* QNUploadManager.m in Sources */,
+				EAF485F61CD466800096B1F1 /* QNHijackingDetectWrapper.m in Sources */,
 				EADD1D5A1C9EE1D300E22D2B /* XMPPMessageArchiving_Message_CoreDataObject.m in Sources */,
 				EADD1DAC1C9EF2A600E22D2B /* NSString+SW.m in Sources */,
 				EAE343451CD2166B0020DF2B /* NSAttributedString+YYText.m in Sources */,
+				EAF485801CD466420096B1F1 /* AFNetworkReachabilityManager.m in Sources */,
 				EAE3433E1CD2166B0020DF2B /* YYTextMagnifier.m in Sources */,
 				EAC05B1D1CC50B7900ABA3C5 /* MKAnnotationView+YYWebImage.m in Sources */,
 				EADD1DA91C9EF0A700E22D2B /* NSDictionary+format.m in Sources */,
@@ -3055,13 +3365,15 @@
 				EADD1D611C9EE1D300E22D2B /* XMPPMessage+XEP_0184.m in Sources */,
 				EADD1D561C9EE1D300E22D2B /* XMPPCapsResourceCoreDataStorageObject.m in Sources */,
 				EADD17591C9ED8A000E22D2B /* HYContactsViewController.m in Sources */,
+				EAF485F31CD466800096B1F1 /* QNRecord.m in Sources */,
+				EAF485C71CD4664F0096B1F1 /* QNDns.m in Sources */,
 				EA26ADA31CD06201000DB77C /* HYMeViewCell.m in Sources */,
 				EAE3434D1CD2166B0020DF2B /* YYLabel.m in Sources */,
 				EADD1D311C9EE1D300E22D2B /* XMPPRoomOccupantHybridMemoryStorageObject.m in Sources */,
+				EAF485FA1CD466800096B1F1 /* QNHex.m in Sources */,
 				EAC05B251CC50B7900ABA3C5 /* YYSpriteSheetImage.m in Sources */,
 				EADD1DA31C9EEF1100E22D2B /* UIImage+SW.m in Sources */,
 				EADD1D761C9EE1D300E22D2B /* GCDMulticastDelegate.m in Sources */,
-				EAC05BD71CC52E3F00ABA3C5 /* AFHTTPSessionManager.m in Sources */,
 				EAC05B921CC5297C00ABA3C5 /* GJCFFileDownloadTask+GJCFAudioDownload.m in Sources */,
 				EAD7BEE01CC539F30089873C /* amrFileCodec.mm in Sources */,
 				EADD1D231C9EE1D300E22D2B /* XMPPSystemInputActivityMonitor.m in Sources */,
@@ -3072,6 +3384,7 @@
 				EADD1D641C9EE1D300E22D2B /* XMPPStreamManagementMemoryStorage.m in Sources */,
 				EAE054F31CC8C2C500E57710 /* SVIndefiniteAnimatedView.m in Sources */,
 				EAE3433A1CD2166B0020DF2B /* YYTextInput.m in Sources */,
+				EAF486061CD4AB8F0096B1F1 /* HYInputKeyboardBar.m in Sources */,
 				EADD1D461C9EE1D300E22D2B /* XMPPResultSet.m in Sources */,
 				EAE343371CD2166B0020DF2B /* YYTextContainerView.m in Sources */,
 				EAC05B931CC5297C00ABA3C5 /* GJCFFileUploadTask+GJCFAudioUpload.m in Sources */,
@@ -3087,6 +3400,7 @@
 				EADD1D401C9EE1D300E22D2B /* XMPPvCardTempBase.m in Sources */,
 				EAC05B901CC5297C00ABA3C5 /* GJCFAudioModel.m in Sources */,
 				EADD1D4A1C9EE1D300E22D2B /* XMPPIQ+XEP_0066.m in Sources */,
+				EAF4857F1CD466420096B1F1 /* AFHTTPSessionManager.m in Sources */,
 				EADD1D6B1C9EE1D300E22D2B /* NSXMLElement+XEP_0203.m in Sources */,
 				EADD1D101C9EE1D300E22D2B /* XMPPPresence.m in Sources */,
 				EADD1D161C9EE1D300E22D2B /* XMPPOutgoingFileTransfer.m in Sources */,
@@ -3094,6 +3408,7 @@
 				EADD1D711C9EE1D300E22D2B /* NSXMLElement+XEP_0297.m in Sources */,
 				EADD1D441C9EE1D300E22D2B /* XMPPvCardTempTel.m in Sources */,
 				EADD1D881C9EE1D300E22D2B /* DDXMLElement.m in Sources */,
+				EAF4857D1CD466420096B1F1 /* AFHTTPRequestOperation.m in Sources */,
 				EADD1D741C9EE1D300E22D2B /* NSXMLElement+XEP_0335.m in Sources */,
 				EAC05B951CC5297C00ABA3C5 /* GJCFAudioRecord.m in Sources */,
 				EADD1D121C9EE1D300E22D2B /* XMPPBandwidthMonitor.m in Sources */,
@@ -3117,9 +3432,10 @@
 				EADD1D251C9EE1D300E22D2B /* XMPPIQ+JabberRPCResonse.m in Sources */,
 				EA412BDA1CCA2F1D009C071B /* HYLoginInfo.m in Sources */,
 				EAB628151CCCAEBD00FB94BC /* NSFileManager+SW.m in Sources */,
+				EAF485CB1CD4664F0096B1F1 /* QNUserAgent.m in Sources */,
+				EAF485FD1CD47F280096B1F1 /* HYEmoticonKeyboardView.m in Sources */,
 				EADD1D481C9EE1D300E22D2B /* XMPPPubSub.m in Sources */,
 				EADD1D391C9EE1D300E22D2B /* XMPPvCardAvatarCoreDataStorageObject.m in Sources */,
-				EAC05BDD1CC52E3F00ABA3C5 /* AFURLSessionManager.m in Sources */,
 				EADD1D0F1C9EE1D300E22D2B /* XMPPParser.m in Sources */,
 				EADD1D111C9EE1D300E22D2B /* XMPPStream.m in Sources */,
 				EAE054F61CC8C2C500E57710 /* SVRadialGradientLayer.m in Sources */,
@@ -3137,19 +3453,22 @@
 				EA26AD9E1CD05046000DB77C /* GJCFStringUitil.m in Sources */,
 				EAC05AFB1CC50B7900ABA3C5 /* FMDatabaseAdditions.m in Sources */,
 				EAE0550F1CC90FEB00E57710 /* HYActionSheetController.m in Sources */,
+				EAF485D11CD4664F0096B1F1 /* QNUploadOption.m in Sources */,
 				EAE342CD1CD1E4100020DF2B /* HYSearchDisplayController.m in Sources */,
+				EAF485F51CD466800096B1F1 /* QNDnspodFree.m in Sources */,
 				EADD1D191C9EE1D300E22D2B /* XMPPReconnect.m in Sources */,
-				EAC05BDB1CC52E3F00ABA3C5 /* AFURLRequestSerialization.m in Sources */,
-				EAC05BD91CC52E3F00ABA3C5 /* AFSecurityPolicy.m in Sources */,
 				EADD1D471C9EE1D300E22D2B /* XMPPIQ+XEP_0060.m in Sources */,
 				EAE343471CD2166B0020DF2B /* UIPasteboard+YYText.m in Sources */,
 				EAC05B1C1CC50B7900ABA3C5 /* CALayer+YYWebImage.m in Sources */,
+				EAF485CA1CD4664F0096B1F1 /* QNSessionManager.m in Sources */,
 				EAC05B181CC50B7900ABA3C5 /* YYDiskCache.m in Sources */,
 				EAD7BEE41CC539F30089873C /* wav.mm in Sources */,
 				EADD1D271C9EE1D300E22D2B /* XMPPIQ+LastActivity.m in Sources */,
 				EAE343561CD21E720020DF2B /* HYImageChatViewCell.m in Sources */,
+				EAF485C31CD4664F0096B1F1 /* QNPHAssetFile.m in Sources */,
 				EAC05B941CC5297C00ABA3C5 /* GJCFAudioPlayer.m in Sources */,
 				EAE055011CC90F2600E57710 /* HYRegisterViewController.m in Sources */,
+				EA3D9B971CD3952F004461C4 /* HYChatInputPanel.m in Sources */,
 				EADD1D811C9EE1D300E22D2B /* DDTTYLogger.m in Sources */,
 				EADD1D3D1C9EE1D300E22D2B /* XMPPvCardTemp.m in Sources */,
 				EADD1D211C9EE1D300E22D2B /* XMPPUserMemoryStorageObject.m in Sources */,
@@ -3157,11 +3476,11 @@
 				EADD1D381C9EE1D300E22D2B /* XMPPvCard.xcdatamodeld in Sources */,
 				EAE3433B1CD2166B0020DF2B /* YYTextKeyboardManager.m in Sources */,
 				EADD1D1A1C9EE1D300E22D2B /* XMPPGroupCoreDataStorageObject.m in Sources */,
-				EAC05BDA1CC52E3F00ABA3C5 /* AFURLConnectionOperation.m in Sources */,
 				EAE343631CD251980020DF2B /* HYChatMessageFrame.m in Sources */,
 				EAE3434E1CD2166B0020DF2B /* YYTextView.m in Sources */,
 				EADD1D041C9EE1D300E22D2B /* XMPPXFacebookPlatformAuthentication.m in Sources */,
 				EAC05B241CC50B7900ABA3C5 /* YYImageCoder.m in Sources */,
+				EAF485BD1CD4664F0096B1F1 /* QN_GTM_Base64.m in Sources */,
 				EAE343481CD2166B0020DF2B /* UIView+YYText.m in Sources */,
 				EADD1D331C9EE1D300E22D2B /* XMPPRoomMessageMemoryStorageObject.m in Sources */,
 				EA39F46F1CCDFDEC00CEBEDF /* HYDatabaseHandler+Room.m in Sources */,
@@ -3171,23 +3490,30 @@
 				EAE343491CD2166B0020DF2B /* YYTextAsyncLayer.m in Sources */,
 				EADD1D841C9EE1D300E22D2B /* DDMultiFormatter.m in Sources */,
 				EA412BFB1CCA6E17009C071B /* HYRecentChatViewController.m in Sources */,
+				EAF485CC1CD4664F0096B1F1 /* QNFileRecorder.m in Sources */,
+				EAF485BF1CD4664F0096B1F1 /* QNAsyncRun.m in Sources */,
 				EAC05B9A1CC52A1D00ABA3C5 /* GJCFCachePathManager.m in Sources */,
 				EADD1D131C9EE1D300E22D2B /* XMPPCoreDataStorage.m in Sources */,
 				EAC05AFC1CC50B7900ABA3C5 /* FMDatabasePool.m in Sources */,
+				EAF485C41CD4664F0096B1F1 /* QNPHAssetResource.m in Sources */,
 				EADD1D2D1C9EE1D300E22D2B /* XMPPRoomOccupantCoreDataStorageObject.m in Sources */,
 				EAD7BEE31CC539F30089873C /* VoiceConverter.mm in Sources */,
 				EADD17471C9ED67D00E22D2B /* HYLoginViewController.m in Sources */,
+				EAF4857E1CD466420096B1F1 /* AFHTTPRequestOperationManager.m in Sources */,
 				EAC05B271CC50B7900ABA3C5 /* YYWebImageManager.m in Sources */,
 				EADD1D751C9EE1D300E22D2B /* DDList.m in Sources */,
 				EAC1988A1CCB8C3900A45C1A /* MGSwipeButton.m in Sources */,
+				EAF485831CD466420096B1F1 /* AFURLRequestSerialization.m in Sources */,
 				EADD1D3A1C9EE1D300E22D2B /* XMPPvCardCoreDataStorage.m in Sources */,
 				EADD1D031C9EE1D300E22D2B /* XMPPSCRAMSHA1Authentication.m in Sources */,
 				EADD1D411C9EE1D300E22D2B /* XMPPvCardTempEmail.m in Sources */,
-				EAC05BDC1CC52E3F00ABA3C5 /* AFURLResponseSerialization.m in Sources */,
 				EADD1D081C9EE1D300E22D2B /* NSXMLElement+XMPP.m in Sources */,
 				EADD1CFF1C9EE1D300E22D2B /* XMPPDeprecatedDigestAuthentication.m in Sources */,
+				EAF485F41CD466800096B1F1 /* QNDnspodEnterprise.m in Sources */,
 				EAE3434A1CD2166B0020DF2B /* YYTextTransaction.m in Sources */,
+				EAF485C11CD4664F0096B1F1 /* QNEtag.m in Sources */,
 				EADD1D321C9EE1D300E22D2B /* XMPPRoomMemoryStorage.m in Sources */,
+				EAF485C01CD4664F0096B1F1 /* QNCrc32.m in Sources */,
 				EAC05B911CC5297C00ABA3C5 /* GJCFAudioNetwork.m in Sources */,
 				EAE343591CD21E880020DF2B /* HYVoiceChatViewCell.m in Sources */,
 				EAE342DC1CD1E87A0020DF2B /* HYSingleChatViewController.m in Sources */,

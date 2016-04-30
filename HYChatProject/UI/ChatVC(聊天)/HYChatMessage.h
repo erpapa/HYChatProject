@@ -31,5 +31,6 @@ typedef NS_ENUM(NSInteger, HYChatMessageType) {
 @property (nonatomic, copy) NSString *timeString;  // 时间
 
 - (instancetype)initWithJsonString:(NSString *)jsonString;
+- (YYTextLayout *)layout; // 生成排版结果
 - (NSString *)jsonString; // 将模型转jsonString
 @end
