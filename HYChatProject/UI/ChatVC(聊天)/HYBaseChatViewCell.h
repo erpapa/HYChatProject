@@ -11,6 +11,7 @@
 
 @class HYBaseChatViewCell;
 @protocol HYBaseChatViewCellDelegate <NSObject>
+@optional
 - (void)chatViewCell:(HYBaseChatViewCell *)chatViewCell didClickHeaderWithJid:(XMPPJID *)jid; // 点击头像
 - (void)chatViewCellDelete:(HYBaseChatViewCell *)chatViewCell;     // 删除
 - (void)chatViewCellForward:(HYBaseChatViewCell *)chatViewCell;    // 转发

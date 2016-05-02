@@ -8,6 +8,6 @@
 
 #import "HYBaseChatViewCell.h"
 
-@interface HYVoiceChatViewCell : HYBaseChatViewCell
+@interface HYAudioChatViewCell : HYBaseChatViewCell
 
 @end

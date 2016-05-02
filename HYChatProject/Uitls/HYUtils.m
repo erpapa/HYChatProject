@@ -9,6 +9,7 @@
 #import "HYUtils.h"
 #import "HYLoginInfo.h"
 #import "HYXMPPManager.h"
+#import "HYEmoticonTool.h"
 #import "XMPPvCardTemp.h"
 #import "NSFileManager+SW.h"
 #import "SVProgressHUD.h"

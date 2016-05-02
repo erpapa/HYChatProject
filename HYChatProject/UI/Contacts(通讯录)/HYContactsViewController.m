@@ -16,6 +16,11 @@
 #import "HYXMPPManager.h"
 #import "HYLoginInfo.h"
 #import "HYSingleChatViewController.h"
+#import "HYNewFriendViewController.h"
+#import "HYGroupListViewController.h"
+#import "HYSearchDisplayController.h"
+#import "HYAddFriendViewController.h"
+#import "HYScanQRCodeViewController.h"
 
 @interface HYContactsViewController ()<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate,HYSearchBarDelegate>
 @property (nonatomic,strong) UITableView *tableView;
@@ -33,6 +38,9 @@
     // 1.tableView
     self.tableView.tableHeaderView = [self tableHeaderView];
     [self.view addSubview:self.tableView];
+    // 2.添加联系人
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addContacts:)];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -96,12 +104,6 @@
     [headerView addSubview:button1];
     
     return headerView;
-}
-
-#pragma mark - 搜索 - HYSearchBarDelegate
-- (void)searchBarDidClicked:(HYSearchBar *)searchBar
-{
-    
 }
 
 #pragma mark - UITableViewDatasource
@@ -371,31 +373,74 @@
 
 - (HYContactsModel *)modelWithStorageObject:(XMPPUserCoreDataStorageObject *)object
 {
-    NSString *userStr = object.nickname.length ? object.nickname : object.jid.user; // 昵称
-    CFMutableStringRef string = CFStringCreateMutableCopy(NULL, 0, (__bridge CFStringRef)userStr);
-    CFStringTransform(string, NULL, kCFStringTransformMandarinLatin, NO);// 拼音
-    CFStringTransform(string, NULL, kCFStringTransformStripDiacritics, NO);// 没有音标
-    NSString *name = (__bridge NSString *)string;// 姓名拼音
-    NSArray *letterArray = [name componentsSeparatedByString:@" "];
-    NSString *firstLetterStr = [NSString string];
-    for (NSString *str in letterArray) {
-        firstLetterStr =[firstLetterStr stringByAppendingString:[[str substringToIndex:1] uppercaseString]];// 截取首字母(并转换为大写)
+    NSString *userName = object.displayName.length ? object.displayName : object.jid.user; // 昵称
+    NSString *firstLetterStr = [NSString new];
+    if (userName.length) {
+        CFMutableStringRef string = CFStringCreateMutableCopy(NULL, 0, (__bridge CFStringRef)userName);
+        CFStringTransform(string, NULL, kCFStringTransformMandarinLatin, NO);// 拼音
+        CFStringTransform(string, NULL, kCFStringTransformStripDiacritics, NO);// 没有音标
+        NSString *name = (__bridge NSString *)string;// 姓名拼音
+        NSArray *letterArray = [name componentsSeparatedByString:@" "];
+        for (NSString *str in letterArray) {
+            firstLetterStr =[firstLetterStr stringByAppendingString:[[str substringToIndex:1] uppercaseString]];// 截取首字母(并转换为大写)
+        }
     }
+    
     HYContactsModel *contactsModel = [[HYContactsModel alloc] init];
     contactsModel.jid = object.jid;
+    contactsModel.displayName = userName;
     contactsModel.firstLetterStr = firstLetterStr;
     contactsModel.sectionNum = [object.sectionNum integerValue];
     contactsModel.isGroup = NO;
     return contactsModel;
 }
 
+#pragma mark - 搜索 - HYSearchBarDelegate
+- (void)searchBarDidClicked:(HYSearchBar *)searchBar
+{
+    
+}
+
+#pragma mark - 新朋友、群聊
 - (void)headerButtonClick:(UIButton *)sender
 {
     if (sender.tag == 0) {
-        
+        HYNewFriendViewController *newFriendVC = [[HYNewFriendViewController alloc] init];
+        [self.navigationController pushViewController:newFriendVC animated:YES];
     } else if (sender.tag == 1) {
-        
+        HYGroupListViewController *groupListVC = [[HYGroupListViewController alloc] init];
+        [self.navigationController pushViewController:groupListVC animated:YES];
     }
+}
+
+#pragma mark - 添加联系人
+- (void)addContacts:(id)sender
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"添加用户，用Chat聊天" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *textAction = [UIAlertAction actionWithTitle:@"输入帐号" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self showAddFriendViewController];
+    }];
+    UIAlertAction *QRAction = [UIAlertAction actionWithTitle:@"扫一扫" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:textAction];
+    [alert addAction:QRAction];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
+    
+}
+
+- (void)showAddFriendViewController
+{
+    HYAddFriendViewController *addFriendVC = [[HYAddFriendViewController alloc] init];
+    [self presentViewController:addFriendVC animated:YES completion:nil];
+}
+
+- (void)showScanQRViewController
+{
+    HYScanQRCodeViewController *scanQRVC = [[HYScanQRCodeViewController alloc] init];
+    [self presentViewController:scanQRVC animated:YES completion:nil];
 }
 
 #pragma mark - 懒加载

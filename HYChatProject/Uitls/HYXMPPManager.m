@@ -101,7 +101,7 @@ static HYXMPPManager *instance;
     _roster = [[XMPPRoster alloc] initWithRosterStorage:_rosterStorage];
     _roster.autoFetchRoster = YES; // 自动获取好友列表
     _roster.autoClearAllUsersAndResources = NO; // 断开连接不清空好友列表
-    _roster.autoAcceptKnownPresenceSubscriptionRequests = YES;
+    _roster.autoAcceptKnownPresenceSubscriptionRequests = YES;// 开启接收自动订阅功能（加好友不需要验证）
     
     // 设置房间
     _roomStorage = [[XMPPRoomCoreDataStorage alloc] init];
@@ -167,61 +167,6 @@ static HYXMPPManager *instance;
 
 #pragma mark -公共方法
 
-/**
- *  CoreData
- */
-- (NSManagedObjectContext *)managedObjectContext_roster
-{
-    return [_rosterStorage mainThreadManagedObjectContext];
-}
-
-- (NSManagedObjectContext *)managedObjectContext_capabilities
-{
-    return [_capabilitiesStorage mainThreadManagedObjectContext];
-}
-
-- (NSManagedObjectContext *)managedObjectContext_messageArchiving
-{
-    return [_messageArchivingStorage mainThreadManagedObjectContext];
-}
-
-
-- (NSManagedObjectContext *)managedObjectContext_room
-{
-    return [_roomStorage mainThreadManagedObjectContext];
-}
-
-// 更改密码
-- (void)xmppUserChangePassword:(NSString *)password
-{
-    NSXMLElement *query =[NSXMLElement elementWithName:@"query" xmlns:@"jabber:iq:register"];
-    NSXMLElement *username =[NSXMLElement elementWithName:@"username" stringValue:[HYLoginInfo sharedInstance].user];
-    NSXMLElement *changePassword =[NSXMLElement elementWithName:@"password" stringValue:password];
-    [query addChild:username];
-    [query addChild:changePassword];
-    
-    XMPPIQ *iq =[XMPPIQ iqWithType:@"set" elementID:[XMPPStream generateUUID] child:query];
-    [iq addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"%@",kDomain]];
-    [_xmppStream sendElement:iq];
-}
-
-// 注销
-- (void)xmppUserlogout
-{
-    // 1." 发送 "离线" 消息"
-    XMPPPresence *offline = [XMPPPresence presenceWithType:@"unavailable"];
-    [_xmppStream sendElement:offline];
-    
-    // 2. 与服务器断开连接
-    [_xmppStream disconnect];
-    
-    // 3.更新用户的登录状态
-    [HYLoginInfo sharedInstance].logon = NO;
-    [[HYLoginInfo sharedInstance] saveUserInfoToSanbox];
-    
-    // 4.切换根控制器
-    [HYUtils initRootViewController];
-}
 // 登录
 - (void)xmppUserLogin:(HYXMPPConnectStatusBlock)resultBlock{
     self.registerUser = NO;
@@ -247,6 +192,40 @@ static HYXMPPManager *instance;
     // 连接主机 成功后发送注册密码
     [self connectToHost];
 }
+
+// 注销
+- (void)xmppUserlogout
+{
+    // 1." 发送 "离线" 消息"
+    XMPPPresence *offline = [XMPPPresence presenceWithType:@"unavailable"];
+    [_xmppStream sendElement:offline];
+    
+    // 2. 与服务器断开连接
+    [_xmppStream disconnect];
+    
+    // 3.更新用户的登录状态
+    [HYLoginInfo sharedInstance].logon = NO;
+    [[HYLoginInfo sharedInstance] saveUserInfoToSanbox];
+    
+    // 4.切换根控制器
+    [HYUtils initRootViewController];
+}
+
+// 更改密码
+- (void)xmppUserChangePassword:(NSString *)password
+{
+    NSXMLElement *query =[NSXMLElement elementWithName:@"query" xmlns:@"jabber:iq:register"];
+    NSXMLElement *username =[NSXMLElement elementWithName:@"username" stringValue:[HYLoginInfo sharedInstance].user];
+    NSXMLElement *changePassword =[NSXMLElement elementWithName:@"password" stringValue:password];
+    [query addChild:username];
+    [query addChild:changePassword];
+    
+    XMPPIQ *iq =[XMPPIQ iqWithType:@"set" elementID:[XMPPStream generateUUID] child:query];
+    [iq addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"%@",kDomain]];
+    [_xmppStream sendElement:iq];
+}
+
+
 /**
  *  获得我的名片
  */
@@ -292,6 +271,112 @@ static HYXMPPManager *instance;
     } else {
         [self.avatarBlockDict setObject:[avatarBlock copy] forKey:[jid bare]];
     }
+}
+
+
+/**
+ *  添加好友
+ */
+- (void)addUserWithID:(NSString *)userID
+{
+    NSString *bare = userID;
+    NSRange range = [userID rangeOfString:@"@"];
+    if (range.location == NSNotFound) {// 如果没找到 NSNotFound
+        bare = [NSString stringWithFormat:@"%@@%@",userID,kDomain];
+    }
+    XMPPJID *jid = [XMPPJID jidWithString:bare];
+    //    BOOL contains = [_rosterStorage userExistsWithJID:jid xmppStream:_xmppStream];// 如果已经是好友就不需要再次添加
+    [_roster subscribePresenceToUser:jid];
+}
+/**
+ *  删除好友
+ */
+- (void)removeUser:(XMPPJID *)jid
+{
+    [_roster removeUser:jid];
+}
+
+/**
+ *  同意好友申请
+ */
+-(void)agreeUserRequest:(XMPPJID *)jid
+{
+    if ([[jid bare] isEqualToString:[[HYLoginInfo sharedInstance].jid bare]]) {
+        return; // 自己不能添加自己为好友
+    }
+    [_roster acceptPresenceSubscriptionRequestFrom:jid andAddToRoster:YES];
+}
+/**
+ *  拒绝好友申请
+ */
+-(void)rejectUserRequest:(XMPPJID *)jid
+{
+    [_roster rejectPresenceSubscriptionRequestFrom:jid];
+}
+
+/**
+ *  发送聊天消息
+ */
+
+- (void)sendText:(NSString *)text success:(HYSuccessBlock)success
+{
+    XMPPJID *jid = self.chatJid;
+    if (jid) {
+        [self sendText:text success:success];
+    } else
+    {
+        success(NO);
+    }
+}
+- (void)sendText:(NSString *)text toJid:(XMPPJID *)jid success:(HYSuccessBlock)success
+{
+    // 发送聊天消息
+    XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:jid];
+    [message addBody:text];
+    XMPPElementReceipt *receipt = [XMPPElementReceipt new];
+    [_xmppStream sendElement:message andGetReceipt:&receipt];
+    BOOL messageState =[receipt wait:-1];
+    if (messageState)
+    {
+        HYLog(@"%@ was sent",text);
+        success(YES);
+        // 发送通知
+        HYRecentChatModel *chatModel = [[HYRecentChatModel alloc] init];
+        chatModel.jid = jid;
+        chatModel.body = text;
+        chatModel.time = [[NSDate date] timeIntervalSince1970];
+        chatModel.isGroup = NO;
+        chatModel.unreadCount = 0;
+        [HYNotification postNotificationName:HYChatDidReceiveMessage object:chatModel];
+        
+    } else {
+        HYLog(@"%@ sent faild",text);
+        success(NO);
+    }
+    
+}
+/**
+ *  CoreData
+ */
+- (NSManagedObjectContext *)managedObjectContext_roster
+{
+    return [_rosterStorage mainThreadManagedObjectContext];
+}
+
+- (NSManagedObjectContext *)managedObjectContext_capabilities
+{
+    return [_capabilitiesStorage mainThreadManagedObjectContext];
+}
+
+- (NSManagedObjectContext *)managedObjectContext_messageArchiving
+{
+    return [_messageArchivingStorage mainThreadManagedObjectContext];
+}
+
+
+- (NSManagedObjectContext *)managedObjectContext_room
+{
+    return [_roomStorage mainThreadManagedObjectContext];
 }
 
 #pragma mark 连接到服务器

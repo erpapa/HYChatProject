@@ -1,5 +1,5 @@
 //
-//  HYEmoticonInputView.h
+//  HYEmoticonKeyboardView.h
 //  HYChatProject
 //
 //  Created by erpapa on 16/4/30.
@@ -15,5 +15,5 @@
 
 @interface HYEmoticonKeyboardView : UIView
 @property (nonatomic, weak) id<HYEmoticonKeyboardViewDelegate> delegate;
-+ (instancetype)sharedView;
+
 @end

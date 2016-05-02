@@ -8,23 +8,25 @@
 
 #import "HYSingleChatViewController.h"
 #import "HYChatMessageFrame.h"
-#import "HYChatInputPanel.h"
+#import "HYInputViewController.h"
 #import "HYXMPPManager.h"
 #import "HYLoginInfo.h"
 #import "HYUtils.h"
+
 #import "HYBaseChatViewCell.h"
 #import "HYTextChatViewCell.h"
 #import "HYImageChatViewCell.h"
-#import "HYVoiceChatViewCell.h"
+#import "HYAudioChatViewCell.h"
 #import "HYVideoChatViewCell.h"
 
 static NSString *kTextChatViewCellIdentifier = @"kTextChatViewCellIdentifier";
 static NSString *kImageChatViewCellIdentifier = @"kImageChatViewCellIdentifier";
-static NSString *kVoiceChatViewCellIdentifier = @"kVoiceChatViewCellIdentifier";
+static NSString *kAudioChatViewCellIdentifier = @"kAudioChatViewCellIdentifier";
 static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
-@interface HYSingleChatViewController ()<UITableViewDataSource, UITableViewDelegate,NSFetchedResultsControllerDelegate>
+@interface HYSingleChatViewController ()<UITableViewDataSource, UITableViewDelegate,NSFetchedResultsControllerDelegate, HYInputViewControllerDelegate, HYBaseChatViewCellDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, strong) HYInputViewController *inputVC;
 @property (nonatomic, strong) NSFetchedResultsController *resultController;//查询结果集合
 @end
 
@@ -37,22 +39,30 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     // 1.tableView
     [self.tableView registerClass:[HYTextChatViewCell class] forCellReuseIdentifier:kTextChatViewCellIdentifier];
     [self.tableView registerClass:[HYImageChatViewCell class] forCellReuseIdentifier:kImageChatViewCellIdentifier];
-    [self.tableView registerClass:[HYVoiceChatViewCell class] forCellReuseIdentifier:kVoiceChatViewCellIdentifier];
+    [self.tableView registerClass:[HYAudioChatViewCell class] forCellReuseIdentifier:kAudioChatViewCellIdentifier];
     [self.tableView registerClass:[HYVideoChatViewCell class] forCellReuseIdentifier:kVideoChatViewCellIdentifier];
     
     [self.view addSubview:self.tableView];
     
     // 2.聊天工具条
+    self.inputVC = [[HYInputViewController alloc] init];
+    self.inputVC.delegate = self;
+    self.inputVC.view.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds) - kInputBarHeight, CGRectGetWidth(self.view.bounds), kInputBarHeight);
+    [self.view addSubview:self.inputVC.view];
     
+    // 3.设置当前聊天对象
+    [HYXMPPManager sharedInstance].chatJid = self.chatJid;
     
-    // 2.获取聊天数据
+    // 4.获取聊天数据
     [self getChatHistory];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.tableView reloadData];
+    // 自动滚动表格到最后一行
+    CGRect section = [self.tableView rectForSection:0];
+    self.tableView.contentOffset = CGPointMake(0, section.size.height - (CGRectGetHeight(self.view.bounds) - kInputBarHeight));
 }
 
 #pragma mark - UITableViewDataSource
@@ -75,8 +85,8 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
             cell = [tableView dequeueReusableCellWithIdentifier:kImageChatViewCellIdentifier];
             break;
         }
-        case HYChatMessageTypeVoice:{
-            cell = [tableView dequeueReusableCellWithIdentifier:kVoiceChatViewCellIdentifier];
+        case HYChatMessageTypeAudio:{
+            cell = [tableView dequeueReusableCellWithIdentifier:kAudioChatViewCellIdentifier];
             break;
         }
         case HYChatMessageTypeVideo:{
@@ -104,6 +114,10 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     if (popMenu.isMenuVisible) {
         [popMenu setMenuVisible:NO animated:YES];
     }
+    if (self.inputVC.isFirstResponder) {
+        [self.inputVC resignFirstResponder]; // 输入框取消第一响应者
+    }
+    
 }
 
 #pragma mark - 获取聊天数据
@@ -119,9 +133,11 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     // 3.过滤
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bareJidStr == %@ AND streamBareJidStr == %@",self.chatJid.bare, [HYLoginInfo sharedInstance].jid.bare];
     [fetchRequest setPredicate:predicate];
-    // 4.排序(升序)
+    // 4.排序(降序)
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
+//    [fetchRequest setFetchLimit:20]; // 分页
+//    [fetchRequest setFetchOffset:0];
     
     //4.执行查询获取数据
     _resultController = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
@@ -146,11 +162,13 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(nullable NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(nullable NSIndexPath *)newIndexPath
 {
     XMPPMessageArchiving_Message_CoreDataObject *object = anObject;
+    if (object.body.length == 0) return; // 如果body为空，返回
     HYChatMessageFrame *messageFrame = [self chatmessageFrameFromObject:object];
     switch (type) {
-        case NSFetchedResultsChangeInsert:{ // 插入(最后)
-            [self.dataSource insertObject:messageFrame atIndex:newIndexPath.row];
-            [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+        case NSFetchedResultsChangeInsert:{ // 插入
+            [self.dataSource addObject:messageFrame];
+            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.dataSource.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+            [self scrollToBottom];
             break;
         }
         case NSFetchedResultsChangeDelete:{ // 删除
@@ -159,13 +177,13 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
             break;
         }
         case NSFetchedResultsChangeMove:{ // 移动
-            [self.dataSource removeObjectAtIndex:indexPath.row];
-            [self.dataSource insertObject:messageFrame atIndex:newIndexPath.row];
-            [self.tableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
-            [self.tableView reloadRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+//            [self.dataSource removeObjectAtIndex:indexPath.row];
+//            [self.dataSource insertObject:messageFrame atIndex:newIndexPath.row];
+//            [self.tableView moveRowAtIndexPath:indexPath toIndexPath:newIndexPath];
+//            [self.tableView reloadRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationNone];
             break;
         }
-        case NSFetchedResultsChangeUpdate:{ // 更新数据
+        case NSFetchedResultsChangeUpdate:{ // 更新
             [self.dataSource removeObjectAtIndex:indexPath.row];
             [self.dataSource insertObject:messageFrame atIndex:indexPath.row];
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
@@ -173,6 +191,17 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
         }
         default:
             break;
+    }
+}
+
+/**
+ *  自动滚动表格到最后一行
+ */
+- (void)scrollToBottom
+{
+    if (self.dataSource.count) {
+        NSIndexPath *lastPath = [NSIndexPath indexPathForRow:self.dataSource.count - 1 inSection:0];
+        [self.tableView scrollToRowAtIndexPath:lastPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
 }
 
@@ -191,7 +220,6 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     message.isOutgoing = object.isOutgoing;
     message.isComposing = object.isComposing;
     message.timeString = [HYUtils timeStringFromDate:object.timestamp];
-    message.textLayout = [message layout]; // 生成排版结果
     // 判断是否显示时间
     HYChatMessageFrame *lastMessageFrame = [self.dataSource lastObject];
     message.isHidenTime = [lastMessageFrame.chatMessage.timeString isEqualToString:message.timeString];
@@ -199,6 +227,21 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     HYChatMessageFrame *messageFrame = [[HYChatMessageFrame alloc] init];
     messageFrame.chatMessage = message;
     return messageFrame;
+}
+#pragma mark - 发送inputViewControllerDDelegate
+
+- (void)inputViewController:(HYInputViewController *)inputViewController sendMessage:(HYChatMessage *)message
+{
+    NSString *body = [message jsonString];
+    [[HYXMPPManager sharedInstance] sendText:body toJid:self.chatJid success:^(BOOL success) {
+        
+    }];
+}
+
+- (void)inputViewController:(HYInputViewController *)inputViewController newHeight:(CGFloat)height
+{
+    self.tableView.contentInset = UIEdgeInsetsMake(64, 0, height, 0);
+    [self scrollToBottom];
 }
 
 #pragma mark - 懒加载
@@ -227,6 +270,8 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
 - (void)dealloc
 {
     self.dataSource = nil;
+    self.inputVC = nil;
+    HYLog(@"%@-dealloc",self);
 }
 
 - (void)didReceiveMemoryWarning {

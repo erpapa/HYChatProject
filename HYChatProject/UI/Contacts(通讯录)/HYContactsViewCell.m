@@ -15,8 +15,7 @@
 @interface HYContactsViewCell()
 @property (nonatomic, strong) UIImageView *headView;
 @property (nonatomic, strong) UILabel *nameLabel;
-@property (nonatomic, strong) UILabel *detailLabel;
-@property (nonatomic, strong) UIImageView *netView;
+@property (nonatomic, strong) UIImageView *statusView;
 @property (nonatomic, strong) UIView *line;
 
 @end
@@ -60,34 +59,26 @@
     self.headView.layer.masksToBounds = YES;
     [self.contentView addSubview:self.headView];
     
-    // 2.网络状况
-    CGFloat netViewlH = headViewW * 0.5;
-    CGFloat netViewX = kScreenW - netViewlH - margin;
-    CGFloat netViewY = headViewY;
-    self.netView = [[UIImageView alloc] initWithFrame:CGRectMake(netViewX, netViewY, netViewlH, netViewlH)];
-    [self.contentView addSubview:self.netView];
-    
-    // 3.昵称
+    // 2.昵称
     CGFloat nameLabelX = CGRectGetMaxX(self.headView.frame) + headViewX;
     CGFloat nameLabelY = headViewY;
-    CGFloat nameLabelW = CGRectGetMinX(self.netView.frame) - nameLabelX;
-    CGFloat nameLabelH = netViewlH;
+    CGFloat nameLabelW = CGRectGetWidth(self.bounds) - nameLabelX * 2;
+    CGFloat nameLabelH = headViewW;
     self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH)];
     self.nameLabel.textColor = [UIColor blackColor];
     self.nameLabel.font = [UIFont systemFontOfSize:18];
     [self.contentView addSubview:self.nameLabel];
     
-    // 4.[状态] 签名
-    CGFloat detailLabelX = nameLabelX;
-    CGFloat detailLabelY = CGRectGetMaxY(self.nameLabel.frame);
-    CGFloat detailLabelW = nameLabelW + 20;
-    CGFloat detailLabelH = nameLabelH;
-    self.detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(detailLabelX, detailLabelY, detailLabelW, detailLabelH)];
-    self.detailLabel.textColor = [UIColor grayColor];
-    self.detailLabel.font = [UIFont systemFontOfSize:14];
-    [self.contentView addSubview:self.detailLabel];
+    // 3.[状态]
+    CGFloat statusViewW = 6;
+    CGFloat statusViewX = CGRectGetMaxX(self.headView.frame) - statusViewW;
+    CGFloat statusViewY = CGRectGetMaxY(self.headView.frame) - statusViewW;
+    self.statusView = [[UIImageView alloc] initWithFrame:CGRectMake(statusViewX, statusViewY, statusViewW, statusViewW)];
+    self.statusView.image = [UIImage circleImageWithColor:[UIColor colorWithRed:239/255.0 green:239/255.0 blue:244/255.0 alpha:1.0f] size:CGSizeMake(12, 12)];
+    [self.contentView addSubview:self.statusView];
     
-    // 5.分割线
+    
+    // 4.分割线
     self.line = [[UIView alloc] initWithFrame:CGRectMake(nameLabelX, kContactsViewCellHeight - 1, kScreenW - nameLabelX, 1)];
     self.line.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:244/255.0 alpha:1.0f];
     [self.contentView addSubview:self.line];
@@ -96,19 +87,38 @@
 - (void)setModel:(HYContactsModel *)model
 {
     _model = model;
-    self.nameLabel.text = model.jid.user;
-    NSString *sectionNum = [HYUtils stringFromSectionNum:model.sectionNum];
-    self.detailLabel.text = [NSString stringWithFormat:@"%@ %@",sectionNum, model.signature];
+    self.nameLabel.text = model.displayName;
+    self.statusView.image = [self imageFromSectionNum:model.sectionNum];
     __weak typeof(self) weakSelf = self;
-    [[HYXMPPManager sharedInstance] getvCardFromJID:model.jid vCardBlock:^(XMPPvCardTemp *vCardTemp) {
+    [[HYXMPPManager sharedInstance] getAvatarFromJID:model.jid avatarBlock:^(NSData *avatar) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (vCardTemp.photo) {
-            strongSelf.headView.image = [UIImage imageWithData:vCardTemp.photo];
-        }
-        if (vCardTemp.nickname.length) {
-            strongSelf.nameLabel.text = vCardTemp.nickname;
+        if (avatar.length) {
+            strongSelf.headView.image = [UIImage imageWithData:avatar];
         }
     }];
+}
+
+- (UIImage *)imageFromSectionNum:(NSInteger)sectionNum
+{
+    UIImage *image = nil;
+    switch (sectionNum) {
+        case 0:{
+            image = [UIImage circleImageWithColor:[UIColor colorWithRed:41/255.0 green:196/255.0 blue:50/255.0 alpha:1.0f] size:CGSizeMake(12, 12)];
+            break;
+        }
+        case 1:{
+            image = [UIImage circleImageWithColor:[UIColor colorWithRed:254/255.0 green:186/255.0 blue:20/255.0 alpha:1.0f] size:CGSizeMake(12, 12)];
+            break;
+        }
+        case 2:{
+            image = [UIImage circleImageWithColor:[UIColor colorWithRed:176/255.0 green:176/255.0 blue:176/255.0 alpha:1.0f] size:CGSizeMake(12, 12)];
+            break;
+        }
+            
+        default:
+            break;
+    }
+    return image;
 }
 
 @end

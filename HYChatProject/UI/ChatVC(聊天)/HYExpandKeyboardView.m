@@ -1,5 +1,5 @@
 //
-//  HYExpandInputView.m
+//  HYExpandKeyboardView.m
 //  HYChatProject
 //
 //  Created by erpapa on 16/4/30.

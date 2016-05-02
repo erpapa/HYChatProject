@@ -12,6 +12,7 @@
 #import "XMPPvCardTemp.h"
 #import "HYUtils.h"
 #import "HYXMPPManager.h"
+#import "HYMyvCardViewController.h"
 
 static NSString *kMeViewCellIdentifier = @"kMeViewCellIdentifier";
 static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
@@ -32,8 +33,9 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
     if (self.vCard == nil) {
         __weak typeof(self) weakSelf = self;
         [[HYXMPPManager sharedInstance] getMyvCard:^(XMPPvCardTemp *vCardTemp) { // 获取个人名片
-            weakSelf.vCard = vCardTemp;
-            [weakSelf.tableView reloadData];
+            __strong typeof(weakSelf) strongSellf = weakSelf;
+            strongSellf.vCard = vCardTemp;
+            [strongSellf.tableView reloadData];
         }];
     }
     
@@ -95,7 +97,10 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (indexPath.section == 0) {
-        [[HYXMPPManager sharedInstance] xmppUserlogout]; // 退出
+        HYMyvCardViewController *myvCardVC = [[HYMyvCardViewController alloc] init];
+        [self.navigationController pushViewController:myvCardVC animated:YES];
+    } else {
+        
     }
 }
 

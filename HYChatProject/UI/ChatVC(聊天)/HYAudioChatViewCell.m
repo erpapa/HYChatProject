@@ -6,14 +6,14 @@
 //  Copyright © 2016年 erpapa. All rights reserved.
 //
 
-#import "HYVoiceChatViewCell.h"
+#import "HYAudioChatViewCell.h"
 
-@interface HYVoiceChatViewCell()
+@interface HYAudioChatViewCell()
 @property (nonatomic, strong) UIImageView *voiceView;
 @property (nonatomic, strong) UILabel *voiceLabel;
 @end
 
-@implementation HYVoiceChatViewCell
+@implementation HYAudioChatViewCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

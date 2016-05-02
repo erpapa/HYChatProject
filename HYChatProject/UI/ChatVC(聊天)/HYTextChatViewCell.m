@@ -39,9 +39,8 @@
 - (void)setMessageFrame:(HYChatMessageFrame *)messageFrame
 {
     [super setMessageFrame:messageFrame];
-    HYChatMessage *message = messageFrame.chatMessage;
     self.textView.frame = messageFrame.textViewFrame;
-    self.textView.textLayout = message.textLayout;
+    self.textView.textLayout = messageFrame.textLayout;
 }
 
 #pragma mark - 继承方法
@@ -69,7 +68,7 @@
 - (void)copyMesssage:(UIMenuItem *)item
 {
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    [pasteboard setString:self.messageFrame.chatMessage.body];
+    [pasteboard setString:self.messageFrame.chatMessage.data];
 }
 
 - (void)forwardMessage:(UIMenuItem *)item

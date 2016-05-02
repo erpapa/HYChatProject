@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class YYTextSimpleEmoticonParser;
 @interface HYEmoticonTool : NSObject
 
 @property (nonatomic, strong, readonly) NSDictionary *emoticonDict;         // 所有表情组成的字典
+@property (nonatomic, strong, readonly) YYTextSimpleEmoticonParser *emoticonParser;// 表情
 @property (nonatomic, strong, readonly) NSArray *emoticonArray;             // 表情数组
 @property (nonatomic, strong, readonly) NSRegularExpression *emoticonRegex; // 表情正则
 

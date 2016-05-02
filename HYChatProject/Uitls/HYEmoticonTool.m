@@ -7,6 +7,8 @@
 //
 
 #import "HYEmoticonTool.h"
+#import "YYImage.h"
+#import "YYText.h"
 
 @implementation HYEmoticonTool
 static HYEmoticonTool *instance;
@@ -39,6 +41,8 @@ static HYEmoticonTool *instance;
 - (void)setupData
 {
     NSMutableDictionary *tempDict = [NSMutableDictionary dictionary];
+    // 表情匹配
+    NSMutableDictionary *mapper = [NSMutableDictionary dictionary];
     _emoticonArray = [self loadInfoArray];
     for (NSInteger index = 0; index < _emoticonArray.count; index++) {
         NSArray *array = [_emoticonArray objectAtIndex:index];
@@ -48,6 +52,14 @@ static HYEmoticonTool *instance;
     }
     _emoticonDict = tempDict;
     _emoticonRegex = [NSRegularExpression regularExpressionWithPattern:@"\\[[^ \\[\\]]+?\\]" options:kNilOptions error:NULL];
+    BACK(^{
+        [_emoticonDict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            NSData *data = [NSData dataWithContentsOfFile:[self imagePathForkey:obj]];
+            mapper[key] = [YYImage imageWithData:data scale:2.0];//由于是@2x的图片，设置其scale为2.0
+        }];
+        _emoticonParser = [YYTextSimpleEmoticonParser new];
+        _emoticonParser.emoticonMapper = mapper;
+    });
 }
 
 - (NSString *)imagePathForkey:(NSString *)key

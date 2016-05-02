@@ -27,6 +27,7 @@ typedef void(^HYSuccessBlock)(BOOL success);//操作成功/失败
 @interface HYXMPPManager : NSObject
 @property (nonatomic, strong,readonly)XMPPStream *xmppStream; // xmpp基础服务类
 @property (nonatomic, assign,readonly)HYXMPPConnectStatus status; // 连接状态
+@property (nonatomic, strong) XMPPJID *chatJid;
 
 
 /********************* 单例 ********************************/
@@ -63,8 +64,38 @@ typedef void(^HYSuccessBlock)(BOOL success);//操作成功/失败
  */
 - (void)getvCardFromJID:(XMPPJID *)jid vCardBlock:(HYvCardBlock)vCardBlock;
 /**
- *  CoreData
+ *  获得头像
  */
+- (void)getAvatarFromJID:(XMPPJID *)jid avatarBlock:(HYAvatarBlock)avatarBlock;
+
+/********************* 添加、删除好友 ********************************/
+
+/**
+ *  添加好友
+ */
+- (void)addUserWithID:(NSString *)userID;
+/**
+ *  删除好友
+ */
+- (void)removeUser:(XMPPJID *)jid;
+/**
+ *  同意好友申请
+ */
+-(void)agreeUserRequest:(XMPPJID *)jid;
+/**
+ *  拒绝好友申请
+ */
+-(void)rejectUserRequest:(XMPPJID *)jid;
+
+
+/********************* 发送聊天消息 ********************************/
+- (void)sendText:(NSString *)text success:(HYSuccessBlock)success;
+- (void)sendText:(NSString *)text toJid:(XMPPJID *)jid success:(HYSuccessBlock)success;
+
+/********************* muc聊天室 ********************************/
+
+/********************* CoreData ********************************/
+
 - (NSManagedObjectContext *)managedObjectContext_roster;
 - (NSManagedObjectContext *)managedObjectContext_capabilities;
 - (NSManagedObjectContext *)managedObjectContext_messageArchiving;

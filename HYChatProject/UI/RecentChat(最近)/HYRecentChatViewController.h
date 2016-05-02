@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface HYRecentChatViewController : UIViewController
-@property (nonatomic, copy) NSString *chatBare; // 当前联系人/群组
+
 @end

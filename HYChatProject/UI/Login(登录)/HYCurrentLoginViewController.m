@@ -126,12 +126,12 @@
 {
     if (transition.toVisible == YES) { // 键盘弹起
         CGFloat offsetY = CGRectGetMaxY(self.loginButton.frame) + CGRectGetHeight(transition.toFrame) - CGRectGetHeight(self.scrollView.frame) + 24;
-        [UIView animateWithDuration:transition.animationCurve delay:0 options:transition.animationOption animations:^{
+        [UIView animateWithDuration:transition.animationDuration delay:0 options:transition.animationOption animations:^{
             if (offsetY > 0) self.scrollView.transform = CGAffineTransformMakeTranslation(0, -offsetY);
         } completion:^(BOOL finished) {
         }];
     } else { // 键盘隐藏
-        [UIView animateWithDuration:transition.animationCurve delay:0 options:transition.animationOption animations:^{
+        [UIView animateWithDuration:transition.animationDuration delay:0 options:transition.animationOption animations:^{
             self.scrollView.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished) {
         }];

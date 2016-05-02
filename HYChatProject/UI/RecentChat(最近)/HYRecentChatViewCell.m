@@ -13,13 +13,14 @@
 #import "XMPPvCardTemp.h"
 #import "YYText.h"
 
+#define kPanding 10
+
 @interface HYRecentChatViewCell()
 @property (nonatomic, strong) UIImageView *headView;
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) YYLabel *detailLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
-@property (nonatomic, strong) UIImageView *badgeView;
-@property (nonatomic, strong) UILabel *badgeLabel;
+@property (nonatomic, strong) UIButton *badgeButton;
 @property (nonatomic, strong) UIView *line;
 @end
 
@@ -51,8 +52,7 @@
 - (void)setupContentView
 {
     CGFloat margin = 6.0; // 上下间隔
-    CGFloat panding = 10.0; // 左右间隔
-    CGFloat headViewX = panding;
+    CGFloat headViewX = kPanding;
     CGFloat headViewY = margin;
     CGFloat headViewW = kRecentChatViewCellHeight - headViewY * 2;
     // 1.头像
@@ -66,7 +66,7 @@
     // 2.日期
     CGFloat timeLabelW = 60;
     CGFloat timeLabelH = headViewW * 0.5;
-    CGFloat timeLabelX = kScreenW - timeLabelW - panding;
+    CGFloat timeLabelX = kScreenW - timeLabelW - kPanding;
     CGFloat timeLabelY = headViewY;
     self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(timeLabelX, timeLabelY, timeLabelW, timeLabelH)];
     self.timeLabel.textColor = [UIColor grayColor];
@@ -91,25 +91,21 @@
     CGFloat detailLabelH = nameLabelH;
     self.detailLabel = [[YYLabel alloc] initWithFrame:CGRectMake(detailLabelX, detailLabelY, detailLabelW, detailLabelH)];
     self.detailLabel.numberOfLines = 1; // 显示一行
-    self.detailLabel.textVerticalAlignment = YYTextVerticalAlignmentCenter; // 居中
+    self.detailLabel.textVerticalAlignment = YYTextVerticalAlignmentCenter; // 上下居中
     [self.contentView addSubview:self.detailLabel];
     
     // 4.未读数
-    CGFloat badgeViewW = 20;
-    CGFloat badgeViewX = kScreenW - badgeViewW - panding;
+    CGFloat badgeViewW = 18;
+    CGFloat badgeViewH = badgeViewW;
+    CGFloat badgeViewX = kScreenW - kPanding - badgeViewW;
     CGFloat badgeViewY = detailLabelY + (detailLabelH - badgeViewW) * 0.5;
     
-    self.badgeView = [[UIImageView alloc] initWithFrame:CGRectMake(badgeViewX, badgeViewY, badgeViewW, badgeViewW)];
-    self.badgeView.image = [UIImage imageWithColor:[UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f] size:CGSizeMake(badgeViewW * 2, badgeViewW * 2)];
-    self.badgeView.layer.cornerRadius = badgeViewW * 0.5;
-    self.badgeView.layer.masksToBounds = YES;
-    [self.contentView addSubview:self.badgeView];
-    
-    self.badgeLabel= [[UILabel alloc] initWithFrame:self.badgeView.bounds];
-    self.badgeLabel.textColor = [UIColor whiteColor];
-    self.badgeLabel.font = [UIFont systemFontOfSize:14];
-    self.badgeLabel.textAlignment = NSTextAlignmentCenter;
-    [self.badgeView addSubview:self.badgeLabel];
+    self.badgeButton = [[UIButton alloc] initWithFrame:CGRectMake(badgeViewX, badgeViewY, badgeViewW, badgeViewW)];
+    [self.badgeButton setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f] size:CGSizeMake(badgeViewW * 2, badgeViewW * 2)] forState:UIControlStateNormal];
+    self.badgeButton.titleLabel.font = [UIFont systemFontOfSize:13];
+    self.badgeButton.layer.cornerRadius = badgeViewH * 0.5;
+    self.badgeButton.layer.masksToBounds = YES;
+    [self.contentView addSubview:self.badgeButton];
     
     // 5.分割线
     self.line = [[UIView alloc] initWithFrame:CGRectMake(nameLabelX, kRecentChatViewCellHeight - 1, kScreenW - nameLabelX, 1)];
@@ -123,20 +119,35 @@
     self.nameLabel.text = chatModel.jid.user;
     self.detailLabel.attributedText = chatModel.attText; // 赋值属性字符串
     self.timeLabel.text = [HYUtils timeStringSince1970:chatModel.time];
+    // 未读消息数
+    self.badgeButton.frame = [self newFrameWithUnreadCount:chatModel.unreadCount];
     NSString *badgeValue = [HYUtils stringFromUnreadCount:chatModel.unreadCount];
-    self.badgeView.hidden = badgeValue.length ? NO : YES;
-    self.badgeLabel.text = badgeValue;
+    self.badgeButton.hidden = badgeValue.length ? NO : YES;
+    [self.badgeButton setTitle:badgeValue forState:UIControlStateNormal];
     __weak typeof(self) weakSelf = self;
-    [[HYXMPPManager sharedInstance] getvCardFromJID:chatModel.jid vCardBlock:^(XMPPvCardTemp *vCardTemp) {
+    [[HYXMPPManager sharedInstance] getAvatarFromJID:chatModel.jid avatarBlock:^(NSData *avatar) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (vCardTemp.photo) {
-            strongSelf.headView.image = [UIImage imageWithData:vCardTemp.photo];
-        }
-        if (vCardTemp.nickname.length) {
-            strongSelf.nameLabel.text = vCardTemp.nickname;
+        if (avatar.length) {
+            strongSelf.headView.image = [UIImage imageWithData:avatar];
         }
     }];
     
+}
+
+- (CGRect)newFrameWithUnreadCount:(int)unreadCount
+{
+    CGRect newFrame = self.badgeButton.frame;
+    if (unreadCount < 10) {
+        newFrame.size.width = 18;
+        newFrame.origin.x = kScreenW - kPanding - 18;
+    } else if (unreadCount < 100) {
+        newFrame.size.width = 25;
+        newFrame.origin.x = kScreenW - kPanding - 24;
+    } else {
+        newFrame.size.width = 30;
+        newFrame.origin.x = kScreenW - kPanding - 30;
+    }
+    return newFrame;
 }
 
 @end

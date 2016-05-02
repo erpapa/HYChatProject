@@ -42,7 +42,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.chatBare = nil; // 置空当前联系人
     XMPPStream *stream = [HYXMPPManager sharedInstance].xmppStream;
     if ([stream isConnected] || [stream isConnecting]) {
         return;
@@ -81,12 +80,11 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     HYRecentChatModel *chatModel = [self.dataSource objectAtIndex:indexPath.row];
     self.unreadCount -= chatModel.unreadCount; // 未读数
-    self.chatBare = [chatModel.jid bare]; // 进入聊天界面（和谁聊天）
     chatModel.unreadCount = 0;
     [self updateChatModel:chatModel atIndexPath:indexPath]; // 更新数据
     if (chatModel.isGroup) { // 群聊
         HYGroupChatViewController *groupVC = [[HYGroupChatViewController alloc] init];
-        groupVC.chatJid = [chatModel.jid bareJID];
+        groupVC.chatJid = chatModel.jid;
         groupVC.hidesBottomBarWhenPushed = YES; // 隐藏tabBar
         [self.navigationController pushViewController:groupVC animated:YES];
     }else{
@@ -136,9 +134,10 @@
     HYRecentChatModel *chatModel = noti.object;
     NSInteger count = self.dataSource.count;
     NSInteger found = NSNotFound;
+    NSString *chatBare = [[HYXMPPManager sharedInstance].chatJid bare];
     for (NSInteger index = 0; index < count; index++) {
         HYRecentChatModel *model = [self.dataSource objectAtIndex:index];
-        if (self.chatBare.length && [[model.jid bare] isEqualToString:self.chatBare]) {
+        if (chatBare.length && [[model.jid bare] isEqualToString:chatBare]) {
             found = index;
             chatModel.unreadCount = 0;
             NSIndexPath *currentIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
@@ -155,8 +154,12 @@
         }
     }
     if (found == NSNotFound) {
-        self.unreadCount += 1; // 未读数+1
-        [self insertChatModel:chatModel atIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];// 插入数据
+        if (chatBare.length && [[chatModel.jid bare] isEqualToString:chatBare]) {
+            [self insertChatModel:chatModel atIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];// 插入数据
+        } else {
+            self.unreadCount += 1; // 未读数+1
+            [self insertChatModel:chatModel atIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];// 插入数据
+        }
     }
     
 }

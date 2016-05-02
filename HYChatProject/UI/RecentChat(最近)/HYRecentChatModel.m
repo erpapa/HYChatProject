@@ -36,14 +36,14 @@
     NSString *bodyString = nil;
     switch (type) {
         case HYChatMessageTypeText:{
-            bodyString = dict[@"body"];
+            bodyString = dict[@"data"];
             break;
         }
         case HYChatMessageTypeImage:{
             bodyString = @"[图片]";
             break;
         }
-        case HYChatMessageTypeVoice:{
+        case HYChatMessageTypeAudio:{
             bodyString = @"[语音]";
             break;
         }
@@ -59,7 +59,7 @@
 
 - (NSAttributedString *)attributedString:(NSString *)string
 {
-    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:string];
+    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@",string]];
     text.yy_font = [UIFont systemFontOfSize:14]; // 字体
     text.yy_color = [UIColor lightGrayColor];
     // 匹配 [表情]
@@ -88,8 +88,8 @@
 {
     if ([string isEqualToString:@"image"]) {
         return HYChatMessageTypeImage;
-    } else if ([string isEqualToString:@"voice"]) {
-        return HYChatMessageTypeVoice;
+    } else if ([string isEqualToString:@"audio"]) {
+        return HYChatMessageTypeAudio;
     } else if ([string isEqualToString:@"video"]) {
         return HYChatMessageTypeVideo;
     }
