@@ -569,6 +569,32 @@ NSString *const kXMPPvCardTempElement = @"vCard";
 	}
 }
 
+- (NSString *)sex {
+    return [[self elementForName:@"SEX"] stringValue];
+}
+
+
+- (void)setSex:(NSString *)sex {
+    XMPP_VCARD_SET_STRING_CHILD(sex, @"SEX");
+}
+
+- (NSString *)email {
+    return [[self elementForName:@"EMAIL"] stringValue];
+}
+
+
+- (void)setEmail:(NSString *)email {
+    XMPP_VCARD_SET_STRING_CHILD(email, @"EMAIL");
+}
+
+- (NSString *)birthDay {
+    return [[self elementForName:@"BDAY"] stringValue];
+}
+
+
+- (void)setBirthDay:(NSString *)birthDay {
+    XMPP_VCARD_SET_STRING_CHILD(birthDay, @"BDAY");
+}
 
 - (NSArray *)orgUnits {
 	NSArray *result = nil;

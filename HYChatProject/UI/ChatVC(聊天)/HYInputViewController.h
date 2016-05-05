@@ -20,4 +20,5 @@
 
 @interface HYInputViewController : UIViewController
 @property (nonatomic, weak) id<HYInputViewControllerDelegate> delegate;
+@property (nonatomic, assign) BOOL onlyMoveKeyboard;
 @end

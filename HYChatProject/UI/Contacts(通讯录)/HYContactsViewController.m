@@ -9,23 +9,26 @@
 #import <CoreData/CoreData.h>
 #import "HYContactsViewController.h"
 #import "HYContactsViewCell.h"
+#import "HYContactsCustomViewCell.h"
 #import "HYContactsHeaderView.h"
 #import "HYContacts.h"
 #import "HYContactsModel.h"
-#import "HYSearchBar.h"
 #import "HYXMPPManager.h"
-#import "HYLoginInfo.h"
 #import "HYSingleChatViewController.h"
 #import "HYNewFriendViewController.h"
 #import "HYGroupListViewController.h"
-#import "HYSearchDisplayController.h"
+#import "HYSearchController.h"
 #import "HYAddFriendViewController.h"
 #import "HYScanQRCodeViewController.h"
+#import "HYSearchController.h"
+#import "HYContactsSearchResultsController.h"
 
-@interface HYContactsViewController ()<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate,HYSearchBarDelegate>
+@interface HYContactsViewController ()<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate,UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray *dataSource;
 @property (nonatomic,strong) NSFetchedResultsController *resultController;//查询结果集合
+@property (nonatomic, strong) HYSearchController *searchController;
+@property (nonatomic, strong) HYContactsSearchResultsController *resultsController;
 
 @end
 
@@ -35,10 +38,20 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    // 1.tableView
-    self.tableView.tableHeaderView = [self tableHeaderView];
+    // 搜索
+    self.resultsController = [[HYContactsSearchResultsController alloc] init];
+    self.searchController = [[HYSearchController alloc] initWithSearchResultsController:self.resultsController];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.delegate = self;
+    [self.searchController.searchBar sizeToFit];
+    self.searchController.searchBar.delegate = self; // so we can monitor text changes + others
+    self.definesPresentationContext = YES;// know where you want UISearchController to be displayed
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, 44.0)];
+    self.searchController.searchBar.frame = CGRectMake(0, 0, kScreenW, 44.0);
+    [headerView addSubview:self.searchController.searchBar];
+    self.tableView.tableHeaderView = headerView;
     [self.view addSubview:self.tableView];
-    // 2.添加联系人
+    // 添加联系人
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addContacts:)];
     
 }
@@ -52,75 +65,56 @@
     }
 }
 
-- (UIView *)tableHeaderView
-{
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 44 + kContactsViewCellHeight * 2)];
-    headerView.backgroundColor = [UIColor whiteColor];
-    // 1.搜索
-    HYSearchBar *searchBar = [[HYSearchBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 44)];
-    searchBar.delegate = self;
-    [headerView addSubview:searchBar];
-    
-    CGFloat margin = 6.0;
-    CGFloat panding = 8.0;
-    CGFloat iconViewW = kContactsViewCellHeight - margin * 2;
-    // 2.新朋友
-    UIImageView *iconView0 = [[UIImageView alloc] initWithFrame:CGRectMake(panding, CGRectGetMaxY(searchBar.frame) + margin, iconViewW, iconViewW)];
-    iconView0.layer.cornerRadius = iconViewW * 0.5;
-    iconView0.layer.masksToBounds = YES;
-    [headerView addSubview:iconView0];
-    
-    CGFloat labelX = CGRectGetMaxX(iconView0.frame) + panding;
-    UILabel *label0 = [[UILabel alloc] initWithFrame:CGRectMake(labelX, CGRectGetMaxY(searchBar.frame), kScreenW - labelX, kContactsViewCellHeight)];
-    label0.font = [UIFont systemFontOfSize:18];
-    label0.text = @"新朋友";
-    [headerView addSubview:label0];
-    
-    UIButton *button0 = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetMinY(label0.frame), kScreenW, kContactsViewCellHeight)];
-    button0.tag = 0;
-    [button0 setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:200/255.0 green:200/255.0 blue:212/255.0 alpha:0.2f]] forState:UIControlStateHighlighted];
-    [button0 addTarget:self action:@selector(headerButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [headerView addSubview:button0];
-    
-    UIView *line0 = [[UIView alloc] initWithFrame:CGRectMake(labelX, CGRectGetMaxY(label0.frame) - 1, kScreenW - labelX, 1)];
-    line0.backgroundColor = [UIColor colorWithRed:239/255.0 green:239/255.0 blue:244/255.0 alpha:1.0f];
-    [headerView addSubview:line0];
-    
-    // 3.群聊
-    UIImageView *iconView1 = [[UIImageView alloc] initWithFrame:CGRectMake(panding, CGRectGetMaxY(line0.frame) + margin, iconViewW, iconViewW)];
-    iconView1.layer.cornerRadius = iconViewW * 0.5;
-    iconView1.layer.masksToBounds = YES;
-    [headerView addSubview:iconView1];
-    
-    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(labelX, CGRectGetMaxY(line0.frame), kScreenW - labelX, kContactsViewCellHeight)];
-    label1.font = [UIFont systemFontOfSize:18];
-    label1.text = @"群聊";
-    [headerView addSubview:label1];
-    
-    UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(0, CGRectGetMinY(label1.frame), kScreenW, kContactsViewCellHeight)];
-    button1.tag = 1;
-    [button1 setBackgroundImage:[UIImage imageWithColor:[UIColor colorWithRed:200/255.0 green:200/255.0 blue:212/255.0 alpha:0.2f]] forState:UIControlStateHighlighted];
-    [button1 addTarget:self action:@selector(headerButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [headerView addSubview:button1];
-    
-    return headerView;
+#pragma mark - 更新搜索结果 UISearchResultsUpdating
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    NSMutableArray *searchResults = [NSMutableArray array];
+    [self.dataSource enumerateObjectsUsingBlock:^(HYContacts *contacts, NSUInteger idx, BOOL *stop) {
+        [contacts.infoArray enumerateObjectsUsingBlock:^(HYContactsModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([model.displayName containsString:self.searchController.searchBar.text]) {
+                [searchResults addObject:model];
+            }
+        }];
+    }];
+    HYContactsSearchResultsController *tableController = (HYContactsSearchResultsController *)self.searchController.searchResultsController;
+    tableController.searchResults = searchResults;//传递搜索结果
+    [tableController.tableView reloadData];
 }
+
+#pragma mark - UISearchBarDelegate
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
+}
+
 
 #pragma mark - UITableViewDatasource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.dataSource.count;
+    return self.dataSource.count + 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    HYContacts *contacts = [self.dataSource objectAtIndex:section];
+    if (section == 0) {
+        return 2;// 新朋友、群聊
+    }
+    HYContacts *contacts = [self.dataSource objectAtIndex:section - 1];
     return contacts.infoArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    HYContacts *contacts = [self.dataSource objectAtIndex:indexPath.section];
+    if (indexPath.section == 0) {
+        HYContactsCustomViewCell *customCell = [HYContactsCustomViewCell cellWithTableView:tableView];
+        NSString *text = nil;
+        if (indexPath.row == 0) { // 新朋友
+            text = @"新朋友";
+        } else if (indexPath.row == 1) { // 群聊
+            text = @"群聊";
+        }
+        customCell.nameLabel.text = text;
+        return customCell;
+    }
+    HYContacts *contacts = [self.dataSource objectAtIndex:indexPath.section - 1];
     HYContactsModel *model = [contacts.infoArray objectAtIndex:indexPath.row];
     HYContactsViewCell *cell = [HYContactsViewCell cellWithTableView:tableView];
     cell.rightButtons = [self rightButtons];
@@ -132,21 +126,29 @@
 #pragma mark - section头部
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    if (section == 0) return nil;
     static NSString *kContactsHeaderIdentifier = @"kContactsHeaderIdentifier";
     HYContactsHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:kContactsHeaderIdentifier];
     if (headerView == nil) {
         headerView = [[HYContactsHeaderView alloc] initWithReuseIdentifier:kContactsHeaderIdentifier];
     }
-    HYContacts *contacts = [self.dataSource objectAtIndex:section];
+    HYContacts *contacts = [self.dataSource objectAtIndex:section - 1];
     headerView.title = contacts.title;
     return headerView;
 }
 
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-//{
-//    HYContacts *contact = [self.dataSource objectAtIndex:section];
-//    return contact.title;
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 0.0f;
+    }
+    return kContactsHeaderViewHeight;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.0f;
+}
 
 #pragma mark - 返回索引数组
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
@@ -157,11 +159,6 @@
             [array addObject:contacts.title];
         }
     }];
-//    for(char c = 'A'; c <= 'Z'; c++)
-//    {
-//        NSString *str = [NSString stringWithFormat:@"%c",c];
-//        [array addObject:str];
-//    }
     return array;
 }
 /**
@@ -179,13 +176,25 @@
             break;
         }
     }
-    return section;
+    return section + 1;
 }
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) { // 新朋友
+            HYNewFriendViewController *newFriendVC = [[HYNewFriendViewController alloc] init];
+            newFriendVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:newFriendVC animated:YES];
+        } else if (indexPath.row == 1) { // 群聊
+            HYGroupListViewController *groupListVC = [[HYGroupListViewController alloc] init];
+            groupListVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:groupListVC animated:YES];
+        }
+        return;
+    }
     HYContacts *contacts = [self.dataSource objectAtIndex:indexPath.section];
     HYContactsModel *model = [contacts.infoArray objectAtIndex:indexPath.row];
     HYSingleChatViewController *singleVC = [[HYSingleChatViewController alloc] init];
@@ -198,7 +207,7 @@
 - (NSArray *)rightButtons
 {
     NSMutableArray *result = [NSMutableArray array];
-    MGSwipeButton *nikeButton = [MGSwipeButton buttonWithTitle:@"备注"  backgroundColor:[UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0] padding:20.0 callback:^BOOL(MGSwipeTableCell * sender){
+    MGSwipeButton *nikeButton = [MGSwipeButton buttonWithTitle:@"备注" backgroundColor:[UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0] padding:20.0 callback:^BOOL(MGSwipeTableCell * sender){
         
         return YES;
     }];
@@ -221,7 +230,7 @@
     //2.Fetch请求
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"XMPPUserCoreDataStorageObject"];
 //    //3.排序和过滤
-    NSPredicate *pre=[NSPredicate predicateWithFormat:@"streamBareJidStr == %@",[HYLoginInfo sharedInstance].jid.bare];
+    NSPredicate *pre=[NSPredicate predicateWithFormat:@"streamBareJidStr == %@",[HYXMPPManager sharedInstance].myJID.bare];
     fetchRequest.predicate=pre;
     //
     NSSortDescriptor *sort=[NSSortDescriptor sortDescriptorWithKey:@"displayName" ascending:YES];
@@ -249,23 +258,9 @@
     }
     
 }
+
 /**
- *  设置model
- "displayName" = erpapa123,
- "streamBareJidStr" = admin@erpapa.cn,
- "subscription" = both,
- "jidStr" = erpapa123@erpapa.cn,
- "ask" = nil,
- "unreadMessages" = 0,
- "jid" = (...not nil..),
- "resources" = <relationship fault: 0x16e31b30 'resources'>,
- "sectionNum" = 0,
- "photo" = nil,
- "primaryResource" = 0x16d42b90 <x-coredata://E5A2E05A-3C00-4B6F-A508-991608571F21/XMPPResourceCoreDataStorageObject/p87>,
- "section" = (...not nil..),
- "groups" = <relationship fault: 0x16e32700 'groups'>,
- "sectionName" = E,
- "nickname" = erpapa123,
+ *  添加联系人model
  */
 - (void)addContacsObject:(XMPPUserCoreDataStorageObject *)object
 {
@@ -371,6 +366,9 @@
     }
 }
 
+/**
+ *  object转model
+ */
 - (HYContactsModel *)modelWithStorageObject:(XMPPUserCoreDataStorageObject *)object
 {
     NSString *userName = object.displayName.length ? object.displayName : object.jid.user; // 昵称
@@ -393,24 +391,6 @@
     contactsModel.sectionNum = [object.sectionNum integerValue];
     contactsModel.isGroup = NO;
     return contactsModel;
-}
-
-#pragma mark - 搜索 - HYSearchBarDelegate
-- (void)searchBarDidClicked:(HYSearchBar *)searchBar
-{
-    
-}
-
-#pragma mark - 新朋友、群聊
-- (void)headerButtonClick:(UIButton *)sender
-{
-    if (sender.tag == 0) {
-        HYNewFriendViewController *newFriendVC = [[HYNewFriendViewController alloc] init];
-        [self.navigationController pushViewController:newFriendVC animated:YES];
-    } else if (sender.tag == 1) {
-        HYGroupListViewController *groupListVC = [[HYGroupListViewController alloc] init];
-        [self.navigationController pushViewController:groupListVC animated:YES];
-    }
 }
 
 #pragma mark - 添加联系人
@@ -453,8 +433,6 @@
         _tableView.showsHorizontalScrollIndicator = NO;
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.rowHeight = kContactsViewCellHeight;
-        _tableView.sectionHeaderHeight = kContactsHeaderViewHeight;
-        _tableView.sectionFooterHeight = 0.0f;
         _tableView.sectionIndexColor = [UIColor grayColor]; // 索引文字颜色
         _tableView.sectionIndexBackgroundColor = [UIColor clearColor]; // 索引的背景色
         _tableView.sectionIndexTrackingBackgroundColor = [UIColor clearColor]; // 选中索引的背景色

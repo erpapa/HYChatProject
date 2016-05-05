@@ -10,7 +10,6 @@
 #import "HYChatMessageFrame.h"
 #import "HYXMPPManager.h"
 #import "XMPPvCardTemp.h"
-#import "HYLoginInfo.h"
 
 @implementation HYBaseChatViewCell
 
@@ -60,20 +59,18 @@
     XMPPJID *jid = nil;
     // UIEdgeInsetsMake(CGFloat top, CGFloat left, CGFloat bottom, CGFloat right) // 拉伸图片，参数是像素，同时要考虑@1x、@2x、@3x这几种情况
     if (message.isOutgoing) {
-        jid = [HYLoginInfo sharedInstance].jid;
         UIImage *normalImage = [[UIImage imageNamed:@"chat_send_nor"] resizableImageWithCapInsets:UIEdgeInsetsMake(25, 40, 30, 70) resizingMode:UIImageResizingModeStretch];
         UIImage *selectedImage = [[UIImage imageNamed:@"chat_send_press"] resizableImageWithCapInsets:UIEdgeInsetsMake(25, 40, 30, 70) resizingMode:UIImageResizingModeStretch];
         [self.contentBgView setBackgroundImage:normalImage forState:UIControlStateNormal];
         [self.contentBgView setBackgroundImage:selectedImage forState:UIControlStateSelected];
     } else {
-        jid = message.jid;
         UIImage *normalImage = [[UIImage imageNamed:@"chat_receive_nor"] resizableImageWithCapInsets:UIEdgeInsetsMake(25, 40, 30, 70) resizingMode:UIImageResizingModeStretch];
         UIImage *selectedImage = [[UIImage imageNamed:@"chat_receive_press"] resizableImageWithCapInsets:UIEdgeInsetsMake(25, 40, 30, 70) resizingMode:UIImageResizingModeStretch];
         [self.contentBgView setBackgroundImage:normalImage forState:UIControlStateNormal];
         [self.contentBgView setBackgroundImage:selectedImage forState:UIControlStateSelected];
     }
     __weak typeof(self) weakSelf = self; // 获取头像
-    [[HYXMPPManager sharedInstance] getvCardFromJID:jid vCardBlock:^(XMPPvCardTemp *vCardTemp) {
+    [[HYXMPPManager sharedInstance] getvCardFromJID:message.jid vCardBlock:^(XMPPvCardTemp *vCardTemp) {
         if (vCardTemp.photo) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             strongSelf.headView.image = [UIImage imageWithData:vCardTemp.photo];

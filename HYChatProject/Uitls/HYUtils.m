@@ -24,10 +24,10 @@
 + (void)initRootViewController
 {
     // 1.从沙盒里加载用户的数据到单例
-    [[HYLoginInfo sharedInstance] loadUserInfoFromSanbox];
-    if ([HYLoginInfo sharedInstance].user.length) {
+    HYLoginInfo *loginInfo = [HYLoginInfo sharedInstance];
+    if (loginInfo.user.length) {
         // 2.判断用户的登录状态,logon == YES 直接来到主界面
-        if([HYLoginInfo sharedInstance].logon){
+        if(loginInfo.logon){
             // 2.1. 设置根控制器
             [UIApplication sharedApplication].delegate.window.rootViewController = [[HYTabBarController alloc] init];
         }else{

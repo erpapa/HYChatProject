@@ -8,6 +8,15 @@
 
 #import "HYLoginInfo.h"
 
+#define kUser @"user"
+#define kPassword @"password"
+#define kHostName @"hostName"
+#define kHostPort @"hostPort"
+#define kLogon @"logon"
+#define kDomain @"erpapa.cn" // 域名
+#define kPort 5222          // 端口
+#define kResource @"iPhone" //resource
+
 @implementation HYLoginInfo
 
 static HYLoginInfo *instance;
@@ -32,11 +41,7 @@ static HYLoginInfo *instance;
 {
     if (instance == nil) {
         instance = [[self alloc] init];
-        instance.user = @"";
-        instance.password = @"";
-        instance.hostName = kDomain;
-        instance.hostPort = 5222;
-        instance.logon = NO;
+        [instance loadUserInfoFromSanbox];
     }
     return instance;
 }
@@ -64,17 +69,13 @@ static HYLoginInfo *instance;
     self.logon = [defaults boolForKey:kLogon];
     NSString *hostName = [defaults objectForKey:kHostName];
     NSInteger hostPort = [defaults integerForKey:kHostPort];
-    if (hostName.length) {
-        self.hostName = hostName;
-    }
-    if (hostPort) {
-        self.hostPort = hostPort;
-    }
+    self.hostName = hostName.length ? hostName : kHostName;
+    self.hostPort = hostPort ? hostPort : kPort;
 }
 
 - (XMPPJID *)jid
 {
-    return [XMPPJID jidWithUser:_user domain:kDomain resource:kResource];
+    return [XMPPJID jidWithUser:_user domain:_hostName resource:kResource];
 }
 
 @end

@@ -9,7 +9,7 @@
 #import "HYConstant.h"
 
 NSString* const HYChatDidReceiveMessage = @"HYChatDidReceiveMessage";
-
+NSString* const HYChatWithSomebody = @"HYChatWithSomebody";
 @implementation HYConstant
 
 @end

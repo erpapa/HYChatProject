@@ -9,8 +9,10 @@
 #import "HYXMPPManager.h"
 #import "HYLoginInfo.h"
 #import "HYUtils.h"
+#import "HYXMPPRoomManager.h"
 #import "HYRecentChatModel.h"
 #import "HYDatabaseHandler+HY.h"
+#import "XMPPMUC.h"
 #import "XMPPRoomCoreDataStorage.h"
 #import "XMPPCapabilitiesCoreDataStorage.h"
 
@@ -21,49 +23,36 @@ NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChang
     XMPPReconnect *_xmppReconnect; // 如果失去连接,自动重连
     XMPPvCardTempModule *_vCardTempModule;//好友名片
     XMPPvCardCoreDataStorage *_vCardStorage;//电子名片的数据存储
-    XMPPRoster *_roster;//好友列表类
-    XMPPRosterCoreDataStorage *_rosterStorage;//好友列表（用户账号）在core data中的操作类
+    XMPPRoster *_xmppRoster;//好友列表类
+    XMPPRosterCoreDataStorage *_xmppRosterStorage;//好友列表（用户账号）在core data中的操作类
     XMPPvCardAvatarModule *_vCardAvatarModule;//头像
-    XMPPRoom *_room;
-    XMPPRoomCoreDataStorage *_roomStorage;
     XMPPMessageArchiving *_messageArchiving;//信息
     XMPPMessageArchivingCoreDataStorage *_messageArchivingStorage;//信息数据存储
     XMPPCapabilities *_capabilities; // 设置功能
     XMPPCapabilitiesCoreDataStorage *_capabilitiesStorage; // 设置功能储存
 }
-@property (assign, nonatomic) BOOL registerUser;
-@property (strong, nonatomic) NSMutableDictionary *avatarBlockDict; // 头像block
-@property (strong, nonatomic) NSMutableDictionary *vCardBlockDict; // 名片block
-@property (copy, nonatomic) HYXMPPConnectStatusBlock connectStatusBlock; // 连接状态
-@property (copy, nonatomic) HYSuccessBlock successBlock; // 操作成功/失败
+@property (nonatomic, assign) BOOL registerUser;
+@property (nonatomic, strong) NSMutableDictionary *avatarBlockDict; // 头像block
+@property (nonatomic, strong) NSMutableDictionary *vCardBlockDict; // 名片block
+@property (nonatomic, copy) HYXMPPConnectStatusBlock connectStatusBlock; // 连接状态
+@property (nonatomic, copy) HYUpdatevCardSuccess updatevCardSuccess; // 更新名片成功/失败
 
 @end
 
 @implementation HYXMPPManager
-
-static HYXMPPManager *instance;
-
-+ (id)allocWithZone:(struct _NSZone *)zone
-{
-    // dispatch_once是线程安全的，onceToken默认为0
-    static dispatch_once_t onceToken;
-    // dispatch_once宏可以保证块代码中的指令只被执行一次
-    dispatch_once(&onceToken, ^{
-        // 在多线程环境下，永远只会被执行一次，instance只会被实例化一次
-        instance = [super allocWithZone:zone];
-    });
-    
-    return instance;
-}
 
 /**
  *  单例
  */
 + (instancetype)sharedInstance
 {
-    if (instance == nil) {
-        instance = [[self alloc] init];
-    }
+    static dispatch_once_t onceToken;
+    // dispatch_once宏可以保证块代码中的指令只被执行一次
+    static HYXMPPManager *instance;
+    dispatch_once(&onceToken, ^{
+        instance = [[super alloc] init];
+    });
+    
     return instance;
 }
 
@@ -93,20 +82,15 @@ static HYXMPPManager *instance;
     _vCardAvatarModule = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:_vCardTempModule];
     
     // 添加花名册模块【获取好友列表】
-    _rosterStorage = [[XMPPRosterCoreDataStorage alloc] init];
+    _xmppRosterStorage = [[XMPPRosterCoreDataStorage alloc] init];
     // 不用每次都重新创建数据库，否则会导致未读消息数丢失，good idea
-    _rosterStorage.autoRemovePreviousDatabaseFile = NO;
-    _rosterStorage.autoRecreateDatabaseFile = NO;
+    _xmppRosterStorage.autoRemovePreviousDatabaseFile = NO;
+    _xmppRosterStorage.autoRecreateDatabaseFile = NO;
     
-    _roster = [[XMPPRoster alloc] initWithRosterStorage:_rosterStorage];
-    _roster.autoFetchRoster = YES; // 自动获取好友列表
-    _roster.autoClearAllUsersAndResources = NO; // 断开连接不清空好友列表
-    _roster.autoAcceptKnownPresenceSubscriptionRequests = YES;// 开启接收自动订阅功能（加好友不需要验证）
-    
-    // 设置房间
-    _roomStorage = [[XMPPRoomCoreDataStorage alloc] init];
-    _roomStorage.autoRemovePreviousDatabaseFile = NO;
-    _roomStorage.autoRecreateDatabaseFile = NO;
+    _xmppRoster = [[XMPPRoster alloc] initWithRosterStorage:_xmppRosterStorage];
+    _xmppRoster.autoFetchRoster = YES; // 自动获取好友列表
+    _xmppRoster.autoClearAllUsersAndResources = NO; // 断开连接不清空好友列表
+    _xmppRoster.autoAcceptKnownPresenceSubscriptionRequests = YES;// 开启接收自动订阅功能（加好友不需要验证）
     
     // 添加聊天模块
     _messageArchivingStorage = [[XMPPMessageArchivingCoreDataStorage alloc] init];
@@ -119,17 +103,17 @@ static HYXMPPManager *instance;
     _capabilities.autoFetchNonHashedCapabilities = NO;
     
     // 激活模块
-    [_xmppReconnect activate:_xmppStream];
-    [_vCardTempModule activate:_xmppStream];
+    [_xmppReconnect     activate:_xmppStream];
+    [_vCardTempModule   activate:_xmppStream];
     [_vCardAvatarModule activate:_xmppStream];
-    [_roster activate:_xmppStream];
-    [_messageArchiving activate:_xmppStream];
+    [_xmppRoster        activate:_xmppStream];
+    [_messageArchiving  activate:_xmppStream];
     
     _xmppStream.enableBackgroundingOnSocket = YES;// 允许在后台运行
     
     // 设置代理
     [_xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()]; // 主线程调用代理
-    [_roster addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    [_xmppRoster addDelegate:self delegateQueue:dispatch_get_main_queue()];
     [_vCardTempModule addDelegate:self delegateQueue:dispatch_get_main_queue()];
     [_vCardAvatarModule addDelegate:self delegateQueue:dispatch_get_main_queue()];
     [_messageArchiving addDelegate:self delegateQueue:dispatch_get_main_queue()];
@@ -138,7 +122,7 @@ static HYXMPPManager *instance;
 - (void)dealloc
 {
     [_xmppStream        removeDelegate:self];
-    [_roster            removeDelegate:self];
+    [_xmppRoster        removeDelegate:self];
     [_vCardTempModule   removeDelegate:self];
     [_vCardAvatarModule removeDelegate:self];
     [_messageArchiving  removeDelegate:self];
@@ -146,7 +130,7 @@ static HYXMPPManager *instance;
     [_xmppReconnect       deactivate];
     [_vCardTempModule     deactivate];
     [_vCardAvatarModule   deactivate];
-    [_roster              deactivate];
+    [_xmppRoster          deactivate];
     [_messageArchiving    deactivate];
     
     [_xmppStream disconnect];
@@ -155,10 +139,8 @@ static HYXMPPManager *instance;
     _vCardStorage = nil;
     _vCardTempModule = nil;
     _vCardAvatarModule = nil;
-    _roster = nil;
-    _rosterStorage = nil;
-    _room = nil;
-    _roomStorage = nil;
+    _xmppRoster = nil;
+    _xmppRosterStorage = nil;
     _messageArchiving = nil;
     _messageArchivingStorage = nil;
     _capabilities = nil;
@@ -166,6 +148,14 @@ static HYXMPPManager *instance;
 }
 
 #pragma mark -公共方法
+
+- (void)setChatJID:(XMPPJID *)chatJID
+{
+    _chatJID = chatJID;
+    if (_chatJID) {
+        [HYNotification postNotificationName:HYChatWithSomebody object:_chatJID];
+    }
+}
 
 // 登录
 - (void)xmppUserLogin:(HYXMPPConnectStatusBlock)resultBlock{
@@ -215,13 +205,13 @@ static HYXMPPManager *instance;
 - (void)xmppUserChangePassword:(NSString *)password
 {
     NSXMLElement *query =[NSXMLElement elementWithName:@"query" xmlns:@"jabber:iq:register"];
-    NSXMLElement *username =[NSXMLElement elementWithName:@"username" stringValue:[HYLoginInfo sharedInstance].user];
+    NSXMLElement *username =[NSXMLElement elementWithName:@"username" stringValue:_myJID.user];
     NSXMLElement *changePassword =[NSXMLElement elementWithName:@"password" stringValue:password];
     [query addChild:username];
     [query addChild:changePassword];
     
     XMPPIQ *iq =[XMPPIQ iqWithType:@"set" elementID:[XMPPStream generateUUID] child:query];
-    [iq addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"%@",kDomain]];
+    [iq addAttributeWithName:@"to" stringValue:[NSString stringWithFormat:@"%@",_myJID.domain]];
     [_xmppStream sendElement:iq];
 }
 
@@ -235,15 +225,15 @@ static HYXMPPManager *instance;
     if (vCardtemp) {
         myvCardBlock(vCardtemp); // 返回我的名片
     } else {
-        [self.vCardBlockDict setObject:[myvCardBlock copy] forKey:[[HYLoginInfo sharedInstance].jid bare]];
+        [self.vCardBlockDict setObject:[myvCardBlock copy] forKey:[_myJID bare]];
     }
 }
 /**
  *  更新我的名片
  */
-- (void)updateMyvCard:(XMPPvCardTemp *)myvCard successBlock:(HYSuccessBlock)successBlock
+- (void)updateMyvCard:(XMPPvCardTemp *)myvCard successBlock:(HYUpdatevCardSuccess)successBlock
 {
-    self.successBlock = successBlock;
+    self.updatevCardSuccess = successBlock;
     [_vCardTempModule updateMyvCardTemp:myvCard];// 更新名片
 }
 /**
@@ -282,18 +272,18 @@ static HYXMPPManager *instance;
     NSString *bare = userID;
     NSRange range = [userID rangeOfString:@"@"];
     if (range.location == NSNotFound) {// 如果没找到 NSNotFound
-        bare = [NSString stringWithFormat:@"%@@%@",userID,kDomain];
+        bare = [NSString stringWithFormat:@"%@@%@",userID,_myJID.domain];
     }
     XMPPJID *jid = [XMPPJID jidWithString:bare];
     //    BOOL contains = [_rosterStorage userExistsWithJID:jid xmppStream:_xmppStream];// 如果已经是好友就不需要再次添加
-    [_roster subscribePresenceToUser:jid];
+    [_xmppRoster subscribePresenceToUser:jid];
 }
 /**
  *  删除好友
  */
 - (void)removeUser:(XMPPJID *)jid
 {
-    [_roster removeUser:jid];
+    [_xmppRoster removeUser:jid];
 }
 
 /**
@@ -301,26 +291,26 @@ static HYXMPPManager *instance;
  */
 -(void)agreeUserRequest:(XMPPJID *)jid
 {
-    if ([[jid bare] isEqualToString:[[HYLoginInfo sharedInstance].jid bare]]) {
+    if ([[jid bare] isEqualToString:[_myJID bare]]) {
         return; // 自己不能添加自己为好友
     }
-    [_roster acceptPresenceSubscriptionRequestFrom:jid andAddToRoster:YES];
+    [_xmppRoster acceptPresenceSubscriptionRequestFrom:jid andAddToRoster:YES];
 }
 /**
  *  拒绝好友申请
  */
 -(void)rejectUserRequest:(XMPPJID *)jid
 {
-    [_roster rejectPresenceSubscriptionRequestFrom:jid];
+    [_xmppRoster rejectPresenceSubscriptionRequestFrom:jid];
 }
 
 /**
  *  发送聊天消息
  */
 
-- (void)sendText:(NSString *)text success:(HYSuccessBlock)success
+- (void)sendText:(NSString *)text success:(HYSendTextSuccess)success
 {
-    XMPPJID *jid = self.chatJid;
+    XMPPJID *jid = self.chatJID;
     if (jid) {
         [self sendText:text success:success];
     } else
@@ -328,7 +318,7 @@ static HYXMPPManager *instance;
         success(NO);
     }
 }
-- (void)sendText:(NSString *)text toJid:(XMPPJID *)jid success:(HYSuccessBlock)success
+- (void)sendText:(NSString *)text toJid:(XMPPJID *)jid success:(HYSendTextSuccess)success
 {
     // 发送聊天消息
     XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:jid];
@@ -355,12 +345,13 @@ static HYXMPPManager *instance;
     }
     
 }
+
 /**
  *  CoreData
  */
 - (NSManagedObjectContext *)managedObjectContext_roster
 {
-    return [_rosterStorage mainThreadManagedObjectContext];
+    return [_xmppRosterStorage mainThreadManagedObjectContext];
 }
 
 - (NSManagedObjectContext *)managedObjectContext_capabilities
@@ -373,18 +364,13 @@ static HYXMPPManager *instance;
     return [_messageArchivingStorage mainThreadManagedObjectContext];
 }
 
-
-- (NSManagedObjectContext *)managedObjectContext_room
-{
-    return [_roomStorage mainThreadManagedObjectContext];
-}
-
 #pragma mark 连接到服务器
 -(void)connectToHost{
     if (!_xmppStream) {//如果_xmppStream为空，则初始化_xmppStream
         [self setupXMPPStream];
     }
     HYLoginInfo *userInfo = [HYLoginInfo sharedInstance];
+    _myJID = userInfo.jid;
     // 设置登录用户JID
     _xmppStream.myJID = userInfo.jid;
     // 设置服务器域名
@@ -392,9 +378,10 @@ static HYXMPPManager *instance;
     // 设置端口 默认是5222
     _xmppStream.hostPort = userInfo.hostPort;
     // 连接，设置超时为2.0f
-    NSError *error = nil;
-    if (![_xmppStream connectWithTimeout:2.0f error:&error]) {
-        HYLog(@"%@",error);
+    if (![_xmppStream connectWithTimeout:2.0f error:nil]) {
+        if (self.connectStatusBlock) {
+            self.connectStatusBlock(HYXMPPConnectStatusDisConnect);
+        }
     }
     
 }
@@ -467,8 +454,8 @@ static HYXMPPManager *instance;
     HYLog(@"授权成功，发送在线消息");
     XMPPPresence *presence = [XMPPPresence presence];
     [_xmppStream sendElement:presence];
+    [[HYXMPPRoomManager sharedInstance] fetchBookmarkedRooms:nil];// 加入所有已加入/创建的房间
     [_vCardTempModule myvCardTemp]; // 获取自己的名片
-    
     _status = HYXMPPConnectStatusAuthSuccess;
     [self postConnectStatus:HYXMPPConnectStatusAuthSuccess];
     // 回调控制器登录成功
@@ -571,15 +558,18 @@ static HYXMPPManager *instance;
 // 在接收了消息后会回调此代理方法
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
 {
-    if (message.body != nil) {
-        HYRecentChatModel *chatModel = [[HYRecentChatModel alloc] init];
-        [[HYDatabaseHandler sharedInstance] recentChatModel:chatModel fromJid:message.from];// 从数据库读取
-        chatModel.jid = message.from;
-        chatModel.body = message.body;
-        chatModel.time = [[NSDate date] timeIntervalSince1970];
-        chatModel.isGroup = NO;
-        chatModel.unreadCount++;
-        [HYNotification postNotificationName:HYChatDidReceiveMessage object:chatModel];
+    // 1.单聊消息
+    if ([[message type] isEqualToString:@"chat"]) {
+        if ([message body].length) {
+            HYRecentChatModel *chatModel = [[HYRecentChatModel alloc] init];
+            [[HYDatabaseHandler sharedInstance] recentChatModel:chatModel fromJid:message.from];// 从数据库读取
+            chatModel.jid = message.from;
+            chatModel.body = [message body];
+            chatModel.time = [[NSDate date] timeIntervalSince1970];
+            chatModel.isGroup = NO;
+            chatModel.unreadCount++;
+            [HYNotification postNotificationName:HYChatDidReceiveMessage object:chatModel];
+        }
     }
 }
 // 在接收了用户在线状态消息后会回调此代理方法
@@ -587,13 +577,13 @@ static HYXMPPManager *instance;
 {
     //XMPPPresence 在线/离线
     //presence.from 消息是谁发送过来
-    HYLog(@"presence.from %@", presence.from);
+    HYLog(@"presence:from %@ type: %@", presence.from, presence.type);
 }
 
 // 在接收IQ/messag、presence出错时，会回调此代理方法
 - (void)xmppStream:(XMPPStream *)sender didReceiveError:(NSXMLElement *)error;
 {
-    
+    HYLog(@"error %@", error);
 }
 
 
@@ -699,7 +689,7 @@ static HYXMPPManager *instance;
     }
     
     // 储存自己的名片
-    if ([jid.bare isEqualToString:[[HYLoginInfo sharedInstance].jid bare]]) {
+    if ([jid.bare isEqualToString:[_myJID bare]]) {
         [HYUtils saveCurrentUservCard:vCardTemp];
     }
     
@@ -707,17 +697,17 @@ static HYXMPPManager *instance;
 // 更新我的电子名片成功
 - (void)xmppvCardTempModuleDidUpdateMyvCard:(XMPPvCardTempModule *)vCardTempModule
 {
-    if (self.successBlock) {
-        self.successBlock(YES);
-        self.successBlock = nil;
+    if (self.updatevCardSuccess) {
+        self.updatevCardSuccess(YES);
+        self.updatevCardSuccess = nil;
     }
 }
 // 更新我的电子名片失败
 - (void)xmppvCardTempModule:(XMPPvCardTempModule *)vCardTempModule failedToUpdateMyvCard:(NSXMLElement *)error
 {
-    if (self.successBlock) {
-        self.successBlock(NO);
-        self.successBlock = nil;
+    if (self.updatevCardSuccess) {
+        self.updatevCardSuccess(NO);
+        self.updatevCardSuccess = nil;
     }
 }
 
@@ -732,31 +722,6 @@ static HYXMPPManager *instance;
         avatarBlock(data);
         [self.avatarBlockDict removeObjectForKey:[jid bare]];
     }
-    
-}
-
-#pragma mark 获得离线消息的时间
-
--(NSDate *)getDelayStampTime:(XMPPMessage *)message{
-    //获得xml中的delay元素
-    XMPPElement *delay=(XMPPElement *)[message elementsForName:@"delay"];
-    if (delay == nil) {
-        return nil;
-    }
-    //获得时间戳
-    NSString *timeString=[[ (XMPPElement *)[message elementForName:@"delay"] attributeForName:@"stamp"] stringValue];
-    //创建日期格式构造器
-    NSDateFormatter *formatter=[[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
-    //按照T 把字符串分割成数组
-    NSArray *arr=[timeString componentsSeparatedByString:@"T"];
-    //获得日期字符串
-    NSString *dateStr=[arr objectAtIndex:0];
-    //获得时间字符串
-    NSString *timeStr=[[[arr objectAtIndex:1] componentsSeparatedByString:@"."] objectAtIndex:0];
-    //构建一个日期对象 这个对象的时区是0
-    NSDate *localDate=[formatter dateFromString:[NSString stringWithFormat:@"%@T%@+0000",dateStr,timeStr]];
-    return localDate;
     
 }
 

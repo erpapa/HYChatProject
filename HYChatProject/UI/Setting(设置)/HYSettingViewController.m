@@ -100,7 +100,7 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
         HYMyvCardViewController *myvCardVC = [[HYMyvCardViewController alloc] init];
         [self.navigationController pushViewController:myvCardVC animated:YES];
     } else {
-        
+        [[HYXMPPManager sharedInstance] xmppUserlogout];
     }
 }
 

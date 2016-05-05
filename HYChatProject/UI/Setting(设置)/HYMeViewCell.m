@@ -48,10 +48,12 @@
     [self.contentView addSubview:self.iconView];
     
     // 2.二维码
-    CGFloat QRViewW = 36;
-    CGFloat QRViewX = kScreenW - 40;
+    CGFloat QRViewW = 18;
+    CGFloat QRViewX = kScreenW - QRViewW - 32;
     CGFloat QRViewY = (kMeViewCellHeight - QRViewW) * 0.5;
     self.QRView = [[UIImageView alloc] initWithFrame:CGRectMake(QRViewX, QRViewY, QRViewW, QRViewW)];
+    self.QRView.image = [UIImage imageNamed:@"setting_QRcode_nor"];
+    self.QRView.highlightedImage = [UIImage imageNamed:@"setting_QRcode_press"];
     [self.contentView addSubview:self.QRView];
     
     // 3.昵称

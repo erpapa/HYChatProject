@@ -10,7 +10,6 @@
 #import "HYChatMessageFrame.h"
 #import "HYInputViewController.h"
 #import "HYXMPPManager.h"
-#import "HYLoginInfo.h"
 #import "HYUtils.h"
 
 #import "HYBaseChatViewCell.h"
@@ -51,7 +50,7 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     [self.view addSubview:self.inputVC.view];
     
     // 3.设置当前聊天对象
-    [HYXMPPManager sharedInstance].chatJid = self.chatJid;
+    [HYXMPPManager sharedInstance].chatJID = self.chatJid;
     
     // 4.获取聊天数据
     [self getChatHistory];
@@ -62,7 +61,16 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     [super viewWillAppear:animated];
     // 自动滚动表格到最后一行
     CGRect section = [self.tableView rectForSection:0];
-    self.tableView.contentOffset = CGPointMake(0, section.size.height - (CGRectGetHeight(self.view.bounds) - kInputBarHeight));
+    CGFloat offsetY = section.size.height - (CGRectGetHeight(self.view.bounds) - CGRectGetHeight(self.inputVC.view.frame));
+    if (offsetY > 0) {
+        [self.tableView setContentOffset:CGPointMake(0, offsetY) animated:NO];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self controlKeyboard];
 }
 
 #pragma mark - UITableViewDataSource
@@ -116,6 +124,7 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     }
     if (self.inputVC.isFirstResponder) {
         [self.inputVC resignFirstResponder]; // 输入框取消第一响应者
+        [self controlKeyboard];
     }
     
 }
@@ -131,7 +140,7 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     // 2.Fetch请求
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"XMPPMessageArchiving_Message_CoreDataObject"];
     // 3.过滤
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bareJidStr == %@ AND streamBareJidStr == %@",self.chatJid.bare, [HYLoginInfo sharedInstance].jid.bare];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bareJidStr == %@ AND streamBareJidStr == %@",self.chatJid.bare, [HYXMPPManager sharedInstance].myJID.bare];
     [fetchRequest setPredicate:predicate];
     // 4.排序(降序)
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
@@ -139,10 +148,10 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
 //    [fetchRequest setFetchLimit:20]; // 分页
 //    [fetchRequest setFetchOffset:0];
     
-    //4.执行查询获取数据
+    // 5.执行查询获取数据
     _resultController = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
     _resultController.delegate=self;
-    //执行
+    // 6.执行
     NSError *error=nil;
     if(![_resultController performFetch:&error]){
         HYLog(@"%s---%@",__func__,error);
@@ -212,13 +221,12 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     HYChatMessage *message = [[HYChatMessage alloc] initWithJsonString:object.body];
     XMPPJID *jid = nil;
     if (object.isOutgoing) { // 发送
-        jid = [HYLoginInfo sharedInstance].jid;
+        jid = [HYXMPPManager sharedInstance].myJID;
     } else { // 接收
         jid = self.chatJid;
     }
     message.jid = jid;
     message.isOutgoing = object.isOutgoing;
-    message.isComposing = object.isComposing;
     message.timeString = [HYUtils timeStringFromDate:object.timestamp];
     // 判断是否显示时间
     HYChatMessageFrame *lastMessageFrame = [self.dataSource lastObject];
@@ -242,6 +250,20 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
 {
     self.tableView.contentInset = UIEdgeInsetsMake(64, 0, height, 0);
     [self scrollToBottom];
+}
+
+/**
+ *  控制keyboard显示
+ */
+- (void)controlKeyboard
+{
+    CGRect section = [self.tableView rectForSection:0];
+    CGFloat h = CGRectGetHeight(self.view.bounds) - 64 - section.size.height;
+    if (h > kPanelHeight) {
+        self.inputVC.onlyMoveKeyboard = YES;// 数据太少就不整体向上移动
+    } else {
+        self.inputVC.onlyMoveKeyboard = NO;// 整体向上移动
+    }
 }
 
 #pragma mark - 懒加载
@@ -271,6 +293,7 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
 {
     self.dataSource = nil;
     self.inputVC = nil;
+    [HYXMPPManager sharedInstance].chatJID = nil;
     HYLog(@"%@-dealloc",self);
 }
 

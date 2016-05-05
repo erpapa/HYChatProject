@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HYSearchDisplayController : UIViewController
+@interface HYSearchController : UISearchController
 
 @end

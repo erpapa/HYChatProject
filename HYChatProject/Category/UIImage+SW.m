@@ -144,6 +144,57 @@
     return image;
 }
 
+
+/**
+ *  创建圆角图片
+ */
+
+static void addRoundedRectToPath(CGContextRef contextRef, CGRect rect, float widthOfRadius, float heightOfRadius) {
+    float fw, fh;
+    if (widthOfRadius == 0 || heightOfRadius == 0)
+    {
+        CGContextAddRect(contextRef, rect);
+        return;
+    }
+    
+    CGContextSaveGState(contextRef);
+    CGContextTranslateCTM(contextRef, CGRectGetMinX(rect), CGRectGetMinY(rect));
+    CGContextScaleCTM(contextRef, widthOfRadius, heightOfRadius);
+    fw = CGRectGetWidth(rect) / widthOfRadius;
+    fh = CGRectGetHeight(rect) / heightOfRadius;
+    
+    CGContextMoveToPoint(contextRef, fw, fh/2);  // Start at lower right corner
+    CGContextAddArcToPoint(contextRef, fw, fh, fw/2, fh, 1);  // Top right corner
+    CGContextAddArcToPoint(contextRef, 0, fh, 0, fh/2, 1); // Top left corner
+    CGContextAddArcToPoint(contextRef, 0, 0, fw/2, 0, 1); // Lower left corner
+    CGContextAddArcToPoint(contextRef, fw, 0, fw, fh/2, 1); // Back to lower right
+    
+    CGContextClosePath(contextRef);
+    CGContextRestoreGState(contextRef);
+}
+
++ (UIImage *)createRoundedRectImage:(UIImage *)image withSize:(CGSize)size radius:(NSInteger)radius {
+    int w = size.width;
+    int h = size.height;
+    
+    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
+    CGContextRef contextRef = CGBitmapContextCreate(NULL, w, h, 8, 4 * w, colorSpaceRef, (CGBitmapInfo)kCGImageAlphaPremultipliedFirst);
+    CGRect rect = CGRectMake(0, 0, w, h);
+    
+    CGContextBeginPath(contextRef);
+    addRoundedRectToPath(contextRef, rect, radius, radius);
+    CGContextClosePath(contextRef);
+    CGContextClip(contextRef);
+    CGContextDrawImage(contextRef, CGRectMake(0, 0, w, h), image.CGImage);
+    CGImageRef imageMasked = CGBitmapContextCreateImage(contextRef);
+    UIImage *img = [UIImage imageWithCGImage:imageMasked];
+    
+    CGContextRelease(contextRef);
+    CGColorSpaceRelease(colorSpaceRef);
+    CGImageRelease(imageMasked);
+    return img;
+}
+
 /**
  *  旋转图片
  */
@@ -270,4 +321,146 @@
     return img;
     
 }
+
+/**
+ *  生成二维码
+ */
++ (UIImage *)createQRCodeWithString:(NSString *)string{
+    if (!string) {
+        return nil;
+    }
+    CIFilter *filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
+    [filter setDefaults];
+    [filter setValue:[string dataUsingEncoding:NSUTF8StringEncoding] forKey:@"inputMessage"];// 设置内容
+    [filter setValue:@"M" forKey:@"inputCorrectionLevel"]; // 设置纠错级别
+    UIImage *QRCodeImage = [UIImage imageWithCIImage:filter.outputImage fixedSize:CGSizeMake(300, 300)];
+    return QRCodeImage;
+}
+
+/**
+ *  得到合适的image
+ */
++ (UIImage *)imageWithCIImage:(CIImage *)image fixedSize:(CGSize)size {
+    CGRect extent = CGRectIntegral(image.extent);
+    CGFloat scale = MIN(size.width/CGRectGetWidth(extent), size.height/CGRectGetHeight(extent));
+    // 创建bitmap;
+    size_t width = CGRectGetWidth(extent) * scale;
+    size_t height = CGRectGetHeight(extent) * scale;
+    CGColorSpaceRef cs = CGColorSpaceCreateDeviceGray();
+    CGContextRef bitmapRef = CGBitmapContextCreate(nil, width, height, 8, 0, cs, (CGBitmapInfo)kCGImageAlphaNone);
+    CIContext *context = [CIContext contextWithOptions:nil];
+    CGImageRef bitmapImage = [context createCGImage:image fromRect:extent];
+    CGContextSetInterpolationQuality(bitmapRef, kCGInterpolationNone);
+    CGContextScaleCTM(bitmapRef, scale, scale);
+    CGContextDrawImage(bitmapRef, extent, bitmapImage);
+    // 保存bitmap到图片
+    CGImageRef scaledImage = CGBitmapContextCreateImage(bitmapRef);
+    CGContextRelease(bitmapRef);
+    CGImageRelease(bitmapImage);
+    return [UIImage imageWithCGImage:scaledImage];
+}
+
+/**
+ *  不失真放大
+ */
+- (UIImage *)fixedSize:(CGSize)size;
+{
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextTranslateCTM(context, 0.0, size.height);
+    CGContextScaleCTM(context, 1.0, -1.0);
+    
+    CGContextSetBlendMode(context, kCGBlendModeCopy);
+    CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, size.width, size.height), self.CGImage);
+    
+    UIImage *imageOut = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return imageOut;
+}
+
+/**
+ *  调整大小
+ */
+- (UIImage *)resizeWithRate:(CGFloat)rate quality:(CGInterpolationQuality)quality
+{
+    UIImage *resized = nil;
+    CGFloat width = self.size.width * rate;
+    CGFloat height = self.size.height * rate;
+    
+    UIGraphicsBeginImageContext(CGSizeMake(width, height));
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetInterpolationQuality(context, quality);
+    [self drawInRect:CGRectMake(0, 0, width, height)];
+    resized = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return resized;
+}
+
+void ProviderReleaseData (void *info, const void *data, size_t size){
+    free((void*)data);
+}
+/**
+ *  替换白色背景
+ */
+- (UIImage *)changeColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue{
+    const int imageWidth = self.size.width;
+    const int imageHeight = self.size.height;
+    size_t      bytesPerRow = imageWidth * 4;
+    uint32_t* rgbImageBuf = (uint32_t*)malloc(bytesPerRow * imageHeight);
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(rgbImageBuf, imageWidth, imageHeight, 8, bytesPerRow, colorSpace,
+                                                 kCGBitmapByteOrder32Little | kCGImageAlphaNoneSkipLast);
+    CGContextDrawImage(context, CGRectMake(0, 0, imageWidth, imageHeight), self.CGImage);
+    // 遍历像素
+    int pixelNum = imageWidth * imageHeight;
+    uint32_t* pCurPtr = rgbImageBuf;
+    for (int i = 0; i < pixelNum; i++, pCurPtr++){
+        if ((*pCurPtr & 0xFFFFFF00) < 0x99999900)    // 将白色变成透明
+        {
+            // 改成下面的代码，会将图片转成想要的颜色
+            uint8_t* ptr = (uint8_t*)pCurPtr;
+            ptr[3] = red; //0~255
+            ptr[2] = green;
+            ptr[1] = blue;
+        } else {
+            uint8_t* ptr = (uint8_t*)pCurPtr;
+            ptr[0] = 0;
+        }
+    }
+    // 输出图片
+    CGDataProviderRef dataProvider = CGDataProviderCreateWithData(NULL, rgbImageBuf, bytesPerRow * imageHeight, ProviderReleaseData);
+    CGImageRef imageRef = CGImageCreate(imageWidth, imageHeight, 8, 32, bytesPerRow, colorSpace,
+                                        kCGImageAlphaLast | kCGBitmapByteOrder32Little, dataProvider,
+                                        NULL, true, kCGRenderingIntentDefault);
+    CGDataProviderRelease(dataProvider);
+    UIImage* resultUIImage = [UIImage imageWithCGImage:imageRef];
+    // 清理空间
+    CGImageRelease(imageRef);
+    CGContextRelease(context);
+    CGColorSpaceRelease(colorSpace);
+    return resultUIImage;
+}
+
+/**
+ *  添加图片
+ */
+- (UIImage *)addIconImage:(UIImage *)iconImage withScale:(CGFloat)scale
+{
+    UIGraphicsBeginImageContext(self.size);
+    //通过两张图片进行位置和大小的绘制，实现两张图片的合并；其实此原理做法也可以用于多张图片的合并
+    CGFloat widthOfImage = self.size.width;
+    CGFloat heightOfImage = self.size.height;
+    CGFloat widthOfIcon = widthOfImage*scale;
+    CGFloat heightOfIcon = heightOfImage*scale;
+    [self drawInRect:CGRectMake(0, 0, widthOfImage, heightOfImage)];
+    [iconImage drawInRect:CGRectMake((widthOfImage-widthOfIcon) * 0.5, (heightOfImage-heightOfIcon) * 0.5, widthOfIcon, heightOfIcon)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+                                     
 @end

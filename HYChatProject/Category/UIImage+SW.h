@@ -36,6 +36,7 @@
  */
 - (UIImage *)circleImage;
 + (UIImage *)circleImageWithColor:(UIColor *)color size:(CGSize)size;
++ (UIImage *)createRoundedRectImage:(UIImage *)image withSize:(CGSize)size radius:(NSInteger)radius;
 /**
  *  旋转图片
  */
@@ -49,4 +50,29 @@
  *  将view截图
  */
 + (UIImage *)captureWithView:(UIView *)view;
+
+/**
+ *  生成二维码(默认300x300)
+ */
++ (UIImage *)createQRCodeWithString:(NSString *)string;
+/**
+ *  从CIImage生成UIImage
+ */
++ (UIImage *)imageWithCIImage:(CIImage *)image fixedSize:(CGSize)size;
+/**
+ *  不失真放大
+ */
+- (UIImage *)fixedSize:(CGSize)size;
+/**
+ *  调整大小
+ */
+- (UIImage *)resizeWithRate:(CGFloat)rate quality:(CGInterpolationQuality)quality;
+/**
+ *  替换白色背景
+ */
+- (UIImage *)changeColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue;
+/**
+ *  添加图片
+ */
+- (UIImage *)addIconImage:(UIImage *)iconImage withScale:(CGFloat)scale;
 @end

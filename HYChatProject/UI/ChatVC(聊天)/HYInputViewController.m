@@ -215,24 +215,47 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
 #pragma mark - 键盘状态改变
 - (void)keyboardChangedWithTransition:(YYKeyboardTransition)transition
 {
-    CGRect newFrame = self.view.superview.frame;
-    if (transition.fromVisible == YES && transition.toVisible == YES) { // 改变
-        newFrame.origin.y = -transition.toFrame.size.height;
-    } else if (transition.fromVisible == YES && transition.toVisible == NO){ // 弹下
-        if (self.panelStatus == HYChatInputPanelStatusNone || self.panelStatus == HYChatInputPanelStatusAudio) {
-            newFrame.origin.y = 0;
-        } else {
+    if (self.onlyMoveKeyboard) {
+        CGRect newFrame = self.view.frame;
+        if (transition.fromVisible == YES && transition.toVisible == YES) { // 改变
+            newFrame.origin.y = CGRectGetMaxY(self.view.superview.frame) - CGRectGetHeight(self.view.frame) - transition.toFrame.size.height;
+        } else if (transition.fromVisible == YES && transition.toVisible == NO){ // 弹下
+            if (self.panelStatus == HYChatInputPanelStatusNone || self.panelStatus == HYChatInputPanelStatusAudio) {
+                newFrame.origin.y = CGRectGetMaxY(self.view.superview.frame) - CGRectGetHeight(self.view.frame);
+            } else {
+                return;
+            }
+        } else if (transition.fromVisible == NO && transition.toVisible == YES){ // 弹起
+            newFrame.origin.y = CGRectGetMaxY(self.view.superview.frame) - CGRectGetHeight(self.view.frame) - transition.toFrame.size.height;
+        }else if (transition.fromVisible == NO && transition.toVisible == NO){// 隐藏
             return;
         }
-    } else if (transition.fromVisible == NO && transition.toVisible == YES){ // 弹起
-        newFrame.origin.y = -transition.toFrame.size.height;
-    }else if (transition.fromVisible == NO && transition.toVisible == NO){// 隐藏
-        return;
+        [UIView animateWithDuration:transition.animationDuration delay:0 options:transition.animationOption animations:^{
+            self.view.frame = newFrame;
+        } completion:^(BOOL finished) {
+        }];
+        
+    } else {
+        CGRect newFrame = self.view.superview.frame;
+        if (transition.fromVisible == YES && transition.toVisible == YES) { // 改变
+            newFrame.origin.y = -transition.toFrame.size.height;
+        } else if (transition.fromVisible == YES && transition.toVisible == NO){ // 弹下
+            if (self.panelStatus == HYChatInputPanelStatusNone || self.panelStatus == HYChatInputPanelStatusAudio) {
+                newFrame.origin.y = 0;
+            } else {
+                return;
+            }
+        } else if (transition.fromVisible == NO && transition.toVisible == YES){ // 弹起
+            newFrame.origin.y = -transition.toFrame.size.height;
+        }else if (transition.fromVisible == NO && transition.toVisible == NO){// 隐藏
+            return;
+        }
+        [UIView animateWithDuration:transition.animationDuration delay:0 options:transition.animationOption animations:^{
+            self.view.superview.frame = newFrame;
+        } completion:^(BOOL finished) {
+        }];
     }
-    [UIView animateWithDuration:transition.animationDuration delay:0 options:transition.animationOption animations:^{
-        self.view.superview.frame = newFrame;
-    } completion:^(BOOL finished) {
-    }];
+    
 }
 
 #pragma mark - HYEmoticonKeyboardViewDeleagte

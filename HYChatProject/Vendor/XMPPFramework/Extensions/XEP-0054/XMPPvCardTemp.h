@@ -69,6 +69,10 @@ extern NSString *const kXMPPvCardTempElement;
 @property (nonatomic, strong) XMPPvCardTemp *agent;
 @property (nonatomic, strong) NSString *orgName;
 
+// 增加的属性
+@property (nonatomic, strong) NSString *sex;
+@property (nonatomic, strong) NSString *email;
+@property (nonatomic, strong) NSString *birthDay;
 /*
  * ORGUNITs can only be set if there is already an ORGNAME. Otherwise, changes are ignored.
  */

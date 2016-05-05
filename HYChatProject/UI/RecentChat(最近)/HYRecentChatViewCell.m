@@ -57,7 +57,6 @@
     CGFloat headViewW = kRecentChatViewCellHeight - headViewY * 2;
     // 1.头像
     self.headView = [[UIImageView alloc] initWithFrame:CGRectMake(headViewX, headViewY, headViewW, headViewW)];
-    self.headView.image = [UIImage imageNamed:@"defaultHead"];
     self.headView.contentMode = UIViewContentModeScaleAspectFill;
     self.headView.layer.cornerRadius = headViewW * 0.5;
     self.headView.layer.masksToBounds = YES;
@@ -116,6 +115,7 @@
 - (void)setChatModel:(HYRecentChatModel *)chatModel
 {
     _chatModel = chatModel;
+    self.headView.image = chatModel.isGroup ? [UIImage imageNamed:@"defaultGroupHead"] : [UIImage imageNamed:@"defaultHead"];
     self.nameLabel.text = chatModel.jid.user;
     self.detailLabel.attributedText = chatModel.attText; // 赋值属性字符串
     self.timeLabel.text = [HYUtils timeStringSince1970:chatModel.time];

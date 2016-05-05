@@ -9,17 +9,20 @@
 #import "HYRecentChatViewController.h"
 #import "HYRecentChatViewCell.h"
 #import "HYRecentChatModel.h"
-#import "HYSearchBar.h"
 #import "HYXMPPManager.h"
 #import "HYDatabaseHandler+HY.h"
 #import "HYUtils.h"
 #import "HYSingleChatViewController.h"
 #import "HYGroupChatViewController.h"
+#import "HYSearchController.h"
+#import "HYRecentSearchResultsController.h"
 
-@interface HYRecentChatViewController ()<UITableViewDataSource, UITableViewDelegate, HYSearchBarDelegate>
+@interface HYRecentChatViewController ()<UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, strong) NSMutableArray *dataSource; // 模型数据
 @property (nonatomic, assign) NSInteger unreadCount; // 消息未读数
+@property (nonatomic, strong) HYSearchController *searchController;
+@property (nonatomic, strong) HYRecentSearchResultsController *resultsController;
 @end
 
 @implementation HYRecentChatViewController
@@ -28,15 +31,21 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    // tableView
-    HYSearchBar *searchBar = [[HYSearchBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 44)];
-    searchBar.delegate = self;
-    self.tableView.tableHeaderView = searchBar;
+    // 搜索
+    self.resultsController = [[HYRecentSearchResultsController alloc] init];
+    self.searchController = [[HYSearchController alloc] initWithSearchResultsController:self.resultsController];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.delegate = self;
+    [self.searchController.searchBar sizeToFit];
+    self.searchController.searchBar.delegate = self; // so we can monitor text changes + others
+    self.definesPresentationContext = YES;// know where you want UISearchController to be displayed
+    self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.view addSubview:self.tableView];
     // 加载最近联系人
     [self loadRecentChatDataSource];
     // 注册通知
     [HYNotification addObserver:self selector:@selector(receiveMessage:) name:HYChatDidReceiveMessage object:nil];
+    [HYNotification addObserver:self selector:@selector(chatWithSomebody:) name:HYChatWithSomebody object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -49,11 +58,22 @@
         [[HYXMPPManager sharedInstance] xmppUserLogin:nil];
     }
 }
+#pragma mark - 更新搜索结果 UISearchResultsUpdating
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
+    NSMutableArray *searchResults = [NSMutableArray array];
+    [self.dataSource enumerateObjectsUsingBlock:^(HYRecentChatModel *chatModel, NSUInteger idx, BOOL *stop) {
+        if ([chatModel.jid.user containsString:self.searchController.searchBar.text]) {
+            [searchResults addObject:chatModel];
+        }
+    }];
+    HYRecentSearchResultsController *tableController = (HYRecentSearchResultsController *)self.searchController.searchResultsController;
+    tableController.searchResults = searchResults;//传递搜索结果
+    [tableController.tableView reloadData];
+}
 
-#pragma mark - 搜索 - HYSearchBarDelegate
-- (void)searchBarDidClicked:(HYSearchBar *)searchBar
-{
-    
+#pragma mark - UISearchBarDelegate
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [searchBar resignFirstResponder];
 }
 
 #pragma mark - UITableViewDatasource
@@ -79,12 +99,9 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     HYRecentChatModel *chatModel = [self.dataSource objectAtIndex:indexPath.row];
-    self.unreadCount -= chatModel.unreadCount; // 未读数
-    chatModel.unreadCount = 0;
-    [self updateChatModel:chatModel atIndexPath:indexPath]; // 更新数据
     if (chatModel.isGroup) { // 群聊
         HYGroupChatViewController *groupVC = [[HYGroupChatViewController alloc] init];
-        groupVC.chatJid = chatModel.jid;
+        groupVC.roomJid = chatModel.jid;
         groupVC.hidesBottomBarWhenPushed = YES; // 隐藏tabBar
         [self.navigationController pushViewController:groupVC animated:YES];
     }else{
@@ -126,15 +143,14 @@
     return result;
 }
 
-/**
- *  接收到消息通知
- */
+#pragma mark - 接收到消息通知
+
 - (void)receiveMessage:(NSNotification *)noti
 {
     HYRecentChatModel *chatModel = noti.object;
     NSInteger count = self.dataSource.count;
     NSInteger found = NSNotFound;
-    NSString *chatBare = [[HYXMPPManager sharedInstance].chatJid bare];
+    NSString *chatBare = [[HYXMPPManager sharedInstance].chatJID bare];
     for (NSInteger index = 0; index < count; index++) {
         HYRecentChatModel *model = [self.dataSource objectAtIndex:index];
         if (chatBare.length && [[model.jid bare] isEqualToString:chatBare]) {
@@ -230,6 +246,22 @@
     [self.dataSource enumerateObjectsUsingBlock:^(HYRecentChatModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         self.unreadCount += obj.unreadCount; // 获得所有未读消息数
     }];
+}
+
+#pragma mark - 接收进入聊天界面通知
+
+- (void)chatWithSomebody:(NSNotification *)noti
+{
+    XMPPJID *chatJid = noti.object;
+    NSInteger count = self.dataSource.count;
+    for (NSInteger index = 0; index < count; index++) {
+        HYRecentChatModel *chatModel = [self.dataSource objectAtIndex:index];
+        if ([chatModel.jid.bare isEqualToString:chatJid.bare]) {
+            self.unreadCount -= chatModel.unreadCount;
+            chatModel.unreadCount = 0;
+            [self updateChatModel:chatModel atIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+        }
+    }
 }
 
 #pragma mark - 懒加载

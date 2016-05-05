@@ -85,7 +85,10 @@
     [self.view endEditing:YES];
     HYLoginInfo *loginInfo = [HYLoginInfo sharedInstance];
     // 删除两端空格
-    loginInfo.user = [self.userTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *bareStr = [self.userTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    XMPPJID *jid = [XMPPJID jidWithString:bareStr];
+    loginInfo.user = jid.user;
+    if (jid.domain) loginInfo.hostName = jid.domain; // 如果带domain，则使用输入的domain
     loginInfo.password = [self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     __weak typeof(self) weakSelf = self;
     [[HYXMPPManager sharedInstance] xmppUserLogin:^(HYXMPPConnectStatus status) {

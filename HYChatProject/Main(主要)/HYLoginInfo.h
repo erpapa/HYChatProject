@@ -8,14 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#define kUser @"user"
-#define kPassword @"password"
-#define kHostName @"hostName"
-#define kHostPort @"hostPort"
-#define kLogon @"logon"
-#define kDomain @"erpapa.cn" // 域名
-#define kResource @"iPhone" //resource
-
 @interface HYLoginInfo : NSObject
 @property (nonatomic, strong) NSString *user;//用户名
 @property (nonatomic, copy) NSString *password;//密码

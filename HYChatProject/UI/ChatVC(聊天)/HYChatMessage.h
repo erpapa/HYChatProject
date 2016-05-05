@@ -25,7 +25,6 @@ typedef NS_ENUM(NSInteger, HYChatMessageType) {
 
 @property (nonatomic, strong) XMPPJID *jid;        // jid
 @property (nonatomic, assign) BOOL isOutgoing;     // 发出/接收
-@property (nonatomic, assign) BOOL isComposing;    //
 @property (nonatomic, assign) BOOL isHidenTime;    // 隐藏时间
 @property (nonatomic, copy) NSString *timeString;  // 时间
 

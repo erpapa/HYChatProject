@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface HYGroupChatViewController : UIViewController
-@property (nonatomic, strong) XMPPJID *chatJid; // 当前群组
+@property (nonatomic, strong) XMPPJID *roomJid; // 当前群组
 @end
