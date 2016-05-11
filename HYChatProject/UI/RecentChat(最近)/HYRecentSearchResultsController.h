@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class HYSearchController;
 @interface HYRecentSearchResultsController : UITableViewController
 @property (nonatomic, strong) NSArray *searchResults;// 搜索数据
 @end

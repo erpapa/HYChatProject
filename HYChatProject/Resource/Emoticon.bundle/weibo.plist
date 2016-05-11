@@ -402,13 +402,5 @@
 		<key>[照相机]</key>
 		<string>o_zhaoxiangji</string>
 	</dict>
-	<dict>
-		<key>[浪]</key>
-		<string>d_lang</string>
-	</dict>
-	<dict>
-		<key>[沙尘暴]</key>
-		<string>w_shachenbao</string>
-	</dict>
 	</array>
 </plist>

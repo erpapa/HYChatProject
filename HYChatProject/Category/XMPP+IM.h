@@ -11,7 +11,7 @@
 #import "XMPPPresence.h"
 
 @interface XMPPIQ (IM)
-
+- (BOOL)isQueryError;                                       // 返回错误消息
 - (BOOL)isChatRoomItems;                                    // 是否为聊天室请求列表
 - (BOOL)isChatRoomInfo;                                     // 是否是聊天室查询信息
 - (BOOL)isSearchContacts;                                   // 是否是搜索联系人

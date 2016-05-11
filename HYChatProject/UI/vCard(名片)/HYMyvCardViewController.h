@@ -1,8 +1,8 @@
 //
-//  HYMyvCardViewController.h
+//  HYMYvCardViewController.h
 //  HYChatProject
 //
-//  Created by erpapa on 16/5/1.
+//  Created by erpapa on 16/5/6.
 //  Copyright © 2016年 erpapa. All rights reserved.
 //
 

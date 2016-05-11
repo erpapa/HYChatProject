@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "HYChatMessageFrame.h"
+#import "YYWebImage.h"
 
 @class HYBaseChatViewCell;
 @protocol HYBaseChatViewCellDelegate <NSObject>
@@ -16,15 +17,16 @@
 - (void)chatViewCellDelete:(HYBaseChatViewCell *)chatViewCell;     // 删除
 - (void)chatViewCellForward:(HYBaseChatViewCell *)chatViewCell;    // 转发
 - (void)chatViewCellReSend:(HYBaseChatViewCell *)chatViewCell;     // 重发
-- (void)chatViewCellClickImage:(HYBaseChatViewCell *)chatViewCell; // 点击语音
-- (void)chatViewCellClickVoice:(HYBaseChatViewCell *)chatViewCell; // 点击语音
+- (void)chatViewCellClickImage:(HYBaseChatViewCell *)chatViewCell; // 点击照片
+- (void)chatViewCellClickAudio:(HYBaseChatViewCell *)chatViewCell; // 点击语音
 - (void)chatViewCellClickVideo:(HYBaseChatViewCell *)chatViewCell; // 点击视频
 @end
 
 @interface HYBaseChatViewCell : UITableViewCell
-@property (nonatomic, strong) UILabel *timeLabel;
-@property (nonatomic, strong) UIButton *contentBgView;
-@property (nonatomic, strong) UIImageView *headView;
+@property (nonatomic, strong) UILabel *timeLabel;                 // 时间
+@property (nonatomic, strong) UIButton *contentBgView;            // 聊天背景框
+@property (nonatomic, strong) UIImageView *headView;              // 头像
+@property (nonatomic, strong) YYAnimatedImageView *indicatorView; // 发送/接收提示
 @property (nonatomic, strong) HYChatMessageFrame *messageFrame;
 @property (nonatomic, weak) id<HYBaseChatViewCellDelegate> delegate;
 

@@ -51,7 +51,7 @@
     if (GJCFStringIsNull(self.remotePath)) {
         return GJCFStringCurrentTimeStamp;
     }else{
-        return [self.remotePath stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+        return [[self.remotePath lastPathComponent] stringByDeletingPathExtension];
     }
 }
 

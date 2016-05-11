@@ -58,6 +58,13 @@
         [[HYXMPPManager sharedInstance] xmppUserLogin:nil];
     }
 }
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    self.searchController.active = NO; // 当view消失后取消搜索的激活状态
+}
+
 #pragma mark - 更新搜索结果 UISearchResultsUpdating
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     NSMutableArray *searchResults = [NSMutableArray array];
@@ -187,8 +194,7 @@
 - (void)updateChatModel:(HYRecentChatModel *)chatModel atIndexPath:(NSIndexPath *)indexPath
 {
     [[HYDatabaseHandler sharedInstance] updateRecentChatModel:chatModel];
-    [self.dataSource removeObjectAtIndex:indexPath.row];
-    [self.dataSource insertObject:chatModel atIndex:indexPath.row];
+    [self.dataSource replaceObjectAtIndex:indexPath.row withObject:chatModel];
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 /**
@@ -197,7 +203,7 @@
 - (void)insertChatModel:(HYRecentChatModel *)chatModel atIndexPath:(NSIndexPath *)indexPath
 {
     [[HYDatabaseHandler sharedInstance] insertRecentChatModel:chatModel]; // 插入数据
-    [self.dataSource insertObject:chatModel atIndex:0];
+    [self.dataSource insertObject:chatModel atIndex:indexPath.row];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 /**
@@ -230,9 +236,9 @@
  */
 - (void)setUnreadCount:(NSInteger)unreadCount
 {
-    _unreadCount = unreadCount;
-    self.navigationController.tabBarItem.badgeValue = [HYUtils stringFromUnreadCount:unreadCount];
-    [UIApplication sharedApplication].applicationIconBadgeNumber = unreadCount;
+    _unreadCount = MAX(0, unreadCount);
+    self.navigationController.tabBarItem.badgeValue = [HYUtils stringFromUnreadCount:_unreadCount];
+    [UIApplication sharedApplication].applicationIconBadgeNumber = _unreadCount;
 }
 
 

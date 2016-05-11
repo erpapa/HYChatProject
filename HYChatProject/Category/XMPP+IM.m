@@ -15,6 +15,18 @@
 
 @implementation XMPPIQ (IM)
 
+#pragma mark 判断是否是错误消息
+- (BOOL)isQueryError
+{
+    if (self.children > 0) {
+        for (NSXMLElement *element in self.children) {
+            if ([element.name isEqualToString:@"query"] && [[self type] isEqualToString:@"error"]) {
+                return YES;
+            }
+        }
+    }
+    return NO;
+}
 
 #pragma mark 判断是否为聊天室信息查询
 - (BOOL)isChatRoomInfo

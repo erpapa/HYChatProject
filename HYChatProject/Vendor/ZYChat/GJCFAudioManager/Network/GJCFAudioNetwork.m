@@ -8,6 +8,7 @@
 
 #import "GJCFAudioNetwork.h"
 #import "GJCFUitils.h"
+#import "HYQNAuthPolicy.h"
 
 @interface GJCFAudioNetwork ()
 
@@ -48,7 +49,11 @@
         self.uploadManager = nil;
     }
     self.uploadManager = [[GJCFFileUploadManager alloc]init];
-    
+    /** 对音频上传进行配置 */
+    [self.uploadManager setDefaultHostUrl:QN_UploadHost];
+    [self.uploadManager setDefaultUploadPath:QN_UploadHost];
+    [self.uploadManager setDefaultRequestHeader:@{@"Content-Type" : @"multipart/form-data"}];
+    [self.uploadManager setDefaultRequestParams:@{@"token" : [HYQNAuthPolicy defaultToken]}];
     /* 设定任务观察 */
     [self observeUploadTask];
 }
@@ -101,8 +106,8 @@
             
             if (self.delegate && [self.delegate respondsToSelector:@selector(audioNetwork:forAudioFile:uploadFaild:)]) {
                 
-                NSError *serverError = [NSError errorWithDomain:@"http://www.ZYProSoft" code:-123 userInfo:@{@"msg": @"参数非法"}];
-                [self.delegate audioNetwork:self forAudioFile:originFile.localStorePath uploadFaild:serverError];
+                NSError *serverError = [NSError errorWithDomain:@"" code:-123 userInfo:@{@"msg": @"参数非法"}];
+                [self.delegate audioNetwork:self forAudioFile:originFile uploadFaild:serverError];
             }
             
         }
@@ -115,7 +120,7 @@
 
     if (self.delegate && [self.delegate respondsToSelector:@selector(audioNetwork:forAudioFile:uploadProgress:)]) {
         
-        [self.delegate audioNetwork:self forAudioFile:originFile.localStorePath uploadProgress:progress];
+        [self.delegate audioNetwork:self forAudioFile:originFile uploadProgress:progress];
         
     }
 }
@@ -126,7 +131,7 @@
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(audioNetwork:forAudioFile:uploadFaild:)]) {
         
-        [self.delegate audioNetwork:self forAudioFile:originFile.localStorePath uploadFaild:error];
+        [self.delegate audioNetwork:self forAudioFile:originFile uploadFaild:error];
     }
 }
 
@@ -170,7 +175,7 @@
         
         GJCFAudioModel *audioFile = task.userInfo[@"audioFile"];
 
-        [self.delegate audioNetwork:self forAudioFile:audioFile.uniqueIdentifier downloadProgress:progress];
+        [self.delegate audioNetwork:self forAudioFile:audioFile downloadProgress:progress];
     }
 }
 
@@ -180,7 +185,7 @@
         
         GJCFAudioModel *audioFile = task.userInfo[@"audioFile"];
 
-        [self.delegate audioNetwork:self forAudioFile:audioFile.remotePath downloadFaild:error];
+        [self.delegate audioNetwork:self forAudioFile:audioFile downloadFaild:error];
         
     }
     
@@ -223,15 +228,12 @@
 - (void)downloadAudioFileWithUrl:(NSString *)remoteAudioUrl withConvertSetting:(BOOL)isNeedConvert withSpecialCacheFileName:(NSString *)cacheFileName withFinishDownloadPlayCheck:(BOOL)finishPlay withFileUniqueIdentifier:(NSString **)fileUniqueIdentifier
 {
     GJCFAudioModel *audioFile = [[GJCFAudioModel alloc]init];
-    
-    NSString *fileName = [[remoteAudioUrl componentsSeparatedByString:@"/"]lastObject];
-    NSString *extensionName = [[fileName componentsSeparatedByString:@"."]lastObject];
-    audioFile.extensionName = extensionName;
-    if (GJCFStringIsNull(cacheFileName)) {
-        cacheFileName = fileName;
-    }
 
-    audioFile.specialCacheFileName = [NSString stringWithFormat:@"%@.%@",cacheFileName,audioFile.extensionName];
+    NSString *specialCacheFileName = cacheFileName;
+    if (GJCFStringIsNull(specialCacheFileName)) {
+        specialCacheFileName = [[remoteAudioUrl lastPathComponent] stringByDeletingPathExtension];
+    }
+    audioFile.specialCacheFileName = specialCacheFileName;
     audioFile.remotePath = remoteAudioUrl;
     audioFile.isNeedConvertEncodeToSave = isNeedConvert;
     audioFile.shouldPlayWhileFinishDownload = finishPlay;

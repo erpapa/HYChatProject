@@ -52,9 +52,10 @@
 + (UIImage *)captureWithView:(UIView *)view;
 
 /**
- *  生成二维码(默认300x300)
+ *  生成二维码（默认300x300）
  */
 + (UIImage *)createQRCodeWithString:(NSString *)string;
++ (UIImage *)createQRCodeWithString:(NSString *)string size:(CGSize)size;
 /**
  *  从CIImage生成UIImage
  */

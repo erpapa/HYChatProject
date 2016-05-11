@@ -373,7 +373,7 @@ static dispatch_queue_t _gjcfFileUploadManagerOperationQueue ;
         
         AFHTTPRequestOperation *uploadOperation = [self.requestOperationManager POST:self.defaultPath parameters:self.defaultRequestParmas constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             
-            [self constructingBodyWithTask:weakTask formData:formData];
+            [self constructingBodyWithTask:weakTask formData:formData]; // 使用task判断类型，得到对应的二进制数据
             
             
         } success:^(AFHTTPRequestOperation *operation, id responseObject) {

@@ -24,12 +24,12 @@
 
 - (void)audioNetwork:(GJCFAudioNetwork *)audioNetwork finishDownloadWithAudioFile:(GJCFAudioModel *)audioFile;
 
-- (void)audioNetwork:(GJCFAudioNetwork *)audioNetwork forAudioFile:(NSString *)audioFileLocalPath uploadFaild:(NSError *)error;
+- (void)audioNetwork:(GJCFAudioNetwork *)audioNetwork forAudioFile:(GJCFAudioModel *)audioFile uploadFaild:(NSError *)error;
 
-- (void)audioNetwork:(GJCFAudioNetwork *)audioNetwork forAudioFile:(NSString *)audioFileUnique downloadFaild:(NSError *)error;
+- (void)audioNetwork:(GJCFAudioNetwork *)audioNetwork forAudioFile:(GJCFAudioModel *)audioFile downloadFaild:(NSError *)error;
 
-- (void)audioNetwork:(GJCFAudioNetwork *)audioNetwork forAudioFile:(NSString *)audioFileLocalPath uploadProgress:(CGFloat)progress;
+- (void)audioNetwork:(GJCFAudioNetwork *)audioNetwork forAudioFile:(GJCFAudioModel *)audioFile uploadProgress:(CGFloat)progress;
 
-- (void)audioNetwork:(GJCFAudioNetwork *)audioNetwork forAudioFile:(NSString *)audioFileUnique downloadProgress:(CGFloat)progress;
+- (void)audioNetwork:(GJCFAudioNetwork *)audioNetwork forAudioFile:(GJCFAudioModel *)audioFile downloadProgress:(CGFloat)progress;
 
 @end

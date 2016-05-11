@@ -15,6 +15,7 @@
 #import "GJCFEncodeAndDecode.h"
 #import "GJCFAudioFileUitil.h"
 #import "GJCFUitils.h"
+#import "HYQNAuthPolicy.h"
 
 @interface GJCFAudioManager ()<GJCFAudioNetworkDelegate,GJCFAudioPlayerDelegate,GJCFAudioRecordDelegate>
 
@@ -59,6 +60,9 @@
 @property (nonatomic,copy)GJCFAudioManagerPlayFaildBlock playFaildBlock;
 
 @property (nonatomic,copy)GJCFAudioManagerRecordFaildBlock recordFaildBlock;
+
+@property (nonatomic, strong) NSMutableDictionary *uploadBlockDict;
+@property (nonatomic, strong) NSMutableDictionary *downloadBlockDict;
 
 @end
 
@@ -114,6 +118,9 @@
         }else{
             self.audioNetwork.delegate = self;
         }
+        
+        self.uploadBlockDict = [NSMutableDictionary dictionary];
+        self.downloadBlockDict = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -331,7 +338,7 @@
         return;
     }
     
-    /* 检测本地是否已经有对应的wav文件 */
+    /* 检测本地是否已经有对应的wav文件 ---> 将url进行MD5编码,再加上扩展(wav) */
     NSString *localWavPath = [[GJCFCachePathManager shareManager] mainAudioCacheFilePathForUrl:remoteAudioUrl];
     NSData *fileData = [NSData dataWithContentsOfFile:localWavPath];
     
@@ -353,7 +360,7 @@
     }
     
     NSString *fileIdentifier = nil;
-    [self.audioNetwork downloadAudioFileWithUrl:remoteAudioUrl withConvertSetting:YES withSpecialCacheFileName:@"" withFinishDownloadPlayCheck:YES withFileUniqueIdentifier:&fileIdentifier];
+    [self.audioNetwork downloadAudioFileWithUrl:remoteAudioUrl withConvertSetting:YES withSpecialCacheFileName:nil withFinishDownloadPlayCheck:YES withFileUniqueIdentifier:&fileIdentifier];
     [self.downloadAudioFileUniqueIdentifiers addObject:fileIdentifier];
 }
 
@@ -435,24 +442,58 @@
     
     if (self.currentRecordAudioFile) {
         
-        [self startUploadAudioFile:self.currentRecordAudioFile];
+        [self startUploadAudioFile:self.currentRecordAudioFile successBlock:nil];
         
     }
 }
 
-- (void)startUploadAudioFile:(GJCFAudioModel *)audioFile
+#pragma mark - 上传下载
+
+- (void)startUploadAudioFile:(GJCFAudioModel *)audioFile successBlock:(GJCFAudioManagerDidUploadSuccessBlock)successBlock;
 {
     if (!audioFile) {
         return;
     }
-
+    
+    if (successBlock) { // 添加block
+        [self.uploadBlockDict setObject:[successBlock copy] forKey:audioFile.uniqueIdentifier];
+    }
+    
     if (self.audioNetwork) {
-        
         /* 通常情况为了上传之后不占缓存，我们要将转码的临时文件在上传完成之后删掉 */
         audioFile.isDeleteWhileUploadFinish = YES;
         [self.audioNetwork uploadAudioFile:audioFile];
     }
 }
+
+- (void)downloadRemoteAudioFileByUrl:(NSString *)remoteAudioUrl successBlock:(GJCFAudioManagerDidDownloadSuccessBlock)successBlock
+{
+    if (!remoteAudioUrl) {
+        return;
+    }
+    
+    /* 检测本地是否已经有对应的wav文件 ---> 将url进行MD5编码,再加上扩展(amr) */
+    NSString *localWavPath = [[GJCFCachePathManager shareManager] mainAudioCacheFilePathForUrl:remoteAudioUrl];
+    NSData *fileData = [NSData dataWithContentsOfFile:localWavPath];
+    
+    /* 确保有路径并且有数据 */
+    if (localWavPath && fileData) {
+        successBlock(YES);
+        return;
+    }
+    
+    NSString *fileIdentifier = nil;
+    [self.audioNetwork downloadAudioFileWithUrl:remoteAudioUrl withConvertSetting:YES withSpecialCacheFileName:nil withFinishDownloadPlayCheck:NO withFileUniqueIdentifier:&fileIdentifier];
+    [self.downloadAudioFileUniqueIdentifiers addObject:fileIdentifier];
+    
+    if (successBlock) { // 添加block
+        [self.downloadBlockDict setObject:[successBlock copy] forKey:fileIdentifier];
+    }
+
+    
+}
+
+
 
 /* 获取指定本地路径音频文件的时长 */
 - (NSTimeInterval)getDurationForLocalWavPath:(NSString *)localAudioFilePath
@@ -465,7 +506,7 @@
 {
     if (!remoteUrl) {
         if (faildBlock) {
-            NSError *error = [NSError errorWithDomain:@"gjcf.AuidoManager.com" code:-235 userInfo:@{@"msg": @"没有远程地址"}];
+            NSError *error = [NSError errorWithDomain:@"domain" code:-235 userInfo:@{@"msg": @"没有远程地址"}];
             faildBlock(remoteUrl,error);
         }
         return;
@@ -718,10 +759,10 @@
     NSLog(@"GJCFAudioManager 上传完成:%@",formateDict);
 
     /* 这里还得判断上传是否真的成功 */
-    if ([[formateDict objectForKey:@"status"] intValue] == 0) {
+    if ([[formateDict objectForKey:@"hash"] length] && [[formateDict objectForKey:@"key"] length]) {
         
         /* 根据IM目前的内容格式来处理成对象Model */
-        baseResultModel.remotePath = [formateDict objectForKey:@"data"];
+        baseResultModel.remotePath = QN_FullURL([formateDict objectForKey:@"key"]);
         
         /* 远程文件和本地文件建立关系 */
         [GJCFAudioFileUitil createRemoteUrl:baseResultModel.remotePath relationWithLocalWavPath:baseResultModel.localStorePath];
@@ -761,36 +802,46 @@
     NSLog(@"GJCFAudioManager 上传成功:%@",audioFile);
     
     if (self.uploadFinishBlock) {
-        
         self.uploadFinishBlock(audioFile.remotePath);
     }
 
     if (self.uploadCompletionBlock) {
         self.uploadCompletionBlock(audioFile.localStorePath,YES,audioFile.remotePath);
     }
+    
+    GJCFAudioManagerDidUploadSuccessBlock successBlock = [self.uploadBlockDict objectForKey:audioFile.uniqueIdentifier];
+    if (successBlock) {
+        successBlock(YES);
+        [self.uploadBlockDict removeObjectForKey:audioFile.uniqueIdentifier];
+    }
 }
 
-- (void)audioNetwork:(GJCFAudioNetwork *)audioNetwork forAudioFile:(NSString *)audioFileLocalPath uploadFaild:(NSError *)error
+- (void)audioNetwork:(GJCFAudioNetwork *)audioNetwork forAudioFile:(GJCFAudioModel *)audioFile uploadFaild:(NSError *)error
 {
     NSLog(@"GJCFAudioManager 上传失败:%@",error);
     
     if (self.uploadFaildBlock) {
-        
         self.uploadFaildBlock(error);
     }
     
     if (self.uploadCompletionBlock) {
-        self.uploadCompletionBlock(audioFileLocalPath,NO,nil);
+        self.uploadCompletionBlock(audioFile.localStorePath,NO,nil);
+    }
+    
+    GJCFAudioManagerDidUploadSuccessBlock successBlock = [self.uploadBlockDict objectForKey:audioFile.uniqueIdentifier];
+    if (successBlock) {
+        successBlock(NO);
+        [self.uploadBlockDict removeObjectForKey:audioFile.uniqueIdentifier];
     }
 
 }
 
-- (void)audioNetwork:(GJCFAudioNetwork *)audioNetwork forAudioFile:(NSString *)audioFileLocalPath uploadProgress:(CGFloat)progress
+- (void)audioNetwork:(GJCFAudioNetwork *)audioNetwork forAudioFile:(GJCFAudioModel *)audioFile uploadProgress:(CGFloat)progress
 {
     NSLog(@"GJCFAudioManager 上传进度:%f",progress);
     if (self.uploadProgressBlock) {
         
-        self.uploadProgressBlock(audioFileLocalPath,progress);
+        self.uploadProgressBlock(audioFile.localStorePath,progress);
     }
 }
 
@@ -801,6 +852,12 @@
     NSLog(@"GJCFAudioManager 需要转码文件:%d",audioFile.isNeedConvertEncodeToSave);
     
     NSLog(@"GJCFAudioManager 需要转码完成播放:%d",audioFile.shouldPlayWhileFinishDownload);
+    
+    GJCFAudioManagerDidDownloadSuccessBlock downloadBlock = [self.downloadBlockDict objectForKey:audioFile.remotePath];
+    if (downloadBlock) {
+        downloadBlock(YES);
+        [self.downloadBlockDict removeObjectForKey:audioFile.uniqueIdentifier];
+    }
     
     /* 判断是不是需要转码的类型 */
     if (audioFile.isNeedConvertEncodeToSave) {
@@ -890,19 +947,25 @@
 
 }
 
-- (void)audioNetwork:(GJCFAudioNetwork *)audioNetwork forAudioFile:(NSString *)audioFileUnique downloadProgress:(CGFloat)progress
+- (void)audioNetwork:(GJCFAudioNetwork *)audioNetwork forAudioFile:(GJCFAudioModel *)audioFile downloadProgress:(CGFloat)progress
 {
-    NSLog(@"GJCFAudioManager 下载:%@ 进度:%f",audioFileUnique,progress);
+    NSLog(@"GJCFAudioManager 下载:%@ 进度:%f",audioFile.uniqueIdentifier,progress);
 }
 
-- (void)audioNetwork:(GJCFAudioNetwork *)audioNetwork forAudioFile:(NSString *)audioFileUnique downloadFaild:(NSError *)error
+- (void)audioNetwork:(GJCFAudioNetwork *)audioNetwork forAudioFile:(GJCFAudioModel *)audioFile downloadFaild:(NSError *)error
 {
-    NSLog(@"GJCFAudioManager 下载:%@ 错误:%@",audioFileUnique,error);
+    NSLog(@"GJCFAudioManager 下载:%@ 错误:%@",audioFile.uniqueIdentifier,error);
     if (self.durationGetFaildBlock) {
-        self.durationGetFaildBlock(audioFileUnique,error);
+        self.durationGetFaildBlock(audioFile.uniqueIdentifier,error);
     }
     if (self.remotePlayFaildBlock) {
-        self.remotePlayFaildBlock(audioFileUnique);
+        self.remotePlayFaildBlock(audioFile.uniqueIdentifier);
+    }
+    
+    GJCFAudioManagerDidDownloadSuccessBlock downloadBlock = [self.downloadBlockDict objectForKey:audioFile.remotePath];
+    if (downloadBlock) {
+        downloadBlock(NO);
+        [self.downloadBlockDict removeObjectForKey:audioFile.uniqueIdentifier];
     }
 }
 
@@ -966,7 +1029,7 @@
     NSLog(@"GJCFAudioManager 播放完成:%@",audioFile.localStorePath);
     
     if (self.finishPlayBlock) {
-        self.finishPlayBlock(audioFile.localStorePath);
+        self.finishPlayBlock(audioFile.uniqueIdentifier);
     }
 }
 

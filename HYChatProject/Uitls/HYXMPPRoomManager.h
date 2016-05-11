@@ -15,6 +15,9 @@ typedef void (^HYRoomInfoBlock)(NSDictionary *roomInfo); // 房间信息字典
 typedef void (^HYRoomOwnersBlock)(NSArray *roomOwners); // 房间创建者
 typedef void (^HYRoomAdminsBlock)(NSArray *roomAdmins); // 房间管理员
 typedef void (^HYRoomMembersBlock)(NSArray *roomMembers); // 房间普通成员
+typedef void (^HYJoinRoomBlock)(BOOL success);     // 加入房间成功/失败
+typedef void (^HYCreateRoomBlock)(BOOL success);   // 创建room成功/失败
+
 
 @class XMPPRoom;
 @interface HYXMPPRoomManager : NSObject
@@ -26,10 +29,10 @@ typedef void (^HYRoomMembersBlock)(NSArray *roomMembers); // 房间普通成员
 + (instancetype)sharedInstance;
 
 // 创建房间
-- (void)createRoomWithRoomName:(NSString *)roomName;
+- (void)createRoomWithRoomName:(NSString *)roomName success:(HYCreateRoomBlock)successBlock;
 // 加入房间
-- (void)joinRoomWithRoomJID:(XMPPJID *)roomJid withNickName:(NSString *)nickName;
-- (void)joinRoomWithRoomJID:(XMPPJID *)roomJid withNickName:(NSString *)nickName password:(NSString *)password;
+- (void)joinRoomWithRoomJID:(XMPPJID *)roomJid withNickName:(NSString *)nickName success:(HYJoinRoomBlock)successBlock;
+- (void)joinRoomWithRoomJID:(XMPPJID *)roomJid withNickName:(NSString *)nickName password:(NSString *)password success:(HYJoinRoomBlock)successBlock;
 // 注册房间
 - (void)registerRoomWithRoomJID:(XMPPJID *)roomJid;
 // 离开房间

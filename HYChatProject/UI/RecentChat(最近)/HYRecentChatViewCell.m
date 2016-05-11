@@ -12,6 +12,8 @@
 #import "HYUtils.h"
 #import "XMPPvCardTemp.h"
 #import "YYText.h"
+#import "UIView+SW.h"
+#import "HYUservCardViewController.h"
 
 #define kPanding 10
 
@@ -60,6 +62,8 @@
     self.headView.contentMode = UIViewContentModeScaleAspectFill;
     self.headView.layer.cornerRadius = headViewW * 0.5;
     self.headView.layer.masksToBounds = YES;
+    self.headView.userInteractionEnabled = YES;
+    [self.headView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headViewClick:)]];
     [self.contentView addSubview:self.headView];
     
     // 2.日期
@@ -120,7 +124,7 @@
     self.detailLabel.attributedText = chatModel.attText; // 赋值属性字符串
     self.timeLabel.text = [HYUtils timeStringSince1970:chatModel.time];
     // 未读消息数
-    self.badgeButton.frame = [self newFrameWithUnreadCount:chatModel.unreadCount];
+    self.badgeButton.frame = [self frameWithUnreadCount:chatModel.unreadCount];
     NSString *badgeValue = [HYUtils stringFromUnreadCount:chatModel.unreadCount];
     self.badgeButton.hidden = badgeValue.length ? NO : YES;
     [self.badgeButton setTitle:badgeValue forState:UIControlStateNormal];
@@ -133,8 +137,10 @@
     }];
     
 }
-
-- (CGRect)newFrameWithUnreadCount:(int)unreadCount
+/**
+ *  返回frame
+ */
+- (CGRect)frameWithUnreadCount:(int)unreadCount
 {
     CGRect newFrame = self.badgeButton.frame;
     if (unreadCount < 10) {
@@ -148,6 +154,18 @@
         newFrame.origin.x = kScreenW - kPanding - 30;
     }
     return newFrame;
+}
+
+/**
+ *  点击头像
+ */
+
+- (void)headViewClick:(UITapGestureRecognizer *)gesture
+{
+    UIViewController *vc = [self parentController];
+    HYUservCardViewController *vCardVC = [[HYUservCardViewController alloc] init];
+    vCardVC.userJid = self.chatModel.jid;
+    [vc.navigationController pushViewController:vCardVC animated:YES];
 }
 
 @end

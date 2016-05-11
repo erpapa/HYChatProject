@@ -11,6 +11,7 @@
 #import "XMPPRoomMemoryStorage.h"
 #import "XMPPRoomCoreDataStorage.h"
 #import "HYXMPPManager.h"
+#import "HYChatMessage.h"
 #import "XMPP+IM.h"
 #import "HYRecentChatModel.h"
 #import "HYDatabaseHandler+HY.h"
@@ -18,7 +19,8 @@
 @interface HYXMPPRoomManager()<XMPPStreamDelegate, XMPPRoomDelegate, XMPPMUCDelegate>
 
 @property (nonatomic, copy) NSString *filterString; // 搜索
-@property (nonatomic, assign) BOOL isCreate;         // 创建/加入
+@property (nonatomic, copy) HYJoinRoomBlock joinRoomBlock; // 加入房间成功/失败
+@property (nonatomic, copy) HYCreateRoomBlock createRoomBlock;//创建房间成功/失败
 @property (nonatomic, strong) XMPPJID *registerRoomJID; // 注册房间jid
 @property (nonatomic, strong) XMPPMUC *xmppMUC;
 @property (nonatomic, strong) XMPPRoomCoreDataStorage *xmppRoomStorage; // 房间CoreData;
@@ -106,10 +108,10 @@
 }
 
 #pragma mark - 创建房间
-- (void)createRoomWithRoomName:(NSString *)roomName
+- (void)createRoomWithRoomName:(NSString *)roomName success:(HYCreateRoomBlock)successBlock;
 {
     HYLog(@"创建群组:%@...", roomName);
-    self.isCreate = YES;
+    self.createRoomBlock = successBlock;
     NSString *xmppRoomJID = [NSString stringWithFormat:@"%@@conference.%@", roomName, _xmppStream.myJID.domain];
     XMPPJID *roomJID = [XMPPJID jidWithString:xmppRoomJID];
     XMPPRoom *xmppRoom = [[XMPPRoom alloc] initWithRoomStorage:_xmppRoomStorage jid:roomJID dispatchQueue:dispatch_get_main_queue()];
@@ -123,15 +125,15 @@
 }
 
 #pragma mark - 加入房间
-- (void)joinRoomWithRoomJID:(XMPPJID *)roomJid withNickName:(NSString *)nickName
+- (void)joinRoomWithRoomJID:(XMPPJID *)roomJid withNickName:(NSString *)nickName success:(HYJoinRoomBlock)successBlock
 {
-    [self joinRoomWithRoomJID:roomJid withNickName:nickName password:nil];
+    [self joinRoomWithRoomJID:roomJid withNickName:nickName password:nil success:successBlock];
 }
 
-- (void)joinRoomWithRoomJID:(XMPPJID *)roomJid withNickName:(NSString *)nickName password:(NSString *)password
+- (void)joinRoomWithRoomJID:(XMPPJID *)roomJid withNickName:(NSString *)nickName password:(NSString *)password success:(HYJoinRoomBlock)successBlock
 {
     HYLog(@"加入群组:%@...", roomJid.bare);
-    self.isCreate = NO;
+    self.joinRoomBlock = successBlock;
     XMPPRoom *xmppRoom = [[XMPPRoom alloc] initWithRoomStorage:_xmppRoomStorage jid:roomJid dispatchQueue:dispatch_get_main_queue()];
     [xmppRoom activate:_xmppStream];
     [xmppRoom addDelegate:self delegateQueue:dispatch_get_main_queue()];
@@ -433,6 +435,7 @@
     [self getPrivateStorateForElement:storage];
 }
 
+
 #pragma mark - 获取群成员
 - (void)fetchRoom:(XMPPJID *)roomJid members:(HYRoomMembersBlock)members
 {
@@ -526,18 +529,15 @@
             return;
         }
         conference = [NSXMLElement elementWithName:@"conference"];
-        [conference addAttributeWithName:@"name" stringValue:@"BookmarkedRoom"];
-        [conference addAttributeWithName:@"autojoin" stringValue:@"true"];
+        [conference addAttributeWithName:@"name" stringValue:joinedRoom.roomJID.user];
         [conference addAttributeWithName:@"jid" stringValue:joinedRoom.roomJID.bare];
-        [conference addAttributeWithName:@"nick" stringValue:_xmppStream.myJID.bare];
-        
+        [conference addAttributeWithName:@"autojoin" stringValue:@"true"];
         [storage addChild:conference];
     }
     conference = [NSXMLElement elementWithName:@"conference"];
-    [conference addAttributeWithName:@"name" stringValue:@"BookmarkedRoom"];
-    [conference addAttributeWithName:@"autojoin" stringValue:@"true"];
+    [conference addAttributeWithName:@"name" stringValue:roomJid.user];
     [conference addAttributeWithName:@"jid" stringValue:roomJid.bare];
-    [conference addAttributeWithName:@"nick" stringValue:_xmppStream.myJID.bare];
+    [conference addAttributeWithName:@"autojoin" stringValue:@"true"];
     [storage addChild:conference];
     [self savePrivateStorageWithElement:storage];
 }
@@ -555,11 +555,9 @@
         XMPPRoom *joinedRoom = [self.bookmarkedRooms objectAtIndex:i];
         if (![roomJid.bare isEqualToString:joinedRoom.roomJID.bare]) { // 不添加准备删除的节点
             conference = [NSXMLElement elementWithName:@"conference"];
-            [conference addAttributeWithName:@"name" stringValue:@"BookmarkedRoom"];
-            [conference addAttributeWithName:@"autojoin" stringValue:@"true"];
+            [conference addAttributeWithName:@"name" stringValue:joinedRoom.roomJID.user];
             [conference addAttributeWithName:@"jid" stringValue:joinedRoom.roomJID.bare];
-            [conference addAttributeWithName:@"nick" stringValue:_xmppStream.myJID.user];
-            
+            [conference addAttributeWithName:@"autojoin" stringValue:@"true"];
             [storage addChild:conference];
         }
     }
@@ -620,7 +618,21 @@
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
 {
     HYLog(@"HYXMPPRoomManager 接收到IQ包%@", iq);
-    if ([iq isChatRoomItems]) {
+    if ([iq isQueryError]) {
+        HYLog(@"查询返回错误消息");
+        if (self.roomInfo) {
+            self.roomInfo(nil);
+            self.roomInfo = nil;
+        }
+        if (self.joinRoomBlock) {
+            self.joinRoomBlock(NO);
+            self.joinRoomBlock = nil;
+        }
+        if (self.createRoomBlock) {
+            self.createRoomBlock(NO);
+            self.createRoomBlock = nil;
+        }
+    } else if ([iq isChatRoomItems]) {
         if (self.searchRoomsBlock) {
             NSXMLElement *element = iq.childElement;
             NSMutableArray *searchRooms = [[NSMutableArray alloc] init];
@@ -629,7 +641,7 @@
                 NSString *roomJid = item.attributesAsDictionary[@"jid"];
                 NSString *roomName = item.attributesAsDictionary[@"name"];
                 if ([roomName rangeOfString:self.filterString].location != NSNotFound) {
-                    [roomDic addEntriesFromDictionary:@{roomJid : roomName}];
+                    [roomDic addEntriesFromDictionary:@{@"roomJid":roomJid, @"name":roomName}];
                     [searchRooms addObject:roomDic];
                 }
             }
@@ -706,7 +718,7 @@
                 [room activate:_xmppStream];
                 [room addDelegate:self delegateQueue:dispatch_get_main_queue()];
                 NSXMLElement *history = [NSXMLElement elementWithName:@"history"];
-                [history addAttributeWithName:@"maxstanzas" stringValue:@"20"]; // 设置历史消息条数
+                [history addAttributeWithName:@"maxstanzas" stringValue:@"0"]; // 设置历史消息条数
                 [room joinRoomUsingNickname:_xmppStream.myJID.user history:history]; // 密码设置为空
                 [room fetchConfigurationForm];
                 [self.bookmarkedRooms addObject:room];
@@ -726,7 +738,7 @@
     } else if ([iq isRoomRegisterCommitResult:self.registerRoomJID.bare]) {
         HYLog(@"接收到房间注册提交结果.");
         if (![[iq type] isEqualToString:@"error"]) {
-            [self joinRoomWithRoomJID:self.registerRoomJID withNickName:_xmppStream.myJID.bare];
+            [self joinRoomWithRoomJID:self.registerRoomJID withNickName:_xmppStream.myJID.bare success:nil];
         }
     }
     return YES;
@@ -763,6 +775,9 @@
 - (void)xmppRoomDidCreate:(XMPPRoom *)sender
 {
     HYLog(@"聊天室已创建,roomJID = %@", sender.roomJID.bare);
+    if (self.createRoomBlock) {
+        self.createRoomBlock(YES);
+    }
 }
 
 /**
@@ -826,9 +841,13 @@
 - (void)xmppRoomDidJoin:(XMPPRoom *)sender
 {
     HYLog(@"%@已经加入群组", sender.myRoomJID.resource);
-    if (self.isCreate) {
-        NSLog(@"对新创建的群组进行配置...");
+    if (self.createRoomBlock) {
+        HYLog(@"对新创建的群组进行配置...");
+        self.createRoomBlock = nil;
         [self configXmppRoom:sender.roomJID];
+    } else if (self.joinRoomBlock) {
+        self.joinRoomBlock(YES);
+        self.joinRoomBlock = nil;
     }
 }
 
@@ -869,8 +888,13 @@
 - (void)xmppRoom:(XMPPRoom *)sender didReceiveMessage:(XMPPMessage *)message fromOccupant:(XMPPJID *)occupantJID
 {
     HYLog(@"xmppRoom接收到聊天室消息, message = %@, JID = %@", message, occupantJID);
+    if ([occupantJID.resource isEqualToString:_xmppStream.myJID.user]) { // 收到自己发送的消息
+        return;
+    }
+    
     if ([[message type] isEqualToString:@"groupchat"]) { // 群聊消息
         if ([message body].length) {
+            // 1.
             HYRecentChatModel *chatModel = [[HYRecentChatModel alloc] init];
             [[HYDatabaseHandler sharedInstance] recentChatModel:chatModel fromJid:message.from];// 从数据库读取
             chatModel.jid = message.from;
@@ -879,9 +903,75 @@
             chatModel.isGroup = YES;
             chatModel.unreadCount++;
             [HYNotification postNotificationName:HYChatDidReceiveMessage object:chatModel];
+            
+            // 2.
+            HYChatMessage *chatMessage = [[HYChatMessage alloc] initWithJsonString:[message body]];
+            chatMessage.jid = message.from;
+            chatMessage.time = [[NSDate date] timeIntervalSince1970];
+            chatMessage.isRead = NO;
+            chatMessage.isOutgoing = NO;
+            chatMessage.isGroup = YES;
+            [[HYDatabaseHandler sharedInstance] addGroupChatMessage:chatMessage]; // 储存
+            [HYNotification postNotificationName:HYChatDidReceiveGroupMessage object:chatMessage];
         }
     }
     
+}
+
+- (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message
+{
+    if ([[message type] isEqualToString:@"groupchat"]) { // 群聊消息
+        if ([message body].length) {
+            // 1.
+            HYRecentChatModel *chatModel = [[HYRecentChatModel alloc] init];
+            [[HYDatabaseHandler sharedInstance] recentChatModel:chatModel fromJid:message.from];// 从数据库读取
+            chatModel.jid = message.to;
+            chatModel.body = [message body];
+            chatModel.time = [[NSDate date] timeIntervalSince1970];
+            chatModel.isGroup = YES;
+            chatModel.unreadCount = 0;
+            [HYNotification postNotificationName:HYChatDidReceiveMessage object:chatModel];
+            
+            // 2.
+            HYChatMessage *chatMessage = [[HYChatMessage alloc] initWithJsonString:[message body]];
+            chatMessage.jid = message.to;
+            chatMessage.time = [[NSDate date] timeIntervalSince1970];
+            chatMessage.isRead = YES;
+            chatMessage.isOutgoing = YES;
+            chatMessage.isGroup = YES;
+            chatMessage.sendStatus = HYChatSendMessageStatusSuccess; // 发送成功
+            [[HYDatabaseHandler sharedInstance] addGroupChatMessage:chatMessage]; // 储存
+            [HYNotification postNotificationName:HYChatDidReceiveGroupMessage object:chatMessage];
+        }
+    }
+}
+
+- (void)xmppStream:(XMPPStream *)sender didFailToSendMessage:(XMPPMessage *)message error:(NSError *)error
+{
+    if ([[message type] isEqualToString:@"groupchat"]) { // 群聊消息
+        if ([message body].length) {
+            // 1.
+            HYRecentChatModel *chatModel = [[HYRecentChatModel alloc] init];
+            [[HYDatabaseHandler sharedInstance] recentChatModel:chatModel fromJid:message.from];// 从数据库读取
+            chatModel.jid = message.to;
+            chatModel.body = [message body];
+            chatModel.time = [[NSDate date] timeIntervalSince1970];
+            chatModel.isGroup = YES;
+            chatModel.unreadCount = 0;
+            [HYNotification postNotificationName:HYChatDidReceiveMessage object:chatModel];
+            
+            // 2.
+            HYChatMessage *chatMessage = [[HYChatMessage alloc] initWithJsonString:[message body]];
+            chatMessage.jid = message.to;
+            chatMessage.time = [[NSDate date] timeIntervalSince1970];
+            chatMessage.isRead = YES;
+            chatMessage.isOutgoing = YES;
+            chatMessage.isGroup = YES;
+            chatMessage.sendStatus = HYChatSendMessageStatusFaild;
+            [[HYDatabaseHandler sharedInstance] addGroupChatMessage:chatMessage]; // 储存
+            [HYNotification postNotificationName:HYChatDidReceiveGroupMessage object:chatMessage];
+        }
+    }
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didFetchBanList:(NSArray *)items

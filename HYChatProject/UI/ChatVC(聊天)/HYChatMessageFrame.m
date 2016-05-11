@@ -10,6 +10,7 @@
 #import "YYText.h"
 #import "YYWebImage.h"
 #import "HYEmoticonTool.h"
+#import "GJCFAudioModel.h"
 
 @implementation HYChatMessageFrame
 
@@ -29,23 +30,19 @@
     _headViewFrame = chatMessage.isOutgoing ? rightIconRect : leftIconRect;
     
     // 3.文本
-    _textLayout = [self layout]; // 生成排版结果
-    CGSize textSize = _textLayout.textBoundingSize;
+    chatMessage.textLayout = [self textLayout]; // 生成排版结果
+    CGSize textSize = chatMessage.textLayout.textBoundingSize;
     _textViewFrame = CGRectMake(kTextPandingLeft, kTextPandingTop, textSize.width, textSize.height);
     
     // 4.背景
-    CGRect rightContentRect,leftContentRect;
+    CGFloat contentWidth, contentHeight, contentY, contentRightX, contentLeftX;
     switch (chatMessage.type) {
         case HYChatMessageTypeText:{
-            CGFloat contentWidth = CGRectGetWidth(_textViewFrame) + kTextPandingLeft + kTextPandingRight;
-            CGFloat contentHeight = CGRectGetHeight(_textViewFrame) + kTextPandingTop + kTextPandingBottom;
-            CGFloat contentY = CGRectGetMinY(_headViewFrame);
-            CGFloat rightX = CGRectGetMinX(_headViewFrame) - kContentMargin - contentWidth;
-            CGFloat leftX = CGRectGetMaxX(_headViewFrame) + kContentMargin;
-            
-            rightContentRect = CGRectMake(rightX, contentY, contentWidth, contentHeight);
-            leftContentRect = CGRectMake(leftX, contentY, contentWidth, contentHeight);
-            
+            contentWidth = CGRectGetWidth(_textViewFrame) + kTextPandingLeft + kTextPandingRight;
+            contentHeight = CGRectGetHeight(_textViewFrame) + kTextPandingTop + kTextPandingBottom;
+            contentY = CGRectGetMinY(_headViewFrame);
+            contentRightX = CGRectGetMinX(_headViewFrame) - kContentMargin - contentWidth;
+            contentLeftX = CGRectGetMaxX(_headViewFrame) + kContentMargin;
             break;
         }
         case HYChatMessageTypeImage:{
@@ -53,7 +50,11 @@
             break;
         }
         case HYChatMessageTypeAudio:{
-            
+            contentWidth = [self getContentWidthByAudioDuration:chatMessage.audioModel.duration];
+            contentHeight = CGRectGetHeight(_headViewFrame);
+            contentY = CGRectGetMinY(_headViewFrame);
+            contentRightX = CGRectGetMinX(_headViewFrame) - kContentMargin - contentWidth;
+            contentLeftX = CGRectGetMaxX(_headViewFrame) + kContentMargin;
             break;
         }
         case HYChatMessageTypeVideo:{
@@ -64,16 +65,26 @@
         default:
             break;
     }
+    
+    CGRect rightContentRect = CGRectMake(contentRightX, contentY, contentWidth, contentHeight);
+    CGRect leftContentRect = CGRectMake(contentLeftX, contentY, contentWidth, contentHeight);
     _contentBgViewFrame = chatMessage.isOutgoing ? rightContentRect : leftContentRect;
+    
+    CGFloat indicatorWidth = kHeadWidth - kTextPandingTop * 2;
+    CGRect rightIndicatorRect = CGRectMake(CGRectGetMinX(_contentBgViewFrame) - indicatorWidth, CGRectGetMaxY(_contentBgViewFrame) - indicatorWidth - kTextPandingTop, indicatorWidth, indicatorWidth);
+    CGRect leftIndicatorRect = CGRectMake(CGRectGetMaxX(_contentBgViewFrame), CGRectGetMaxY(_contentBgViewFrame) - indicatorWidth - kTextPandingTop, indicatorWidth, indicatorWidth);
+    _indicatorViewFrame = chatMessage.isOutgoing ? rightIndicatorRect : leftIndicatorRect;
+    
+    
     _cellHeight = CGRectGetMaxY(_contentBgViewFrame) + kContentMarginBottom;
 }
 
-- (YYTextLayout *)layout
+- (YYTextLayout *)textLayout
 {
-    if (self.chatMessage.type != HYChatMessageTypeText || self.chatMessage.data.length == 0) {
+    if (self.chatMessage.type != HYChatMessageTypeText || self.chatMessage.textMessage.length == 0) {
         return nil;
     }
-    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:self.chatMessage.data];
+    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:self.chatMessage.textMessage];
     text.yy_font = [UIFont systemFontOfSize:kTextFontSize]; // 字体
     text.yy_color = self.chatMessage.isOutgoing ? kMyTextColor : kOtherTextColor; //字体颜色
     // 匹配 [表情]
@@ -113,6 +124,22 @@
     }
     
     return [YYTextLayout layoutWithContainerSize:maxSize text:text];
+}
+
+- (CGFloat)getContentWidthByAudioDuration:(CGFloat)audioDuration
+{
+    if (audioDuration < 3) {
+        return 132/2 - 6;
+    }
+    else if (audioDuration < 11)
+    {
+        return 132/2 - 6 + (audioDuration - 3) * (252/2 - 132/2 - 6)/13;
+    }
+    else if (audioDuration < 60)
+    {
+        return 132/2 - 6 + (8  + ((NSInteger)((audioDuration - 10)/10))) * (252/2 - 132/2 - 6)/(13);
+    }
+    return 252/2 - 6;
 }
 
 @end

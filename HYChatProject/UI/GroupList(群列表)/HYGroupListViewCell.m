@@ -8,6 +8,8 @@
 
 #import "HYGroupListViewCell.h"
 #import "HYContactsModel.h"
+#import "UIView+SW.h"
+#import "HYGroupInfoViewController.h"
 
 @interface HYGroupListViewCell()
 @property (nonatomic, strong) UIImageView *headView;
@@ -53,6 +55,8 @@
     self.headView.contentMode = UIViewContentModeScaleAspectFill;
     self.headView.layer.cornerRadius = headViewW * 0.5;
     self.headView.layer.masksToBounds = YES;
+    self.headView.userInteractionEnabled = YES;
+    [self.headView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headViewClick:)]];
     [self.contentView addSubview:self.headView];
     
     // 2.昵称
@@ -76,5 +80,17 @@
     _model = model;
     self.nameLabel.text = model.displayName;
 }
+
+/**
+ *  点击头像
+ */
+- (void)headViewClick:(UITapGestureRecognizer *)gesture
+{
+    UIViewController *vc = [self parentController];
+    HYGroupInfoViewController *groupInfoVC = [[HYGroupInfoViewController alloc] init];
+    groupInfoVC.roomJid = self.model.jid;
+    [vc.navigationController pushViewController:groupInfoVC animated:YES];
+}
+
 
 @end

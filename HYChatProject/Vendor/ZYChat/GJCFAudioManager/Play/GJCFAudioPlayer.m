@@ -92,7 +92,7 @@
     BOOL isPrepare = [self.audioPlayer prepareToPlay];
     if (!isPrepare) {
         
-        NSError *faildError = [NSError errorWithDomain:@"gjcf.AudioManager.com" code:-235 userInfo:@{@"msg": @"GJCFAuidoPlayer准备播放失败"}];
+        NSError *faildError = [NSError errorWithDomain:@"domain" code:-235 userInfo:@{@"msg": @"GJCFAuidoPlayer准备播放失败"}];
         if (self.delegate && [self.delegate respondsToSelector:@selector(audioPlayer:didOccusError:)]) {
             [self.delegate audioPlayer:self didOccusError:faildError];
         }
@@ -111,7 +111,7 @@
         
     }else{
         
-        NSError *faildError = [NSError errorWithDomain:@"gjcf.AudioManager.com" code:-235 userInfo:@{@"msg": @"GJCFAuidoPlayer正在播放失败"}];
+        NSError *faildError = [NSError errorWithDomain:@"domain" code:-235 userInfo:@{@"msg": @"GJCFAuidoPlayer正在播放失败"}];
         if (self.delegate && [self.delegate respondsToSelector:@selector(audioPlayer:didOccusError:)]) {
             [self.delegate audioPlayer:self didOccusError:faildError];
         }
@@ -123,7 +123,7 @@
 {
     /* 阻止重复快速重复播放 */
     if (self.audioPlayer.isPlaying) {
-        NSError *faildError = [NSError errorWithDomain:@"gjcf.AudioManager.com" code:-235 userInfo:@{@"msg": @"GJCFAuidoPlayer正在播放失败"}];
+        NSError *faildError = [NSError errorWithDomain:@"domain" code:-235 userInfo:@{@"msg": @"GJCFAuidoPlayer正在播放失败"}];
         if (self.delegate && [self.delegate respondsToSelector:@selector(audioPlayer:didOccusError:)]) {
             [self.delegate audioPlayer:self didOccusError:faildError];
         }

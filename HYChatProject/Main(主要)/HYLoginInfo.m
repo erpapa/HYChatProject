@@ -69,7 +69,7 @@ static HYLoginInfo *instance;
     self.logon = [defaults boolForKey:kLogon];
     NSString *hostName = [defaults objectForKey:kHostName];
     NSInteger hostPort = [defaults integerForKey:kHostPort];
-    self.hostName = hostName.length ? hostName : kHostName;
+    self.hostName = hostName.length ? hostName : kDomain;
     self.hostPort = hostPort ? hostPort : kPort;
 }
 

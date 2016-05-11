@@ -13,6 +13,12 @@
 #import "YYTextView.h"
 #import "HYChatMessage.h"
 #import "HYEmoticonTool.h"
+#import "HYRecordProgressHUD.h"
+#import "GJCFAudioModel.h"
+#import "GJCFAudioFileUitil.h"
+#import "GJCFEncodeAndDecode.h"
+#import "GJCFAudioRecord.h"
+
 
 #define kNormalButtonBottom 7
 #define kTextViewMargin 6
@@ -30,7 +36,7 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
     HYChatInputPanelStatusExpand    // 扩展
 };
 
-@interface HYInputViewController()<HYEmoticonKeyboardViewDelegate, HYExpandKeyboardViewDelegate, YYKeyboardObserver, YYTextViewDelegate>
+@interface HYInputViewController()<HYEmoticonKeyboardViewDelegate, HYExpandKeyboardViewDelegate, YYKeyboardObserver, YYTextViewDelegate, GJCFAudioRecordDelegate>
 
 @property (nonatomic, strong) UIView *line;           // 顶部添加一条线
 @property (nonatomic, strong) UIButton *audioButton;  // 语音
@@ -38,10 +44,14 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
 @property (nonatomic, strong) UIButton *expandButton; // 扩展
 @property (nonatomic, strong) UIButton *emoButton;    // 表情
 @property (nonatomic, strong) UIButton *pressButton;  // 语音长按button（同时充当输入框背景）
+@property (nonatomic, strong) UIButton *otherButton;  // 用于显示输入键盘
 @property (nonatomic, strong) HYEmoticonKeyboardView *emoticonView;
 @property (nonatomic, strong) HYExpandKeyboardView *expandView;
 @property (nonatomic, assign) HYChatInputPanelStatus panelStatus;
 @property (nonatomic, assign) CGFloat textViewHeight;
+
+/* 录音组件 */
+@property (nonatomic, strong) GJCFAudioRecord *audioRecord;
 @end
 
 @implementation HYInputViewController
@@ -53,6 +63,8 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
     self.textViewHeight = kTextViewMinHeight;
     self.panelStatus = HYChatInputPanelStatusNone;
     [[YYKeyboardManager defaultManager] addObserver:self];
+    /* 初始化录音组件 */
+    [self initAudioRecord];
 }
 
 - (void)setupContentView
@@ -60,7 +72,7 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
     self.view.backgroundColor = [UIColor colorWithRed:249/255.0f green:249/255.0f blue:249/255.0f alpha:0.98f];
     // 0.线
     self.line = [[UIView alloc] init];
-    self.line.backgroundColor = [UIColor colorWithRed:200/255.0f green:200/255.0f blue:200/255.0f alpha:1.0f];
+    self.line.backgroundColor = [UIColor colorWithRed:222/255.0f green:222/255.0f blue:222/255.0f alpha:1.0f];
     [self.view addSubview:self.line];
     
     // 1.语音
@@ -95,6 +107,10 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
     self.textView.layer.cornerRadius = 3;
     self.textView.layer.masksToBounds = YES;
     [self.view addSubview:self.textView];
+    
+    self.otherButton = [[UIButton alloc] initWithFrame:self.textView.frame];
+    [self.otherButton addTarget:self action:@selector(switchKeyboard) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:self.otherButton];
     
     // 4.表情
     self.emoButton = [[UIButton alloc] init];
@@ -144,6 +160,60 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
     }
 }
 
+#pragma mark - 录音管理
+- (void)initAudioRecord
+{
+    self.audioRecord = [[GJCFAudioRecord alloc] init];
+    self.audioRecord.delegate = self;
+    self.audioRecord.limitRecordDuration = 60.0f; // 最大录音时长
+    self.audioRecord.minEffectDuration = 1.0f; // 最小录音时长
+}
+
+- (void)audioRecord:(GJCFAudioRecord *)audioRecord finishRecord:(GJCFAudioModel *)resultAudio
+{
+    HYLog(@"录音成功:%@",resultAudio.description);
+    [HYRecordProgressHUD dismissWithTitle:@"正在发送..."];
+    /**
+     *  录音文件转码
+     */
+    [GJCFAudioFileUitil setupAudioFileTempEncodeFilePath:resultAudio];
+    
+    if ([GJCFEncodeAndDecode convertAudioFileToAMR:resultAudio]) {
+        
+        HYLog(@"录音文件转码成功:%@",resultAudio);
+        if (self.delegate && [self.delegate respondsToSelector:@selector(inputViewController:sendAudioModel:)]) {
+            [self.delegate inputViewController:self sendAudioModel:resultAudio];
+        }
+    }
+}
+
+- (void)audioRecord:(GJCFAudioRecord *)audioRecord didFaildByMinRecordDuration:(NSTimeInterval)minDuration
+{
+    HYLog(@"小于最小录音时间，录音失败:%f",minDuration);
+    [HYRecordProgressHUD dismissWithTitle:@"说话时间太短！"];
+}
+
+- (void)audioRecord:(GJCFAudioRecord *)audioRecord didOccusError:(NSError *)error
+{
+    HYLog(@"录音失败:%@",error);
+    [HYRecordProgressHUD dismissWithTitle:@"录音失败！"];
+}
+
+- (void)audioRecord:(GJCFAudioRecord *)audioRecord limitDurationProgress:(CGFloat)progress
+{
+    HYLog(@"最大录音限制进度:%f",progress);
+}
+
+- (void)audioRecord:(GJCFAudioRecord *)audioRecord soundMeter:(CGFloat)soundMeter
+{
+    HYLog(@"录音音量:%f",soundMeter);
+}
+
+- (void)audioRecordDidCancel:(GJCFAudioRecord *)audioRecord
+{
+    HYLog(@"录音取消");
+}
+
 #pragma mark - 录音
 /**
  *  按下button
@@ -151,6 +221,8 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
 - (void)touchDown:(UIButton *)sender
 {
     [self.pressButton setTitle:@"按住 说话" forState:UIControlStateNormal];
+    [self.audioRecord startRecord];
+    [HYRecordProgressHUD showWithTitle:@"手指上滑，取消发送"];
 }
 /**
  *  在button内部
@@ -158,23 +230,33 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
 - (void)dragInside:(UIButton *)sender
 {
     [self.pressButton setTitle:@"按住 说话" forState:UIControlStateNormal];
+    [HYRecordProgressHUD changeSubTitle:@"手指上滑，取消发送"];
 }
-
+/**
+ *  发送录音
+ */
 - (void)touchUpInside:(UIButton *)sender
 {
     [self.pressButton setTitle:@"按住 说话" forState:UIControlStateNormal];
+    [self.audioRecord finishRecord];
 }
-/**
- *  在button外部
- */
+
+
 - (void)dragOutside:(UIButton *)sender
 {
     [self.pressButton setTitle:@"松开 结束" forState:UIControlStateNormal];
+    [HYRecordProgressHUD changeSubTitle:@"松开手指，取消发送"];
 }
 
+/**
+ *  取消发送
+ */
 - (void)touchOutside:(UIButton *)sender
 {
     [self.pressButton setTitle:@"按住 说话" forState:UIControlStateNormal];
+    [HYRecordProgressHUD dismissWithTitle:@"取消发送..."];
+    [self.audioRecord cancelRecord];
+    
 }
 
 #pragma mark - textViewDelegate
@@ -185,18 +267,43 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
     if([text isEqualToString:@"\n"]){
         //如果没有要发送的内容返回空
         if(body.length == 0) return NO;
-        //发送消息
-        HYChatMessage *message = [[HYChatMessage alloc] init];
-        message.type = HYChatMessageTypeText;
-        message.data = body;
-        if ([self.delegate respondsToSelector:@selector(inputViewController:sendMessage:)]) {
-            [self.delegate inputViewController:self sendMessage:message];
+        if ([self.delegate respondsToSelector:@selector(inputViewController:sendText:)]) {
+            [self.delegate inputViewController:self sendText:body];
         }
         self.textView.text=nil;
         return NO;
     }
     return YES;
 }
+
+#pragma mark - HYEmoticonKeyboardViewDelegate
+/**
+ *  选中表情
+ */
+- (void)emoticonKeyboardDidTapText:(NSString *)text
+{
+    if (text.length) {
+        [self.textView replaceRange:_textView.selectedTextRange withText:text];
+    }
+}
+
+/**
+ *  删除
+ */
+- (void)emoticonKeyboardDidTapBackspace
+{
+    [self.textView deleteBackward];
+}
+
+/**
+ *  发送
+ */
+- (void)emoticonKeyboardDidTapSendButton
+{
+    // 发送
+    [self textView:self.textView shouldChangeTextInRange:NSMakeRange(self.textView.text.length, 0) replacementText:@"\n"];
+}
+
 
 /**
  *  根据输入文字多少，自动调整输入框的高度
@@ -220,10 +327,10 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
         if (transition.fromVisible == YES && transition.toVisible == YES) { // 改变
             newFrame.origin.y = CGRectGetMaxY(self.view.superview.frame) - CGRectGetHeight(self.view.frame) - transition.toFrame.size.height;
         } else if (transition.fromVisible == YES && transition.toVisible == NO){ // 弹下
-            if (self.panelStatus == HYChatInputPanelStatusNone || self.panelStatus == HYChatInputPanelStatusAudio) {
-                newFrame.origin.y = CGRectGetMaxY(self.view.superview.frame) - CGRectGetHeight(self.view.frame);
-            } else {
+            if (self.textView.inputView && self.panelStatus == HYChatInputPanelStatusText) { // 表情->text
                 return;
+            } else {
+                newFrame.origin.y = CGRectGetMaxY(self.view.superview.frame) - CGRectGetHeight(self.view.frame);
             }
         } else if (transition.fromVisible == NO && transition.toVisible == YES){ // 弹起
             newFrame.origin.y = CGRectGetMaxY(self.view.superview.frame) - CGRectGetHeight(self.view.frame) - transition.toFrame.size.height;
@@ -240,10 +347,10 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
         if (transition.fromVisible == YES && transition.toVisible == YES) { // 改变
             newFrame.origin.y = -transition.toFrame.size.height;
         } else if (transition.fromVisible == YES && transition.toVisible == NO){ // 弹下
-            if (self.panelStatus == HYChatInputPanelStatusNone || self.panelStatus == HYChatInputPanelStatusAudio) {
-                newFrame.origin.y = 0;
-            } else {
+            if (self.textView.inputView && self.panelStatus == HYChatInputPanelStatusText) { // 表情->text
                 return;
+            } else {
+                newFrame.origin.y = 0;
             }
         } else if (transition.fromVisible == NO && transition.toVisible == YES){ // 弹起
             newFrame.origin.y = -transition.toFrame.size.height;
@@ -289,6 +396,7 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
     CGFloat textViewHeight = self.textViewHeight;
     self.textView.frame = CGRectMake(textViewX, textViewY, textViewWidth, textViewHeight);
     self.pressButton.frame = CGRectMake(textViewX - 1, textViewY - 1, textViewWidth + 2, textViewHeight + 2);
+    self.otherButton.frame = self.textView.frame;
 }
 
 #pragma mark - 覆盖父方法
@@ -320,11 +428,20 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
     return [self.textView canBecomeFirstResponder];
 }
 
+- (void)switchKeyboard
+{
+    if (self.panelStatus != HYChatInputPanelStatusText) {
+        self.panelStatus = HYChatInputPanelStatusText;
+        self.otherButton.hidden = YES;
+    }
+}
+
 #pragma mark - 懒加载
 - (HYEmoticonKeyboardView *)emoticonView
 {
     if (_emoticonView == nil) {
         _emoticonView = [[HYEmoticonKeyboardView alloc] init];
+        _emoticonView.delegate = self;
         _emoticonView.frame = CGRectMake(0, 0, kScreenW, kPanelHeight);
     }
     return _emoticonView;
@@ -353,6 +470,8 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
             [self.expandButton setImage:[UIImage imageNamed:@"chat_bottom_up_nor"] forState:UIControlStateNormal];
             [self.expandButton setImage:[UIImage imageNamed:@"chat_bottom_up_press"] forState:UIControlStateHighlighted];
             // 去掉键盘
+            self.pressButton.enabled = NO;
+            self.otherButton.hidden = YES;
             [self.textView resignFirstResponder];
             self.textView.inputView = nil;
             self.textView.hidden = NO;
@@ -366,6 +485,8 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
             [self.expandButton setImage:[UIImage imageNamed:@"chat_bottom_up_nor"] forState:UIControlStateNormal];
             [self.expandButton setImage:[UIImage imageNamed:@"chat_bottom_up_press"] forState:UIControlStateHighlighted];
             // 显示键盘
+            self.pressButton.enabled = NO;
+            self.otherButton.hidden = YES;
             self.textView.hidden = NO;
             if (self.textView.inputView) {
                 [self.textView resignFirstResponder];
@@ -384,6 +505,8 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
             [self.expandButton setImage:[UIImage imageNamed:@"chat_bottom_up_nor"] forState:UIControlStateNormal];
             [self.expandButton setImage:[UIImage imageNamed:@"chat_bottom_up_press"] forState:UIControlStateHighlighted];
             // 去掉键盘
+            self.pressButton.enabled = YES;
+            self.otherButton.hidden = YES;
             [self.textView resignFirstResponder];
             self.textView.inputView = nil;
             self.textView.hidden = YES; // 隐藏textView
@@ -399,6 +522,8 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
             [self.expandButton setImage:[UIImage imageNamed:@"chat_bottom_up_nor"] forState:UIControlStateNormal];
             [self.expandButton setImage:[UIImage imageNamed:@"chat_bottom_up_press"] forState:UIControlStateHighlighted];
             // 切换键盘
+            self.pressButton.enabled = NO;
+            self.otherButton.hidden = NO;
             self.textView.hidden = NO;
             [self.textView resignFirstResponder];
             self.textView.inputView = self.emoticonView;
@@ -413,6 +538,8 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
             [self.expandButton setImage:[UIImage imageNamed:@"chat_bottom_up_nor"] forState:UIControlStateNormal];
             [self.expandButton setImage:[UIImage imageNamed:@"chat_bottom_up_press"] forState:UIControlStateHighlighted];
             // 切换键盘
+            self.pressButton.enabled = NO;
+            self.otherButton.hidden = NO;
             self.textView.hidden = NO;
             [self.textView resignFirstResponder];
             self.textView.inputView = self.expandView;
@@ -427,6 +554,9 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
 - (void)dealloc
 {
     [[YYKeyboardManager defaultManager] removeObserver:self];
+    if (self.audioRecord.isRecording) {
+        [self.audioRecord cancelRecord];
+    }
     HYLog(@"%@-dealloc",self);
 }
 

@@ -10,6 +10,12 @@
 
 NSString* const HYChatDidReceiveMessage = @"HYChatDidReceiveMessage";
 NSString* const HYChatWithSomebody = @"HYChatWithSomebody";
+NSString* const HYChatJoinOrCreateGroup = @"HYChatJoinOrCreateGroup";
+NSString* const HYChatDidReceiveSingleMessage = @"HYChatDidReceiveSingleMessage";
+NSString* const HYChatDidReceiveGroupMessage = @"HYChatDidReceiveGroupMessage";
+NSString* const HYChatStartPlayAudio = @"HYChatStartPlayAudio";
+NSString* const HYChatStopPlayAudio = @"HYChatStopPlayAudio";
+
 @implementation HYConstant
 
 @end

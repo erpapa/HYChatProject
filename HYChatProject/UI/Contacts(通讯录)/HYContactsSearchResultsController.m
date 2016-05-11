@@ -10,6 +10,7 @@
 #import "HYSingleChatViewController.h"
 #import "HYContactsViewCell.h"
 #import "HYContactsModel.h"
+#import "HYSearchController.h"
 
 @interface HYContactsSearchResultsController ()
 

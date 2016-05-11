@@ -203,12 +203,12 @@
             }
             case HYXMPPConnectStatusDisConnect:
             {
-                [HYUtils alertWithErrorMsg:@"与服务器断开连接"];
+                [HYUtils alertWithErrorMsg:@"与服务器断开连接 !"];
                 break;
             }
             case HYXMPPConnectStatusTimeOut:
             {
-                [HYUtils alertWithErrorMsg:@"网络连接超时"];
+                [HYUtils alertWithErrorMsg:@"网络连接超时 !"];
                 break;
             }
             case HYXMPPConnectStatusAuthSuccess:
@@ -219,7 +219,7 @@
             }
             case HYXMPPConnectStatusAuthFailure:
             {
-                [HYUtils alertWithTitle:@"用户名或者密码不正确"];
+                [HYUtils alertWithTitle:@"用户名或者密码不正确 !"];
                 break;
             }
             default:{

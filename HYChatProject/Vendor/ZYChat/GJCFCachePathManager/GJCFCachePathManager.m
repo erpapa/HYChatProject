@@ -152,7 +152,7 @@ static NSString *  GJCFAudioFileCacheSubTempEncodeFileDirectory = @"GJCFAudioFil
     if (GJCFStringIsNull(url)) {
         return nil;
     }
-    NSString *fileName = [url stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+    NSString *fileName = [NSString stringWithFormat:@"%@",GJCFStringToMD5(url)];
     return [self mainImageCacheFilePath:fileName];
 }
 
@@ -162,7 +162,8 @@ static NSString *  GJCFAudioFileCacheSubTempEncodeFileDirectory = @"GJCFAudioFil
     if (GJCFStringIsNull(url)) {
         return nil;
     }
-    NSString *fileName = [url stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+    NSString *file = [url lastPathComponent];
+    NSString *fileName = [NSString stringWithFormat:@"%@.wav",[file stringByDeletingPathExtension]];
     return [self mainAudioCacheFilePath:fileName];
 }
 

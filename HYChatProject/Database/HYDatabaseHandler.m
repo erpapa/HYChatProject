@@ -41,6 +41,10 @@ static HYDatabaseHandler *instance;
         // 3.创表
         [_dbQueue inDatabase:^(FMDatabase *db) {
             [db createRecentChatTable]; // 创建最近联系人列表
+            [db createRoomTable];
+            [db createNewFriendTable];
+            [db createSingleChatTable];
+            [db createGroupChatTable];
         }];
     }
     return self;

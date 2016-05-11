@@ -40,7 +40,7 @@
 {
     [super setMessageFrame:messageFrame];
     self.textView.frame = messageFrame.textViewFrame;
-    self.textView.textLayout = messageFrame.textLayout;
+    self.textView.textLayout = messageFrame.chatMessage.textLayout;
 }
 
 #pragma mark - 继承方法
@@ -68,7 +68,12 @@
 - (void)copyMesssage:(UIMenuItem *)item
 {
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    [pasteboard setString:self.messageFrame.chatMessage.data];
+    [pasteboard setString:self.messageFrame.chatMessage.textMessage];
+}
+
+- (void)deleteMessage:(UIMenuItem *)item
+{
+    
 }
 
 - (void)forwardMessage:(UIMenuItem *)item
@@ -76,10 +81,6 @@
     
 }
 
-- (void)deleteMessage:(UIMenuItem *)item
-{
-    
-}
 
 - (void)reSendMessage:(UIMenuItem *)item
 {

@@ -46,10 +46,7 @@
     [self.searchController.searchBar sizeToFit];
     self.searchController.searchBar.delegate = self; // so we can monitor text changes + others
     self.definesPresentationContext = YES;// know where you want UISearchController to be displayed
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenW, 44.0)];
-    self.searchController.searchBar.frame = CGRectMake(0, 0, kScreenW, 44.0);
-    [headerView addSubview:self.searchController.searchBar];
-    self.tableView.tableHeaderView = headerView;
+    self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.view addSubview:self.tableView];
     // 添加联系人
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addContacts:)];
@@ -63,6 +60,12 @@
         // 加载好友列表
         [self loadContacts];
     }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    self.searchController.active = NO;
 }
 
 #pragma mark - 更新搜索结果 UISearchResultsUpdating
@@ -95,7 +98,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 2;// 新朋友、群聊
+        return 2;// 新朋友、聊天室
     }
     HYContacts *contacts = [self.dataSource objectAtIndex:section - 1];
     return contacts.infoArray.count;
@@ -108,8 +111,8 @@
         NSString *text = nil;
         if (indexPath.row == 0) { // 新朋友
             text = @"新朋友";
-        } else if (indexPath.row == 1) { // 群聊
-            text = @"群聊";
+        } else if (indexPath.row == 1) { // 聊天室
+            text = @"聊天室";
         }
         customCell.nameLabel.text = text;
         return customCell;
@@ -195,7 +198,7 @@
         }
         return;
     }
-    HYContacts *contacts = [self.dataSource objectAtIndex:indexPath.section];
+    HYContacts *contacts = [self.dataSource objectAtIndex:indexPath.section - 1];
     HYContactsModel *model = [contacts.infoArray objectAtIndex:indexPath.row];
     HYSingleChatViewController *singleVC = [[HYSingleChatViewController alloc] init];
     singleVC.chatJid = model.jid;
@@ -264,6 +267,7 @@
  */
 - (void)addContacsObject:(XMPPUserCoreDataStorageObject *)object
 {
+    if (object == nil) return;
     HYContactsModel *contactsModel = [self modelWithStorageObject:object];
     NSString *firstLetter = [contactsModel.firstLetterStr substringToIndex:1];// 截取首字母(并转换为大写)
     NSInteger count = self.dataSource.count;
@@ -331,7 +335,7 @@
                     HYContactsModel *model = [contact.infoArray objectAtIndex:j];
                     if ([model.jid.bare isEqualToString:object.jid.bare]) {
                         [contact.infoArray removeObjectAtIndex:j];
-                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
+                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i+1];
                         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                         return;
                     }
@@ -353,7 +357,7 @@
                         HYContactsModel *currentModel = [self modelWithStorageObject:object];
                         [contact.infoArray removeObjectAtIndex:j];
                         [contact.infoArray insertObject:currentModel atIndex:j];
-                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
+                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i+1];
                         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                         return;
                     }
@@ -396,12 +400,17 @@
 #pragma mark - 添加联系人
 - (void)addContacts:(id)sender
 {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"添加用户，用Chat聊天" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"输入帐号或者扫描二维码添加好友" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *textAction = [UIAlertAction actionWithTitle:@"输入帐号" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self showAddFriendViewController];
+        HYAddFriendViewController *addFriendVC = [[HYAddFriendViewController alloc] init];
+        addFriendVC.type = HYAddFriendTypeFriend;
+        addFriendVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:addFriendVC animated:YES];
     }];
     UIAlertAction *QRAction = [UIAlertAction actionWithTitle:@"扫一扫" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
+        HYScanQRCodeViewController *scanQRVC = [[HYScanQRCodeViewController alloc] init];
+        scanQRVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:scanQRVC animated:YES];
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:textAction];
@@ -409,18 +418,6 @@
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
     
-}
-
-- (void)showAddFriendViewController
-{
-    HYAddFriendViewController *addFriendVC = [[HYAddFriendViewController alloc] init];
-    [self presentViewController:addFriendVC animated:YES completion:nil];
-}
-
-- (void)showScanQRViewController
-{
-    HYScanQRCodeViewController *scanQRVC = [[HYScanQRCodeViewController alloc] init];
-    [self presentViewController:scanQRVC animated:YES completion:nil];
 }
 
 #pragma mark - 懒加载

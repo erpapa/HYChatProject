@@ -45,6 +45,11 @@
     [self.headView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headViewClick:)]];
     [self.contentView addSubview:self.headView];
     
+    self.indicatorView = [[YYAnimatedImageView alloc] init];
+    self.indicatorView.animatedImage = [self animateImage];
+    self.indicatorView.hidden = YES;
+    [self.contentView addSubview:self.indicatorView];
+    
     // 通知
     [HYNotification addObserver:self selector:@selector(popMenuWillHide:) name:UIMenuControllerWillHideMenuNotification object:nil];
     
@@ -56,33 +61,96 @@
     _messageFrame = messageFrame;
     HYChatMessage *message = messageFrame.chatMessage;
     self.timeLabel.text = message.timeString;
-    XMPPJID *jid = nil;
     // UIEdgeInsetsMake(CGFloat top, CGFloat left, CGFloat bottom, CGFloat right) // 拉伸图片，参数是像素，同时要考虑@1x、@2x、@3x这几种情况
     if (message.isOutgoing) {
         UIImage *normalImage = [[UIImage imageNamed:@"chat_send_nor"] resizableImageWithCapInsets:UIEdgeInsetsMake(25, 40, 30, 70) resizingMode:UIImageResizingModeStretch];
         UIImage *selectedImage = [[UIImage imageNamed:@"chat_send_press"] resizableImageWithCapInsets:UIEdgeInsetsMake(25, 40, 30, 70) resizingMode:UIImageResizingModeStretch];
         [self.contentBgView setBackgroundImage:normalImage forState:UIControlStateNormal];
         [self.contentBgView setBackgroundImage:selectedImage forState:UIControlStateSelected];
+        __weak typeof(self) weakSelf = self; // 获取头像
+        XMPPJID *jid = [HYXMPPManager sharedInstance].xmppStream.myJID;
+        [[HYXMPPManager sharedInstance] getAvatarFromJID:jid avatarBlock:^(NSData *avatar) {
+            if (avatar.length) {
+                weakSelf.headView.image = [UIImage imageWithData:avatar];
+            }
+        }];
+        switch (message.sendStatus) {
+            case HYChatSendMessageStatusSending:{
+                self.indicatorView.hidden = NO;
+                self.indicatorView.image = nil;
+                self.indicatorView.animatedImage = [self animateImage];;
+                self.indicatorView.autoPlayAnimatedImage = YES;
+                break;
+            }
+            case HYChatSendMessageStatusSuccess:{
+                self.indicatorView.hidden = YES;
+                self.indicatorView.image = nil;
+                self.indicatorView.animatedImage = nil;
+                self.indicatorView.autoPlayAnimatedImage = NO;
+                break;
+            }
+            case HYChatSendMessageStatusFaild:{
+                self.indicatorView.hidden = NO;
+                self.indicatorView.animatedImage = nil;
+                self.indicatorView.image = [UIImage imageNamed:@"commonFail"];
+                self.indicatorView.autoPlayAnimatedImage = NO;
+                break;
+            }
+                
+            default:
+                break;
+        }
+        
     } else {
         UIImage *normalImage = [[UIImage imageNamed:@"chat_receive_nor"] resizableImageWithCapInsets:UIEdgeInsetsMake(25, 40, 30, 70) resizingMode:UIImageResizingModeStretch];
         UIImage *selectedImage = [[UIImage imageNamed:@"chat_receive_press"] resizableImageWithCapInsets:UIEdgeInsetsMake(25, 40, 30, 70) resizingMode:UIImageResizingModeStretch];
         [self.contentBgView setBackgroundImage:normalImage forState:UIControlStateNormal];
         [self.contentBgView setBackgroundImage:selectedImage forState:UIControlStateSelected];
-    }
-    __weak typeof(self) weakSelf = self; // 获取头像
-    [[HYXMPPManager sharedInstance] getvCardFromJID:message.jid vCardBlock:^(XMPPvCardTemp *vCardTemp) {
-        if (vCardTemp.photo) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            strongSelf.headView.image = [UIImage imageWithData:vCardTemp.photo];
+        __weak typeof(self) weakSelf = self; // 获取头像
+        XMPPJID *jid = message.jid;
+        if (message.isGroup) { // 如果是群组消息
+            jid = [XMPPJID jidWithString:[NSString stringWithFormat:@"%@@%@",jid.resource,[HYXMPPManager sharedInstance].xmppStream.myJID.domain]];
         }
-    }];
+        [[HYXMPPManager sharedInstance] getAvatarFromJID:jid avatarBlock:^(NSData *avatar) {
+            if (avatar.length) {
+                weakSelf.headView.image = [UIImage imageWithData:avatar];
+            }
+        }];
+        switch (message.receiveStatus) {
+            case HYChatReceiveMessageStatusReceiving:{
+                self.indicatorView.hidden = NO;
+                self.indicatorView.image = nil;
+                self.indicatorView.animatedImage = [self animateImage];
+                self.indicatorView.autoPlayAnimatedImage = YES;
+                break;
+            }
+            case HYChatReceiveMessageStatusSuccess:{
+                self.indicatorView.hidden = YES;
+                self.indicatorView.image = nil;
+                self.indicatorView.animatedImage = nil;
+                self.indicatorView.autoPlayAnimatedImage = NO;
+                break;
+            }
+            case HYChatReceiveMessageStatusFaild:{
+                self.indicatorView.hidden = NO;
+                self.indicatorView.animatedImage = nil;
+                self.indicatorView.image = [UIImage imageNamed:@"commonFail"];
+                self.indicatorView.autoPlayAnimatedImage = NO;
+                break;
+            }
+            default:
+                break;
+        }
+    }
     
     // frame
     self.timeLabel.hidden = message.isHidenTime;
     self.timeLabel.frame = messageFrame.timeLabelFrame;
     self.headView.frame = messageFrame.headViewFrame;
     self.contentBgView.frame = messageFrame.contentBgViewFrame;
+    self.indicatorView.frame = messageFrame.indicatorViewFrame;
 }
+
 
 // 单击
 - (void)headViewClick:(UITapGestureRecognizer *)sender
@@ -92,6 +160,7 @@
     }
 }
 
+#pragma mark - public method
 // 长按
 - (void)showPopMenu:(UILongPressGestureRecognizer *)sender{
     [self becomeFirstResponder];
@@ -138,6 +207,13 @@
     if (self.contentBgView.selected == YES) {
         self.contentBgView.selected = NO;
     }
+}
+
+- (YYImage *)animateImage
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"icon_loading_white.gif" ofType:nil];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    return [YYImage imageWithData:data];
 }
 
 @end

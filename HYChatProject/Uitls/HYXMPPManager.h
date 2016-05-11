@@ -40,7 +40,7 @@ typedef void(^HYSendTextSuccess)(BOOL success);//发送消息成功/失败
  */
 - (void)xmppUserLogin:(HYXMPPConnectStatusBlock)resultBlock;
 /**
- *  用户注册
+ *  用户注册（先建立匿名连接）
  */
 - (void)xmppUserRegister:(HYXMPPConnectStatusBlock)resultBlock;
 /**
@@ -74,9 +74,9 @@ typedef void(^HYSendTextSuccess)(BOOL success);//发送消息成功/失败
 /********************* 添加、删除好友 ********************************/
 
 /**
- *  添加好友
+ *  添加好友 -1 自己 0 已经是好友 1 发送成功
  */
-- (void)addUserWithID:(NSString *)userID;
+- (int)addUser:(XMPPJID *)userID;
 /**
  *  删除好友
  */
@@ -90,10 +90,9 @@ typedef void(^HYSendTextSuccess)(BOOL success);//发送消息成功/失败
  */
 -(void)rejectUserRequest:(XMPPJID *)jid;
 
-
 /********************* 发送聊天消息 ********************************/
-- (void)sendText:(NSString *)text success:(HYSendTextSuccess)success;
-- (void)sendText:(NSString *)text toJid:(XMPPJID *)jid success:(HYSendTextSuccess)success;
+- (void)sendText:(NSString *)text;
+- (void)sendText:(NSString *)text toJid:(XMPPJID *)jid;
 
 /********************* CoreData ********************************/
 

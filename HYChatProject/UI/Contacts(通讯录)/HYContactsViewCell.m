@@ -11,6 +11,9 @@
 #import "HYXMPPManager.h"
 #import "XMPPvCardTemp.h"
 #import "HYUtils.h"
+#import "UIView+SW.h"
+#import "HYUservCardViewController.h"
+
 
 @interface HYContactsViewCell()
 @property (nonatomic, strong) UIImageView *headView;
@@ -57,6 +60,8 @@
     self.headView.contentMode = UIViewContentModeScaleAspectFill;
     self.headView.layer.cornerRadius = headViewW * 0.5;
     self.headView.layer.masksToBounds = YES;
+    self.headView.userInteractionEnabled = YES;
+    [self.headView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headViewClick:)]];
     [self.contentView addSubview:self.headView];
     
     // 2.昵称
@@ -119,6 +124,19 @@
             break;
     }
     return image;
+}
+
+
+/**
+ *  点击头像
+ */
+
+- (void)headViewClick:(UITapGestureRecognizer *)gesture
+{
+    UIViewController *vc = [self parentController];
+    HYUservCardViewController *vCardVC = [[HYUservCardViewController alloc] init];
+    vCardVC.userJid = self.model.jid;
+    [vc.navigationController pushViewController:vCardVC animated:YES];
 }
 
 @end

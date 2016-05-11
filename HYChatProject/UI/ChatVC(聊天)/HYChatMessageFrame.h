@@ -29,14 +29,13 @@
 #define kMyTextColor [UIColor whiteColor]        // 我发的消息
 #define kOtherTextColor [UIColor blackColor]     // 对方发送的消息
 
-@class YYTextLayout;
 @interface HYChatMessageFrame : NSObject
 @property (nonatomic, strong) HYChatMessage *chatMessage;
 @property (nonatomic, assign, readonly) CGRect timeLabelFrame;      // 时间
 @property (nonatomic, assign, readonly) CGRect contentBgViewFrame;  // 聊天背景
+@property (nonatomic, assign, readonly) CGRect indicatorViewFrame;  // 转圈
 @property (nonatomic, assign, readonly) CGRect headViewFrame;       // 头像
 @property (nonatomic, assign, readonly) CGRect textViewFrame;       // 文字
-@property (nonatomic, strong, readonly) YYTextLayout *textLayout;   // 文字排版结果
 @property (nonatomic, assign, readonly) CGFloat cellHeight;         // cell高度
 
 @end

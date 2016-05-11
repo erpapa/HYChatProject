@@ -11,6 +11,7 @@
 #import "HYRecentChatModel.h"
 #import "HYSingleChatViewController.h"
 #import "HYGroupChatViewController.h"
+#import "HYSearchController.h"
 
 @interface HYRecentSearchResultsController ()
 
@@ -58,6 +59,7 @@
         singleVC.hidesBottomBarWhenPushed = YES; // 隐藏tabBar
         [self.presentingViewController.navigationController pushViewController:singleVC animated:YES];
     }
+    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -84,10 +84,19 @@
 
 - (IBAction)registerClick:(UIButton *)sender {
     [self.view endEditing:YES];
-    HYLoginInfo *userInfo = [HYLoginInfo sharedInstance];
+    HYLoginInfo *loginInfo = [HYLoginInfo sharedInstance];
     // 删除两端空格
-    userInfo.user = [self.userTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    userInfo.password = [self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *bareStr = [self.userTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSRange atRange = [bareStr rangeOfString:@"@"];
+    if (atRange.location == NSNotFound)
+    {
+        loginInfo.user = bareStr;
+    } else {
+        XMPPJID *jid = [XMPPJID jidWithString:bareStr];
+        loginInfo.user = jid.user;
+        loginInfo.hostName = jid.domain;
+    }
+    loginInfo.password = [self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     __weak typeof(self) weakSelf = self;
     [[HYXMPPManager sharedInstance] xmppUserRegister:^(HYXMPPConnectStatus status) {
         [weakSelf handleResultType:status];
@@ -120,13 +129,13 @@
             }
             case HYXMPPConnectStatusRegisterSuccess:
             {
-                [HYUtils alertWithSuccessMsg:@"注册成功!"];
+                [HYUtils alertWithSuccessMsg:@"注册成功 !"];
                 [self dismissViewControllerAnimated:YES completion:nil];
                 break;
             }
             case HYXMPPConnectStatusRegisterFailure:
             {
-                [HYUtils alertWithTitle:@"注册失败!"];
+                [HYUtils alertWithTitle:@"注册失败 !"];
                 break;
             }
             default:{

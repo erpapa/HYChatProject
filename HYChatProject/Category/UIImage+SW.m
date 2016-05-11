@@ -325,7 +325,12 @@ static void addRoundedRectToPath(CGContextRef contextRef, CGRect rect, float wid
 /**
  *  生成二维码
  */
-+ (UIImage *)createQRCodeWithString:(NSString *)string{
++ (UIImage *)createQRCodeWithString:(NSString *)string
+{
+    return [self createQRCodeWithString:string size:CGSizeMake(300, 300)];
+}
+
++ (UIImage *)createQRCodeWithString:(NSString *)string size:(CGSize)size{
     if (!string) {
         return nil;
     }
@@ -333,7 +338,7 @@ static void addRoundedRectToPath(CGContextRef contextRef, CGRect rect, float wid
     [filter setDefaults];
     [filter setValue:[string dataUsingEncoding:NSUTF8StringEncoding] forKey:@"inputMessage"];// 设置内容
     [filter setValue:@"M" forKey:@"inputCorrectionLevel"]; // 设置纠错级别
-    UIImage *QRCodeImage = [UIImage imageWithCIImage:filter.outputImage fixedSize:CGSizeMake(300, 300)];
+    UIImage *QRCodeImage = [UIImage imageWithCIImage:filter.outputImage fixedSize:size];
     return QRCodeImage;
 }
 

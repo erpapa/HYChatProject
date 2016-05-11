@@ -86,9 +86,15 @@
     HYLoginInfo *loginInfo = [HYLoginInfo sharedInstance];
     // 删除两端空格
     NSString *bareStr = [self.userTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    XMPPJID *jid = [XMPPJID jidWithString:bareStr];
-    loginInfo.user = jid.user;
-    if (jid.domain) loginInfo.hostName = jid.domain; // 如果带domain，则使用输入的domain
+    NSRange atRange = [bareStr rangeOfString:@"@"];
+    if (atRange.location == NSNotFound)
+    {
+        loginInfo.user = bareStr;
+    } else {
+        XMPPJID *jid = [XMPPJID jidWithString:bareStr];
+        loginInfo.user = jid.user;
+        loginInfo.hostName = jid.domain;
+    }
     loginInfo.password = [self.passwordTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     __weak typeof(self) weakSelf = self;
     [[HYXMPPManager sharedInstance] xmppUserLogin:^(HYXMPPConnectStatus status) {
@@ -112,12 +118,12 @@
             }
             case HYXMPPConnectStatusDisConnect:
             {
-                [HYUtils alertWithErrorMsg:@"与服务器断开连接"];
+                [HYUtils alertWithErrorMsg:@"与服务器断开连接 !"];
                 break;
             }
             case HYXMPPConnectStatusTimeOut:
             {
-                [HYUtils alertWithErrorMsg:@"网络连接超时"];
+                [HYUtils alertWithErrorMsg:@"网络连接超时 !"];
                 break;
             }
             case HYXMPPConnectStatusAuthSuccess:
@@ -128,7 +134,7 @@
             }
             case HYXMPPConnectStatusAuthFailure:
             {
-                [HYUtils alertWithTitle:@"用户名或者密码不正确"];
+                [HYUtils alertWithTitle:@"用户名或者密码不正确 !"];
                 break;
             }
             default:{

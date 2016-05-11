@@ -15,6 +15,7 @@
 #import "XMPPRoom.h"
 #import "HYGroupSearchListController.h"
 #import "HYSearchController.h"
+#import "HYAddFriendViewController.h"
 
 @interface HYGroupListViewController ()<UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 @property (nonatomic,strong) UITableView *tableView;
@@ -40,18 +41,12 @@
     self.definesPresentationContext = YES;// know where you want UISearchController to be displayed
     self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.view addSubview:self.tableView];
-    
-    // 2.获取数据
-    NSArray *bookmarkedRooms = [HYXMPPRoomManager sharedInstance].bookmarkedRooms;
-    [bookmarkedRooms enumerateObjectsUsingBlock:^(XMPPRoom *room, NSUInteger idx, BOOL * _Nonnull stop) {
-        HYContactsModel *model = [[HYContactsModel alloc] init];
-        model.jid = room.roomJID;
-        model.displayName = room.roomJID.user;
-        model.isGroup = YES;
-        [self.dataSource addObject:model];
-    }];
-    // 3.创建/添加房间
+    // 获得房间列表
+    [self reloadData:nil];
+    // 创建/添加房间
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createRoom:)];
+    // 通知
+    [HYNotification addObserver:self selector:@selector(reloadData:) name:HYChatJoinOrCreateGroup object:nil];
     
 }
 
@@ -73,6 +68,12 @@
             [weakSelf.tableView reloadData];
         }];
     }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    self.searchController.active = NO; // 当view消失后取消搜索的激活状态
 }
 
 #pragma mark - 更新搜索结果 UISearchResultsUpdating
@@ -119,10 +120,80 @@
     [self.navigationController pushViewController:groupChat animated:YES];
 }
 
+/*
+- (void)loadRooms
+{
+    //1.上下文   XMPPRoster.xcdatamodel
+    NSManagedObjectContext *context = [[HYXMPPRoomManager sharedInstance] managedObjectContext_room];
+    if (context == nil) { // 防止xmppStream没有连接会崩溃
+        return;
+    }
+    //2.Fetch请求
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"XMPPRoomOccupantCoreDataStorageObject"];
+    //3.排序和过滤
+    NSPredicate *pre=[NSPredicate predicateWithFormat:@"streamBareJidStr == %@",[HYXMPPRoomManager sharedInstance].xmppStream.myJID.bare];
+    fetchRequest.predicate=pre;
+    //
+    NSSortDescriptor *sort=[NSSortDescriptor sortDescriptorWithKey:@"roomJIDStr" ascending:YES];
+    fetchRequest.sortDescriptors=@[sort];
+    
+    //4.执行查询获取数据
+    _resultController = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+    _resultController.delegate=self;
+    //执行
+    NSError *error=nil;
+    if(![_resultController performFetch:&error]){
+        HYLog(@"%s---%@",__func__,error);
+    } else {
+        [self.dataSource removeAllObjects];
+        [_resultController.fetchedObjects enumerateObjectsUsingBlock:^(XMPPRoomOccupantCoreDataStorageObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
+            HYContactsModel *model = [[HYContactsModel alloc] init];
+            model.jid = object.roomJID;
+            model.displayName = object.roomJID.user;
+            model.isGroup = YES;
+            [self.dataSource addObject:model];
+        }];
+    }
+    
+}
+*/
+
 #pragma mark - 创建/加入房间
 - (void)createRoom:(id)sender
 {
-    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"添加或者创建聊天室" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *addAction = [UIAlertAction actionWithTitle:@"加入聊天室" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        HYAddFriendViewController *addFriendVC = [[HYAddFriendViewController alloc] init];
+        addFriendVC.type = HYAddFriendTypeGroup;
+        [self.navigationController pushViewController:addFriendVC animated:YES];
+    }];
+    UIAlertAction *createAction = [UIAlertAction actionWithTitle:@"创建聊天室" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        HYAddFriendViewController *addFriendVC = [[HYAddFriendViewController alloc] init];
+        addFriendVC.type = HYAddFriendTypeCreateGroup;
+        [self.navigationController pushViewController:addFriendVC animated:YES];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:addAction];
+    [alert addAction:createAction];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)reloadData:(NSNotification *)noti
+{
+    // 获取数据
+    NSArray *bookmarkedRooms = [HYXMPPRoomManager sharedInstance].bookmarkedRooms;
+    [self.dataSource removeAllObjects];
+    [bookmarkedRooms enumerateObjectsUsingBlock:^(XMPPRoom *room, NSUInteger idx, BOOL * _Nonnull stop) {
+        HYContactsModel *model = [[HYContactsModel alloc] init];
+        model.jid = room.roomJID;
+        model.displayName = room.roomJID.user;
+        model.isGroup = YES;
+        [self.dataSource addObject:model];
+    }];
+    if (noti) { // 如果获得通知
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark - 懒加载
@@ -148,6 +219,11 @@
         _dataSource = [NSMutableArray array];
     }
     return _dataSource;
+}
+
+- (void)dealloc
+{
+    [HYNotification removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -29,7 +29,7 @@
     // This is an example of a functional test case.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
     
-    UIImage *QRImage = [UIImage createQRCodeWithString:@"admin@erpapa.cn"];
+    UIImage *QRImage = [UIImage createQRCodeWithString:@"admin@erpapa.cn" size:CGSizeMake(300, 300)];
     UIImage *iconImage = [UIImage imageNamed:@"defaultHead"];
     UIImage *newImage = [QRImage addIconImage:iconImage withScale:0.2];
     NSLog(@"%@",newImage);

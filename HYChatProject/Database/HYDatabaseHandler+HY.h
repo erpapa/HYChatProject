@@ -9,3 +9,7 @@
 #import "HYDatabaseHandler.h"
 #import "HYDatabaseHandler+RecentChat.h"
 #import "HYDatabaseHandler+Room.h"
+#import "HYDatabaseHandler+NewFriend.h"
+#import "HYDatabaseHandler+SingleChat.h"
+#import "HYDatabaseHandler+GroupChat.h"
+

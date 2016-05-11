@@ -8,8 +8,6 @@
 
 #import "HYUtils.h"
 #import "HYLoginInfo.h"
-#import "HYXMPPManager.h"
-#import "HYEmoticonTool.h"
 #import "XMPPvCardTemp.h"
 #import "NSFileManager+SW.h"
 #import "SVProgressHUD.h"
@@ -94,7 +92,7 @@
 + (void)alertWithErrorMsg:(NSString *)msg
 {
     if ([SVProgressHUD isVisible] == NO) {
-        [SVProgressHUD dismiss];
+        [self initProgressHUD];
     }
     [SVProgressHUD showErrorWithStatus:msg];
 }
@@ -321,6 +319,17 @@
                                    };
     NSString *weekName = [weekNameDict objectForKey:@(weekDay)];
     return [NSString stringWithFormat:@"星期%@",weekName];
+}
+
+#pragma mark -  Generate Key
+
++ (NSString *)generateImageKeyWithPrefix:(NSString *)keyPrefix
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd_HH-mm-ss"];
+    [formatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+    NSString *timeString = [formatter stringFromDate:[NSDate date]];
+    return [NSString stringWithFormat:@"%@_%@.jpg", keyPrefix, timeString];
 }
 
 @end

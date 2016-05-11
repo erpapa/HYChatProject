@@ -57,4 +57,10 @@
 + (NSString *)timeStringSince1970:(double)secs;
 + (NSString *)timeStringFromDate:(NSDate *)date;
 
+/**
+ *  生成七牛云上传文件key
+ */
+// keyPrefix_yyyy-MM-dd_HH-mm-ss.jpg
++ (NSString *)generateImageKeyWithPrefix:(NSString *)keyPrefix;
+
 @end

@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "HYUtils.h"
+#import "AFNetworkReachabilityManager.h"
 
 @interface AppDelegate ()
 
@@ -30,6 +31,9 @@
     }
     // 5.设置keyWindow并显示窗口
     [self.window makeKeyAndVisible];
+    
+    // 6.开始监听网络状态
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
     return YES;
 }

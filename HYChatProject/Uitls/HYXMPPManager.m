@@ -11,8 +11,10 @@
 #import "HYUtils.h"
 #import "HYXMPPRoomManager.h"
 #import "HYRecentChatModel.h"
+#import "HYChatMessage.h"
 #import "HYDatabaseHandler+HY.h"
 #import "XMPPMUC.h"
+#import "XMPP+IM.h"
 #import "XMPPRoomCoreDataStorage.h"
 #import "XMPPCapabilitiesCoreDataStorage.h"
 
@@ -88,7 +90,7 @@ NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChang
     _xmppRosterStorage.autoRecreateDatabaseFile = NO;
     
     _xmppRoster = [[XMPPRoster alloc] initWithRosterStorage:_xmppRosterStorage];
-    _xmppRoster.autoFetchRoster = YES; // 自动获取好友列表
+    _xmppRoster.autoFetchRoster = YES; //  //自动从服务器更新好友记录,例如:好友更改了名片
     _xmppRoster.autoClearAllUsersAndResources = NO; // 断开连接不清空好友列表
     _xmppRoster.autoAcceptKnownPresenceSubscriptionRequests = YES;// 开启接收自动订阅功能（加好友不需要验证）
     
@@ -170,7 +172,7 @@ NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChang
     // 连接主机 成功后发送登录密码
     [self connectToHost];
 }
-// 注册
+// 注册（先建立匿名连接）
 - (void)xmppUserRegister:(HYXMPPConnectStatusBlock)resultBlock{
     self.registerUser = YES;
     // 先把block存起来
@@ -241,6 +243,9 @@ NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChang
  */
 - (void)getvCardFromJID:(XMPPJID *)jid vCardBlock:(HYvCardBlock)vCardBlock
 {
+    if (jid == nil) {
+        vCardBlock(nil);
+    }
     // 如果本地为空，自动从网络获取好友名片
     XMPPvCardTemp *vCardTemp = [_vCardTempModule vCardTempForJID:jid shouldFetch:YES];
     if (vCardTemp) {
@@ -255,6 +260,10 @@ NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChang
  */
 - (void)getAvatarFromJID:(XMPPJID *)jid avatarBlock:(HYAvatarBlock)avatarBlock
 {
+    if (jid == nil) {
+        avatarBlock(nil);
+        return;
+    }
     NSData *data = [_vCardAvatarModule photoDataForJID:jid];
     if (data) {
         avatarBlock(data);
@@ -267,16 +276,17 @@ NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChang
 /**
  *  添加好友
  */
-- (void)addUserWithID:(NSString *)userID
+- (int)addUser:(XMPPJID *)userID
 {
-    NSString *bare = userID;
-    NSRange range = [userID rangeOfString:@"@"];
-    if (range.location == NSNotFound) {// 如果没找到 NSNotFound
-        bare = [NSString stringWithFormat:@"%@@%@",userID,_myJID.domain];
+    if ([userID.bare isEqualToString:_myJID.bare]) {
+        return -1;
     }
-    XMPPJID *jid = [XMPPJID jidWithString:bare];
-    //    BOOL contains = [_rosterStorage userExistsWithJID:jid xmppStream:_xmppStream];// 如果已经是好友就不需要再次添加
-    [_xmppRoster subscribePresenceToUser:jid];
+    BOOL contains = [_xmppRosterStorage userExistsWithJID:userID xmppStream:_xmppStream];// 如果已经是好友就不需要再次添加
+    if (contains) {
+        return 0;
+    }
+    [_xmppRoster subscribePresenceToUser:userID];
+    return 1;
 }
 /**
  *  删除好友
@@ -308,41 +318,23 @@ NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChang
  *  发送聊天消息
  */
 
-- (void)sendText:(NSString *)text success:(HYSendTextSuccess)success
+- (void)sendText:(NSString *)text
 {
     XMPPJID *jid = self.chatJID;
     if (jid) {
-        [self sendText:text success:success];
-    } else
-    {
-        success(NO);
+        [self sendText:text toJid:jid];
     }
 }
-- (void)sendText:(NSString *)text toJid:(XMPPJID *)jid success:(HYSendTextSuccess)success
+- (void)sendText:(NSString *)text toJid:(XMPPJID *)jid
 {
     // 发送聊天消息
     XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:jid];
     [message addBody:text];
-    XMPPElementReceipt *receipt = [XMPPElementReceipt new];
-    [_xmppStream sendElement:message andGetReceipt:&receipt];
-    BOOL messageState =[receipt wait:-1];
-    if (messageState)
-    {
-        HYLog(@"%@ was sent",text);
-        success(YES);
-        // 发送通知
-        HYRecentChatModel *chatModel = [[HYRecentChatModel alloc] init];
-        chatModel.jid = jid;
-        chatModel.body = text;
-        chatModel.time = [[NSDate date] timeIntervalSince1970];
-        chatModel.isGroup = NO;
-        chatModel.unreadCount = 0;
-        [HYNotification postNotificationName:HYChatDidReceiveMessage object:chatModel];
-        
-    } else {
-        HYLog(@"%@ sent faild",text);
-        success(NO);
-    }
+    [_xmppStream sendElement:message];
+//    XMPPElementReceipt *receipt = [XMPPElementReceipt new];
+//    [_xmppStream sendElement:message andGetReceipt:&receipt];
+//    BOOL messageState =[receipt wait:-1];
+//    return messageState;
     
 }
 
@@ -371,8 +363,8 @@ NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChang
     }
     HYLoginInfo *userInfo = [HYLoginInfo sharedInstance];
     _myJID = userInfo.jid;
-    // 设置登录用户JID
     _xmppStream.myJID = userInfo.jid;
+    
     // 设置服务器域名
     _xmppStream.hostName = userInfo.hostName;
     // 设置端口 默认是5222
@@ -421,6 +413,16 @@ NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChang
     }
 }
 
+
+/* ejabberd 配置/opt/ejabberd-15.10/conf/ejabberd.yml
+## In-band registration allows registration of any possible username.
+## To disable in-band registration, replace 'allow' with 'deny'.
+register:
+    all: allow  // 允许注册
+## Only allow to register from localhost
+trusted_network:
+    all: allow  // 允许所有人注册
+*/
 // 与主机连接成功
 -(void)xmppStreamDidConnect:(XMPPStream *)sender{
     HYLog(@"与主机连接成功");
@@ -555,12 +557,15 @@ NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChang
 //{
 //    return YES;
 //}
+
 // 在接收了消息后会回调此代理方法
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
 {
+    //XEP--0136 已经用coreData实现了数据的接收和保存
     // 1.单聊消息
     if ([[message type] isEqualToString:@"chat"]) {
         if ([message body].length) {
+            // 1.
             HYRecentChatModel *chatModel = [[HYRecentChatModel alloc] init];
             [[HYDatabaseHandler sharedInstance] recentChatModel:chatModel fromJid:message.from];// 从数据库读取
             chatModel.jid = message.from;
@@ -569,6 +574,16 @@ NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChang
             chatModel.isGroup = NO;
             chatModel.unreadCount++;
             [HYNotification postNotificationName:HYChatDidReceiveMessage object:chatModel];
+            
+            // 2.
+            HYChatMessage *chatMessage = [[HYChatMessage alloc] initWithJsonString:[message body]];
+            chatMessage.jid = message.from;
+            chatMessage.time = [[NSDate date] timeIntervalSince1970];
+            chatMessage.isRead = NO;
+            chatMessage.isOutgoing = NO;
+            chatMessage.isGroup = NO;
+            [[HYDatabaseHandler sharedInstance] addChatMessage:chatMessage]; // 储存
+            [HYNotification postNotificationName:HYChatDidReceiveSingleMessage object:chatMessage];
         }
     }
 }
@@ -577,7 +592,18 @@ NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChang
 {
     //XMPPPresence 在线/离线
     //presence.from 消息是谁发送过来
-    HYLog(@"presence:from %@ type: %@", presence.from, presence.type);
+    HYLog(@"接收好友状态from %@ type: %@", presence.from, presence.type);
+    //取得好友状态
+    NSString *presenceType = [NSString stringWithFormat:@"%@", [presence type]]; //online/offline
+    //当前用户
+    //    NSString *userId = [NSString stringWithFormat:@"%@", [[sender myJID] user]];
+    //在线用户
+    //    NSString *presenceFromUser =[NSString stringWithFormat:@"%@", [[presence from] user]];
+    //这里再次加好友
+    if ([presenceType isEqualToString:@"subscribed"]) { // 对方同意添加好友回执
+        XMPPJID *jid = [XMPPJID jidWithString:[NSString stringWithFormat:@"%@",[presence from]]];
+        [_xmppRoster acceptPresenceSubscriptionRequestFrom:jid andAddToRoster:YES];
+    }
 }
 
 // 在接收IQ/messag、presence出错时，会回调此代理方法
@@ -614,7 +640,31 @@ NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChang
 // 在发送消息成功后，会回调此代理方法
 - (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message
 {
-    
+    // 1.单聊消息
+    if ([[message type] isEqualToString:@"chat"]) {
+        if ([message body].length) {
+            // 1.
+            HYRecentChatModel *chatModel = [[HYRecentChatModel alloc] init];
+            [[HYDatabaseHandler sharedInstance] recentChatModel:chatModel fromJid:message.from];// 从数据库读取
+            chatModel.jid = message.to;
+            chatModel.body = [message body];
+            chatModel.time = [[NSDate date] timeIntervalSince1970];
+            chatModel.isGroup = NO;
+            chatModel.unreadCount = 0;
+            [HYNotification postNotificationName:HYChatDidReceiveMessage object:chatModel];
+            
+            // 2.
+            HYChatMessage *chatMessage = [[HYChatMessage alloc] initWithJsonString:[message body]];
+            chatMessage.jid = message.to;
+            chatMessage.time = [[NSDate date] timeIntervalSince1970];
+            chatMessage.isRead = YES;
+            chatMessage.isOutgoing = YES;
+            chatMessage.isGroup = NO;
+            chatMessage.sendStatus = HYChatSendMessageStatusSuccess; // 发送成功
+            [[HYDatabaseHandler sharedInstance] addChatMessage:chatMessage]; // 储存
+            [HYNotification postNotificationName:HYChatDidReceiveSingleMessage object:chatMessage];
+        }
+    }
 }
 // 在发送用户在线状态信息成功后，会回调此方法
 - (void)xmppStream:(XMPPStream *)sender didSendPresence:(XMPPPresence *)presence
@@ -632,7 +682,31 @@ NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChang
 // 在发送消息失败后，会回调此代理方法
 - (void)xmppStream:(XMPPStream *)sender didFailToSendMessage:(XMPPMessage *)message error:(NSError *)error
 {
-    
+    // 1.单聊消息
+    if ([[message type] isEqualToString:@"chat"]) {
+        if ([message body].length) {
+            // 1.
+            HYRecentChatModel *chatModel = [[HYRecentChatModel alloc] init];
+            [[HYDatabaseHandler sharedInstance] recentChatModel:chatModel fromJid:message.from];// 从数据库读取
+            chatModel.jid = message.to;
+            chatModel.body = [message body];
+            chatModel.time = [[NSDate date] timeIntervalSince1970];
+            chatModel.isGroup = NO;
+            chatModel.unreadCount = 0;
+            [HYNotification postNotificationName:HYChatDidReceiveMessage object:chatModel];
+            
+            // 2.
+            HYChatMessage *chatMessage = [[HYChatMessage alloc] initWithJsonString:[message body]];
+            chatMessage.jid = message.to;
+            chatMessage.time = [[NSDate date] timeIntervalSince1970];
+            chatMessage.isRead = YES;
+            chatMessage.isOutgoing = YES;
+            chatMessage.isGroup = NO;
+            chatMessage.sendStatus = HYChatSendMessageStatusFaild; // 发送失败
+            [[HYDatabaseHandler sharedInstance] addChatMessage:chatMessage]; // 储存
+            [HYNotification postNotificationName:HYChatDidReceiveSingleMessage object:chatMessage];
+        }
+    }
 }
 // 在发送用户在线状态失败信息后，会回调此方法
 - (void)xmppStream:(XMPPStream *)sender didFailToSendPresence:(XMPPPresence *)presence error:(NSError *)error
@@ -722,6 +796,65 @@ NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChang
         avatarBlock(data);
         [self.avatarBlockDict removeObjectForKey:[jid bare]];
     }
+    
+}
+
+#pragma mark - XMPPRosterDelegate
+/**
+ *  处理加好友回调,加好友
+ */
+- (void)xmppRoster:(XMPPRoster *)sender didReceivePresenceSubscriptionRequest:(XMPPPresence *)presence
+{
+    HYLog(@"接收到%@的好友请求：%@",[presence from], presence);
+    XMPPJID *jid = [XMPPJID jidWithString:[NSString stringWithFormat:@"%@",[presence from]]];
+    NSString *message = [NSString stringWithFormat:@"\n%@请求添加您为好友！", jid.user];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"拒绝" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [self rejectUserRequest:jid];
+    }];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"同意" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self agreeUserRequest:jid];
+    }];
+    [alert addAction:cancelAction];
+    [alert addAction:okAction];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+}
+
+/**
+ * Sent when a Roster Push is received as specified in Section 2.1.6 of RFC 6121.
+ **/
+- (void)xmppRoster:(XMPPRoster *)sender didReceiveRosterPush:(XMPPIQ *)iq
+{
+    
+}
+
+/**
+ * Sent when the initial roster is received.
+ **/
+- (void)xmppRosterDidBeginPopulating:(XMPPRoster *)sender withVersion:(NSString *)version
+{
+    
+}
+
+/**
+ * Sent when the initial roster has been populated into storage.
+ **/
+- (void)xmppRosterDidEndPopulating:(XMPPRoster *)sender
+{
+    
+}
+
+/**
+ * Sent when the roster receives a roster item.
+ *
+ * Example:
+ *
+ * <item jid='romeo@example.net' name='Romeo' subscription='both'>
+ *   <group>Friends</group>
+ * </item>
+ **/
+- (void)xmppRoster:(XMPPRoster *)sender didReceiveRosterItem:(NSXMLElement *)item
+{
     
 }
 

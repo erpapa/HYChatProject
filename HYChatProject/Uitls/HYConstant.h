@@ -8,8 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString* const HYChatDidReceiveMessage; // 接收消息
-extern NSString* const HYChatWithSomebody; // 进入聊天页面
+extern NSString* const HYChatDidReceiveMessage;   // 接收消息
+extern NSString* const HYChatWithSomebody;        // 进入聊天页面
+extern NSString* const HYChatJoinOrCreateGroup;   // 加入或者创建聊天室
+extern NSString* const HYChatDidReceiveSingleMessage;   // 接收消息
+extern NSString* const HYChatDidReceiveGroupMessage;   // 接收消息
+extern NSString* const HYChatStartPlayAudio;      // 开始播放音频
+extern NSString* const HYChatStopPlayAudio;       // 停止播放音频
 @interface HYConstant : NSObject
 
 @end

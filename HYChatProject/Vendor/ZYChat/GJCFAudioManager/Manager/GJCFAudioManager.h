@@ -39,13 +39,16 @@ typedef void (^GJCFAudioManagerShouldShowPlayProgressBlock) (NSString *audioLoca
 
 typedef void (^GJCFAudioManagerShouldShowPlayProgressDetailBlock) (NSString *audioLocalPath,NSTimeInterval playCurrentTime,NSTimeInterval duration);
 
-typedef void (^GJCFAudioManagerDidFinishPlayCurrentAudioBlock) (NSString *audioLocalPath);
+typedef void (^GJCFAudioManagerDidFinishPlayCurrentAudioBlock) (NSString *uniqueIdentifier);
 
 typedef void (^GJCFAudioManagerDidFinishRecordCurrentAudioBlock) (NSString *audioLocalPath,NSTimeInterval duration);
 
 typedef void (^GJCFAudioManagerUploadAudioFileProgressBlock) (NSString *audioLocalPath,CGFloat progress);
 
 typedef void (^GJCFAudioManagerUploadCompletionBlock) (NSString *audioLocalPath,BOOL result,NSString *remoteUrl);
+
+typedef void (^GJCFAudioManagerDidUploadSuccessBlock) (BOOL success); // 上传成功/失败
+typedef void (^GJCFAudioManagerDidDownloadSuccessBlock) (BOOL success); // 下载成功/失败
 
 @interface GJCFAudioManager : NSObject
 
@@ -112,6 +115,16 @@ typedef void (^GJCFAudioManagerUploadCompletionBlock) (NSString *audioLocalPath,
 /* 获取指定本地路径音频文件的时长 */
 - (NSTimeInterval)getDurationForLocalWavPath:(NSString *)localAudioFilePath;
 
+
+#pragma mark - 上传下载
+
+/* 开始上传指定文件 */
+- (void)startUploadAudioFile:(GJCFAudioModel *)audioFile successBlock:(GJCFAudioManagerDidUploadSuccessBlock)successBlock;
+
+/* 下载音频文件 */
+- (void)downloadRemoteAudioFileByUrl:(NSString *)remoteAudioUrl successBlock:(GJCFAudioManagerDidDownloadSuccessBlock)successBlock;;
+
+
 /* 获取网络音频文件时长 */
 - (void)getDurationForRemoteUrl:(NSString *)remoteUrl withFinish:(GJCFAudioManagerDidFinishGetRemoteFileDurationBlock)finishBlock withFaildBlock:(GJCFAudioManagerDidFaildGetRemoteFileDurationBlock)faildBlock;
 
@@ -133,8 +146,6 @@ typedef void (^GJCFAudioManagerUploadCompletionBlock) (NSString *audioLocalPath,
 /* 开始上传当前录制的音频文件 */
 - (void)startUploadCurrentRecordFileWithFinish:(GJCFAudioManagerDidFinishUploadCurrentRecordFileBlock)finishBlock withFaildBlock:(GJCFAudioManagerDidFaildUploadCurrentRecordFileBlock)faildBlock;
 
-/* 开始上传指定文件 */
-- (void)startUploadAudioFile:(GJCFAudioModel *)audioFile;
 
 /* 观察播放进度 */
 - (void)setCurrentAudioPlayProgressBlock:(GJCFAudioManagerShouldShowPlayProgressBlock)progressBlock;
@@ -168,5 +179,6 @@ typedef void (^GJCFAudioManagerUploadCompletionBlock) (NSString *audioLocalPath,
 
 /* 观察录音失败 */
 - (void)setRecrodFaildBlock:(GJCFAudioManagerRecordFaildBlock)faildRecordBlock;
+
 
 @end
