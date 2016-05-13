@@ -338,7 +338,7 @@
         return;
     }
     
-    /* 检测本地是否已经有对应的wav文件 ---> 将url进行MD5编码,再加上扩展(wav) */
+    /* 检测本地是否已经有对应的wav文件 ---> 获取文件名,再加上扩展(wav) */
     NSString *localWavPath = [[GJCFCachePathManager shareManager] mainAudioCacheFilePathForUrl:remoteAudioUrl];
     NSData *fileData = [NSData dataWithContentsOfFile:localWavPath];
     
@@ -347,6 +347,7 @@
 
         GJCFAudioModel *existAudio = [[GJCFAudioModel alloc]init];
         existAudio.localStorePath = localWavPath;
+        existAudio.remotePath = remoteAudioUrl;
         
         NSLog(@"GJCFAudioManager 播放已经下载过的音频文件:%@",existAudio.localStorePath);
         [self playAudioFile:existAudio];
@@ -472,7 +473,7 @@
         return;
     }
     
-    /* 检测本地是否已经有对应的wav文件 ---> 将url进行MD5编码,再加上扩展(amr) */
+    /* 检测本地是否已经有对应的wav文件 ---> 获取文件名,再加上扩展(amr) */
     NSString *localWavPath = [[GJCFCachePathManager shareManager] mainAudioCacheFilePathForUrl:remoteAudioUrl];
     NSData *fileData = [NSData dataWithContentsOfFile:localWavPath];
     
@@ -1029,7 +1030,7 @@
     NSLog(@"GJCFAudioManager 播放完成:%@",audioFile.localStorePath);
     
     if (self.finishPlayBlock) {
-        self.finishPlayBlock(audioFile.uniqueIdentifier);
+        self.finishPlayBlock(audioFile.remotePath);
     }
 }
 

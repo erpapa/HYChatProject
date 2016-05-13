@@ -67,7 +67,7 @@
 
     /* 阻止快速重复录音 */
     if (self.audioRecord.isRecording) {
-        NSError *faildError = [NSError errorWithDomain:@"gjcf.AudioManager.com" code:-236 userInfo:@{@"msg": @"GJCFAuidoRecord 正在录音"}];
+        NSError *faildError = [NSError errorWithDomain:@"domain" code:-236 userInfo:@{@"msg": @"GJCFAuidoRecord 正在录音"}];
         if (self.delegate && [self.delegate respondsToSelector:@selector(audioRecord:didOccusError:)]) {
             [self.delegate audioRecord:self didOccusError:faildError];
         }
@@ -93,6 +93,8 @@
     
     /* 设置新得录音文件得本地缓存地址 */
     [GJCFAudioFileUitil setupAudioFileLocalStorePath:self.currentRecordFile];
+    /* 设置新得录音文件的远程地址 */
+    [GJCFAudioFileUitil setupAudioFileRemoteUrl:self.currentRecordFile];
     
     /* 开始新的录音实例 */
     if (self.audioRecord) {

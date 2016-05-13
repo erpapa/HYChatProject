@@ -39,7 +39,7 @@ typedef void (^GJCFAudioManagerShouldShowPlayProgressBlock) (NSString *audioLoca
 
 typedef void (^GJCFAudioManagerShouldShowPlayProgressDetailBlock) (NSString *audioLocalPath,NSTimeInterval playCurrentTime,NSTimeInterval duration);
 
-typedef void (^GJCFAudioManagerDidFinishPlayCurrentAudioBlock) (NSString *uniqueIdentifier);
+typedef void (^GJCFAudioManagerDidFinishPlayCurrentAudioBlock) (NSString *remoteUrl);
 
 typedef void (^GJCFAudioManagerDidFinishRecordCurrentAudioBlock) (NSString *audioLocalPath,NSTimeInterval duration);
 

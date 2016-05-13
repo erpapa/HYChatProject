@@ -46,7 +46,13 @@
             break;
         }
         case HYChatMessageTypeImage:{
-            
+            CGFloat scale = chatMessage.imageWidth / chatMessage.imageHeight; // 640/1136 = 0.563
+            CGFloat ratio = MIN(MAX(scale, 0.8), 1.2); // 图片比例最高1.3，最低0.7
+            contentWidth = ratio > 1.0 ? (kScreenW * 0.55) : (kScreenW * 0.45);
+            contentHeight = contentWidth / ratio;
+            contentY = CGRectGetMinY(_headViewFrame);
+            contentRightX = CGRectGetMinX(_headViewFrame) - kContentMargin - contentWidth;
+            contentLeftX = CGRectGetMaxX(_headViewFrame) + kContentMargin;
             break;
         }
         case HYChatMessageTypeAudio:{
@@ -58,7 +64,11 @@
             break;
         }
         case HYChatMessageTypeVideo:{
-            
+            contentWidth = kScreenW * 0.6;
+            contentHeight = contentWidth - 20;
+            contentY = CGRectGetMinY(_headViewFrame);
+            contentRightX = CGRectGetMinX(_headViewFrame) - kContentMargin - contentWidth;
+            contentLeftX = CGRectGetMaxX(_headViewFrame) + kContentMargin;
             break;
         }
             
@@ -71,8 +81,8 @@
     _contentBgViewFrame = chatMessage.isOutgoing ? rightContentRect : leftContentRect;
     
     CGFloat indicatorWidth = kHeadWidth - kTextPandingTop * 2;
-    CGRect rightIndicatorRect = CGRectMake(CGRectGetMinX(_contentBgViewFrame) - indicatorWidth, CGRectGetMaxY(_contentBgViewFrame) - indicatorWidth - kTextPandingTop, indicatorWidth, indicatorWidth);
-    CGRect leftIndicatorRect = CGRectMake(CGRectGetMaxX(_contentBgViewFrame), CGRectGetMaxY(_contentBgViewFrame) - indicatorWidth - kTextPandingTop, indicatorWidth, indicatorWidth);
+    CGRect rightIndicatorRect = CGRectMake(CGRectGetMinX(_contentBgViewFrame) - indicatorWidth, CGRectGetMaxY(_contentBgViewFrame) - indicatorWidth - kTextPandingTop * 0.5, indicatorWidth, indicatorWidth);
+    CGRect leftIndicatorRect = CGRectMake(CGRectGetMaxX(_contentBgViewFrame), CGRectGetMaxY(_contentBgViewFrame) - indicatorWidth - kTextPandingTop * 0.5, indicatorWidth, indicatorWidth);
     _indicatorViewFrame = chatMessage.isOutgoing ? rightIndicatorRect : leftIndicatorRect;
     
     
@@ -128,18 +138,18 @@
 
 - (CGFloat)getContentWidthByAudioDuration:(CGFloat)audioDuration
 {
-    if (audioDuration < 3) {
-        return 132/2 - 6;
+    if (audioDuration < 4) {
+        return 72 + audioDuration * 4;
     }
-    else if (audioDuration < 11)
+    else if (audioDuration <= 16)
     {
-        return 132/2 - 6 + (audioDuration - 3) * (252/2 - 132/2 - 6)/13;
+        return 80 + (audioDuration - 4) * 4;
     }
     else if (audioDuration < 60)
     {
-        return 132/2 - 6 + (8  + ((NSInteger)((audioDuration - 10)/10))) * (252/2 - 132/2 - 6)/(13);
+        return 144 + (audioDuration - 16) * 2;
     }
-    return 252/2 - 6;
+    return kScreenW - (kHeadWidth + kHeadMargin) * 2;
 }
 
 @end

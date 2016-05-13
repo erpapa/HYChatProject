@@ -91,8 +91,8 @@ typedef void(^HYSendTextSuccess)(BOOL success);//发送消息成功/失败
 -(void)rejectUserRequest:(XMPPJID *)jid;
 
 /********************* 发送聊天消息 ********************************/
-- (void)sendText:(NSString *)text;
-- (void)sendText:(NSString *)text toJid:(XMPPJID *)jid;
+- (BOOL)sendText:(NSString *)text;
+- (BOOL)sendText:(NSString *)text toJid:(XMPPJID *)jid;
 
 /********************* CoreData ********************************/
 

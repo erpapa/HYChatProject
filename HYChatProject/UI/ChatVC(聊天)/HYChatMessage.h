@@ -35,7 +35,7 @@ typedef NS_ENUM(NSInteger, HYChatMessageType) {
     HYChatMessageTypeVideo // 视频video
 };
 
-@class YYTextLayout,GJCFAudioModel;
+@class YYTextLayout,GJCFAudioModel,HYVideoModel;
 @interface HYChatMessage : NSObject
 @property (nonatomic, assign) HYChatMessageType type;    // 消息类型
 @property (nonatomic, strong) XMPPJID *jid;              // 聊天对象jid
@@ -57,8 +57,7 @@ typedef NS_ENUM(NSInteger, HYChatMessageType) {
 @property (nonatomic, assign) BOOL isRead;                // 是否播放过
 
 #pragma mark - 视频、文件消息
-@property (nonatomic, strong) NSString *videoUrl;         // video链接
-@property (nonatomic, assign) float videoSize;            // 文件大小
+@property (nonatomic, strong) HYVideoModel *videoModel;   // 视频model
 @property (nonatomic, assign) BOOL isPlayingVideo;        // 是否正在播放video
 
 @property (nonatomic, assign) HYChatSendMessageStatus sendStatus;          // 发送状态
@@ -71,4 +70,14 @@ typedef NS_ENUM(NSInteger, HYChatMessageType) {
 
 - (instancetype)initWithJsonString:(NSString *)jsonString;
 - (NSString *)jsonString; // 将模型转jsonString
+@end
+
+@class HYVideoDecoder;
+@interface HYVideoModel : NSObject
+@property (nonatomic, strong) HYVideoDecoder *videoDecoder; // 解码
+@property (nonatomic, strong) NSString *videoThumbImageUrl; // video封面链接
+@property (nonatomic, strong) NSString *videoUrl;         // video链接
+@property (nonatomic, strong) NSString *videoLocalPath;   // video本地文件路径
+@property (nonatomic, assign) float videoSize;            // 文件大小
+
 @end

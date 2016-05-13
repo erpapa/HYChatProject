@@ -7,7 +7,7 @@
 //
 
 #import "GJCFFileUploadTask+GJCFAudioUpload.h"
-#import "HYQNAuthPolicy.h"
+#import "GJCFAudioFileUitil.h"
 #import "GJCFUploadFileModel.h"
 
 @implementation GJCFFileUploadTask (GJCFAudioUpload)
@@ -23,8 +23,8 @@
 //    task.customRequestHeader = customRequestHeader;
     
     //自定义请求参数(没有该参数，七牛云将会自动命名)
-    NSString *file = audioFile.localStorePath.lastPathComponent;
-    NSString *fileName = [NSString stringWithFormat:@"%@.amr",[file stringByDeletingPathExtension]]; // localStorePath与tempEncodeFilePath文件名不同
+    [GJCFAudioFileUitil setupAudioFileRemoteUrl:audioFile]; // 设置远程地址
+    NSString *fileName = [audioFile.remotePath lastPathComponent];
     task.customRequestParams = @{@"key": fileName};
     
     //设置原始的文件对象

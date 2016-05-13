@@ -57,7 +57,8 @@
 {
     [super setMessageFrame:messageFrame];
     HYChatMessage *message = messageFrame.chatMessage;
-    self.audioTimeLabel.text = [NSString stringWithFormat:@"%.1f",message.audioModel.duration];
+    self.audioTimeLabel.text = [NSString stringWithFormat:@"%.1f''",message.audioModel.duration];
+    self.audioPlayIndicatorView.animationRepeatCount = (int)(message.audioModel.duration + 0.7);
     
     CGFloat panding = 8;
     CGFloat audioPlayWidth = CGRectGetHeight(self.contentBgView.frame) - panding * 2;

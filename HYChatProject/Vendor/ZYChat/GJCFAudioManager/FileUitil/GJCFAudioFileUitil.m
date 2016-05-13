@@ -10,6 +10,7 @@
 #import "GJCFEncodeAndDecode.h"
 #import "GJCFUitils.h"
 #import "GJCFCachePathManager.h"
+#import "HYQNAuthPolicy.h"
 
 /* 主缓存目录 */
 static NSString *  GJCFAudioFileCacheDirectory = @"GJCFAudioFileCacheDirectory";
@@ -67,6 +68,16 @@ static NSString *  GJCFAudioFileRemoteLocalWavFileShipList = @"GJCFAudioFileRemo
     NSString *randomPath = [[self cacheDirectory]stringByAppendingPathComponent:fileName];
     
     audioFile.localStorePath = randomPath;
+}
+
+/* 设置远程地址 */
++ (void)setupAudioFileRemoteUrl:(GJCFAudioModel*)audioFile
+{
+    if (!audioFile) {
+        return;
+    }
+    NSString *fileName = [[audioFile.localStorePath lastPathComponent] stringByDeletingPathExtension];
+    audioFile.remotePath = QN_FullURL([fileName stringByAppendingPathExtension:@"amr"]);
 }
 
 /* 设置一个临时转编码文件的缓存地址 */

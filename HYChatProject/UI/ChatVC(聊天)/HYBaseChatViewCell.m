@@ -79,21 +79,18 @@
                 self.indicatorView.hidden = NO;
                 self.indicatorView.image = nil;
                 self.indicatorView.animatedImage = [self animateImage];;
-                self.indicatorView.autoPlayAnimatedImage = YES;
                 break;
             }
             case HYChatSendMessageStatusSuccess:{
                 self.indicatorView.hidden = YES;
                 self.indicatorView.image = nil;
                 self.indicatorView.animatedImage = nil;
-                self.indicatorView.autoPlayAnimatedImage = NO;
                 break;
             }
             case HYChatSendMessageStatusFaild:{
                 self.indicatorView.hidden = NO;
                 self.indicatorView.animatedImage = nil;
                 self.indicatorView.image = [UIImage imageNamed:@"commonFail"];
-                self.indicatorView.autoPlayAnimatedImage = NO;
                 break;
             }
                 
@@ -121,21 +118,18 @@
                 self.indicatorView.hidden = NO;
                 self.indicatorView.image = nil;
                 self.indicatorView.animatedImage = [self animateImage];
-                self.indicatorView.autoPlayAnimatedImage = YES;
                 break;
             }
             case HYChatReceiveMessageStatusSuccess:{
                 self.indicatorView.hidden = YES;
                 self.indicatorView.image = nil;
                 self.indicatorView.animatedImage = nil;
-                self.indicatorView.autoPlayAnimatedImage = NO;
                 break;
             }
             case HYChatReceiveMessageStatusFaild:{
                 self.indicatorView.hidden = NO;
                 self.indicatorView.animatedImage = nil;
                 self.indicatorView.image = [UIImage imageNamed:@"commonFail"];
-                self.indicatorView.autoPlayAnimatedImage = NO;
                 break;
             }
             default:

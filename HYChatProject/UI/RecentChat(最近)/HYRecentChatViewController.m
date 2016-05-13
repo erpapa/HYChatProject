@@ -44,7 +44,7 @@
     // 加载最近联系人
     [self loadRecentChatDataSource];
     // 注册通知
-    [HYNotification addObserver:self selector:@selector(receiveMessage:) name:HYChatDidReceiveMessage object:nil];
+    [HYNotification addObserver:self selector:@selector(receiveRecentMessage:) name:HYChatDidReceiveMessage object:nil];
     [HYNotification addObserver:self selector:@selector(chatWithSomebody:) name:HYChatWithSomebody object:nil];
 }
 
@@ -152,7 +152,7 @@
 
 #pragma mark - 接收到消息通知
 
-- (void)receiveMessage:(NSNotification *)noti
+- (void)receiveRecentMessage:(NSNotification *)noti
 {
     HYRecentChatModel *chatModel = noti.object;
     NSInteger count = self.dataSource.count;

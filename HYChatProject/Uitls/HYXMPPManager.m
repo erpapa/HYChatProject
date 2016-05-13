@@ -318,23 +318,35 @@ NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChang
  *  发送聊天消息
  */
 
-- (void)sendText:(NSString *)text
+- (BOOL)sendText:(NSString *)text
 {
     XMPPJID *jid = self.chatJID;
     if (jid) {
-        [self sendText:text toJid:jid];
+        return [self sendText:text toJid:jid];
     }
+    return NO;
 }
-- (void)sendText:(NSString *)text toJid:(XMPPJID *)jid
+- (BOOL)sendText:(NSString *)text toJid:(XMPPJID *)jid
 {
+    HYRecentChatModel *chatModel = [[HYRecentChatModel alloc] init];
+    [[HYDatabaseHandler sharedInstance] recentChatModel:chatModel fromJid:jid];// 从数据库读取
+    chatModel.jid = jid;
+    chatModel.body = text;
+    chatModel.time = [[NSDate date] timeIntervalSince1970];
+    chatModel.isGroup = NO;
+    chatModel.unreadCount = 0;
+    MAIN(^{
+        [HYNotification postNotificationName:HYChatDidReceiveMessage object:chatModel];
+    });
+    
+    
     // 发送聊天消息
     XMPPMessage *message = [XMPPMessage messageWithType:@"chat" to:jid];
     [message addBody:text];
-    [_xmppStream sendElement:message];
-//    XMPPElementReceipt *receipt = [XMPPElementReceipt new];
-//    [_xmppStream sendElement:message andGetReceipt:&receipt];
-//    BOOL messageState =[receipt wait:-1];
-//    return messageState;
+    XMPPElementReceipt *receipt = [XMPPElementReceipt new];
+    [_xmppStream sendElement:message andGetReceipt:&receipt];
+    BOOL messageState =[receipt wait:-1];
+    return messageState;
     
 }
 
@@ -582,6 +594,11 @@ trusted_network:
             chatMessage.isRead = NO;
             chatMessage.isOutgoing = NO;
             chatMessage.isGroup = NO;
+            if (chatMessage.type == HYChatMessageTypeText || chatMessage.type == HYChatMessageTypeImage) {
+                chatMessage.receiveStatus = HYChatReceiveMessageStatusSuccess;
+            } else {
+                chatMessage.receiveStatus = HYChatReceiveMessageStatusReceiving;
+            }
             [[HYDatabaseHandler sharedInstance] addChatMessage:chatMessage]; // 储存
             [HYNotification postNotificationName:HYChatDidReceiveSingleMessage object:chatMessage];
         }
@@ -640,31 +657,7 @@ trusted_network:
 // 在发送消息成功后，会回调此代理方法
 - (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message
 {
-    // 1.单聊消息
-    if ([[message type] isEqualToString:@"chat"]) {
-        if ([message body].length) {
-            // 1.
-            HYRecentChatModel *chatModel = [[HYRecentChatModel alloc] init];
-            [[HYDatabaseHandler sharedInstance] recentChatModel:chatModel fromJid:message.from];// 从数据库读取
-            chatModel.jid = message.to;
-            chatModel.body = [message body];
-            chatModel.time = [[NSDate date] timeIntervalSince1970];
-            chatModel.isGroup = NO;
-            chatModel.unreadCount = 0;
-            [HYNotification postNotificationName:HYChatDidReceiveMessage object:chatModel];
-            
-            // 2.
-            HYChatMessage *chatMessage = [[HYChatMessage alloc] initWithJsonString:[message body]];
-            chatMessage.jid = message.to;
-            chatMessage.time = [[NSDate date] timeIntervalSince1970];
-            chatMessage.isRead = YES;
-            chatMessage.isOutgoing = YES;
-            chatMessage.isGroup = NO;
-            chatMessage.sendStatus = HYChatSendMessageStatusSuccess; // 发送成功
-            [[HYDatabaseHandler sharedInstance] addChatMessage:chatMessage]; // 储存
-            [HYNotification postNotificationName:HYChatDidReceiveSingleMessage object:chatMessage];
-        }
-    }
+    
 }
 // 在发送用户在线状态信息成功后，会回调此方法
 - (void)xmppStream:(XMPPStream *)sender didSendPresence:(XMPPPresence *)presence
@@ -682,31 +675,7 @@ trusted_network:
 // 在发送消息失败后，会回调此代理方法
 - (void)xmppStream:(XMPPStream *)sender didFailToSendMessage:(XMPPMessage *)message error:(NSError *)error
 {
-    // 1.单聊消息
-    if ([[message type] isEqualToString:@"chat"]) {
-        if ([message body].length) {
-            // 1.
-            HYRecentChatModel *chatModel = [[HYRecentChatModel alloc] init];
-            [[HYDatabaseHandler sharedInstance] recentChatModel:chatModel fromJid:message.from];// 从数据库读取
-            chatModel.jid = message.to;
-            chatModel.body = [message body];
-            chatModel.time = [[NSDate date] timeIntervalSince1970];
-            chatModel.isGroup = NO;
-            chatModel.unreadCount = 0;
-            [HYNotification postNotificationName:HYChatDidReceiveMessage object:chatModel];
-            
-            // 2.
-            HYChatMessage *chatMessage = [[HYChatMessage alloc] initWithJsonString:[message body]];
-            chatMessage.jid = message.to;
-            chatMessage.time = [[NSDate date] timeIntervalSince1970];
-            chatMessage.isRead = YES;
-            chatMessage.isOutgoing = YES;
-            chatMessage.isGroup = NO;
-            chatMessage.sendStatus = HYChatSendMessageStatusFaild; // 发送失败
-            [[HYDatabaseHandler sharedInstance] addChatMessage:chatMessage]; // 储存
-            [HYNotification postNotificationName:HYChatDidReceiveSingleMessage object:chatMessage];
-        }
-    }
+    
 }
 // 在发送用户在线状态失败信息后，会回调此方法
 - (void)xmppStream:(XMPPStream *)sender didFailToSendPresence:(XMPPPresence *)presence error:(NSError *)error

@@ -14,6 +14,9 @@
 /* 设置本地缓存路径 */
 + (void)setupAudioFileLocalStorePath:(GJCFAudioModel*)audioFile;
 
+/* 设置远程地址 */
++ (void)setupAudioFileRemoteUrl:(GJCFAudioModel*)audioFile;
+
 /* 设置一个临时转编码文件的缓存地址 */
 + (void)setupAudioFileTempEncodeFilePath:(GJCFAudioModel*)audioFile;
 

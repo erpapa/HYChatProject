@@ -67,7 +67,7 @@
     [self.contentView addSubview:self.headView];
     
     // 2.日期
-    CGFloat timeLabelW = 60;
+    CGFloat timeLabelW = 80;
     CGFloat timeLabelH = headViewW * 0.5;
     CGFloat timeLabelX = kScreenW - timeLabelW - kPanding;
     CGFloat timeLabelY = headViewY;
@@ -122,7 +122,7 @@
     self.headView.image = chatModel.isGroup ? [UIImage imageNamed:@"defaultGroupHead"] : [UIImage imageNamed:@"defaultHead"];
     self.nameLabel.text = chatModel.jid.user;
     self.detailLabel.attributedText = chatModel.attText; // 赋值属性字符串
-    self.timeLabel.text = [HYUtils timeStringSince1970:chatModel.time];
+    self.timeLabel.text = [HYUtils sampleTimeStringSince1970:chatModel.time];
     // 未读消息数
     self.badgeButton.frame = [self frameWithUnreadCount:chatModel.unreadCount];
     NSString *badgeValue = [HYUtils stringFromUnreadCount:chatModel.unreadCount];

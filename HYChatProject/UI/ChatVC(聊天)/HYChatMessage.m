@@ -66,8 +66,10 @@
             break;
         }
         case HYChatMessageTypeVideo:{
-            self.videoUrl = dict[@"videoUrl"];
-            self.videoSize = [dict[@"videoSize"] floatValue];
+            self.videoModel = [[HYVideoModel alloc] init];
+            self.videoModel.videoThumbImageUrl = dict[@"videoThumbImageUrl"];
+            self.videoModel.videoUrl = dict[@"videoUrl"];
+            self.videoModel.videoSize = [dict[@"videoSize"] floatValue];
             break;
         }
         default:
@@ -96,8 +98,9 @@
             break;
         }
         case HYChatMessageTypeVideo:{
-            dict[@"videoUrl"] = [NSString stringWithFormat:@"%@",self.videoUrl];
-            dict[@"videoSize"] = [NSString stringWithFormat:@"%.1f",self.videoSize];
+            dict[@"videoThumbImageUrl"] = [NSString stringWithFormat:@"%@",self.videoModel.videoThumbImageUrl];
+            dict[@"videoUrl"] = [NSString stringWithFormat:@"%@",self.videoModel.videoUrl];
+            dict[@"videoSize"] = [NSString stringWithFormat:@"%.1f",self.videoModel.videoSize];
             break;
         }
         default:
@@ -148,4 +151,23 @@
     }
     return HYChatMessageTypeText;
 }
+@end
+
+
+@implementation HYVideoModel
+
+- (NSString *)videoLocalPath
+{
+    if (self.videoUrl.length) {
+        NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+        NSString *localFilePath = [NSString stringWithFormat:@"%@/videoCache/%@",document,[self.videoUrl lastPathComponent]];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:localFilePath]) { // 如果文件已经下载完成
+            return localFilePath;
+        } else {
+            return nil;
+        }
+    }
+    return nil;
+}
+
 @end

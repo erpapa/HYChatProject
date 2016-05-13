@@ -21,6 +21,17 @@
     
     return result;
 }
+
+- (BOOL)updateChatMessage:(HYChatMessage *)chatMessage
+{
+    __block BOOL result = YES;
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        result = [db updateChatMessage:chatMessage];
+    }];
+    
+    return result;
+}
+
 - (BOOL)deleteChatMessage:(HYChatMessage *)chatMessage
 {
     __block BOOL result = YES;
@@ -73,6 +84,19 @@
     return YES;
     
 }
+
+- (BOOL)updateChatMessage:(HYChatMessage *)chatMessage
+{
+    HYLoginInfo *loginInfo = [HYLoginInfo sharedInstance];
+    NSString *sql = [NSString stringWithFormat:@"UPDATE T_CHAT_SINGLECHAT SET isRead=%d,sendStatus=%d,receiveStatus=%d WHERE msgid ='%@' AND myJid='%@' AND chatBare='%@'",chatMessage.isRead,chatMessage.sendStatus,chatMessage.sendStatus,chatMessage.messageID,loginInfo.jid.full,chatMessage.jid.bare];
+    if(![self executeUpdate:sql])
+    {
+        HYLog(@"%@ fail,%@",sql,[[self lastError] localizedDescription]);
+        return NO;
+    }
+    return YES;
+}
+
 - (BOOL)deleteChatMessage:(HYChatMessage *)chatMessage
 {
     HYLoginInfo *loginInfo = [HYLoginInfo sharedInstance];

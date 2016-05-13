@@ -304,6 +304,16 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
     [self textView:self.textView shouldChangeTextInRange:NSMakeRange(self.textView.text.length, 0) replacementText:@"\n"];
 }
 
+#pragma mark - HYExpandKeyboardViewDelegate
+/**
+ *  点击扩展
+ */
+- (void)expandKeyboardView:(HYExpandKeyboardView *)expandKeyboardView clickWithType:(HYExpandType)type
+{
+    if ([self.delegate respondsToSelector:@selector(inputViewController:clickExpandType:)]) {
+        [self.delegate inputViewController:self clickExpandType:type];
+    }
+}
 
 /**
  *  根据输入文字多少，自动调整输入框的高度
@@ -451,6 +461,7 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
 {
     if (_expandView == nil) {
         _expandView = [[HYExpandKeyboardView alloc] init];
+        _expandView.delegate = self;
         _expandView.frame = CGRectMake(0, 0, kScreenW, kPanelHeight);
     }
     return _expandView;

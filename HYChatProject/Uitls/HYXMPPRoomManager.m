@@ -392,10 +392,26 @@
 }
 
 // 发送消息
-- (void)sendText:(NSString *)text toRoomJid:(XMPPJID *)roomJid
+- (BOOL)sendText:(NSString *)text toRoomJid:(XMPPJID *)roomJid
 {
-    XMPPRoom *room = [self roomFromJid:roomJid];
-    [room sendMessageWithBody:text];
+    HYRecentChatModel *chatModel = [[HYRecentChatModel alloc] init];
+    [[HYDatabaseHandler sharedInstance] recentChatModel:chatModel fromJid:roomJid];// 从数据库读取
+    chatModel.jid = roomJid;
+    chatModel.body = text;
+    chatModel.time = [[NSDate date] timeIntervalSince1970];
+    chatModel.isGroup = YES;
+    chatModel.unreadCount = 0;
+    MAIN(^{
+        [HYNotification postNotificationName:HYChatDidReceiveMessage object:chatModel];
+    });
+    
+    
+    XMPPMessage *message = [XMPPMessage messageWithType:@"groupchat" to:roomJid];
+    [message addBody:text];
+    XMPPElementReceipt *receipt = [XMPPElementReceipt new];
+    [_xmppStream sendElement:message andGetReceipt:&receipt];
+    BOOL messageState =[receipt wait:-1];
+    return messageState;
 }
 
 #pragma mark - 搜索群组
@@ -916,62 +932,6 @@
         }
     }
     
-}
-
-- (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message
-{
-    if ([[message type] isEqualToString:@"groupchat"]) { // 群聊消息
-        if ([message body].length) {
-            // 1.
-            HYRecentChatModel *chatModel = [[HYRecentChatModel alloc] init];
-            [[HYDatabaseHandler sharedInstance] recentChatModel:chatModel fromJid:message.from];// 从数据库读取
-            chatModel.jid = message.to;
-            chatModel.body = [message body];
-            chatModel.time = [[NSDate date] timeIntervalSince1970];
-            chatModel.isGroup = YES;
-            chatModel.unreadCount = 0;
-            [HYNotification postNotificationName:HYChatDidReceiveMessage object:chatModel];
-            
-            // 2.
-            HYChatMessage *chatMessage = [[HYChatMessage alloc] initWithJsonString:[message body]];
-            chatMessage.jid = message.to;
-            chatMessage.time = [[NSDate date] timeIntervalSince1970];
-            chatMessage.isRead = YES;
-            chatMessage.isOutgoing = YES;
-            chatMessage.isGroup = YES;
-            chatMessage.sendStatus = HYChatSendMessageStatusSuccess; // 发送成功
-            [[HYDatabaseHandler sharedInstance] addGroupChatMessage:chatMessage]; // 储存
-            [HYNotification postNotificationName:HYChatDidReceiveGroupMessage object:chatMessage];
-        }
-    }
-}
-
-- (void)xmppStream:(XMPPStream *)sender didFailToSendMessage:(XMPPMessage *)message error:(NSError *)error
-{
-    if ([[message type] isEqualToString:@"groupchat"]) { // 群聊消息
-        if ([message body].length) {
-            // 1.
-            HYRecentChatModel *chatModel = [[HYRecentChatModel alloc] init];
-            [[HYDatabaseHandler sharedInstance] recentChatModel:chatModel fromJid:message.from];// 从数据库读取
-            chatModel.jid = message.to;
-            chatModel.body = [message body];
-            chatModel.time = [[NSDate date] timeIntervalSince1970];
-            chatModel.isGroup = YES;
-            chatModel.unreadCount = 0;
-            [HYNotification postNotificationName:HYChatDidReceiveMessage object:chatModel];
-            
-            // 2.
-            HYChatMessage *chatMessage = [[HYChatMessage alloc] initWithJsonString:[message body]];
-            chatMessage.jid = message.to;
-            chatMessage.time = [[NSDate date] timeIntervalSince1970];
-            chatMessage.isRead = YES;
-            chatMessage.isOutgoing = YES;
-            chatMessage.isGroup = YES;
-            chatMessage.sendStatus = HYChatSendMessageStatusFaild;
-            [[HYDatabaseHandler sharedInstance] addGroupChatMessage:chatMessage]; // 储存
-            [HYNotification postNotificationName:HYChatDidReceiveGroupMessage object:chatMessage];
-        }
-    }
 }
 
 - (void)xmppRoom:(XMPPRoom *)sender didFetchBanList:(NSArray *)items

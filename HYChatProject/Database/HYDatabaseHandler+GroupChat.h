@@ -11,6 +11,7 @@
 @class HYChatMessage;
 @interface HYDatabaseHandler(GroupChat)
 - (BOOL)addGroupChatMessage:(HYChatMessage *)chatMessage;
+- (BOOL)updateGroupChatMessage:(HYChatMessage *)chatMessage;
 - (BOOL)deleteGroupChatMessage:(HYChatMessage *)chatMessage;
 - (BOOL)recentGroupChatMessages:(NSMutableArray *)chatMessages fromRoomJID:(XMPPJID *)roomJid; // 最近20条聊天记录
 - (BOOL)moreGroupChatMessages:(NSMutableArray *)chatMessages fromRoomJID:(XMPPJID *)roomJid beforeTime:(NSTimeInterval)time; // 更早的聊天记录(20条)
@@ -19,6 +20,7 @@
 @interface FMDatabase(GroupChat)
 - (void)createGroupChatTable;
 - (BOOL)addGroupChatMessage:(HYChatMessage *)chatMessage;
+- (BOOL)updateGroupChatMessage:(HYChatMessage *)chatMessage;
 - (BOOL)deleteGroupChatMessage:(HYChatMessage *)chatMessage;
 - (BOOL)recentGroupChatMessages:(NSMutableArray *)chatMessages fromRoomJID:(XMPPJID *)roomJid; // 最近20条聊天记录
 - (BOOL)moreGroupChatMessages:(NSMutableArray *)chatMessages fromRoomJID:(XMPPJID *)roomJid beforeTime:(NSTimeInterval)time; // 更早的聊天记录(20条)

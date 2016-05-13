@@ -272,7 +272,7 @@ static dispatch_queue_t _gjcfFileUploadManagerOperationQueue ;
             /* 如果没有文件二进制数据，那么去读取本地存储文件的路径，根据是否有归档属性去读取文件数据 */
             if (aFile.fileData) {
                 
-                NSLog(@"GJCFUploadManager 从文件二进制数据包上传:%@",aFile.fileData);
+                NSLog(@"GJCFUploadManager 上传二进制数据包，文件大小:%dKB",aFile.fileData.length / 1024);
                 
                 [formData appendPartWithFileData:aFile.fileData name:aFile.formName fileName:aFile.fileName mimeType:aFile.mimeType];
                 

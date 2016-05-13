@@ -46,7 +46,7 @@
 
 + (GJCFUploadFileModel*)fileModelWithFileName:(NSString*)fileName withFileData:(NSData*)fileData withFormName:(NSString*)formName
 {
-    return [GJCFUploadFileModel fileModelWithFileName:fileName withFileData:fileData withFormName:formName withMimeType:nil];
+    return [GJCFUploadFileModel fileModelWithFileName:fileName withFileData:fileData withFormName:formName withMimeType:@"application/octet-stream"];
 }
 
 + (GJCFUploadFileModel*)fileModelWithFileName:(NSString*)fileName withFileData:(NSData*)fileData withFormName:(NSString*)formName withMimeType:(NSString*)mimeType
@@ -97,6 +97,7 @@
                                   
                                   @"AMR": @"audio/amr",
                                   
+                                  @"mov": @"application/octet-stream",
                                   };
     
     return [typeMapDict objectForKey:fileExtension];

@@ -35,6 +35,11 @@
     NSLog(@"%@",newImage);
 }
 
+- (void)testExample1 {
+    NSLog(@"%f",[NSDate timeIntervalSinceReferenceDate]); // 2000.1.1
+    NSLog(@"%f",[[NSDate date] timeIntervalSince1970]); // 1970.1.1
+}
+
 - (void)testPerformanceExample {
     // This is an example of a performance test case.
     [self measureBlock:^{

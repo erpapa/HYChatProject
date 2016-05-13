@@ -66,7 +66,7 @@ typedef void (^HYCreateRoomBlock)(BOOL success);   // 创建room成功/失败
 /**
  *  在聊天室内发送消息
  */
-- (void)sendText:(NSString *)text toRoomJid:(XMPPJID *)roomJid;
+- (BOOL)sendText:(NSString *)text toRoomJid:(XMPPJID *)roomJid;
 /**
  *  通过jid获得room
  */
