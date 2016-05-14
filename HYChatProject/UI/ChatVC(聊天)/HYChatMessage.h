@@ -35,7 +35,7 @@ typedef NS_ENUM(NSInteger, HYChatMessageType) {
     HYChatMessageTypeVideo // 视频video
 };
 
-@class YYTextLayout,GJCFAudioModel,HYVideoModel;
+@class YYTextLayout,HYAudioModel,HYVideoModel;
 @interface HYChatMessage : NSObject
 @property (nonatomic, assign) HYChatMessageType type;    // 消息类型
 @property (nonatomic, strong) XMPPJID *jid;              // 聊天对象jid
@@ -48,11 +48,12 @@ typedef NS_ENUM(NSInteger, HYChatMessageType) {
 
 #pragma mark - 图片消息
 @property (nonatomic, strong) NSString *imageUrl;         // 图片url(发送消息需要在本地图片另存为一份)
+@property (nonatomic, strong) UIImage *image;             // 图片
 @property (nonatomic, assign) float imageWidth;           // 高度
 @property (nonatomic, assign) float imageHeight;          // 宽度
 
 #pragma mark - 语音消息
-@property (nonatomic, strong) GJCFAudioModel *audioModel; // 音频model
+@property (nonatomic, strong) HYAudioModel *audioModel; // 音频model
 @property (nonatomic, assign) BOOL isPlayingAudio;        // 正在播放
 @property (nonatomic, assign) BOOL isRead;                // 是否播放过
 

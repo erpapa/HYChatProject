@@ -35,8 +35,8 @@
 
 - (NSString *)localPath:(NSString *)key
 {
-    NSString *documentsDirectory = [self documentsDirectory];
-    NSString *localPath = [documentsDirectory stringByAppendingPathComponent:key];
+    NSString *docDir = [self documentsDirectory];
+    NSString *localPath = [NSString stringWithFormat:@"%@/%@",docDir,key];
     return localPath;
 }
 

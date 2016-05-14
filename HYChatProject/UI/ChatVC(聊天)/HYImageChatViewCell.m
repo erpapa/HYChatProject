@@ -53,7 +53,12 @@
         normalImage = [[UIImage imageNamed:@"chat_receive_nor"] resizableImageWithCapInsets:UIEdgeInsetsMake(25, 40, 30, 70) resizingMode:UIImageResizingModeStretch];
     }
     [self makeMaskView:self.photoView withImage:normalImage]; // 设置mask，遮盖
-    [self.photoView yy_setImageWithURL:[NSURL URLWithString:message.imageUrl] placeholder:[UIImage imageNamed:@"chat_images_failed"]];
+    if (message.image) {
+        self.photoView.image = message.image;
+    } else {
+        [self.photoView yy_setImageWithURL:[NSURL URLWithString:message.imageUrl] placeholder:[UIImage imageNamed:@"chat_images_failed"] options:YYWebImageOptionProgressive completion:nil];
+    }
+    
     
     
 }
@@ -82,10 +87,13 @@
         return;
     }
     UIMenuItem *item1 = [[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteMessage:)];
-    UIMenuItem *item2 = [[UIMenuItem alloc] initWithTitle:@"转发" action:@selector(forwardMessage:)];
-    NSArray *menuItems = @[item1,item2];
-    [popMenu setMenuItems:menuItems];
-    [popMenu setMenuItems:@[item1]];
+    UIMenuItem *item2;
+    if (self.messageFrame.chatMessage.sendStatus == HYChatSendMessageStatusFaild) {
+        item2 = [[UIMenuItem alloc] initWithTitle:@"重发" action:@selector(reSendMessage:)];
+    } else {
+        item2 = [[UIMenuItem alloc] initWithTitle:@"转发" action:@selector(forwardMessage:)];
+    }
+    [popMenu setMenuItems:@[item1,item2]];
     [popMenu setArrowDirection:UIMenuControllerArrowDown];
     
     [popMenu setTargetRect:self.contentBgView.frame inView:self];
@@ -94,12 +102,24 @@
 
 - (void)deleteMessage:(UIMenuItem *)item
 {
-    
+    if ([self.delegate respondsToSelector:@selector(chatViewCellDelete:)]) {
+        [self.delegate chatViewCellDelete:self];
+    }
 }
+
+- (void)forwardMessage:(UIMenuItem *)item
+{
+    if ([self.delegate respondsToSelector:@selector(chatViewCellForward:)]) {
+        [self.delegate chatViewCellForward:self];
+    }
+}
+
 
 - (void)reSendMessage:(UIMenuItem *)item
 {
-    
+    if ([self.delegate respondsToSelector:@selector(chatViewCellReSend:)]) {
+        [self.delegate chatViewCellReSend:self];
+    }
 }
 
 @end

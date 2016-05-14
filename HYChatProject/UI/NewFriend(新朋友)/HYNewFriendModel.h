@@ -12,4 +12,5 @@
 @property (nonatomic, strong) XMPPJID *jid;        // 好友/群组jid
 @property (nonatomic, strong) NSString *body;      // 消息内容
 @property (nonatomic, assign) NSTimeInterval time; // 时间 NSTimeIntervalSince1970
+@property (nonatomic, assign) BOOL isFriendRequest;// 好友请求
 @end

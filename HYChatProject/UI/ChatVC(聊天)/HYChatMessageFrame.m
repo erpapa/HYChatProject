@@ -10,7 +10,7 @@
 #import "YYText.h"
 #import "YYWebImage.h"
 #import "HYEmoticonTool.h"
-#import "GJCFAudioModel.h"
+#import "HYAudioModel.h"
 
 @implementation HYChatMessageFrame
 

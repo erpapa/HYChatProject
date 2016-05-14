@@ -42,6 +42,9 @@
  */
 + (NSString *)localPath:(NSString *)key;
 + (NSString *)bundlePath:(NSString *)fileName;
++ (NSString *)audioTempEncodeFilePath:(NSString *)key;
++ (NSString *)audioCachePath:(NSString *)key;
++ (NSString *)videoCachePath:(NSString *)key;
 
 /**
  *  badgeValue
@@ -57,6 +60,7 @@
 + (NSString *)sampleTimeStringSince1970:(double)secs;
 + (NSString *)timeStringSince1970:(double)secs;
 + (NSString *)timeStringFromDate:(NSDate *)date;
++ (NSString *)currentTimeStampString;
 
 /**
  *  生成七牛云上传文件key

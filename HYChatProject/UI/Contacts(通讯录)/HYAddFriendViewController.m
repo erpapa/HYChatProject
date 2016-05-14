@@ -98,6 +98,11 @@
 {
     // 删除两端空格
     NSString *bareStr = [self.accountTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (bareStr.length == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请重新输入！" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
+        [alert show];
+        return;
+    }
     NSRange atRange = [bareStr rangeOfString:@"@"];
     NSString *domain = [HYXMPPManager sharedInstance].myJID.domain;
     __weak typeof(self) weakSelf = self;

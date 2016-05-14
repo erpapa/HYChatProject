@@ -14,10 +14,9 @@
 #import "HYChatMessage.h"
 #import "HYEmoticonTool.h"
 #import "HYRecordProgressHUD.h"
-#import "GJCFAudioModel.h"
-#import "GJCFAudioFileUitil.h"
-#import "GJCFEncodeAndDecode.h"
-#import "GJCFAudioRecord.h"
+#import "HYAudioModel.h"
+#import "HYEncodeAndDecode.h"
+#import "HYAudioRecord.h"
 
 
 #define kNormalButtonBottom 7
@@ -36,7 +35,7 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
     HYChatInputPanelStatusExpand    // 扩展
 };
 
-@interface HYInputViewController()<HYEmoticonKeyboardViewDelegate, HYExpandKeyboardViewDelegate, YYKeyboardObserver, YYTextViewDelegate, GJCFAudioRecordDelegate>
+@interface HYInputViewController()<HYEmoticonKeyboardViewDelegate, HYExpandKeyboardViewDelegate, YYKeyboardObserver, YYTextViewDelegate, HYAudioRecordDelegate>
 
 @property (nonatomic, strong) UIView *line;           // 顶部添加一条线
 @property (nonatomic, strong) UIButton *audioButton;  // 语音
@@ -51,7 +50,7 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
 @property (nonatomic, assign) CGFloat textViewHeight;
 
 /* 录音组件 */
-@property (nonatomic, strong) GJCFAudioRecord *audioRecord;
+@property (nonatomic, strong) HYAudioRecord *audioRecord;
 @end
 
 @implementation HYInputViewController
@@ -163,23 +162,18 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
 #pragma mark - 录音管理
 - (void)initAudioRecord
 {
-    self.audioRecord = [[GJCFAudioRecord alloc] init];
+    self.audioRecord = [[HYAudioRecord alloc] init];
     self.audioRecord.delegate = self;
     self.audioRecord.limitRecordDuration = 60.0f; // 最大录音时长
     self.audioRecord.minEffectDuration = 1.0f; // 最小录音时长
 }
 
-- (void)audioRecord:(GJCFAudioRecord *)audioRecord finishRecord:(GJCFAudioModel *)resultAudio
+- (void)audioRecord:(HYAudioRecord *)audioRecord finishRecord:(HYAudioModel *)resultAudio
 {
     HYLog(@"录音成功:%@",resultAudio.description);
     [HYRecordProgressHUD dismissWithTitle:@"正在发送..."];
-    /**
-     *  录音文件转码
-     */
-    [GJCFAudioFileUitil setupAudioFileTempEncodeFilePath:resultAudio];
     
-    if ([GJCFEncodeAndDecode convertAudioFileToAMR:resultAudio]) {
-        
+    if ([HYEncodeAndDecode convertAudioFileToAMR:resultAudio]) { // 录音文件转码
         HYLog(@"录音文件转码成功:%@",resultAudio);
         if (self.delegate && [self.delegate respondsToSelector:@selector(inputViewController:sendAudioModel:)]) {
             [self.delegate inputViewController:self sendAudioModel:resultAudio];
@@ -187,29 +181,29 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
     }
 }
 
-- (void)audioRecord:(GJCFAudioRecord *)audioRecord didFaildByMinRecordDuration:(NSTimeInterval)minDuration
+- (void)audioRecord:(HYAudioRecord *)audioRecord didFaildByMinRecordDuration:(NSTimeInterval)minDuration
 {
     HYLog(@"小于最小录音时间，录音失败:%f",minDuration);
     [HYRecordProgressHUD dismissWithTitle:@"说话时间太短！"];
 }
 
-- (void)audioRecord:(GJCFAudioRecord *)audioRecord didOccusError:(NSError *)error
+- (void)audioRecord:(HYAudioRecord *)audioRecord didOccusError:(NSError *)error
 {
     HYLog(@"录音失败:%@",error);
     [HYRecordProgressHUD dismissWithTitle:@"录音失败！"];
 }
 
-- (void)audioRecord:(GJCFAudioRecord *)audioRecord limitDurationProgress:(CGFloat)progress
+- (void)audioRecord:(HYAudioRecord *)audioRecord limitDurationProgress:(CGFloat)progress
 {
     HYLog(@"最大录音限制进度:%f",progress);
 }
 
-- (void)audioRecord:(GJCFAudioRecord *)audioRecord soundMeter:(CGFloat)soundMeter
+- (void)audioRecord:(HYAudioRecord *)audioRecord soundMeter:(CGFloat)soundMeter
 {
     HYLog(@"录音音量:%f",soundMeter);
 }
 
-- (void)audioRecordDidCancel:(GJCFAudioRecord *)audioRecord
+- (void)audioRecordDidCancel:(HYAudioRecord *)audioRecord
 {
     HYLog(@"录音取消");
 }
@@ -310,6 +304,7 @@ typedef NS_ENUM(NSInteger, HYChatInputPanelStatus) {
  */
 - (void)expandKeyboardView:(HYExpandKeyboardView *)expandKeyboardView clickWithType:(HYExpandType)type
 {
+    self.panelStatus = HYChatInputPanelStatusNone;
     if ([self.delegate respondsToSelector:@selector(inputViewController:clickExpandType:)]) {
         [self.delegate inputViewController:self clickExpandType:type];
     }

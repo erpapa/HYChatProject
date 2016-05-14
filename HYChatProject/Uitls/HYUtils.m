@@ -11,6 +11,7 @@
 #import "XMPPvCardTemp.h"
 #import "NSFileManager+SW.h"
 #import "SVProgressHUD.h"
+#import "HYQNAuthPolicy.h"
 #import "HYFirstLoginViewController.h"
 #import "HYCurrentLoginViewController.h"
 #import "HYTabBarController.h"
@@ -168,6 +169,31 @@
 + (NSString *)bundlePath:(NSString *)fileName
 {
     return [[NSFileManager defaultManager] bundlePath:fileName];
+}
+
++ (NSString *)audioTempEncodeFilePath:(NSString *)key
+{
+    return [self audioCachePath:key];
+}
+
++ (NSString *)audioCachePath:(NSString *)key
+{
+    NSString *dirPath = [self localPath:@"audioCache"];
+    BOOL isDir = YES;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:dirPath isDirectory:&isDir]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:dirPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    return [NSString stringWithFormat:@"%@/%@",dirPath,key];
+}
+
++ (NSString *)videoCachePath:(NSString *)key
+{
+    NSString *dirPath = [self localPath:@"videoCache"];
+    BOOL isDir = YES;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:dirPath isDirectory:&isDir]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:dirPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    return [NSString stringWithFormat:@"%@/%@",dirPath,key];
 }
 
 /**
@@ -362,4 +388,16 @@
     return [NSString stringWithFormat:@"%@_%@.jpg", keyPrefix, timeString];
 }
 
+
++ (NSString *)currentTimeStampString
+{
+    NSDate *now = [NSDate date];
+    NSTimeInterval timeInterval = [now timeIntervalSinceReferenceDate];
+    
+    NSString *timeString = [NSString stringWithFormat:@"%lf",timeInterval];
+    timeString = [timeString stringByReplacingOccurrencesOfString:@"." withString:@""];
+    
+    return timeString;
+    
+}
 @end

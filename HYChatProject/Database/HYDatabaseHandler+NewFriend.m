@@ -12,11 +12,11 @@
 
 @implementation HYDatabaseHandler(NewFriend)
 
-- (BOOL)insertFriend:(HYNewFriendModel *)friendModel
+- (BOOL)addFriend:(HYNewFriendModel *)friendModel
 {
     __block BOOL result = YES;
     [_dbQueue inDatabase:^(FMDatabase *db) {
-        result = [db insertFriend:friendModel];
+        result = [db addFriend:friendModel];
     }];
     
     return result;
@@ -38,19 +38,27 @@
     return result;
 }
 
+- (BOOL)allRequestFriends:(NSMutableArray *)friends
+{
+    __block BOOL result = YES;
+    [_dbQueue inDatabase:^(FMDatabase *db) {
+        result = [db allRequestFriends:friends];
+    }];
+    return result;
+}
 @end
 
 @implementation FMDatabase(NewFriend)
 
 - (void)createNewFriendTable
 {
-    [self executeUpdate:@"CREATE TABLE IF NOT EXISTS T_CHAT_NEWFRIEND (id integer primary key autoincrement,myJid text,friendBare text,friendResource text,body text,time double)"];
+    [self executeUpdate:@"CREATE TABLE IF NOT EXISTS T_CHAT_NEWFRIEND (id integer primary key autoincrement,myJid text,friendBare text,friendResource text,body text,time double,isFriendRequest int)"];
 }
 
-- (BOOL)insertFriend:(HYNewFriendModel *)friendModel
+- (BOOL)addFriend:(HYNewFriendModel *)friendModel
 {
     HYLoginInfo *loginInfo = [HYLoginInfo sharedInstance];
-    NSString *sql = [NSString stringWithFormat:@"INSERT INTO T_CHAT_NEWFRIEND(myJid,friendBare,friendResource,body,time) VALUES('%@','%@','%@','%@','%lf')",loginInfo.jid.full,friendModel.jid.bare,friendModel.jid.resource,friendModel.body,friendModel.time];
+    NSString *sql = [NSString stringWithFormat:@"INSERT INTO T_CHAT_NEWFRIEND(myJid,friendBare,friendResource,body,time,isFriendRequest) VALUES('%@','%@','%@','%@','%lf','%d')",loginInfo.jid.full,friendModel.jid.bare,friendModel.jid.resource,friendModel.body,friendModel.time,friendModel.isFriendRequest];
     if(![self executeUpdate:sql])
     {
         HYLog(@"%@ fail,%@",sql,[[self lastError] localizedDescription]);
@@ -72,7 +80,30 @@
 - (BOOL)allNewFriends:(NSMutableArray *)friends
 {
     HYLoginInfo *loginInfo = [HYLoginInfo sharedInstance];
-    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM T_CHAT_RECENTCHAT WHERE myJid='%@' order by time desc",[loginInfo.jid full]];
+    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM T_CHAT_RECENTCHAT WHERE myJid='%@' AND isFriendRequest=0 order by time desc",[loginInfo.jid full]];
+    FMResultSet *rs = [self executeQuery:sql];
+    if(rs == nil)
+    {
+        HYLog(@"%@ fail,%@",sql,[[self lastError] localizedDescription]);
+        return NO;
+    }
+    
+    [friends removeAllObjects];
+    while ([rs next])
+    {
+        HYNewFriendModel *model = [[HYNewFriendModel alloc] init];
+        [self friendModel:model fromResultSet:rs];
+        [friends addObject:model]; // 添加到models
+    }
+    
+    [rs close];
+    return YES;
+}
+
+- (BOOL)allRequestFriends:(NSMutableArray *)friends
+{
+    HYLoginInfo *loginInfo = [HYLoginInfo sharedInstance];
+    NSString *sql = [NSString stringWithFormat:@"SELECT * FROM T_CHAT_RECENTCHAT WHERE myJid='%@' AND isFriendRequest=1 order by time desc",[loginInfo.jid full]];
     FMResultSet *rs = [self executeQuery:sql];
     if(rs == nil)
     {
@@ -99,10 +130,12 @@
     XMPPJID *friendJid = [XMPPJID jidWithString:friendBare resource:friendResource];
     NSString *body = [rs stringForColumn:@"body"];
     NSTimeInterval time = [rs doubleForColumn:@"time"];
+    BOOL isFriendRequest = [rs intForColumn:@"isFriendRequest"];
     
     [friendModel setJid:friendJid];
     [friendModel setBody:body];
     [friendModel setTime:time];
+    [friendModel setIsFriendRequest:isFriendRequest];
 }
 
 

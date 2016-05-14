@@ -7,8 +7,7 @@
 //
 
 #import "HYAudioChatViewCell.h"
-#import "GJCFAudioModel.h"
-#import "GJCFAudioManager.h"
+#import "HYAudioModel.h"
 
 @interface HYAudioChatViewCell()
 @property (nonatomic, strong) UIImageView *audioPlayIndicatorView;
@@ -58,7 +57,7 @@
     [super setMessageFrame:messageFrame];
     HYChatMessage *message = messageFrame.chatMessage;
     self.audioTimeLabel.text = [NSString stringWithFormat:@"%.1f''",message.audioModel.duration];
-    self.audioPlayIndicatorView.animationRepeatCount = (int)(message.audioModel.duration + 0.7);
+    self.audioPlayIndicatorView.animationRepeatCount = (int)(message.audioModel.duration + 0.85);
     
     CGFloat panding = 8;
     CGFloat audioPlayWidth = CGRectGetHeight(self.contentBgView.frame) - panding * 2;
@@ -138,7 +137,12 @@
         return;
     }
     UIMenuItem *item1 = [[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteMessage:)];
-    [popMenu setMenuItems:@[item1]];
+    UIMenuItem *item2 = [[UIMenuItem alloc] initWithTitle:@"重发" action:@selector(reSendMessage:)];
+    NSArray *menuItems = @[item1];
+    if (self.messageFrame.chatMessage.sendStatus == HYChatSendMessageStatusFaild) {
+        menuItems = @[item1,item2];
+    }
+    [popMenu setMenuItems:menuItems];
     [popMenu setArrowDirection:UIMenuControllerArrowDown];
     
     [popMenu setTargetRect:self.contentBgView.frame inView:self];
@@ -147,12 +151,16 @@
 
 - (void)deleteMessage:(UIMenuItem *)item
 {
-    
+    if ([self.delegate respondsToSelector:@selector(chatViewCellDelete:)]) {
+        [self.delegate chatViewCellDelete:self];
+    }
 }
 
 - (void)reSendMessage:(UIMenuItem *)item
 {
-    
+    if ([self.delegate respondsToSelector:@selector(chatViewCellReSend:)]) {
+        [self.delegate chatViewCellReSend:self];
+    }
 }
 
 @end

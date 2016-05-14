@@ -19,6 +19,7 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
 @interface HYSettingViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) XMPPvCardTemp *vCard;
+@property (nonatomic, strong) NSArray *dataSource;
 @end
 
 @implementation HYSettingViewController
@@ -44,17 +45,13 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return self.dataSource.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return 1;
-    } else if (section == 1) {
-        return 3;
-    }
-    return 3;
+    NSArray *array = [self.dataSource objectAtIndex:section];
+    return array.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -69,8 +66,11 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
     }
     HYSettingViewCell *settingCell = [tableView dequeueReusableCellWithIdentifier:kSettingViewCellIdentifier];
     if (settingCell == nil) {
-        settingCell = [[HYSettingViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kSettingViewCellIdentifier];
+        settingCell = [[HYSettingViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kSettingViewCellIdentifier];
     }
+    NSArray *array = [self.dataSource objectAtIndex:indexPath.section];
+    NSDictionary *dict = [array objectAtIndex:indexPath.row];
+    settingCell.textLabel.text = [dict objectForKey:@"text"];
     return settingCell;
     
 }
@@ -116,6 +116,26 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
         _tableView.delegate = self;
     }
     return _tableView;
+}
+
+- (NSArray *)dataSource
+{
+    if (_dataSource == nil) {
+        _dataSource = @[@[
+                              @{@"image":@"",@"text":@""}
+                          ],
+                        @[
+                              @{@"image":@"",@"text":@"通知"},
+                              @{@"image":@"",@"text":@"好友请求"},
+                              @{@"image":@"",@"text":@"照片和媒体文件"}
+                          ],
+                        @[
+                              @{@"image":@"",@"text":@"报告问题"},
+                              @{@"image":@"",@"text":@"帮助"},
+                              @{@"image":@"",@"text":@"关于"}]
+                        ];
+    }
+    return _dataSource;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -7,8 +7,9 @@
 //
 
 #import "HYChatMessage.h"
-#import "GJCFAudioModel.h"
+#import "HYAudioModel.h"
 #import "HYLoginInfo.h"
+#import "HYUtils.h"
 
 @implementation HYChatMessage
 
@@ -17,8 +18,7 @@
     self = [super init];
     if (self) {
         // 生成messageID
-        NSString *timeString = [NSString stringWithFormat:@"%lf",[[NSDate date] timeIntervalSince1970]];
-        _messageID = [timeString stringByReplacingOccurrencesOfString:@"." withString:@""];
+        _messageID = [HYUtils currentTimeStampString];
         
     }
     return self;
@@ -60,8 +60,9 @@
             break;
         }
         case HYChatMessageTypeAudio:{
-            self.audioModel = [[GJCFAudioModel alloc] init];
+            self.audioModel = [[HYAudioModel alloc] init];
             self.audioModel.remotePath = dict[@"audioUrl"];
+            self.audioModel.fileName = [[self.audioModel.remotePath lastPathComponent] stringByDeletingPathExtension];
             self.audioModel.duration = [dict[@"audioDurction"] floatValue];
             break;
         }
@@ -159,8 +160,7 @@
 - (NSString *)videoLocalPath
 {
     if (self.videoUrl.length) {
-        NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-        NSString *localFilePath = [NSString stringWithFormat:@"%@/videoCache/%@",document,[self.videoUrl lastPathComponent]];
+        NSString *localFilePath = [HYUtils videoCachePath:self.videoUrl.lastPathComponent];
         if ([[NSFileManager defaultManager] fileExistsAtPath:localFilePath]) { // 如果文件已经下载完成
             return localFilePath;
         } else {

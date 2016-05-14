@@ -11,9 +11,20 @@
 		EA0CEADD1CE30ADF00D7E80C /* HYDatabaseHandler+NewFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0CEADC1CE30ADF00D7E80C /* HYDatabaseHandler+NewFriend.m */; };
 		EA0F22751CC7BEE9007AB887 /* HYUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0F22741CC7BEE9007AB887 /* HYUtils.m */; };
 		EA139F331CC9D0F600E1E085 /* HYFirstLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA139F321CC9D0F600E1E085 /* HYFirstLoginViewController.m */; };
-		EA26AD9C1CD05046000DB77C /* GJCFDateUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA26AD941CD05046000DB77C /* GJCFDateUitil.m */; };
-		EA26AD9D1CD05046000DB77C /* GJCFQuickCacheUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA26AD981CD05046000DB77C /* GJCFQuickCacheUitil.m */; };
-		EA26AD9E1CD05046000DB77C /* GJCFStringUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EA26AD9B1CD05046000DB77C /* GJCFStringUitil.m */; };
+		EA2204111CE6C823007FBBCF /* HYFileDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2203F61CE6C823007FBBCF /* HYFileDownloadManager.m */; };
+		EA2204121CE6C823007FBBCF /* HYFileDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2203F81CE6C823007FBBCF /* HYFileDownloadTask.m */; };
+		EA2204131CE6C823007FBBCF /* HYEncodeAndDecode.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2203FB1CE6C823007FBBCF /* HYEncodeAndDecode.m */; };
+		EA2204141CE6C823007FBBCF /* HYFileUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2203FE1CE6C823007FBBCF /* HYFileUploadManager.m */; };
+		EA2204151CE6C823007FBBCF /* HYFileUploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2204001CE6C823007FBBCF /* HYFileUploadTask.m */; };
+		EA2204161CE6C823007FBBCF /* HYUploadFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2204021CE6C823007FBBCF /* HYUploadFileModel.m */; };
+		EA2204171CE6C823007FBBCF /* HYAudioModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2204041CE6C823007FBBCF /* HYAudioModel.m */; };
+		EA2204181CE6C823007FBBCF /* HYNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2204061CE6C823007FBBCF /* HYNetworkManager.m */; };
+		EA2204191CE6C823007FBBCF /* HYAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2204091CE6C823007FBBCF /* HYAudioPlayer.m */; };
+		EA22041A1CE6C823007FBBCF /* HYAudioRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = EA22040D1CE6C823007FBBCF /* HYAudioRecord.m */; };
+		EA22041B1CE6C823007FBBCF /* HYAudioRecordSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2204101CE6C823007FBBCF /* HYAudioRecordSettings.m */; };
+		EA2204201CE7104E007FBBCF /* HYXMPPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA22041D1CE7104E007FBBCF /* HYXMPPManager.m */; };
+		EA2204211CE7104E007FBBCF /* HYXMPPRoomManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA22041F1CE7104E007FBBCF /* HYXMPPRoomManager.m */; };
+		EA2204241CE762B8007FBBCF /* HYForwardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2204231CE762B8007FBBCF /* HYForwardingViewController.m */; };
 		EA26ADB21CD08BB2000DB77C /* HYContactsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA26ADB11CD08BB2000DB77C /* HYContactsHeaderView.m */; };
 		EA26ADC51CD0C67C000DB77C /* contacts_network_2g@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA26ADB91CD0C67C000DB77C /* contacts_network_2g@2x.png */; };
 		EA26ADC61CD0C67C000DB77C /* contacts_network_2g_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA26ADBA1CD0C67C000DB77C /* contacts_network_2g_press@2x.png */; };
@@ -33,14 +44,12 @@
 		EA27A9661CE480A60043D0FA /* expand_icons_folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA27A9621CE480A60043D0FA /* expand_icons_folder@2x.png */; };
 		EA27A9671CE480A60043D0FA /* expand_icons_pic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA27A9631CE480A60043D0FA /* expand_icons_pic@2x.png */; };
 		EA27A9681CE480A60043D0FA /* expand_icons_video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA27A9641CE480A60043D0FA /* expand_icons_video@2x.png */; };
-		EA27A96F1CE4963F0043D0FA /* HYUploadNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = EA27A96E1CE4963F0043D0FA /* HYUploadNetwork.m */; };
 		EA27A97B1CE4D2BD0043D0FA /* ODRefreshControl.m in Sources */ = {isa = PBXBuildFile; fileRef = EA27A97A1CE4D2BD0043D0FA /* ODRefreshControl.m */; };
 		EA27A97E1CE4DB2E0043D0FA /* HYVideoCaptureController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA27A97D1CE4DB2E0043D0FA /* HYVideoCaptureController.m */; };
 		EA27A9811CE4DE630043D0FA /* press_btn_green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA27A97F1CE4DE630043D0FA /* press_btn_green@2x.png */; };
 		EA27A9821CE4DE630043D0FA /* press_btn_green@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA27A9801CE4DE630043D0FA /* press_btn_green@3x.png */; };
 		EA27A9851CE4E0440043D0FA /* HYVideoDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = EA27A9841CE4E0440043D0FA /* HYVideoDecoder.m */; };
 		EA27A9881CE4E25F0043D0FA /* HYVideoPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA27A9871CE4E25F0043D0FA /* HYVideoPlayController.m */; };
-		EA2A441E1CD787CF00DAF9C7 /* HYXMPPRoomManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2A441D1CD787CF00DAF9C7 /* HYXMPPRoomManager.m */; };
 		EA2A44211CD7A20100DAF9C7 /* XMPP+IM.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2A44201CD7A20100DAF9C7 /* XMPP+IM.m */; };
 		EA32FEAB1CCF70D000FE8D39 /* UITabBar+SW.m in Sources */ = {isa = PBXBuildFile; fileRef = EA32FEAA1CCF70D000FE8D39 /* UITabBar+SW.m */; };
 		EA32FEAD1CCF803D00FE8D39 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA32FEAC1CCF803D00FE8D39 /* CoreData.framework */; };
@@ -76,7 +85,6 @@
 		EA5009481CDDF03C0094095B /* emoticon_keyboard_magnifier@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA5009461CDDF03C0094095B /* emoticon_keyboard_magnifier@3x.png */; };
 		EA50094B1CDE26A30094095B /* HYRecordProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = EA50094A1CDE26A30094095B /* HYRecordProgressHUD.m */; };
 		EA50094D1CDE28A30094095B /* Chat_record_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = EA50094C1CDE28A30094095B /* Chat_record_circle.png */; };
-		EA5EF0531CC7364600FE5654 /* HYXMPPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5EF0521CC7364600FE5654 /* HYXMPPManager.m */; };
 		EA6A0C6E1CDB2001009C8C72 /* HYGroupListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6A0C6D1CDB2001009C8C72 /* HYGroupListViewCell.m */; };
 		EA6A0C781CDB28F1009C8C72 /* defaultGroupHead@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA6A0C771CDB28F1009C8C72 /* defaultGroupHead@2x.png */; };
 		EA6A0C7F1CDB37AA009C8C72 /* HYContactsCustomViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6A0C7E1CDB37AA009C8C72 /* HYContactsCustomViewCell.m */; };
@@ -122,22 +130,6 @@
 		EAC05B281CC50B7900ABA3C5 /* YYWebImageOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05AF91CC50B7900ABA3C5 /* YYWebImageOperation.m */; };
 		EAC05B431CC50F3400ABA3C5 /* WebP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC05B421CC50F3400ABA3C5 /* WebP.framework */; };
 		EAC05B451CC5109600ABA3C5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC05B441CC5109600ABA3C5 /* libz.tbd */; };
-		EAC05B881CC5297C00ABA3C5 /* GJCFFileDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B5F1CC5297C00ABA3C5 /* GJCFFileDownloadManager.m */; };
-		EAC05B891CC5297C00ABA3C5 /* GJCFFileDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B611CC5297C00ABA3C5 /* GJCFFileDownloadTask.m */; };
-		EAC05B8A1CC5297C00ABA3C5 /* GJCFFileUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B641CC5297C00ABA3C5 /* GJCFFileUploadManager.m */; };
-		EAC05B8B1CC5297C00ABA3C5 /* GJCFFileUploadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B661CC5297C00ABA3C5 /* GJCFFileUploadTask.m */; };
-		EAC05B8C1CC5297C00ABA3C5 /* GJCFUploadFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B681CC5297C00ABA3C5 /* GJCFUploadFileModel.m */; };
-		EAC05B8D1CC5297C00ABA3C5 /* GJCFEncodeAndDecode.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B6C1CC5297C00ABA3C5 /* GJCFEncodeAndDecode.m */; };
-		EAC05B8E1CC5297C00ABA3C5 /* GJCFAudioFileUitil.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B6F1CC5297C00ABA3C5 /* GJCFAudioFileUitil.m */; };
-		EAC05B8F1CC5297C00ABA3C5 /* GJCFAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B721CC5297C00ABA3C5 /* GJCFAudioManager.m */; };
-		EAC05B901CC5297C00ABA3C5 /* GJCFAudioModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B751CC5297C00ABA3C5 /* GJCFAudioModel.m */; };
-		EAC05B911CC5297C00ABA3C5 /* GJCFAudioNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B781CC5297C00ABA3C5 /* GJCFAudioNetwork.m */; };
-		EAC05B921CC5297C00ABA3C5 /* GJCFFileDownloadTask+GJCFAudioDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B7B1CC5297C00ABA3C5 /* GJCFFileDownloadTask+GJCFAudioDownload.m */; };
-		EAC05B931CC5297C00ABA3C5 /* GJCFFileUploadTask+GJCFAudioUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B7D1CC5297C00ABA3C5 /* GJCFFileUploadTask+GJCFAudioUpload.m */; };
-		EAC05B941CC5297C00ABA3C5 /* GJCFAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B801CC5297C00ABA3C5 /* GJCFAudioPlayer.m */; };
-		EAC05B951CC5297C00ABA3C5 /* GJCFAudioRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B841CC5297C00ABA3C5 /* GJCFAudioRecord.m */; };
-		EAC05B961CC5297C00ABA3C5 /* GJCFAudioRecordSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B871CC5297C00ABA3C5 /* GJCFAudioRecordSettings.m */; };
-		EAC05B9A1CC52A1D00ABA3C5 /* GJCFCachePathManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC05B991CC52A1D00ABA3C5 /* GJCFCachePathManager.m */; };
 		EAC1988A1CCB8C3900A45C1A /* MGSwipeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC198871CCB8C3900A45C1A /* MGSwipeButton.m */; };
 		EAC1988B1CCB8C3900A45C1A /* MGSwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC198891CCB8C3900A45C1A /* MGSwipeTableCell.m */; };
 		EAC6CB091CCD059B007D9E78 /* HYDatabaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC6CB071CCD059B007D9E78 /* HYDatabaseHandler.m */; };
@@ -389,6 +381,10 @@
 		EAF834BC1CDCA39700C73CB9 /* UIView+SW.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF834BB1CDCA39700C73CB9 /* UIView+SW.m */; };
 		EAF834BF1CDCA65B00C73CB9 /* HYGroupInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF834BE1CDCA65B00C73CB9 /* HYGroupInfoViewController.m */; };
 		EAF834C21CDCA98200C73CB9 /* HYAddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF834C11CDCA98200C73CB9 /* HYAddFriendViewController.m */; };
+		EAFB8E781CE5CF5000BBAAC1 /* HYPhotoBrowserController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFB8E771CE5CF5000BBAAC1 /* HYPhotoBrowserController.m */; };
+		EAFB8E7C1CE6185500BBAAC1 /* HYNewFriendViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFB8E7B1CE6185500BBAAC1 /* HYNewFriendViewCell.m */; };
+		EAFB8E831CE61D6E00BBAAC1 /* HYFriendRequestViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFB8E821CE61D6E00BBAAC1 /* HYFriendRequestViewCell.m */; };
+		EAFB8E861CE61DF600BBAAC1 /* HYFreindRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAFB8E851CE61DF600BBAAC1 /* HYFreindRequestViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -417,15 +413,36 @@
 		EA0F22741CC7BEE9007AB887 /* HYUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYUtils.m; sourceTree = "<group>"; };
 		EA139F311CC9D0F600E1E085 /* HYFirstLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYFirstLoginViewController.h; sourceTree = "<group>"; };
 		EA139F321CC9D0F600E1E085 /* HYFirstLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYFirstLoginViewController.m; sourceTree = "<group>"; };
-		EA26AD931CD05046000DB77C /* GJCFDateUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFDateUitil.h; sourceTree = "<group>"; };
-		EA26AD941CD05046000DB77C /* GJCFDateUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFDateUitil.m; sourceTree = "<group>"; };
-		EA26AD951CD05046000DB77C /* GJCFDateUitilMacrocDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFDateUitilMacrocDefine.h; sourceTree = "<group>"; };
-		EA26AD961CD05046000DB77C /* GJCFQuickCacheMacrocDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFQuickCacheMacrocDefine.h; sourceTree = "<group>"; };
-		EA26AD971CD05046000DB77C /* GJCFQuickCacheUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFQuickCacheUitil.h; sourceTree = "<group>"; };
-		EA26AD981CD05046000DB77C /* GJCFQuickCacheUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFQuickCacheUitil.m; sourceTree = "<group>"; };
-		EA26AD991CD05046000DB77C /* GJCFStringMacrocDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFStringMacrocDefine.h; sourceTree = "<group>"; };
-		EA26AD9A1CD05046000DB77C /* GJCFStringUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFStringUitil.h; sourceTree = "<group>"; };
-		EA26AD9B1CD05046000DB77C /* GJCFStringUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFStringUitil.m; sourceTree = "<group>"; };
+		EA2203F51CE6C823007FBBCF /* HYFileDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYFileDownloadManager.h; sourceTree = "<group>"; };
+		EA2203F61CE6C823007FBBCF /* HYFileDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYFileDownloadManager.m; sourceTree = "<group>"; };
+		EA2203F71CE6C823007FBBCF /* HYFileDownloadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYFileDownloadTask.h; sourceTree = "<group>"; };
+		EA2203F81CE6C823007FBBCF /* HYFileDownloadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYFileDownloadTask.m; sourceTree = "<group>"; };
+		EA2203FA1CE6C823007FBBCF /* HYEncodeAndDecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYEncodeAndDecode.h; sourceTree = "<group>"; };
+		EA2203FB1CE6C823007FBBCF /* HYEncodeAndDecode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYEncodeAndDecode.m; sourceTree = "<group>"; };
+		EA2203FD1CE6C823007FBBCF /* HYFileUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYFileUploadManager.h; sourceTree = "<group>"; };
+		EA2203FE1CE6C823007FBBCF /* HYFileUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYFileUploadManager.m; sourceTree = "<group>"; };
+		EA2203FF1CE6C823007FBBCF /* HYFileUploadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYFileUploadTask.h; sourceTree = "<group>"; };
+		EA2204001CE6C823007FBBCF /* HYFileUploadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYFileUploadTask.m; sourceTree = "<group>"; };
+		EA2204011CE6C823007FBBCF /* HYUploadFileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYUploadFileModel.h; sourceTree = "<group>"; };
+		EA2204021CE6C823007FBBCF /* HYUploadFileModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYUploadFileModel.m; sourceTree = "<group>"; };
+		EA2204031CE6C823007FBBCF /* HYAudioModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HYAudioModel.h; path = ../HYAudioModel.h; sourceTree = "<group>"; };
+		EA2204041CE6C823007FBBCF /* HYAudioModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HYAudioModel.m; path = ../HYAudioModel.m; sourceTree = "<group>"; };
+		EA2204051CE6C823007FBBCF /* HYNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYNetworkManager.h; sourceTree = "<group>"; };
+		EA2204061CE6C823007FBBCF /* HYNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYNetworkManager.m; sourceTree = "<group>"; };
+		EA2204081CE6C823007FBBCF /* HYAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYAudioPlayer.h; sourceTree = "<group>"; };
+		EA2204091CE6C823007FBBCF /* HYAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYAudioPlayer.m; sourceTree = "<group>"; };
+		EA22040A1CE6C823007FBBCF /* HYAudioPlayerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYAudioPlayerDelegate.h; sourceTree = "<group>"; };
+		EA22040C1CE6C823007FBBCF /* HYAudioRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYAudioRecord.h; sourceTree = "<group>"; };
+		EA22040D1CE6C823007FBBCF /* HYAudioRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYAudioRecord.m; sourceTree = "<group>"; };
+		EA22040E1CE6C823007FBBCF /* HYAudioRecordDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYAudioRecordDelegate.h; sourceTree = "<group>"; };
+		EA22040F1CE6C823007FBBCF /* HYAudioRecordSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYAudioRecordSettings.h; sourceTree = "<group>"; };
+		EA2204101CE6C823007FBBCF /* HYAudioRecordSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYAudioRecordSettings.m; sourceTree = "<group>"; };
+		EA22041C1CE7104E007FBBCF /* HYXMPPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYXMPPManager.h; sourceTree = "<group>"; };
+		EA22041D1CE7104E007FBBCF /* HYXMPPManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYXMPPManager.m; sourceTree = "<group>"; };
+		EA22041E1CE7104E007FBBCF /* HYXMPPRoomManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYXMPPRoomManager.h; sourceTree = "<group>"; };
+		EA22041F1CE7104E007FBBCF /* HYXMPPRoomManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYXMPPRoomManager.m; sourceTree = "<group>"; };
+		EA2204221CE762B8007FBBCF /* HYForwardingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYForwardingViewController.h; sourceTree = "<group>"; };
+		EA2204231CE762B8007FBBCF /* HYForwardingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYForwardingViewController.m; sourceTree = "<group>"; };
 		EA26ADB01CD08BB2000DB77C /* HYContactsHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYContactsHeaderView.h; sourceTree = "<group>"; };
 		EA26ADB11CD08BB2000DB77C /* HYContactsHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYContactsHeaderView.m; sourceTree = "<group>"; };
 		EA26ADB91CD0C67C000DB77C /* contacts_network_2g@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contacts_network_2g@2x.png"; sourceTree = "<group>"; };
@@ -446,8 +463,6 @@
 		EA27A9621CE480A60043D0FA /* expand_icons_folder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "expand_icons_folder@2x.png"; sourceTree = "<group>"; };
 		EA27A9631CE480A60043D0FA /* expand_icons_pic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "expand_icons_pic@2x.png"; sourceTree = "<group>"; };
 		EA27A9641CE480A60043D0FA /* expand_icons_video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "expand_icons_video@2x.png"; sourceTree = "<group>"; };
-		EA27A96D1CE4963F0043D0FA /* HYUploadNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYUploadNetwork.h; sourceTree = "<group>"; };
-		EA27A96E1CE4963F0043D0FA /* HYUploadNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYUploadNetwork.m; sourceTree = "<group>"; };
 		EA27A9791CE4D2BD0043D0FA /* ODRefreshControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ODRefreshControl.h; sourceTree = "<group>"; };
 		EA27A97A1CE4D2BD0043D0FA /* ODRefreshControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ODRefreshControl.m; sourceTree = "<group>"; };
 		EA27A97C1CE4DB2E0043D0FA /* HYVideoCaptureController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYVideoCaptureController.h; sourceTree = "<group>"; };
@@ -458,8 +473,6 @@
 		EA27A9841CE4E0440043D0FA /* HYVideoDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYVideoDecoder.m; sourceTree = "<group>"; };
 		EA27A9861CE4E25F0043D0FA /* HYVideoPlayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYVideoPlayController.h; sourceTree = "<group>"; };
 		EA27A9871CE4E25F0043D0FA /* HYVideoPlayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYVideoPlayController.m; sourceTree = "<group>"; };
-		EA2A441C1CD787CF00DAF9C7 /* HYXMPPRoomManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYXMPPRoomManager.h; sourceTree = "<group>"; };
-		EA2A441D1CD787CF00DAF9C7 /* HYXMPPRoomManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYXMPPRoomManager.m; sourceTree = "<group>"; };
 		EA2A441F1CD7A20100DAF9C7 /* XMPP+IM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XMPP+IM.h"; sourceTree = "<group>"; };
 		EA2A44201CD7A20100DAF9C7 /* XMPP+IM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XMPP+IM.m"; sourceTree = "<group>"; };
 		EA32FEA91CCF70D000FE8D39 /* UITabBar+SW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBar+SW.h"; sourceTree = "<group>"; };
@@ -511,8 +524,6 @@
 		EA5009491CDE26A30094095B /* HYRecordProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYRecordProgressHUD.h; sourceTree = "<group>"; };
 		EA50094A1CDE26A30094095B /* HYRecordProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYRecordProgressHUD.m; sourceTree = "<group>"; };
 		EA50094C1CDE28A30094095B /* Chat_record_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Chat_record_circle.png; sourceTree = "<group>"; };
-		EA5EF0511CC7364500FE5654 /* HYXMPPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYXMPPManager.h; sourceTree = "<group>"; };
-		EA5EF0521CC7364600FE5654 /* HYXMPPManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYXMPPManager.m; sourceTree = "<group>"; };
 		EA6A0C6C1CDB2001009C8C72 /* HYGroupListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYGroupListViewCell.h; sourceTree = "<group>"; };
 		EA6A0C6D1CDB2001009C8C72 /* HYGroupListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYGroupListViewCell.m; sourceTree = "<group>"; };
 		EA6A0C771CDB28F1009C8C72 /* defaultGroupHead@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "defaultGroupHead@2x.png"; sourceTree = "<group>"; };
@@ -530,7 +541,6 @@
 		EA7D87AE1CE3126700BFD367 /* HYDatabaseHandler+SingleChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HYDatabaseHandler+SingleChat.m"; sourceTree = "<group>"; };
 		EA7D87BB1CE3183400BFD367 /* HYDatabaseHandler+GroupChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HYDatabaseHandler+GroupChat.h"; sourceTree = "<group>"; };
 		EA7D87BC1CE3183400BFD367 /* HYDatabaseHandler+GroupChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HYDatabaseHandler+GroupChat.m"; sourceTree = "<group>"; };
-		EA8230AE1CC5F0E70003DF11 /* GJCFUitils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFUitils.h; sourceTree = "<group>"; };
 		EAB628131CCCAEBD00FB94BC /* NSFileManager+SW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+SW.h"; sourceTree = "<group>"; };
 		EAB628141CCCAEBD00FB94BC /* NSFileManager+SW.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+SW.m"; sourceTree = "<group>"; };
 		EAB6282F1CCCC90600FB94BC /* HYConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYConstant.h; sourceTree = "<group>"; };
@@ -602,41 +612,6 @@
 		EAC05AF91CC50B7900ABA3C5 /* YYWebImageOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYWebImageOperation.m; sourceTree = "<group>"; };
 		EAC05B421CC50F3400ABA3C5 /* WebP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WebP.framework; sourceTree = "<group>"; };
 		EAC05B441CC5109600ABA3C5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		EAC05B5E1CC5297C00ABA3C5 /* GJCFFileDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFFileDownloadManager.h; sourceTree = "<group>"; };
-		EAC05B5F1CC5297C00ABA3C5 /* GJCFFileDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFFileDownloadManager.m; sourceTree = "<group>"; };
-		EAC05B601CC5297C00ABA3C5 /* GJCFFileDownloadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFFileDownloadTask.h; sourceTree = "<group>"; };
-		EAC05B611CC5297C00ABA3C5 /* GJCFFileDownloadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFFileDownloadTask.m; sourceTree = "<group>"; };
-		EAC05B631CC5297C00ABA3C5 /* GJCFFileUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFFileUploadManager.h; sourceTree = "<group>"; };
-		EAC05B641CC5297C00ABA3C5 /* GJCFFileUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFFileUploadManager.m; sourceTree = "<group>"; };
-		EAC05B651CC5297C00ABA3C5 /* GJCFFileUploadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFFileUploadTask.h; sourceTree = "<group>"; };
-		EAC05B661CC5297C00ABA3C5 /* GJCFFileUploadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFFileUploadTask.m; sourceTree = "<group>"; };
-		EAC05B671CC5297C00ABA3C5 /* GJCFUploadFileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFUploadFileModel.h; sourceTree = "<group>"; };
-		EAC05B681CC5297C00ABA3C5 /* GJCFUploadFileModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFUploadFileModel.m; sourceTree = "<group>"; };
-		EAC05B6B1CC5297C00ABA3C5 /* GJCFEncodeAndDecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFEncodeAndDecode.h; sourceTree = "<group>"; };
-		EAC05B6C1CC5297C00ABA3C5 /* GJCFEncodeAndDecode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFEncodeAndDecode.m; sourceTree = "<group>"; };
-		EAC05B6E1CC5297C00ABA3C5 /* GJCFAudioFileUitil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioFileUitil.h; sourceTree = "<group>"; };
-		EAC05B6F1CC5297C00ABA3C5 /* GJCFAudioFileUitil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioFileUitil.m; sourceTree = "<group>"; };
-		EAC05B711CC5297C00ABA3C5 /* GJCFAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioManager.h; sourceTree = "<group>"; };
-		EAC05B721CC5297C00ABA3C5 /* GJCFAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioManager.m; sourceTree = "<group>"; };
-		EAC05B741CC5297C00ABA3C5 /* GJCFAudioModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioModel.h; sourceTree = "<group>"; };
-		EAC05B751CC5297C00ABA3C5 /* GJCFAudioModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioModel.m; sourceTree = "<group>"; };
-		EAC05B771CC5297C00ABA3C5 /* GJCFAudioNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioNetwork.h; sourceTree = "<group>"; };
-		EAC05B781CC5297C00ABA3C5 /* GJCFAudioNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioNetwork.m; sourceTree = "<group>"; };
-		EAC05B791CC5297C00ABA3C5 /* GJCFAudioNetworkDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioNetworkDelegate.h; sourceTree = "<group>"; };
-		EAC05B7A1CC5297C00ABA3C5 /* GJCFFileDownloadTask+GJCFAudioDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GJCFFileDownloadTask+GJCFAudioDownload.h"; sourceTree = "<group>"; };
-		EAC05B7B1CC5297C00ABA3C5 /* GJCFFileDownloadTask+GJCFAudioDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GJCFFileDownloadTask+GJCFAudioDownload.m"; sourceTree = "<group>"; };
-		EAC05B7C1CC5297C00ABA3C5 /* GJCFFileUploadTask+GJCFAudioUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GJCFFileUploadTask+GJCFAudioUpload.h"; sourceTree = "<group>"; };
-		EAC05B7D1CC5297C00ABA3C5 /* GJCFFileUploadTask+GJCFAudioUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GJCFFileUploadTask+GJCFAudioUpload.m"; sourceTree = "<group>"; };
-		EAC05B7F1CC5297C00ABA3C5 /* GJCFAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioPlayer.h; sourceTree = "<group>"; };
-		EAC05B801CC5297C00ABA3C5 /* GJCFAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioPlayer.m; sourceTree = "<group>"; };
-		EAC05B811CC5297C00ABA3C5 /* GJCFAudioPlayerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioPlayerDelegate.h; sourceTree = "<group>"; };
-		EAC05B831CC5297C00ABA3C5 /* GJCFAudioRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioRecord.h; sourceTree = "<group>"; };
-		EAC05B841CC5297C00ABA3C5 /* GJCFAudioRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioRecord.m; sourceTree = "<group>"; };
-		EAC05B851CC5297C00ABA3C5 /* GJCFAudioRecordDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioRecordDelegate.h; sourceTree = "<group>"; };
-		EAC05B861CC5297C00ABA3C5 /* GJCFAudioRecordSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFAudioRecordSettings.h; sourceTree = "<group>"; };
-		EAC05B871CC5297C00ABA3C5 /* GJCFAudioRecordSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFAudioRecordSettings.m; sourceTree = "<group>"; };
-		EAC05B981CC52A1D00ABA3C5 /* GJCFCachePathManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJCFCachePathManager.h; sourceTree = "<group>"; };
-		EAC05B991CC52A1D00ABA3C5 /* GJCFCachePathManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GJCFCachePathManager.m; sourceTree = "<group>"; };
 		EAC198861CCB8C3900A45C1A /* MGSwipeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeButton.h; sourceTree = "<group>"; };
 		EAC198871CCB8C3900A45C1A /* MGSwipeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSwipeButton.m; sourceTree = "<group>"; };
 		EAC198881CCB8C3900A45C1A /* MGSwipeTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSwipeTableCell.h; sourceTree = "<group>"; };
@@ -1128,6 +1103,14 @@
 		EAF834BE1CDCA65B00C73CB9 /* HYGroupInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYGroupInfoViewController.m; sourceTree = "<group>"; };
 		EAF834C01CDCA98200C73CB9 /* HYAddFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYAddFriendViewController.h; sourceTree = "<group>"; };
 		EAF834C11CDCA98200C73CB9 /* HYAddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYAddFriendViewController.m; sourceTree = "<group>"; };
+		EAFB8E761CE5CF5000BBAAC1 /* HYPhotoBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYPhotoBrowserController.h; sourceTree = "<group>"; };
+		EAFB8E771CE5CF5000BBAAC1 /* HYPhotoBrowserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYPhotoBrowserController.m; sourceTree = "<group>"; };
+		EAFB8E7A1CE6185500BBAAC1 /* HYNewFriendViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYNewFriendViewCell.h; sourceTree = "<group>"; };
+		EAFB8E7B1CE6185500BBAAC1 /* HYNewFriendViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYNewFriendViewCell.m; sourceTree = "<group>"; };
+		EAFB8E811CE61D6E00BBAAC1 /* HYFriendRequestViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYFriendRequestViewCell.h; sourceTree = "<group>"; };
+		EAFB8E821CE61D6E00BBAAC1 /* HYFriendRequestViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYFriendRequestViewCell.m; sourceTree = "<group>"; };
+		EAFB8E841CE61DF600BBAAC1 /* HYFreindRequestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYFreindRequestViewController.h; sourceTree = "<group>"; };
+		EAFB8E851CE61DF600BBAAC1 /* HYFreindRequestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYFreindRequestViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1207,6 +1190,82 @@
 				EAE0550E1CC90FEB00E57710 /* HYActionSheetController.m */,
 			);
 			name = ActionSheet;
+			sourceTree = "<group>";
+		};
+		EA2203F31CE6C823007FBBCF /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				EA22041C1CE7104E007FBBCF /* HYXMPPManager.h */,
+				EA22041D1CE7104E007FBBCF /* HYXMPPManager.m */,
+				EA22041E1CE7104E007FBBCF /* HYXMPPRoomManager.h */,
+				EA22041F1CE7104E007FBBCF /* HYXMPPRoomManager.m */,
+				EA2204051CE6C823007FBBCF /* HYNetworkManager.h */,
+				EA2204061CE6C823007FBBCF /* HYNetworkManager.m */,
+				EA2203F41CE6C823007FBBCF /* DownloadManager */,
+				EA2203FC1CE6C823007FBBCF /* FileUploadManager */,
+				EA2203F91CE6C823007FBBCF /* Encode&Decode */,
+				EA2204071CE6C823007FBBCF /* Play */,
+				EA22040B1CE6C823007FBBCF /* Record */,
+			);
+			name = Network;
+			path = HYChatProject/Network;
+			sourceTree = "<group>";
+		};
+		EA2203F41CE6C823007FBBCF /* DownloadManager */ = {
+			isa = PBXGroup;
+			children = (
+				EA2203F51CE6C823007FBBCF /* HYFileDownloadManager.h */,
+				EA2203F61CE6C823007FBBCF /* HYFileDownloadManager.m */,
+				EA2203F71CE6C823007FBBCF /* HYFileDownloadTask.h */,
+				EA2203F81CE6C823007FBBCF /* HYFileDownloadTask.m */,
+			);
+			path = DownloadManager;
+			sourceTree = "<group>";
+		};
+		EA2203F91CE6C823007FBBCF /* Encode&Decode */ = {
+			isa = PBXGroup;
+			children = (
+				EA2203FA1CE6C823007FBBCF /* HYEncodeAndDecode.h */,
+				EA2203FB1CE6C823007FBBCF /* HYEncodeAndDecode.m */,
+			);
+			path = "Encode&Decode";
+			sourceTree = "<group>";
+		};
+		EA2203FC1CE6C823007FBBCF /* FileUploadManager */ = {
+			isa = PBXGroup;
+			children = (
+				EA2203FD1CE6C823007FBBCF /* HYFileUploadManager.h */,
+				EA2203FE1CE6C823007FBBCF /* HYFileUploadManager.m */,
+				EA2203FF1CE6C823007FBBCF /* HYFileUploadTask.h */,
+				EA2204001CE6C823007FBBCF /* HYFileUploadTask.m */,
+				EA2204011CE6C823007FBBCF /* HYUploadFileModel.h */,
+				EA2204021CE6C823007FBBCF /* HYUploadFileModel.m */,
+			);
+			path = FileUploadManager;
+			sourceTree = "<group>";
+		};
+		EA2204071CE6C823007FBBCF /* Play */ = {
+			isa = PBXGroup;
+			children = (
+				EA2204031CE6C823007FBBCF /* HYAudioModel.h */,
+				EA2204041CE6C823007FBBCF /* HYAudioModel.m */,
+				EA2204081CE6C823007FBBCF /* HYAudioPlayer.h */,
+				EA2204091CE6C823007FBBCF /* HYAudioPlayer.m */,
+				EA22040A1CE6C823007FBBCF /* HYAudioPlayerDelegate.h */,
+			);
+			path = Play;
+			sourceTree = "<group>";
+		};
+		EA22040B1CE6C823007FBBCF /* Record */ = {
+			isa = PBXGroup;
+			children = (
+				EA22040C1CE6C823007FBBCF /* HYAudioRecord.h */,
+				EA22040D1CE6C823007FBBCF /* HYAudioRecord.m */,
+				EA22040E1CE6C823007FBBCF /* HYAudioRecordDelegate.h */,
+				EA22040F1CE6C823007FBBCF /* HYAudioRecordSettings.h */,
+				EA2204101CE6C823007FBBCF /* HYAudioRecordSettings.m */,
+			);
+			path = Record;
 			sourceTree = "<group>";
 		};
 		EA26ADB71CD0C67C000DB77C /* Resource */ = {
@@ -1369,10 +1428,6 @@
 		EA5EF0501CC7348A00FE5654 /* Uitls */ = {
 			isa = PBXGroup;
 			children = (
-				EA5EF0511CC7364500FE5654 /* HYXMPPManager.h */,
-				EA5EF0521CC7364600FE5654 /* HYXMPPManager.m */,
-				EA2A441C1CD787CF00DAF9C7 /* HYXMPPRoomManager.h */,
-				EA2A441D1CD787CF00DAF9C7 /* HYXMPPRoomManager.m */,
 				EA0F22731CC7BEE9007AB887 /* HYUtils.h */,
 				EA0F22741CC7BEE9007AB887 /* HYUtils.m */,
 				EAB6282F1CCCC90600FB94BC /* HYConstant.h */,
@@ -1428,23 +1483,6 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		EA8230A41CC5EE1B0003DF11 /* GJCFUitils */ = {
-			isa = PBXGroup;
-			children = (
-				EA8230AE1CC5F0E70003DF11 /* GJCFUitils.h */,
-				EA26AD991CD05046000DB77C /* GJCFStringMacrocDefine.h */,
-				EA26AD9A1CD05046000DB77C /* GJCFStringUitil.h */,
-				EA26AD9B1CD05046000DB77C /* GJCFStringUitil.m */,
-				EA26AD951CD05046000DB77C /* GJCFDateUitilMacrocDefine.h */,
-				EA26AD931CD05046000DB77C /* GJCFDateUitil.h */,
-				EA26AD941CD05046000DB77C /* GJCFDateUitil.m */,
-				EA26AD961CD05046000DB77C /* GJCFQuickCacheMacrocDefine.h */,
-				EA26AD971CD05046000DB77C /* GJCFQuickCacheUitil.h */,
-				EA26AD981CD05046000DB77C /* GJCFQuickCacheUitil.m */,
-			);
-			path = GJCFUitils;
-			sourceTree = "<group>";
-		};
 		EABAB85D1CD62D9700473C0F /* GroupList(群列表) */ = {
 			isa = PBXGroup;
 			children = (
@@ -1457,6 +1495,7 @@
 		EABAB85E1CD62D9700473C0F /* NewFriend(新朋友) */ = {
 			isa = PBXGroup;
 			children = (
+				EAFB8E791CE6182500BBAAC1 /* Cell */,
 				EA7D87A91CE30FAF00BFD367 /* Model */,
 				EA7D87A81CE30FA700BFD367 /* Controller */,
 			);
@@ -1488,8 +1527,8 @@
 		EABAB8671CD62DE900473C0F /* Setting(设置) */ = {
 			isa = PBXGroup;
 			children = (
-				EABAB8721CD62DFC00473C0F /* Controller */,
-				EABAB8711CD62DEE00473C0F /* Cell */,
+				EAFB8E801CE61D4500BBAAC1 /* 设置 */,
+				EAFB8E7D1CE61D0D00BBAAC1 /* 好友请求 */,
 			);
 			path = "Setting(设置)";
 			sourceTree = "<group>";
@@ -1612,139 +1651,6 @@
 			path = Image;
 			sourceTree = "<group>";
 		};
-		EAC05B5C1CC5297C00ABA3C5 /* ZYChat */ = {
-			isa = PBXGroup;
-			children = (
-				EA8230A41CC5EE1B0003DF11 /* GJCFUitils */,
-				EAC05B971CC52A1D00ABA3C5 /* GJCFCachePathManager */,
-				EAC05B691CC5297C00ABA3C5 /* GJCFAudioManager */,
-				EAC05B5D1CC5297C00ABA3C5 /* DownloadManager */,
-				EAC05B621CC5297C00ABA3C5 /* FileUploadManager */,
-				EA27A96D1CE4963F0043D0FA /* HYUploadNetwork.h */,
-				EA27A96E1CE4963F0043D0FA /* HYUploadNetwork.m */,
-			);
-			path = ZYChat;
-			sourceTree = "<group>";
-		};
-		EAC05B5D1CC5297C00ABA3C5 /* DownloadManager */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05B5E1CC5297C00ABA3C5 /* GJCFFileDownloadManager.h */,
-				EAC05B5F1CC5297C00ABA3C5 /* GJCFFileDownloadManager.m */,
-				EAC05B601CC5297C00ABA3C5 /* GJCFFileDownloadTask.h */,
-				EAC05B611CC5297C00ABA3C5 /* GJCFFileDownloadTask.m */,
-			);
-			path = DownloadManager;
-			sourceTree = "<group>";
-		};
-		EAC05B621CC5297C00ABA3C5 /* FileUploadManager */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05B631CC5297C00ABA3C5 /* GJCFFileUploadManager.h */,
-				EAC05B641CC5297C00ABA3C5 /* GJCFFileUploadManager.m */,
-				EAC05B651CC5297C00ABA3C5 /* GJCFFileUploadTask.h */,
-				EAC05B661CC5297C00ABA3C5 /* GJCFFileUploadTask.m */,
-				EAC05B671CC5297C00ABA3C5 /* GJCFUploadFileModel.h */,
-				EAC05B681CC5297C00ABA3C5 /* GJCFUploadFileModel.m */,
-			);
-			path = FileUploadManager;
-			sourceTree = "<group>";
-		};
-		EAC05B691CC5297C00ABA3C5 /* GJCFAudioManager */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05B701CC5297C00ABA3C5 /* Manager */,
-				EAC05B6A1CC5297C00ABA3C5 /* Encode&Decode */,
-				EAC05B6D1CC5297C00ABA3C5 /* FileUitil */,
-				EAC05B731CC5297C00ABA3C5 /* Model */,
-				EAC05B761CC5297C00ABA3C5 /* Network */,
-				EAC05B7E1CC5297C00ABA3C5 /* Play */,
-				EAC05B821CC5297C00ABA3C5 /* Record */,
-			);
-			path = GJCFAudioManager;
-			sourceTree = "<group>";
-		};
-		EAC05B6A1CC5297C00ABA3C5 /* Encode&Decode */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05B6B1CC5297C00ABA3C5 /* GJCFEncodeAndDecode.h */,
-				EAC05B6C1CC5297C00ABA3C5 /* GJCFEncodeAndDecode.m */,
-			);
-			path = "Encode&Decode";
-			sourceTree = "<group>";
-		};
-		EAC05B6D1CC5297C00ABA3C5 /* FileUitil */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05B6E1CC5297C00ABA3C5 /* GJCFAudioFileUitil.h */,
-				EAC05B6F1CC5297C00ABA3C5 /* GJCFAudioFileUitil.m */,
-			);
-			path = FileUitil;
-			sourceTree = "<group>";
-		};
-		EAC05B701CC5297C00ABA3C5 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05B711CC5297C00ABA3C5 /* GJCFAudioManager.h */,
-				EAC05B721CC5297C00ABA3C5 /* GJCFAudioManager.m */,
-			);
-			path = Manager;
-			sourceTree = "<group>";
-		};
-		EAC05B731CC5297C00ABA3C5 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05B741CC5297C00ABA3C5 /* GJCFAudioModel.h */,
-				EAC05B751CC5297C00ABA3C5 /* GJCFAudioModel.m */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		EAC05B761CC5297C00ABA3C5 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05B771CC5297C00ABA3C5 /* GJCFAudioNetwork.h */,
-				EAC05B781CC5297C00ABA3C5 /* GJCFAudioNetwork.m */,
-				EAC05B791CC5297C00ABA3C5 /* GJCFAudioNetworkDelegate.h */,
-				EAC05B7A1CC5297C00ABA3C5 /* GJCFFileDownloadTask+GJCFAudioDownload.h */,
-				EAC05B7B1CC5297C00ABA3C5 /* GJCFFileDownloadTask+GJCFAudioDownload.m */,
-				EAC05B7C1CC5297C00ABA3C5 /* GJCFFileUploadTask+GJCFAudioUpload.h */,
-				EAC05B7D1CC5297C00ABA3C5 /* GJCFFileUploadTask+GJCFAudioUpload.m */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		EAC05B7E1CC5297C00ABA3C5 /* Play */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05B7F1CC5297C00ABA3C5 /* GJCFAudioPlayer.h */,
-				EAC05B801CC5297C00ABA3C5 /* GJCFAudioPlayer.m */,
-				EAC05B811CC5297C00ABA3C5 /* GJCFAudioPlayerDelegate.h */,
-			);
-			path = Play;
-			sourceTree = "<group>";
-		};
-		EAC05B821CC5297C00ABA3C5 /* Record */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05B831CC5297C00ABA3C5 /* GJCFAudioRecord.h */,
-				EAC05B841CC5297C00ABA3C5 /* GJCFAudioRecord.m */,
-				EAC05B851CC5297C00ABA3C5 /* GJCFAudioRecordDelegate.h */,
-				EAC05B861CC5297C00ABA3C5 /* GJCFAudioRecordSettings.h */,
-				EAC05B871CC5297C00ABA3C5 /* GJCFAudioRecordSettings.m */,
-			);
-			path = Record;
-			sourceTree = "<group>";
-		};
-		EAC05B971CC52A1D00ABA3C5 /* GJCFCachePathManager */ = {
-			isa = PBXGroup;
-			children = (
-				EAC05B981CC52A1D00ABA3C5 /* GJCFCachePathManager.h */,
-				EAC05B991CC52A1D00ABA3C5 /* GJCFCachePathManager.m */,
-			);
-			path = GJCFCachePathManager;
-			sourceTree = "<group>";
-		};
 		EAC198851CCB8C3900A45C1A /* MGSwipeTableCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1807,6 +1713,7 @@
 				EADD175D1C9EDCFF00E22D2B /* Vendor */,
 				EADD1DA01C9EEEC400E22D2B /* Category */,
 				EA5EF0501CC7348A00FE5654 /* Uitls */,
+				EA2203F31CE6C823007FBBCF /* Network */,
 				EAC6CB021CCD059B007D9E78 /* Database */,
 				EADD16F01C9ED2E100E22D2B /* HYChat */,
 				EADD170A1C9ED2E100E22D2B /* HYChatProjectTests */,
@@ -1945,7 +1852,6 @@
 			isa = PBXGroup;
 			children = (
 				EAC198851CCB8C3900A45C1A /* MGSwipeTableCell */,
-				EAC05B5C1CC5297C00ABA3C5 /* ZYChat */,
 				EAE343021CD2166B0020DF2B /* YYText */,
 				EAC05AD11CC50B7900ABA3C5 /* YYWebImage */,
 				EAE054F71CC908F400E57710 /* YYKeyboardManager */,
@@ -2961,10 +2867,14 @@
 				EAE342D91CD1E87A0020DF2B /* HYSingleChatViewController.m */,
 				EAE342D61CD1E87A0020DF2B /* HYGroupChatViewController.h */,
 				EAE342D71CD1E87A0020DF2B /* HYGroupChatViewController.m */,
+				EA2204221CE762B8007FBBCF /* HYForwardingViewController.h */,
+				EA2204231CE762B8007FBBCF /* HYForwardingViewController.m */,
 				EA27A97C1CE4DB2E0043D0FA /* HYVideoCaptureController.h */,
 				EA27A97D1CE4DB2E0043D0FA /* HYVideoCaptureController.m */,
 				EA27A9861CE4E25F0043D0FA /* HYVideoPlayController.h */,
 				EA27A9871CE4E25F0043D0FA /* HYVideoPlayController.m */,
+				EAFB8E761CE5CF5000BBAAC1 /* HYPhotoBrowserController.h */,
+				EAFB8E771CE5CF5000BBAAC1 /* HYPhotoBrowserController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -3133,6 +3043,51 @@
 				EAF4857C1CD466420096B1F1 /* AFURLSessionManager.m */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		EAFB8E791CE6182500BBAAC1 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				EAFB8E7A1CE6185500BBAAC1 /* HYNewFriendViewCell.h */,
+				EAFB8E7B1CE6185500BBAAC1 /* HYNewFriendViewCell.m */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		EAFB8E7D1CE61D0D00BBAAC1 /* 好友请求 */ = {
+			isa = PBXGroup;
+			children = (
+				EAFB8E7F1CE61D3E00BBAAC1 /* Cell */,
+				EAFB8E7E1CE61D3300BBAAC1 /* Controller */,
+			);
+			name = "好友请求";
+			sourceTree = "<group>";
+		};
+		EAFB8E7E1CE61D3300BBAAC1 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EAFB8E841CE61DF600BBAAC1 /* HYFreindRequestViewController.h */,
+				EAFB8E851CE61DF600BBAAC1 /* HYFreindRequestViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		EAFB8E7F1CE61D3E00BBAAC1 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				EAFB8E811CE61D6E00BBAAC1 /* HYFriendRequestViewCell.h */,
+				EAFB8E821CE61D6E00BBAAC1 /* HYFriendRequestViewCell.m */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		EAFB8E801CE61D4500BBAAC1 /* 设置 */ = {
+			isa = PBXGroup;
+			children = (
+				EABAB8721CD62DFC00473C0F /* Controller */,
+				EABAB8711CD62DEE00473C0F /* Cell */,
+			);
+			name = "设置";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -3335,9 +3290,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAC05B8C1CC5297C00ABA3C5 /* GJCFUploadFileModel.m in Sources */,
+				EA2204191CE6C823007FBBCF /* HYAudioPlayer.m in Sources */,
 				EADD1D801C9EE1D300E22D2B /* DDLog.m in Sources */,
 				EADD1D001C9EE1D300E22D2B /* XMPPDeprecatedPlainAuthentication.m in Sources */,
+				EA2204131CE6C823007FBBCF /* HYEncodeAndDecode.m in Sources */,
 				EADD1D3C1C9EE1D300E22D2B /* XMPPvCardTempCoreDataStorageObject.m in Sources */,
 				EADD1D3F1C9EE1D300E22D2B /* XMPPvCardTempAdrTypes.m in Sources */,
 				EADD1D181C9EE1D300E22D2B /* XMPPProcessOne.m in Sources */,
@@ -3345,8 +3301,9 @@
 				EADD1D781C9EE1D300E22D2B /* XMPPIDTracker.m in Sources */,
 				EADD1D061C9EE1D300E22D2B /* NSData+XMPP.m in Sources */,
 				EAC05B1A1CC50B7900ABA3C5 /* YYMemoryCache.m in Sources */,
-				EAC05B891CC5297C00ABA3C5 /* GJCFFileDownloadTask.m in Sources */,
 				EAC1988B1CCB8C3900A45C1A /* MGSwipeTableCell.m in Sources */,
+				EA2204171CE6C823007FBBCF /* HYAudioModel.m in Sources */,
+				EA2204121CE6C823007FBBCF /* HYFileDownloadTask.m in Sources */,
 				EA32FEB01CCF94C400FE8D39 /* HYContacts.m in Sources */,
 				EADD1D301C9EE1D300E22D2B /* XMPPRoomMessageHybridCoreDataStorageObject.m in Sources */,
 				EADD1D6E1C9EE1D300E22D2B /* XMPPMessage+XEP_0224.m in Sources */,
@@ -3355,10 +3312,10 @@
 				EA6A0C851CDB477D009C8C72 /* HYRecentSearchResultsController.m in Sources */,
 				EADD1D371C9EE1D300E22D2B /* XMPPRoom.m in Sources */,
 				EA27A97B1CE4D2BD0043D0FA /* ODRefreshControl.m in Sources */,
-				EAC05B8E1CC5297C00ABA3C5 /* GJCFAudioFileUitil.m in Sources */,
 				EA2A44211CD7A20100DAF9C7 /* XMPP+IM.m in Sources */,
 				EAE342E61CD1FA680020DF2B /* HYChatMessage.m in Sources */,
 				EADD1D491C9EE1D300E22D2B /* TURNSocket.m in Sources */,
+				EA22041B1CE6C823007FBBCF /* HYAudioRecordSettings.m in Sources */,
 				EADD1D4B1C9EE1D300E22D2B /* XMPPMessage+XEP_0066.m in Sources */,
 				EADD1D7F1C9EE1D300E22D2B /* DDFileLogger.m in Sources */,
 				EADD1D361C9EE1D300E22D2B /* XMPPMUC.m in Sources */,
@@ -3382,21 +3339,21 @@
 				EADD1D0E1C9EE1D300E22D2B /* XMPPModule.m in Sources */,
 				EADD17441C9ED64300E22D2B /* main.m in Sources */,
 				EA32FEAB1CCF70D000FE8D39 /* UITabBar+SW.m in Sources */,
+				EA2204111CE6C823007FBBCF /* HYFileDownloadManager.m in Sources */,
 				EAF485851CD466420096B1F1 /* AFURLSessionManager.m in Sources */,
 				EAC6CB0E1CCD0601007D9E78 /* HYDatabaseHandler+RecentChat.m in Sources */,
 				EA412BFA1CCA6E17009C071B /* HYRecentChatViewCell.m in Sources */,
 				EABAB8781CD62E7A00473C0F /* HYGroupListViewController.m in Sources */,
 				EADD1D7A1C9EE1D300E22D2B /* XMPPStringPrep.m in Sources */,
 				EADD1D9F1C9EED6B00E22D2B /* HYNavigationController.m in Sources */,
-				EA26AD9C1CD05046000DB77C /* GJCFDateUitil.m in Sources */,
 				EAF485841CD466420096B1F1 /* AFURLResponseSerialization.m in Sources */,
 				EAE3433F1CD2166B0020DF2B /* YYTextSelectionView.m in Sources */,
 				EAC05AFA1CC50B7900ABA3C5 /* FMDatabase.m in Sources */,
 				EAE3434B1CD2166B0020DF2B /* YYTextUtilities.m in Sources */,
 				EABAB86E1CD62DE900473C0F /* HYMeViewCell.m in Sources */,
-				EAC05B961CC5297C00ABA3C5 /* GJCFAudioRecordSettings.m in Sources */,
 				EADD1D421C9EE1D300E22D2B /* XMPPvCardTempLabel.m in Sources */,
 				EADD1D581C9EE1D300E22D2B /* XMPPMessageArchiving.xcdatamodeld in Sources */,
+				EAFB8E7C1CE6185500BBAAC1 /* HYNewFriendViewCell.m in Sources */,
 				EA139F331CC9D0F600E1E085 /* HYFirstLoginViewController.m in Sources */,
 				EADD1D201C9EE1D300E22D2B /* XMPPRosterMemoryStorage.m in Sources */,
 				EAE054FE1CC90F1700E57710 /* HYCurrentLoginViewController.m in Sources */,
@@ -3408,12 +3365,11 @@
 				EA50094B1CDE26A30094095B /* HYRecordProgressHUD.m in Sources */,
 				EADD1D281C9EE1D300E22D2B /* XMPPLastActivity.m in Sources */,
 				EAC05B201CC50B7900ABA3C5 /* UIImageView+YYWebImage.m in Sources */,
+				EAFB8E781CE5CF5000BBAAC1 /* HYPhotoBrowserController.m in Sources */,
 				EADD1D5C1C9EE1D300E22D2B /* XMPPMessageArchiving.m in Sources */,
-				EA5EF0531CC7364600FE5654 /* HYXMPPManager.m in Sources */,
 				EADD1D1C1C9EE1D300E22D2B /* XMPPRoster.xcdatamodel in Sources */,
 				EADD1D351C9EE1D300E22D2B /* XMPPMessage+XEP0045.m in Sources */,
 				EAF705B91CE1BD0300B03EC4 /* GTMBase64.m in Sources */,
-				EAC05B881CC5297C00ABA3C5 /* GJCFFileDownloadManager.m in Sources */,
 				EAE342DB1CD1E87A0020DF2B /* HYGroupChatViewController.m in Sources */,
 				EAE343431CD2166B0020DF2B /* YYTextRubyAnnotation.m in Sources */,
 				EADD1D1E1C9EE1D300E22D2B /* XMPPUserCoreDataStorageObject.m in Sources */,
@@ -3428,21 +3384,19 @@
 				EADD1D051C9EE1D300E22D2B /* XMPPXOAuth2Google.m in Sources */,
 				EAF485811CD466420096B1F1 /* AFSecurityPolicy.m in Sources */,
 				EA27A9881CE4E25F0043D0FA /* HYVideoPlayController.m in Sources */,
-				EA26AD9D1CD05046000DB77C /* GJCFQuickCacheUitil.m in Sources */,
 				EAC05AFE1CC50B7900ABA3C5 /* FMResultSet.m in Sources */,
 				EADD1D531C9EE1D300E22D2B /* XMPPCapabilities.xcdatamodel in Sources */,
+				EA2204211CE7104E007FBBCF /* HYXMPPRoomManager.m in Sources */,
 				EA6A0C6E1CDB2001009C8C72 /* HYGroupListViewCell.m in Sources */,
 				EADD1D151C9EE1D300E22D2B /* XMPPIncomingFileTransfer.m in Sources */,
 				EADD1D021C9EE1D300E22D2B /* XMPPPlainAuthentication.m in Sources */,
 				EADD1D6A1C9EE1D300E22D2B /* XMPPTime.m in Sources */,
 				EADD1D6F1C9EE1D300E22D2B /* XMPPMessage+XEP_0280.m in Sources */,
+				EA2204201CE7104E007FBBCF /* HYXMPPManager.m in Sources */,
 				EADD1D4D1C9EE1D300E22D2B /* NSDate+XMPPDateTimeProfiles.m in Sources */,
-				EAC05B8A1CC5297C00ABA3C5 /* GJCFFileUploadManager.m in Sources */,
 				EADD1D521C9EE1D300E22D2B /* NSString+XEP_0106.m in Sources */,
 				EADD1CFE1C9EE1D300E22D2B /* XMPPAnonymousAuthentication.m in Sources */,
 				EADD17501C9ED85400E22D2B /* HYTabBarController.m in Sources */,
-				EAC05B8D1CC5297C00ABA3C5 /* GJCFEncodeAndDecode.m in Sources */,
-				EA27A96F1CE4963F0043D0FA /* HYUploadNetwork.m in Sources */,
 				EADD1D1D1C9EE1D300E22D2B /* XMPPRosterCoreDataStorage.m in Sources */,
 				EAE3433C1CD2166B0020DF2B /* YYTextLayout.m in Sources */,
 				EA3D9B591CD30653004461C4 /* HYEmoticonTool.m in Sources */,
@@ -3451,11 +3405,9 @@
 				EAF485821CD466420096B1F1 /* AFURLConnectionOperation.m in Sources */,
 				EA412C011CCA6EFA009C071B /* HYRecentChatModel.m in Sources */,
 				EAE343461CD2166B0020DF2B /* NSParagraphStyle+YYText.m in Sources */,
-				EAC05B8B1CC5297C00ABA3C5 /* GJCFFileUploadTask.m in Sources */,
 				EADD1D291C9EE1D300E22D2B /* XMPPPrivacy.m in Sources */,
 				EAE3433D1CD2166B0020DF2B /* YYTextLine.m in Sources */,
 				EADD1D071C9EE1D300E22D2B /* NSNumber+XMPP.m in Sources */,
-				EAC05B8F1CC5297C00ABA3C5 /* GJCFAudioManager.m in Sources */,
 				EADD1D2B1C9EE1D300E22D2B /* XMPPRoomCoreDataStorage.m in Sources */,
 				EADD1D1B1C9EE1D300E22D2B /* XMPPResourceCoreDataStorageObject.m in Sources */,
 				EADD1D7C1C9EE1D300E22D2B /* GCDAsyncSocket.m in Sources */,
@@ -3468,6 +3420,7 @@
 				EADD1DAC1C9EF2A600E22D2B /* NSString+SW.m in Sources */,
 				EAE343451CD2166B0020DF2B /* NSAttributedString+YYText.m in Sources */,
 				EAF485801CD466420096B1F1 /* AFNetworkReachabilityManager.m in Sources */,
+				EAFB8E831CE61D6E00BBAAC1 /* HYFriendRequestViewCell.m in Sources */,
 				EABAB8701CD62DE900473C0F /* HYSettingViewController.m in Sources */,
 				EAE3433E1CD2166B0020DF2B /* YYTextMagnifier.m in Sources */,
 				EAC05B1D1CC50B7900ABA3C5 /* MKAnnotationView+YYWebImage.m in Sources */,
@@ -3485,7 +3438,6 @@
 				EAC05B251CC50B7900ABA3C5 /* YYSpriteSheetImage.m in Sources */,
 				EADD1DA31C9EEF1100E22D2B /* UIImage+SW.m in Sources */,
 				EADD1D761C9EE1D300E22D2B /* GCDMulticastDelegate.m in Sources */,
-				EAC05B921CC5297C00ABA3C5 /* GJCFFileDownloadTask+GJCFAudioDownload.m in Sources */,
 				EAD7BEE01CC539F30089873C /* amrFileCodec.mm in Sources */,
 				EADD1D231C9EE1D300E22D2B /* XMPPSystemInputActivityMonitor.m in Sources */,
 				EADD1D601C9EE1D300E22D2B /* XMPPPresence+XEP_0172.m in Sources */,
@@ -3497,7 +3449,6 @@
 				EAE3433A1CD2166B0020DF2B /* YYTextInput.m in Sources */,
 				EADD1D461C9EE1D300E22D2B /* XMPPResultSet.m in Sources */,
 				EAE343371CD2166B0020DF2B /* YYTextContainerView.m in Sources */,
-				EAC05B931CC5297C00ABA3C5 /* GJCFFileUploadTask+GJCFAudioUpload.m in Sources */,
 				EAC05B221CC50B7900ABA3C5 /* YYFrameImage.m in Sources */,
 				EA5009361CDDBCE50094095B /* HYEmoticonCollectionView.m in Sources */,
 				EADD1D5B1C9EE1D300E22D2B /* XMPPMessageArchivingCoreDataStorage.m in Sources */,
@@ -3509,13 +3460,13 @@
 				EAC05B1B1CC50B7900ABA3C5 /* _YYWebImageSetter.m in Sources */,
 				EADD1D4F1C9EE1D300E22D2B /* XMPPMessage+XEP_0085.m in Sources */,
 				EADD1D401C9EE1D300E22D2B /* XMPPvCardTempBase.m in Sources */,
-				EAC05B901CC5297C00ABA3C5 /* GJCFAudioModel.m in Sources */,
 				EADD1D4A1C9EE1D300E22D2B /* XMPPIQ+XEP_0066.m in Sources */,
 				EAF4857F1CD466420096B1F1 /* AFHTTPSessionManager.m in Sources */,
 				EADD1D6B1C9EE1D300E22D2B /* NSXMLElement+XEP_0203.m in Sources */,
 				EADD1D101C9EE1D300E22D2B /* XMPPPresence.m in Sources */,
 				EADD1D161C9EE1D300E22D2B /* XMPPOutgoingFileTransfer.m in Sources */,
 				EADD1D0B1C9EE1D300E22D2B /* XMPPIQ.m in Sources */,
+				EA2204141CE6C823007FBBCF /* HYFileUploadManager.m in Sources */,
 				EADD1D711C9EE1D300E22D2B /* NSXMLElement+XEP_0297.m in Sources */,
 				EADD1D441C9EE1D300E22D2B /* XMPPvCardTempTel.m in Sources */,
 				EA0405B41CE0C9B300ED29ED /* HYQNAuthPolicy.m in Sources */,
@@ -3523,7 +3474,6 @@
 				EADD1D881C9EE1D300E22D2B /* DDXMLElement.m in Sources */,
 				EAF4857D1CD466420096B1F1 /* AFHTTPRequestOperation.m in Sources */,
 				EADD1D741C9EE1D300E22D2B /* NSXMLElement+XEP_0335.m in Sources */,
-				EAC05B951CC5297C00ABA3C5 /* GJCFAudioRecord.m in Sources */,
 				EADD1D121C9EE1D300E22D2B /* XMPPBandwidthMonitor.m in Sources */,
 				EAC05B191CC50B7900ABA3C5 /* YYKVStorage.m in Sources */,
 				EABAB8661CD62D9700473C0F /* HYSearchController.m in Sources */,
@@ -3546,6 +3496,7 @@
 				EADD1D7E1C9EE1D300E22D2B /* DDASLLogger.m in Sources */,
 				EADD1D251C9EE1D300E22D2B /* XMPPIQ+JabberRPCResonse.m in Sources */,
 				EA412BDA1CCA2F1D009C071B /* HYLoginInfo.m in Sources */,
+				EA2204181CE6C823007FBBCF /* HYNetworkManager.m in Sources */,
 				EAB628151CCCAEBD00FB94BC /* NSFileManager+SW.m in Sources */,
 				EAF485FD1CD47F280096B1F1 /* HYEmoticonKeyboardView.m in Sources */,
 				EADD1D481C9EE1D300E22D2B /* XMPPPubSub.m in Sources */,
@@ -3553,6 +3504,7 @@
 				EADD1D0F1C9EE1D300E22D2B /* XMPPParser.m in Sources */,
 				EADD1D111C9EE1D300E22D2B /* XMPPStream.m in Sources */,
 				EA4666DB1CDC94CF00C5431D /* HYMyvCardViewController.m in Sources */,
+				EA22041A1CE6C823007FBBCF /* HYAudioRecord.m in Sources */,
 				EAE054F61CC8C2C500E57710 /* SVRadialGradientLayer.m in Sources */,
 				EADD1D0C1C9EE1D300E22D2B /* XMPPJID.m in Sources */,
 				EADD1D241C9EE1D300E22D2B /* XMPPIQ+JabberRPC.m in Sources */,
@@ -3564,9 +3516,9 @@
 				EADD1D3B1C9EE1D300E22D2B /* XMPPvCardCoreDataStorageObject.m in Sources */,
 				EA0CEADD1CE30ADF00D7E80C /* HYDatabaseHandler+NewFriend.m in Sources */,
 				EADD1D551C9EE1D300E22D2B /* XMPPCapsCoreDataStorageObject.m in Sources */,
+				EA2204241CE762B8007FBBCF /* HYForwardingViewController.m in Sources */,
 				EADD1D891C9EE1D300E22D2B /* DDXMLNode.m in Sources */,
 				EADD1D141C9EE1D300E22D2B /* XMPPFileTransfer.m in Sources */,
-				EA26AD9E1CD05046000DB77C /* GJCFStringUitil.m in Sources */,
 				EAC05AFB1CC50B7900ABA3C5 /* FMDatabaseAdditions.m in Sources */,
 				EAE0550F1CC90FEB00E57710 /* HYActionSheetController.m in Sources */,
 				EAF834C21CDCA98200C73CB9 /* HYAddFriendViewController.m in Sources */,
@@ -3579,7 +3531,7 @@
 				EA4666D81CDC947500C5431D /* HYQRCodeViewController.m in Sources */,
 				EADD1D271C9EE1D300E22D2B /* XMPPIQ+LastActivity.m in Sources */,
 				EAE343561CD21E720020DF2B /* HYImageChatViewCell.m in Sources */,
-				EAC05B941CC5297C00ABA3C5 /* GJCFAudioPlayer.m in Sources */,
+				EA2204161CE6C823007FBBCF /* HYUploadFileModel.m in Sources */,
 				EAE055011CC90F2600E57710 /* HYRegisterViewController.m in Sources */,
 				EA3D9B971CD3952F004461C4 /* HYInputViewController.m in Sources */,
 				EADD1D811C9EE1D300E22D2B /* DDTTYLogger.m in Sources */,
@@ -3608,13 +3560,13 @@
 				EADD1D841C9EE1D300E22D2B /* DDMultiFormatter.m in Sources */,
 				EA412BFB1CCA6E17009C071B /* HYRecentChatViewController.m in Sources */,
 				EABAB87E1CD6309B00473C0F /* HYUservCardViewController.m in Sources */,
-				EAC05B9A1CC52A1D00ABA3C5 /* GJCFCachePathManager.m in Sources */,
 				EADD1D131C9EE1D300E22D2B /* XMPPCoreDataStorage.m in Sources */,
 				EAC05AFC1CC50B7900ABA3C5 /* FMDatabasePool.m in Sources */,
 				EADD1D2D1C9EE1D300E22D2B /* XMPPRoomOccupantCoreDataStorageObject.m in Sources */,
 				EA7D87AC1CE30FD900BFD367 /* HYNewFriendModel.m in Sources */,
 				EAD7BEE31CC539F30089873C /* VoiceConverter.mm in Sources */,
 				EADD17471C9ED67D00E22D2B /* HYLoginViewController.m in Sources */,
+				EAFB8E861CE61DF600BBAAC1 /* HYFreindRequestViewController.m in Sources */,
 				EAF4857E1CD466420096B1F1 /* AFHTTPRequestOperationManager.m in Sources */,
 				EAC05B271CC50B7900ABA3C5 /* YYWebImageManager.m in Sources */,
 				EA6A0C8B1CDB6852009C8C72 /* HYGroupSearchListController.m in Sources */,
@@ -3626,14 +3578,13 @@
 				EADD1D031C9EE1D300E22D2B /* XMPPSCRAMSHA1Authentication.m in Sources */,
 				EADD1D411C9EE1D300E22D2B /* XMPPvCardTempEmail.m in Sources */,
 				EADD1D081C9EE1D300E22D2B /* NSXMLElement+XMPP.m in Sources */,
+				EA2204151CE6C823007FBBCF /* HYFileUploadTask.m in Sources */,
 				EADD1CFF1C9EE1D300E22D2B /* XMPPDeprecatedDigestAuthentication.m in Sources */,
 				EAE3434A1CD2166B0020DF2B /* YYTextTransaction.m in Sources */,
 				EADD1D321C9EE1D300E22D2B /* XMPPRoomMemoryStorage.m in Sources */,
-				EAC05B911CC5297C00ABA3C5 /* GJCFAudioNetwork.m in Sources */,
 				EAE343591CD21E880020DF2B /* HYAudioChatViewCell.m in Sources */,
 				EAE342DC1CD1E87A0020DF2B /* HYSingleChatViewController.m in Sources */,
 				EAC05AFD1CC50B7900ABA3C5 /* FMDatabaseQueue.m in Sources */,
-				EA2A441E1CD787CF00DAF9C7 /* HYXMPPRoomManager.m in Sources */,
 				EADD1D1F1C9EE1D300E22D2B /* XMPPResourceMemoryStorageObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

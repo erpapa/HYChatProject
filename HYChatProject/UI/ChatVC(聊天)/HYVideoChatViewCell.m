@@ -10,7 +10,7 @@
 #import "HYVideoDecoder.h"
 #import "YYWebImage.h"
 
-@interface HYVideoChatViewCell()<HYVideoDecoderDelegate>
+@interface HYVideoChatViewCell()
 @property (nonatomic, strong) UIImageView *videoView;
 
 @end
@@ -54,7 +54,7 @@
         normalImage = [[UIImage imageNamed:@"chat_receive_nor"] resizableImageWithCapInsets:UIEdgeInsetsMake(25, 40, 30, 70) resizingMode:UIImageResizingModeStretch];
     }
     [self makeMaskView:self.videoView withImage:normalImage]; // 设置mask，遮盖
-    self.videoView.yy_imageURL = [NSURL URLWithString:message.videoModel.videoThumbImageUrl];
+    [self.videoView yy_setImageWithURL:[NSURL URLWithString:message.videoModel.videoThumbImageUrl] options:YYWebImageOptionProgressive];
     
     if (message.videoModel.videoLocalPath) { // 本地文件存在
         [self decodeVideo]; // 解码
@@ -78,26 +78,31 @@
 - (void)decodeVideo
 {
     if (self.messageFrame.chatMessage.videoModel.videoDecoder == nil) {
+        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             self.messageFrame.chatMessage.videoModel.videoDecoder = [[HYVideoDecoder alloc] initWithFile:self.messageFrame.chatMessage.videoModel.videoLocalPath];
-            self.messageFrame.chatMessage.videoModel.videoDecoder.delegate = self;
-            [self.messageFrame.chatMessage.videoModel.videoDecoder decode];
+            __weak typeof(self) weakSelf = self;
+            [weakSelf.messageFrame.chatMessage.videoModel.videoDecoder decode:^(BOOL finished) {
+                if (finished) {
+                    [weakSelf videoDecodeFinished:weakSelf.messageFrame.chatMessage.videoModel.videoDecoder];
+                }
+            }];
         });
-    }else{
+    } else {
         [self videoDecodeFinished:self.messageFrame.chatMessage.videoModel.videoDecoder];
     }
 }
 
-
 - (void)videoDecodeFinished:(HYVideoDecoder *)videoDecoder
 {
     //解码完成 刷新界面
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (self.messageFrame.chatMessage.videoModel.videoDecoder.animation != nil) {
+    if (videoDecoder.animation != nil) {
+        dispatch_async(dispatch_get_main_queue(), ^{
             [self.videoView.layer removeAnimationForKey:@"contents"];
-            [self.videoView.layer addAnimation:self.messageFrame.chatMessage.videoModel.videoDecoder.animation forKey:nil];
-        }
-    });
+            [self.videoView.layer addAnimation:videoDecoder.animation forKey:nil];
+        });
+    }
+    
 }
 
 #pragma mark - 继承方法
@@ -110,10 +115,13 @@
         return;
     }
     UIMenuItem *item1 = [[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteMessage:)];
-    UIMenuItem *item2 = [[UIMenuItem alloc] initWithTitle:@"转发" action:@selector(forwardMessage:)];
-    NSArray *menuItems = @[item1,item2];
-    [popMenu setMenuItems:menuItems];
-    [popMenu setMenuItems:@[item1]];
+    UIMenuItem *item2;
+    if (self.messageFrame.chatMessage.sendStatus == HYChatSendMessageStatusFaild) {
+        item2 = [[UIMenuItem alloc] initWithTitle:@"重发" action:@selector(reSendMessage:)];
+    } else {
+        item2 = [[UIMenuItem alloc] initWithTitle:@"转发" action:@selector(forwardMessage:)];
+    }
+    [popMenu setMenuItems:@[item1,item2]];
     [popMenu setArrowDirection:UIMenuControllerArrowDown];
     
     [popMenu setTargetRect:self.contentBgView.frame inView:self];
@@ -122,11 +130,23 @@
 
 - (void)deleteMessage:(UIMenuItem *)item
 {
-    
+    if ([self.delegate respondsToSelector:@selector(chatViewCellDelete:)]) {
+        [self.delegate chatViewCellDelete:self];
+    }
 }
+
+- (void)forwardMessage:(UIMenuItem *)item
+{
+    if ([self.delegate respondsToSelector:@selector(chatViewCellForward:)]) {
+        [self.delegate chatViewCellForward:self];
+    }
+}
+
 
 - (void)reSendMessage:(UIMenuItem *)item
 {
-    
+    if ([self.delegate respondsToSelector:@selector(chatViewCellReSend:)]) {
+        [self.delegate chatViewCellReSend:self];
+    }
 }
 @end

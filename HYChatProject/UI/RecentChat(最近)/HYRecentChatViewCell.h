@@ -10,6 +10,7 @@
 #import "MGSwipeTableCell.h"
 
 #define kRecentChatViewCellHeight 66.0
+
 @class HYRecentChatModel;
 @interface HYRecentChatViewCell : MGSwipeTableCell
 

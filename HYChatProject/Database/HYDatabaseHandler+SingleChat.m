@@ -74,7 +74,15 @@
 - (BOOL)addChatMessage:(HYChatMessage *)chatMessage
 {
     HYLoginInfo *loginInfo = [HYLoginInfo sharedInstance];
-    NSString* sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO T_CHAT_SINGLECHAT(msgid,myJid,chatBare,chatResource,body,time,isOutgoing,isRead,sendStatus,receiveStatus,isGroup) VALUES('%@','%@','%@','%@','%@','%lf','%d','%d','%d','%d','%d')",chatMessage.messageID,loginInfo.jid.full,chatMessage.jid.bare,chatMessage.jid.resource,[chatMessage jsonString],chatMessage.time,chatMessage.isOutgoing,chatMessage.isRead,chatMessage.sendStatus,chatMessage.receiveStatus,chatMessage.isGroup];
+    HYChatSendMessageStatus sendStatus = chatMessage.sendStatus;
+    if (sendStatus == HYChatSendMessageStatusSending) {
+        sendStatus = HYChatSendMessageStatusFaild;
+    }
+    HYChatReceiveMessageStatus receiveStatus = chatMessage.receiveStatus;
+    if (receiveStatus == HYChatReceiveMessageStatusReceiving) {
+        receiveStatus = HYChatReceiveMessageStatusFaild;
+    }
+    NSString* sql = [NSString stringWithFormat:@"INSERT OR REPLACE INTO T_CHAT_SINGLECHAT(msgid,myJid,chatBare,chatResource,body,time,isOutgoing,isRead,sendStatus,receiveStatus,isGroup) VALUES('%@','%@','%@','%@','%@','%lf','%d','%d','%d','%d','%d')",chatMessage.messageID,loginInfo.jid.full,chatMessage.jid.bare,chatMessage.jid.resource,[chatMessage jsonString],chatMessage.time,chatMessage.isOutgoing,chatMessage.isRead,sendStatus,receiveStatus,chatMessage.isGroup];
     
     if(![self executeUpdate:sql])
     {
@@ -88,7 +96,15 @@
 - (BOOL)updateChatMessage:(HYChatMessage *)chatMessage
 {
     HYLoginInfo *loginInfo = [HYLoginInfo sharedInstance];
-    NSString *sql = [NSString stringWithFormat:@"UPDATE T_CHAT_SINGLECHAT SET isRead=%d,sendStatus=%d,receiveStatus=%d WHERE msgid ='%@' AND myJid='%@' AND chatBare='%@'",chatMessage.isRead,chatMessage.sendStatus,chatMessage.sendStatus,chatMessage.messageID,loginInfo.jid.full,chatMessage.jid.bare];
+    HYChatSendMessageStatus sendStatus = chatMessage.sendStatus;
+    if (sendStatus == HYChatSendMessageStatusSending) {
+        sendStatus = HYChatSendMessageStatusFaild;
+    }
+    HYChatReceiveMessageStatus receiveStatus = chatMessage.receiveStatus;
+    if (receiveStatus == HYChatReceiveMessageStatusReceiving) {
+        receiveStatus = HYChatReceiveMessageStatusFaild;
+    }
+    NSString *sql = [NSString stringWithFormat:@"UPDATE T_CHAT_SINGLECHAT SET isRead=%d,sendStatus=%d,receiveStatus=%d WHERE msgid='%@' AND myJid='%@' AND chatBare='%@'",chatMessage.isRead,sendStatus,receiveStatus,chatMessage.messageID,loginInfo.jid.full,chatMessage.jid.bare];
     if(![self executeUpdate:sql])
     {
         HYLog(@"%@ fail,%@",sql,[[self lastError] localizedDescription]);
@@ -100,7 +116,7 @@
 - (BOOL)deleteChatMessage:(HYChatMessage *)chatMessage
 {
     HYLoginInfo *loginInfo = [HYLoginInfo sharedInstance];
-    NSString *sql = [NSString stringWithFormat:@"DELETE FROM T_CHAT_SINGLECHAT WHERE myJid='%@' AND chatBare='%@'",[loginInfo.jid full],[chatMessage.jid bare]];
+    NSString *sql = [NSString stringWithFormat:@"DELETE FROM T_CHAT_SINGLECHAT WHERE msgid='%@' AND myJid='%@' AND chatBare='%@'", chatMessage.messageID, [loginInfo.jid full],[chatMessage.jid bare]];
     if(![self executeUpdate:sql])
     {
         HYLog(@"%@ fail,%@",sql,[[self lastError] localizedDescription]);

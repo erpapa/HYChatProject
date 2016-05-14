@@ -12,16 +12,17 @@
 #import "HYXMPPManager.h"
 #import "HYXMPPRoomManager.h"
 #import "HYDatabaseHandler+HY.h"
-#import "AFNetworking.h"
 #import "YYImageCache.h"
-#import "HYUploadNetwork.h"
-#import "ODRefreshControl.h"
 #import "HYUtils.h"
+#import "HYAudioPlayer.h"
+#import "AFNetworking.h"
+#import "HYNetworkManager.h"
 
-#import "GJCFAudioModel.h"
-#import "GJCFAudioManager.h"
-#import "GJCFUploadFileModel.h"
-#import "GJCFCachePathManager.h"
+#import "ODRefreshControl.h"
+#import "HYVideoCaptureController.h"
+#import "HYVideoPlayController.h"
+#import "HYPhotoBrowserController.h"
+#import "HYUservCardViewController.h"
 
 #import "HYBaseChatViewCell.h"
 #import "HYTextChatViewCell.h"
@@ -33,15 +34,16 @@ static NSString *kTextChatViewCellIdentifier = @"kTextChatViewCellIdentifier";
 static NSString *kImageChatViewCellIdentifier = @"kImageChatViewCellIdentifier";
 static NSString *kAudioChatViewCellIdentifier = @"kAudioChatViewCellIdentifier";
 static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
-@interface HYGroupChatViewController ()<UITableViewDataSource, UITableViewDelegate,NSFetchedResultsControllerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, HYInputViewControllerDelegate, HYBaseChatViewCellDelegate>
+@interface HYGroupChatViewController ()<UITableViewDataSource, UITableViewDelegate,NSFetchedResultsControllerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, HYInputViewControllerDelegate, HYBaseChatViewCellDelegate,HYVideoCaptureControllerDelegate,HYAudioPlayerDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) HYInputViewController *inputVC;
 @property (nonatomic, strong) NSFetchedResultsController *resultController;//查询结果集合
 @property (nonatomic, strong) ODRefreshControl *refreshControl;
 
-@property (nonatomic, strong) GJCFAudioPlayer *audioPlayer;
-@property (nonatomic, strong) NSString *playingAudioMsgId;// 当前播放的消息
+@property (nonatomic, strong) HYAudioPlayer *audioPlayer;
+@property (nonatomic, strong) NSString *playingMessageID;// 当前播放的消息
+@property (nonatomic, assign) BOOL isShowMultimedia;
 @end
 
 @implementation HYGroupChatViewController
@@ -73,7 +75,7 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     // 4.设置当前聊天对象
     [HYXMPPManager sharedInstance].chatJID = self.roomJid;
     
-    // 8.获取聊天数据
+    // 5.获取聊天数据
     [self getChatHistory];
     
     // 6.监听网络状态改变
@@ -84,10 +86,8 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     }];
     
     // 7.音频
-    __weak typeof(self) weakSelf = self;
-    [[GJCFAudioManager shareManager] setCurrentAudioPlayFinishedBlock:^(NSString *remoteUrl) {
-        [weakSelf stopPlayCurrentAudio];
-    }];
+    self.audioPlayer = [[HYAudioPlayer alloc] init];
+    self.audioPlayer.delegate = self;
     
     // 8.注册通知
     [HYNotification addObserver:self selector:@selector(receiveGroupMessage:) name:HYChatDidReceiveGroupMessage object:nil];
@@ -96,6 +96,10 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    if (self.isShowMultimedia) {
+        self.isShowMultimedia = NO;
+        return;
+    }
     // 自动滚动表格到最后一行
     if (self.dataSource.count) {
         NSIndexPath *lastPath = [NSIndexPath indexPathForRow:self.dataSource.count - 1 inSection:0];
@@ -112,7 +116,7 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [[GJCFAudioManager shareManager] stopPlayCurrentAudio]; // 停止播放
+    [self.audioPlayer stop];
 }
 
 #pragma mark - UITableViewDataSource
@@ -187,6 +191,7 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
         HYChatMessageFrame *messageFrame = [[HYChatMessageFrame alloc] init];
         messageFrame.chatMessage = message;
         [self.dataSource addObject:messageFrame];
+        [self downlodMultimediaMessage:message]; // 下载
     }];
 }
 
@@ -212,6 +217,7 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
             HYChatMessageFrame *messageFrame = [[HYChatMessageFrame alloc] init];
             messageFrame.chatMessage = message;
             [tempArray addObject:messageFrame];
+            [self downlodMultimediaMessage:message]; // 下载
         }];
         [tempArray addObjectsFromArray:self.dataSource];
         self.dataSource = tempArray;
@@ -225,6 +231,7 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
 // 发送照片/视频/文件
 - (void)inputViewController:(HYInputViewController *)inputViewController clickExpandType:(HYExpandType)type
 {
+    self.isShowMultimedia = YES;
     switch (type) {
         case HYExpandTypePicture:{ // 照片
             UIImagePickerController *pickerController = [[UIImagePickerController alloc] init];
@@ -241,7 +248,10 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
             break;
         }
         case HYExpandTypeVideo:{ // 视频
-            
+            HYVideoCaptureController *videoVapture = [[HYVideoCaptureController alloc] init];
+            videoVapture.modalPresentationStyle = UIModalPresentationOverCurrentContext;// 半透明
+            videoVapture.delegate = self;
+            [self presentViewController:videoVapture animated:NO completion:nil];
             break;
         }
         case HYExpandTypeFolder:{ // 文件
@@ -259,18 +269,25 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
 /**
  *  发送图片
  */
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
     [picker dismissViewControllerAnimated:YES completion:^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            //发送消息
-            HYChatMessage *message = [[HYChatMessage alloc] init];
-            NSString *imageName = [NSString stringWithFormat:@"%@.jpg",message.messageID];
-            [[YYImageCache sharedCache] setImage:image forKey:QN_FullURL(imageName)]; // 设置缓存，重要！！！！
-            [self sendSingleMessage:message withObject:image];
-            
+        
+        //获取照片的原图
+        UIImage* original = [info objectForKey:UIImagePickerControllerOriginalImage];
+        //发送消息
+        HYChatMessage *message = [[HYChatMessage alloc] init];
+        NSString *imageName = [NSString stringWithFormat:@"%@.webP",message.messageID];
+        message.imageUrl = QN_FullURL(imageName);
+        [self sendSingleMessage:message withObject:original];
+        BACK(^{
+            CGFloat quality = 0.9;
+            NSData *data = UIImageJPEGRepresentation(original, quality);
+            if (data.length >= 768 * 1024) quality = 0.7;
+            NSData *imageData = [YYImageEncoder encodeImage:original type:YYImageTypeWebP quality:quality];
+            [[YYImageCache sharedCache] setImage:nil imageData:imageData forKey:QN_FullURL(imageName) withType:YYImageCacheTypeAll]; // 设置缓存，重要！！！！
             __weak typeof(self) weakSelf = self;
-            [[HYUploadNetwork sharedInstance] startUploadImage:image imageName:imageName successBlock:^(BOOL success) {
+            [[HYNetworkManager sharedInstance] uploadImage:imageData imageName:imageName successBlock:^(BOOL success) {
                 if(success){ // 上传照片成功
                     BOOL sendSuccess = [[HYXMPPRoomManager sharedInstance] sendText:[message jsonString] toRoomJid:weakSelf.roomJid];
                     if (sendSuccess) {
@@ -293,6 +310,49 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - HYVideoCaptureControllerDelegate
+
+// 上传视频
+- (void)videoCaptureController:(HYVideoCaptureController *)videoCaptureController captureVideo:(NSString *)filePath screenShot:(UIImage *)screenShot
+{
+    //发送消息
+    HYChatMessage *message = [[HYChatMessage alloc] init];
+    
+    NSString *imageName = [NSString stringWithFormat:@"%@.webP",message.messageID];
+    NSString *videoName = [filePath lastPathComponent];
+    HYVideoModel *videoModel = [[HYVideoModel alloc] init];
+    videoModel.videoThumbImageUrl = QN_FullURL(imageName);
+    videoModel.videoUrl = QN_FullURL(videoName);
+    videoModel.videoSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil] fileSize]; // 视频大小
+    NSData *imageData = [YYImageEncoder encodeImage:screenShot type:YYImageTypeWebP quality:0.9];
+    [[YYImageCache sharedCache] setImage:nil imageData:imageData forKey:QN_FullURL(imageName) withType:YYImageCacheTypeAll]; // 设置缓存，重要！！！！
+    [self sendSingleMessage:message withObject:videoModel];
+    // 上传到七牛云
+    
+    __weak typeof(self) weakSelf = self;
+    [[HYNetworkManager sharedInstance] uploadImage:imageData imageName:imageName successBlock:^(BOOL success) { // 上传封面
+        if (success) {
+            [[HYNetworkManager sharedInstance] uploadFilePath:filePath fileName:videoName successBlock:^(BOOL success) { // 上传视频
+                if (success) {
+                    BOOL sendSuccess = [[HYXMPPRoomManager sharedInstance] sendText:[message jsonString] toRoomJid:weakSelf.roomJid];
+                    if (sendSuccess) {
+                        message.sendStatus = HYChatSendMessageStatusSuccess;
+                    } else {
+                        message.sendStatus = HYChatSendMessageStatusFaild;
+                    }
+                } else {
+                    message.sendStatus = HYChatSendMessageStatusFaild;
+                }
+                [self refreshMessage:message];
+            }];
+            
+        } else {
+            message.sendStatus = HYChatSendMessageStatusFaild;
+            [self refreshMessage:message];
+        }
+    }];
+}
+
 
 // 发送文本/表情消息
 - (void)inputViewController:(HYInputViewController *)inputViewController sendText:(NSString *)text
@@ -301,7 +361,7 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     HYChatMessage *message = [[HYChatMessage alloc] init];
     message.type = HYChatMessageTypeText;
     message.textMessage = text;
-    BOOL sendSuccess = [[HYXMPPRoomManager sharedInstance] sendText:[message jsonString] toRoomJid:self.roomJid];;
+    BOOL sendSuccess = [[HYXMPPRoomManager sharedInstance] sendText:[message jsonString] toRoomJid:self.roomJid];
     if (sendSuccess) {
         message.sendStatus = HYChatSendMessageStatusSuccess;
         [self sendSingleMessage:message withObject:text];
@@ -313,12 +373,12 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
 }
 
 // 发送语音消息
-- (void)inputViewController:(HYInputViewController *)inputViewController sendAudioModel:(GJCFAudioModel *)audioModel
+- (void)inputViewController:(HYInputViewController *)inputViewController sendAudioModel:(HYAudioModel *)audioModel
 {
     HYChatMessage *message = [[HYChatMessage alloc] init];
     [self sendSingleMessage:message withObject:audioModel];
     __weak typeof(self) weakSelf = self;
-    [[GJCFAudioManager shareManager] startUploadAudioFile:audioModel successBlock:^(BOOL success) {
+    [[HYNetworkManager sharedInstance] uploadFilePath:audioModel.tempEncodeFilePath fileName:[audioModel.tempEncodeFilePath lastPathComponent] successBlock:^(BOOL success) {
         if(success){ // 上传音频文件成功
             BOOL sendSuccess = [[HYXMPPRoomManager sharedInstance] sendText:[message jsonString] toRoomJid:weakSelf.roomJid];
             if (sendSuccess) {
@@ -353,38 +413,38 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     NSIndexPath *indexPath = [self.tableView indexPathForCell:chatViewCell];
     HYChatMessageFrame *messageFrame = [self.dataSource objectAtIndex:indexPath.row];
     HYChatMessage *message = messageFrame.chatMessage;
-    if ([self.playingAudioMsgId isEqualToString:message.messageID]) { // 当前播放
-        [[GJCFAudioManager shareManager] stopPlayCurrentAudio];// 停止播放
+    if ([self.playingMessageID isEqualToString:message.messageID]) { // 当前播放
+        [self.audioPlayer stop];// 停止播放
         message.isRead = YES;
         message.isPlayingAudio = NO;
     } else {
-        [[GJCFAudioManager shareManager] stopPlayCurrentAudio];// 停止播放
-        [[GJCFAudioManager shareManager] playRemoteAudioFileByUrl:message.audioModel.remotePath];
+        [self.audioPlayer stop];// 停止播放
+        [self.audioPlayer playAudioFile:message.audioModel]; // 播放
         message.isRead = YES;
         message.isPlayingAudio = YES;
-        self.playingAudioMsgId = message.messageID;
+        self.playingMessageID = message.messageID;
     }
     [[HYDatabaseHandler sharedInstance] updateGroupChatMessage:message];// 更新数据库操作
     [self.dataSource replaceObjectAtIndex:indexPath.row withObject:messageFrame];
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
-// 停止播放
-- (void)stopPlayCurrentAudio
+#pragma mark - HYAudioPlayerDelegate 停止播放
+
+- (void)audioPlayer:(HYAudioPlayer *)audioPlay didFinishPlayAudio:(HYAudioModel *)audioFile
 {
     NSInteger count = self.dataSource.count;
     for (NSInteger index = 0; index < count; index++) {
         HYChatMessageFrame *messageFrame = [self.dataSource objectAtIndex:index];
         HYChatMessage *message = messageFrame.chatMessage;
-        if ([message.messageID isEqualToString:self.playingAudioMsgId]) {
+        if ([message.messageID isEqualToString:self.playingMessageID]) {
             message.isPlayingAudio = NO;
-            self.playingAudioMsgId = nil;
-            [self.dataSource replaceObjectAtIndex:index withObject:messageFrame];
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+            self.playingMessageID = nil;
             MAIN(^{
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
                 [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             });
-            return; // 返回(在这里有个问题，如果别人发送两段相同的录音，只会更新前一个，但是可以直接跳过，因为本客户端不会有两个相同的录音)
+            return;
         }
     }
 }
@@ -392,25 +452,53 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
 // 点击头像
 - (void)chatViewCell:(HYBaseChatViewCell *)chatViewCell didClickHeaderWithJid:(XMPPJID *)jid
 {
-    
+    HYUservCardViewController *userVC = [[HYUservCardViewController alloc] init];
+    userVC.userJid = jid;
+    [self.navigationController pushViewController:userVC animated:YES];
 }
 
 // 点击图片
 - (void)chatViewCellClickImage:(HYBaseChatViewCell *)chatViewCell
 {
-    
+    NSMutableArray *photos = [NSMutableArray array];
+    [self.dataSource enumerateObjectsUsingBlock:^(HYChatMessageFrame *messageFrame, NSUInteger idx, BOOL * _Nonnull stop) {
+        HYChatMessage *message = messageFrame.chatMessage;
+        if (message.imageUrl.length) {
+            [photos addObject:message.imageUrl];
+        }
+    }];
+    NSInteger currentImageIndex = photos.count - 1;;
+    for (NSInteger index = 0; index < photos.count; index++) {
+        NSString *imageUrl = [photos objectAtIndex:index];
+        if ([imageUrl isEqualToString:chatViewCell.messageFrame.chatMessage.imageUrl]) {
+            currentImageIndex = index;
+            break;
+        }
+    }
+    self.isShowMultimedia = YES;
+    HYPhotoBrowserController *photoBrowser = [[HYPhotoBrowserController alloc] init];
+    photoBrowser.currentImageIndex = currentImageIndex;
+    photoBrowser.dataSource = photos;
+    [self presentViewController:photoBrowser animated:YES completion:nil];
 }
 
 // 点击视频
 - (void)chatViewCellClickVideo:(HYBaseChatViewCell *)chatViewCell
 {
-    
+    self.isShowMultimedia = YES;
+    HYChatMessageFrame *messsageFrame = chatViewCell.messageFrame;
+    HYVideoModel *videoModel = messsageFrame.chatMessage.videoModel;
+    HYVideoPlayController *playController = [[HYVideoPlayController alloc] initWithPath:videoModel.videoLocalPath];
+    [self presentViewController:playController animated:YES completion:nil];
 }
 
 // 删除消息
 - (void)chatViewCellDelete:(HYBaseChatViewCell *)chatViewCell
 {
-    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:chatViewCell];
+    [[HYDatabaseHandler sharedInstance] deleteGroupChatMessage:chatViewCell.messageFrame.chatMessage];
+    [self.dataSource removeObjectAtIndex:indexPath.row];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 // 转发
@@ -422,9 +510,97 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
 // 重发
 - (void)chatViewCellReSend:(HYBaseChatViewCell *)chatViewCell
 {
-    
+    HYChatMessageFrame *messsageFrame = chatViewCell.messageFrame;
+    HYChatMessage *message = messsageFrame.chatMessage;
+    switch (message.type) {
+        case HYChatMessageTypeText:{ // 文本
+            BOOL sendSuccess = [[HYXMPPRoomManager sharedInstance] sendText:[message jsonString] toRoomJid:self.roomJid];
+            if (sendSuccess) {
+                message.sendStatus = HYChatSendMessageStatusSuccess;
+            } else {
+                message.sendStatus = HYChatSendMessageStatusFaild;
+            }
+            [self refreshMessage:message];
+            break;
+        }
+        case HYChatMessageTypeImage:{ // 图片
+            NSString *imageName = [NSString stringWithFormat:@"%@.webP",message.messageID];
+            NSData *imageData = [[YYImageCache sharedCache] getImageDataForKey:QN_FullURL(imageName)]; // 从缓存读取图片
+            message.sendStatus = HYChatSendMessageStatusSending;
+            [self refreshMessage:message]; // 刷新
+            __weak typeof(self) weakSelf = self;
+            [[HYNetworkManager sharedInstance] uploadImage:imageData imageName:imageName successBlock:^(BOOL success) {
+                if(success){ // 上传照片成功
+                    BOOL sendSuccess = [[HYXMPPRoomManager sharedInstance] sendText:[message jsonString] toRoomJid:weakSelf.roomJid];
+                    if (sendSuccess) {
+                        message.sendStatus = HYChatSendMessageStatusSuccess;
+                    } else {
+                        message.sendStatus = HYChatSendMessageStatusFaild;
+                    }
+                } else {
+                    message.sendStatus = HYChatSendMessageStatusFaild;
+                }
+                [weakSelf refreshMessage:message];
+            }];
+            break;
+        }
+        case HYChatMessageTypeAudio:{ // 音频
+            message.sendStatus = HYChatSendMessageStatusSending;
+            [self refreshMessage:message]; // 刷新
+            __weak typeof(self) weakSelf = self;
+            [[HYNetworkManager sharedInstance] uploadFilePath:message.audioModel.tempEncodeFilePath fileName:[message.audioModel.tempEncodeFilePath lastPathComponent] successBlock:^(BOOL success) {
+                if(success){ // 上传音频文件成功
+                    BOOL sendSuccess = [[HYXMPPRoomManager sharedInstance] sendText:[message jsonString] toRoomJid:weakSelf.roomJid];
+                    if (sendSuccess) {
+                        message.sendStatus = HYChatSendMessageStatusSuccess;
+                    } else {
+                        message.sendStatus = HYChatSendMessageStatusFaild;
+                    }
+                } else {
+                    message.sendStatus = HYChatSendMessageStatusFaild;
+                }
+                [weakSelf refreshMessage:message];
+            }];
+            break;
+        }
+            
+        case HYChatMessageTypeVideo:{ // 视频
+            NSString *imageName = [NSString stringWithFormat:@"%@.webP",message.messageID];
+            NSData *imageData = [[YYImageCache sharedCache] getImageDataForKey:QN_FullURL(imageName)]; // 从缓存读取图片
+            NSString *filePath = message.videoModel.videoLocalPath;
+            NSString *videoName = [filePath lastPathComponent];
+            message.sendStatus = HYChatSendMessageStatusSending;
+            [self refreshMessage:message]; // 刷新
+            // 上传到七牛云
+            __weak typeof(self) weakSelf = self;
+            [[HYNetworkManager sharedInstance] uploadImage:imageData imageName:imageName successBlock:^(BOOL success) { // 上传封面
+                if (success) {
+                    [[HYNetworkManager sharedInstance] uploadFilePath:filePath fileName:videoName successBlock:^(BOOL success) { // 上传视频
+                        if (success) {
+                            BOOL sendSuccess = [[HYXMPPRoomManager sharedInstance] sendText:[message jsonString] toRoomJid:weakSelf.roomJid];
+                            if (sendSuccess) {
+                                message.sendStatus = HYChatSendMessageStatusSuccess;
+                            } else {
+                                message.sendStatus = HYChatSendMessageStatusFaild;
+                            }
+                        } else {
+                            message.sendStatus = HYChatSendMessageStatusFaild;
+                        }
+                        [self refreshMessage:message];
+                    }];
+                    
+                } else {
+                    message.sendStatus = HYChatSendMessageStatusFaild;
+                    [self refreshMessage:message];
+                }
+            }];
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
-
 
 /**
  *  控制keyboard显示
@@ -444,20 +620,26 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
 
 - (void)sendSingleMessage:(HYChatMessage *)chatMessage withObject:(id)obj
 {
-    if ([obj isKindOfClass:[GJCFAudioModel class]]) { // 语音
+    if ([obj isKindOfClass:[NSString class]]) {
+        chatMessage.type = HYChatMessageTypeText;
+        chatMessage.textMessage = obj;
+    }else if ([obj isKindOfClass:[HYAudioModel class]]) { // 语音
         chatMessage.type = HYChatMessageTypeAudio;
         chatMessage.audioModel = obj;
         chatMessage.sendStatus = HYChatSendMessageStatusSending;
     } else if ([obj isKindOfClass:[UIImage class]]) { // 图片
         UIImage *image = (UIImage *)obj;
-        NSString *imageName = [NSString stringWithFormat:@"%@.jpg",chatMessage.messageID];
         chatMessage.type = HYChatMessageTypeImage;
-        chatMessage.imageUrl = QN_FullURL(imageName);
+        chatMessage.image = image;
         chatMessage.imageWidth = image.size.width;
         chatMessage.imageHeight = image.size.height;
         chatMessage.sendStatus = HYChatSendMessageStatusSending;
+    } else if ([obj isKindOfClass:[HYVideoModel class]]) { // 视频
+        chatMessage.type = HYChatMessageTypeVideo;
+        chatMessage.videoModel = obj;
+        chatMessage.sendStatus = HYChatSendMessageStatusSending;
     }
-    chatMessage.jid = self.roomJid;
+    chatMessage.jid = [XMPPJID jidWithString:self.roomJid.bare resource:[HYXMPPRoomManager sharedInstance].xmppStream.myJID.user];
     chatMessage.time = [[NSDate date] timeIntervalSince1970];
     chatMessage.isRead = YES;
     chatMessage.isOutgoing = YES;
@@ -499,10 +681,27 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
         [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
         [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionNone animated:YES];
     });
-    
-    if (message.type == HYChatMessageTypeAudio) {
-        __weak typeof(self) weakSelf = self;// 下载audio
-        [[GJCFAudioManager shareManager] downloadRemoteAudioFileByUrl:message.audioModel.remotePath successBlock:^(BOOL success) {
+    [self downlodMultimediaMessage:message]; // 下载
+}
+
+/**
+ *  下载音频、视频
+ */
+
+- (void)downlodMultimediaMessage:(HYChatMessage *)message
+{
+    __weak typeof(self) weakSelf = self;
+    if (message.type == HYChatMessageTypeAudio) {// 下载audio
+        [[HYNetworkManager sharedInstance] downloadAudioModel:message.audioModel successBlock:^(BOOL success) {
+            if (success) {
+                message.receiveStatus = HYChatReceiveMessageStatusSuccess;
+            } else {
+                message.receiveStatus = HYChatReceiveMessageStatusFaild;
+            }
+            [weakSelf refreshMessage:message];
+        }];
+    } else if (message.type == HYChatMessageTypeVideo) {// 下载视频
+        [[HYNetworkManager sharedInstance] downloadVideoUrl:message.videoModel.videoUrl successBlock:^(BOOL success) {
             if (success) {
                 message.receiveStatus = HYChatReceiveMessageStatusSuccess;
             } else {
@@ -512,6 +711,7 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
         }];
     }
 }
+
 
 #pragma mark - 更新消息
 
@@ -525,7 +725,10 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
             MAIN(^{
                 [[HYDatabaseHandler sharedInstance] updateGroupChatMessage:chatMessage];// 更新数据库
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                if ([[self.tableView indexPathsForVisibleRows] containsObject:indexPath]) { // row可见才需要刷新
+                    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                }
+                
             });
             return;
         }
@@ -561,7 +764,6 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     self.inputVC = nil;
     [HYXMPPManager sharedInstance].chatJID = nil;
     [HYNotification removeObserver:self];
-    [[GJCFAudioManager shareManager] stopPlayCurrentAudio]; // 停止播放
     HYLog(@"%@-dealloc",self);
 }
 
@@ -569,6 +771,7 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 /*
  - (void)getChatHistory

@@ -30,6 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.title = @"聊天室";
     self.view.backgroundColor = [UIColor whiteColor];
     // 搜索
     self.resultsController = [[HYGroupSearchListController alloc] init];

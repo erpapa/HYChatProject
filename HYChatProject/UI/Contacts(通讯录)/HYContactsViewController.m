@@ -210,8 +210,26 @@
 - (NSArray *)rightButtons
 {
     NSMutableArray *result = [NSMutableArray array];
+    __weak typeof(self) weakSelf = self;
     MGSwipeButton *nikeButton = [MGSwipeButton buttonWithTitle:@"备注" backgroundColor:[UIColor colorWithRed:0.78f green:0.78f blue:0.8f alpha:1.0] padding:20.0 callback:^BOOL(MGSwipeTableCell * sender){
+        NSIndexPath *indexPath = [weakSelf.tableView indexPathForCell:sender];
+        HYContacts *contacts = [weakSelf.dataSource objectAtIndex:indexPath.section - 1];
+        HYContactsModel *model = [contacts.infoArray objectAtIndex:indexPath.row];
         
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"设置好友昵称" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField){
+            textField.text = model.displayName;
+        }];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            UITextField *textField = alertController.textFields.firstObject;
+            NSString *inputText = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            NSString *nickName = inputText.length ? inputText : model.jid.user;
+            [[HYXMPPManager sharedInstance] setNickname:nickName forUser:model.jid];
+        }];
+        [alertController addAction:cancelAction];
+        [alertController addAction:okAction];
+        [weakSelf presentViewController:alertController animated:YES completion:nil];
         return YES;
     }];
     [result addObject:nikeButton];
@@ -267,7 +285,7 @@
  */
 - (void)addContacsObject:(XMPPUserCoreDataStorageObject *)object
 {
-    if (object == nil) return;
+    if (object.jid == nil) return;
     HYContactsModel *contactsModel = [self modelWithStorageObject:object];
     NSString *firstLetter = [contactsModel.firstLetterStr substringToIndex:1];// 截取首字母(并转换为大写)
     NSInteger count = self.dataSource.count;
@@ -344,7 +362,16 @@
             break;
         }
         case NSFetchedResultsChangeMove:{
-            
+            BACK(^{ // 后台处理数据
+                [self.dataSource removeAllObjects];
+                [_resultController.fetchedObjects enumerateObjectsUsingBlock:^(XMPPUserCoreDataStorageObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [self addContacsObject:object];
+                }];
+                [self sortWithContacts]; // 排序
+                MAIN(^{
+                    [self.tableView reloadData]; // 刷新数据
+                });
+            });
             break;
         }
         case NSFetchedResultsChangeUpdate:{

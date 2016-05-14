@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "HYExpandKeyboardView.h"
 
-@class HYInputViewController, HYChatMessage, GJCFAudioModel;
+@class HYInputViewController, HYChatMessage, HYAudioModel;
 @protocol HYInputViewControllerDelegate <NSObject>
 @optional
 - (void)inputViewController:(HYInputViewController *)inputViewController newHeight:(CGFloat)height; // 调整高度
 - (void)inputViewController:(HYInputViewController *)inputViewController sendText:(NSString *)text;
-- (void)inputViewController:(HYInputViewController *)inputViewController sendAudioModel:(GJCFAudioModel *)audioModel;
+- (void)inputViewController:(HYInputViewController *)inputViewController sendAudioModel:(HYAudioModel *)audioModel;
 - (void)inputViewController:(HYInputViewController *)inputViewController clickExpandType:(HYExpandType)type;;
 @end
 

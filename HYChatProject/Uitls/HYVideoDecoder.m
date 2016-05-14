@@ -8,28 +8,22 @@
 
 #import "HYVideoDecoder.h"
 #import <AVFoundation/AVFoundation.h>
-
-@interface HYVideoDecoder()
-
-@property (nonatomic,strong) NSString *filePath;
-@property (nonatomic,strong) NSMutableArray *images;
-
-@end
+#import "HYChatMessage.h"
 
 @implementation HYVideoDecoder
 
-- (instancetype)initWithFile:(NSString *) filePath
+- (instancetype)initWithFile:(NSString *)filePath
 {
     self = [super init];
     if (self) {
-        
         _images = [NSMutableArray array];
         _filePath = filePath;
     }
     return self;
 }
 
--(void) decode
+
+- (void)decode:(HYdecodeFinished)finished;
 {
     NSURL *url = [NSURL fileURLWithPath:_filePath];
     AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:url options:nil];
@@ -38,6 +32,7 @@
     AVAssetReader *reader = [[AVAssetReader alloc] initWithAsset:asset error:&error];
     if ( error) {
         NSLog(@"解码错误");
+        finished(NO);
         return;
     }
     
@@ -76,10 +71,7 @@
         }
     }];
     
-    if (_delegate && [_delegate respondsToSelector:@selector(videoDecodeFinished:)]) {
-        [_delegate videoDecodeFinished:self];
-    }
-    
+    finished(YES);
 }
 
 

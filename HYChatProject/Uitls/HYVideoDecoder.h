@@ -7,18 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class HYVideoDecoder;
-@protocol HYVideoDecoderDelegate <NSObject>
-@required
-- (void)videoDecodeFinished:(HYVideoDecoder *)videoDecoder;
-@end
+typedef void(^HYdecodeFinished)(BOOL finished);
 
 @interface HYVideoDecoder : NSObject
-@property (nonatomic, weak) id<HYVideoDecoderDelegate> delegate;
+@property (nonatomic, strong) NSString *filePath;
 @property (nonatomic, strong) CAKeyframeAnimation *animation;
+@property (nonatomic, strong) NSMutableArray *images;
 
 - (instancetype)initWithFile:(NSString *)filePath;
-- (void)decode;
+- (void)decode:(HYdecodeFinished)finished;
 
 @end

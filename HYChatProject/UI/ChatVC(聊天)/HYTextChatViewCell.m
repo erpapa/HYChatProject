@@ -55,7 +55,13 @@
     
     UIMenuItem *item1 = [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyMesssage:)];
     UIMenuItem *item2 = [[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteMessage:)];
-    UIMenuItem *item3 = [[UIMenuItem alloc] initWithTitle:@"转发" action:@selector(forwardMessage:)];
+    UIMenuItem *item3;
+    if (self.messageFrame.chatMessage.sendStatus == HYChatSendMessageStatusFaild) {
+        item3 = [[UIMenuItem alloc] initWithTitle:@"重发" action:@selector(reSendMessage:)];
+    } else {
+        item3 = [[UIMenuItem alloc] initWithTitle:@"转发" action:@selector(forwardMessage:)];
+    }
+    
     NSArray *menuItems = @[item1,item2,item3];
     [popMenu setMenuItems:menuItems];
     [popMenu setArrowDirection:UIMenuControllerArrowDown];
@@ -73,17 +79,23 @@
 
 - (void)deleteMessage:(UIMenuItem *)item
 {
-    
+    if ([self.delegate respondsToSelector:@selector(chatViewCellDelete:)]) {
+        [self.delegate chatViewCellDelete:self];
+    }
 }
 
 - (void)forwardMessage:(UIMenuItem *)item
 {
-    
+    if ([self.delegate respondsToSelector:@selector(chatViewCellForward:)]) {
+        [self.delegate chatViewCellForward:self];
+    }
 }
 
 
 - (void)reSendMessage:(UIMenuItem *)item
 {
-    
+    if ([self.delegate respondsToSelector:@selector(chatViewCellReSend:)]) {
+        [self.delegate chatViewCellReSend:self];
+    }
 }
 @end
