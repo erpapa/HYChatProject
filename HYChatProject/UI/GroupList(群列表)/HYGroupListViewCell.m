@@ -78,7 +78,7 @@
 - (void)setModel:(HYContactsModel *)model
 {
     _model = model;
-    self.nameLabel.text = model.displayName;
+    self.nameLabel.text = model.nickName;
 }
 
 /**

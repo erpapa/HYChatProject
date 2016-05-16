@@ -92,7 +92,7 @@
 - (void)setModel:(HYContactsModel *)model
 {
     _model = model;
-    self.nameLabel.text = model.displayName;
+    self.nameLabel.text = model.nickName;
     self.statusView.image = [self imageFromSectionNum:model.sectionNum];
     __weak typeof(self) weakSelf = self;
     [[HYXMPPManager sharedInstance] getAvatarFromJID:model.jid avatarBlock:^(NSData *avatar) {

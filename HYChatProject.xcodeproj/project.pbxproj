@@ -25,6 +25,7 @@
 		EA2204201CE7104E007FBBCF /* HYXMPPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA22041D1CE7104E007FBBCF /* HYXMPPManager.m */; };
 		EA2204211CE7104E007FBBCF /* HYXMPPRoomManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA22041F1CE7104E007FBBCF /* HYXMPPRoomManager.m */; };
 		EA2204241CE762B8007FBBCF /* HYForwardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2204231CE762B8007FBBCF /* HYForwardingViewController.m */; };
+		EA2204271CE76539007FBBCF /* HYForwardingViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2204261CE76539007FBBCF /* HYForwardingViewCell.m */; };
 		EA26ADB21CD08BB2000DB77C /* HYContactsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA26ADB11CD08BB2000DB77C /* HYContactsHeaderView.m */; };
 		EA26ADC51CD0C67C000DB77C /* contacts_network_2g@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA26ADB91CD0C67C000DB77C /* contacts_network_2g@2x.png */; };
 		EA26ADC61CD0C67C000DB77C /* contacts_network_2g_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA26ADBA1CD0C67C000DB77C /* contacts_network_2g_press@2x.png */; };
@@ -134,6 +135,12 @@
 		EAC1988B1CCB8C3900A45C1A /* MGSwipeTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC198891CCB8C3900A45C1A /* MGSwipeTableCell.m */; };
 		EAC6CB091CCD059B007D9E78 /* HYDatabaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC6CB071CCD059B007D9E78 /* HYDatabaseHandler.m */; };
 		EAC6CB0E1CCD0601007D9E78 /* HYDatabaseHandler+RecentChat.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC6CB0D1CCD0601007D9E78 /* HYDatabaseHandler+RecentChat.m */; };
+		EAC97C111CE89D3500CD9294 /* HYNotifactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC97C101CE89D3500CD9294 /* HYNotifactionViewController.m */; };
+		EAC97C151CE89D8E00CD9294 /* HYPhotoSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC97C141CE89D8E00CD9294 /* HYPhotoSettingViewController.m */; };
+		EAC97C191CE89DA300CD9294 /* HYHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC97C181CE89DA300CD9294 /* HYHelpViewController.m */; };
+		EAC97C1D1CE89DE800CD9294 /* HYFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC97C1C1CE89DE800CD9294 /* HYFeedbackViewController.m */; };
+		EAC97C211CE89DFC00CD9294 /* HYAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC97C201CE89DFC00CD9294 /* HYAboutViewController.m */; };
+		EAC97C241CE8D94600CD9294 /* HYChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC97C231CE8D94600CD9294 /* HYChangePasswordViewController.m */; };
 		EAD7BEE01CC539F30089873C /* amrFileCodec.mm in Sources */ = {isa = PBXBuildFile; fileRef = EAD7BED51CC539F30089873C /* amrFileCodec.mm */; };
 		EAD7BEE11CC539F30089873C /* libopencore-amrnb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD7BEDA1CC539F30089873C /* libopencore-amrnb.a */; };
 		EAD7BEE21CC539F30089873C /* libopencore-amrwb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD7BEDB1CC539F30089873C /* libopencore-amrwb.a */; };
@@ -443,6 +450,8 @@
 		EA22041F1CE7104E007FBBCF /* HYXMPPRoomManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYXMPPRoomManager.m; sourceTree = "<group>"; };
 		EA2204221CE762B8007FBBCF /* HYForwardingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYForwardingViewController.h; sourceTree = "<group>"; };
 		EA2204231CE762B8007FBBCF /* HYForwardingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYForwardingViewController.m; sourceTree = "<group>"; };
+		EA2204251CE76539007FBBCF /* HYForwardingViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYForwardingViewCell.h; sourceTree = "<group>"; };
+		EA2204261CE76539007FBBCF /* HYForwardingViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYForwardingViewCell.m; sourceTree = "<group>"; };
 		EA26ADB01CD08BB2000DB77C /* HYContactsHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYContactsHeaderView.h; sourceTree = "<group>"; };
 		EA26ADB11CD08BB2000DB77C /* HYContactsHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYContactsHeaderView.m; sourceTree = "<group>"; };
 		EA26ADB91CD0C67C000DB77C /* contacts_network_2g@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contacts_network_2g@2x.png"; sourceTree = "<group>"; };
@@ -621,6 +630,18 @@
 		EAC6CB071CCD059B007D9E78 /* HYDatabaseHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYDatabaseHandler.m; sourceTree = "<group>"; };
 		EAC6CB0C1CCD0601007D9E78 /* HYDatabaseHandler+RecentChat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HYDatabaseHandler+RecentChat.h"; sourceTree = "<group>"; };
 		EAC6CB0D1CCD0601007D9E78 /* HYDatabaseHandler+RecentChat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HYDatabaseHandler+RecentChat.m"; sourceTree = "<group>"; };
+		EAC97C0F1CE89D3500CD9294 /* HYNotifactionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYNotifactionViewController.h; sourceTree = "<group>"; };
+		EAC97C101CE89D3500CD9294 /* HYNotifactionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYNotifactionViewController.m; sourceTree = "<group>"; };
+		EAC97C131CE89D8E00CD9294 /* HYPhotoSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYPhotoSettingViewController.h; sourceTree = "<group>"; };
+		EAC97C141CE89D8E00CD9294 /* HYPhotoSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYPhotoSettingViewController.m; sourceTree = "<group>"; };
+		EAC97C171CE89DA300CD9294 /* HYHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYHelpViewController.h; sourceTree = "<group>"; };
+		EAC97C181CE89DA300CD9294 /* HYHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYHelpViewController.m; sourceTree = "<group>"; };
+		EAC97C1B1CE89DE800CD9294 /* HYFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYFeedbackViewController.h; sourceTree = "<group>"; };
+		EAC97C1C1CE89DE800CD9294 /* HYFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYFeedbackViewController.m; sourceTree = "<group>"; };
+		EAC97C1F1CE89DFC00CD9294 /* HYAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYAboutViewController.h; sourceTree = "<group>"; };
+		EAC97C201CE89DFC00CD9294 /* HYAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYAboutViewController.m; sourceTree = "<group>"; };
+		EAC97C221CE8D94600CD9294 /* HYChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYChangePasswordViewController.h; sourceTree = "<group>"; };
+		EAC97C231CE8D94600CD9294 /* HYChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYChangePasswordViewController.m; sourceTree = "<group>"; };
 		EAD7BED41CC539F30089873C /* amrFileCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amrFileCodec.h; sourceTree = "<group>"; };
 		EAD7BED51CC539F30089873C /* amrFileCodec.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = amrFileCodec.mm; sourceTree = "<group>"; };
 		EAD7BED61CC539F30089873C /* dec_if.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dec_if.h; sourceTree = "<group>"; };
@@ -1520,6 +1541,8 @@
 				EABAB87D1CD6309B00473C0F /* HYUservCardViewController.m */,
 				EAF834BD1CDCA65B00C73CB9 /* HYGroupInfoViewController.h */,
 				EAF834BE1CDCA65B00C73CB9 /* HYGroupInfoViewController.m */,
+				EAC97C221CE8D94600CD9294 /* HYChangePasswordViewController.h */,
+				EAC97C231CE8D94600CD9294 /* HYChangePasswordViewController.m */,
 			);
 			path = "vCard(名片)";
 			sourceTree = "<group>";
@@ -1528,7 +1551,12 @@
 			isa = PBXGroup;
 			children = (
 				EAFB8E801CE61D4500BBAAC1 /* 设置 */,
+				EAC97C0D1CE89CE400CD9294 /* 通知 */,
 				EAFB8E7D1CE61D0D00BBAAC1 /* 好友请求 */,
+				EAC97C121CE89D4B00CD9294 /* 照片和媒体文件 */,
+				EAC97C1E1CE89DED00CD9294 /* 关于 */,
+				EAC97C1A1CE89DAE00CD9294 /* 报告问题 */,
+				EAC97C161CE89D9400CD9294 /* 帮助 */,
 			);
 			path = "Setting(设置)";
 			sourceTree = "<group>";
@@ -1685,6 +1713,51 @@
 				EAC6CB0D1CCD0601007D9E78 /* HYDatabaseHandler+RecentChat.m */,
 			);
 			name = recentChat;
+			sourceTree = "<group>";
+		};
+		EAC97C0D1CE89CE400CD9294 /* 通知 */ = {
+			isa = PBXGroup;
+			children = (
+				EAC97C0F1CE89D3500CD9294 /* HYNotifactionViewController.h */,
+				EAC97C101CE89D3500CD9294 /* HYNotifactionViewController.m */,
+			);
+			name = "通知";
+			sourceTree = "<group>";
+		};
+		EAC97C121CE89D4B00CD9294 /* 照片和媒体文件 */ = {
+			isa = PBXGroup;
+			children = (
+				EAC97C131CE89D8E00CD9294 /* HYPhotoSettingViewController.h */,
+				EAC97C141CE89D8E00CD9294 /* HYPhotoSettingViewController.m */,
+			);
+			name = "照片和媒体文件";
+			sourceTree = "<group>";
+		};
+		EAC97C161CE89D9400CD9294 /* 帮助 */ = {
+			isa = PBXGroup;
+			children = (
+				EAC97C171CE89DA300CD9294 /* HYHelpViewController.h */,
+				EAC97C181CE89DA300CD9294 /* HYHelpViewController.m */,
+			);
+			name = "帮助";
+			sourceTree = "<group>";
+		};
+		EAC97C1A1CE89DAE00CD9294 /* 报告问题 */ = {
+			isa = PBXGroup;
+			children = (
+				EAC97C1B1CE89DE800CD9294 /* HYFeedbackViewController.h */,
+				EAC97C1C1CE89DE800CD9294 /* HYFeedbackViewController.m */,
+			);
+			name = "报告问题";
+			sourceTree = "<group>";
+		};
+		EAC97C1E1CE89DED00CD9294 /* 关于 */ = {
+			isa = PBXGroup;
+			children = (
+				EAC97C1F1CE89DFC00CD9294 /* HYAboutViewController.h */,
+				EAC97C201CE89DFC00CD9294 /* HYAboutViewController.m */,
+			);
+			name = "关于";
 			sourceTree = "<group>";
 		};
 		EAD7BED31CC539F30089873C /* AudioCoder */ = {
@@ -2837,6 +2910,8 @@
 				EAE343551CD21E720020DF2B /* HYImageChatViewCell.m */,
 				EAE3435A1CD21E990020DF2B /* HYVideoChatViewCell.h */,
 				EAE3435B1CD21E990020DF2B /* HYVideoChatViewCell.m */,
+				EA2204251CE76539007FBBCF /* HYForwardingViewCell.h */,
+				EA2204261CE76539007FBBCF /* HYForwardingViewCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -3333,6 +3408,7 @@
 				EADD1D661C9EE1D300E22D2B /* XMPPStreamManagement.m in Sources */,
 				EAC05B231CC50B7900ABA3C5 /* YYImage.m in Sources */,
 				EADD1D2E1C9EE1D300E22D2B /* XMPPRoomHybrid.xcdatamodeld in Sources */,
+				EAC97C1D1CE89DE800CD9294 /* HYFeedbackViewController.m in Sources */,
 				EADD1D871C9EE1D300E22D2B /* DDXMLDocument.m in Sources */,
 				EAC05B1F1CC50B7900ABA3C5 /* UIImage+YYWebImage.m in Sources */,
 				EADD1D861C9EE1D300E22D2B /* NSString+DDXML.m in Sources */,
@@ -3364,6 +3440,7 @@
 				EADD1D791C9EE1D300E22D2B /* XMPPSRVResolver.m in Sources */,
 				EA50094B1CDE26A30094095B /* HYRecordProgressHUD.m in Sources */,
 				EADD1D281C9EE1D300E22D2B /* XMPPLastActivity.m in Sources */,
+				EAC97C191CE89DA300CD9294 /* HYHelpViewController.m in Sources */,
 				EAC05B201CC50B7900ABA3C5 /* UIImageView+YYWebImage.m in Sources */,
 				EAFB8E781CE5CF5000BBAAC1 /* HYPhotoBrowserController.m in Sources */,
 				EADD1D5C1C9EE1D300E22D2B /* XMPPMessageArchiving.m in Sources */,
@@ -3394,6 +3471,7 @@
 				EADD1D6F1C9EE1D300E22D2B /* XMPPMessage+XEP_0280.m in Sources */,
 				EA2204201CE7104E007FBBCF /* HYXMPPManager.m in Sources */,
 				EADD1D4D1C9EE1D300E22D2B /* NSDate+XMPPDateTimeProfiles.m in Sources */,
+				EAC97C151CE89D8E00CD9294 /* HYPhotoSettingViewController.m in Sources */,
 				EADD1D521C9EE1D300E22D2B /* NSString+XEP_0106.m in Sources */,
 				EADD1CFE1C9EE1D300E22D2B /* XMPPAnonymousAuthentication.m in Sources */,
 				EADD17501C9ED85400E22D2B /* HYTabBarController.m in Sources */,
@@ -3404,6 +3482,7 @@
 				EA26ADB21CD08BB2000DB77C /* HYContactsHeaderView.m in Sources */,
 				EAF485821CD466420096B1F1 /* AFURLConnectionOperation.m in Sources */,
 				EA412C011CCA6EFA009C071B /* HYRecentChatModel.m in Sources */,
+				EAC97C111CE89D3500CD9294 /* HYNotifactionViewController.m in Sources */,
 				EAE343461CD2166B0020DF2B /* NSParagraphStyle+YYText.m in Sources */,
 				EADD1D291C9EE1D300E22D2B /* XMPPPrivacy.m in Sources */,
 				EAE3433D1CD2166B0020DF2B /* YYTextLine.m in Sources */,
@@ -3453,6 +3532,7 @@
 				EA5009361CDDBCE50094095B /* HYEmoticonCollectionView.m in Sources */,
 				EADD1D5B1C9EE1D300E22D2B /* XMPPMessageArchivingCoreDataStorage.m in Sources */,
 				EADD1D831C9EE1D300E22D2B /* DDDispatchQueueLogFormatter.m in Sources */,
+				EA2204271CE76539007FBBCF /* HYForwardingViewCell.m in Sources */,
 				EAB628311CCCC90600FB94BC /* HYConstant.m in Sources */,
 				EAE343401CD2166B0020DF2B /* YYTextArchiver.m in Sources */,
 				EAE054F51CC8C2C500E57710 /* SVProgressHUD.m in Sources */,
@@ -3514,6 +3594,7 @@
 				EADD1D6D1C9EE1D300E22D2B /* XMPPAttentionModule.m in Sources */,
 				EADD1D431C9EE1D300E22D2B /* XMPPvCardTempModule.m in Sources */,
 				EADD1D3B1C9EE1D300E22D2B /* XMPPvCardCoreDataStorageObject.m in Sources */,
+				EAC97C241CE8D94600CD9294 /* HYChangePasswordViewController.m in Sources */,
 				EA0CEADD1CE30ADF00D7E80C /* HYDatabaseHandler+NewFriend.m in Sources */,
 				EADD1D551C9EE1D300E22D2B /* XMPPCapsCoreDataStorageObject.m in Sources */,
 				EA2204241CE762B8007FBBCF /* HYForwardingViewController.m in Sources */,
@@ -3576,6 +3657,7 @@
 				EAF834BF1CDCA65B00C73CB9 /* HYGroupInfoViewController.m in Sources */,
 				EADD1D3A1C9EE1D300E22D2B /* XMPPvCardCoreDataStorage.m in Sources */,
 				EADD1D031C9EE1D300E22D2B /* XMPPSCRAMSHA1Authentication.m in Sources */,
+				EAC97C211CE89DFC00CD9294 /* HYAboutViewController.m in Sources */,
 				EADD1D411C9EE1D300E22D2B /* XMPPvCardTempEmail.m in Sources */,
 				EADD1D081C9EE1D300E22D2B /* NSXMLElement+XMPP.m in Sources */,
 				EA2204151CE6C823007FBBCF /* HYFileUploadTask.m in Sources */,

@@ -98,6 +98,7 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (indexPath.section == 0) {
         HYMyvCardViewController *myvCardVC = [[HYMyvCardViewController alloc] init];
+        myvCardVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:myvCardVC animated:YES];
     } else {
         [[HYXMPPManager sharedInstance] xmppUserlogout];
@@ -132,8 +133,8 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
                         @[
                               @{@"image":@"",@"text":@"报告问题"},
                               @{@"image":@"",@"text":@"帮助"},
-                              @{@"image":@"",@"text":@"关于"}]
-                        ];
+                              @{@"image":@"",@"text":@"关于"}
+                        ]];
     }
     return _dataSource;
 }

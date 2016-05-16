@@ -38,6 +38,10 @@
 - (void)testExample1 {
     NSLog(@"%f",[NSDate timeIntervalSinceReferenceDate]); // 2000.1.1
     NSLog(@"%f",[[NSDate date] timeIntervalSince1970]); // 1970.1.1
+    
+    NSMutableArray *array = [NSMutableArray arrayWithObjects:@"1",@"2", nil];
+    [array removeObject:@"0"];
+    NSLog(@"%@",array);
 }
 
 - (void)testPerformanceExample {

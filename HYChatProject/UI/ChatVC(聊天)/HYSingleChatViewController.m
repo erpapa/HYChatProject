@@ -19,6 +19,7 @@
 #import "HYNetworkManager.h"
 
 #import "ODRefreshControl.h"
+#import "HYForwardingViewController.h"
 #import "HYVideoCaptureController.h"
 #import "HYVideoPlayController.h"
 #import "HYPhotoBrowserController.h"
@@ -111,6 +112,15 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
 {
     [super viewDidAppear:animated];
     [self settingKeyboard];
+    NSArray *indexPaths = [self.tableView indexPathsForVisibleRows];
+    NSMutableArray *indexs = [NSMutableArray array];
+    for (NSIndexPath *indexPath in indexPaths) {
+        HYChatMessageFrame *messageFrame = [self.dataSource objectAtIndex:indexPath.row];
+        if (messageFrame.chatMessage.type == HYChatMessageTypeVideo) {
+            [indexs addObject:indexPath];
+        }
+    }
+    [self.tableView reloadRowsAtIndexPaths:indexs withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -277,30 +287,27 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
         UIImage *original = [info objectForKey:UIImagePickerControllerOriginalImage];
         //发送消息
         HYChatMessage *message = [[HYChatMessage alloc] init];
-        NSString *imageName = [NSString stringWithFormat:@"%@.webP",message.messageID];
+        NSString *imageName = [NSString stringWithFormat:@"%@.jpg",message.messageID];
         message.imageUrl = QN_FullURL(imageName);
+        CGFloat quality = original.size.width > 1600 ? 0.4 : 0.9;
+        NSData *imageData = UIImageJPEGRepresentation(original, quality);
+        // NSData *imageData = [YYImageEncoder encodeImage:original type:YYImageTypeWebP quality:quality];// webP格式，但是由于太消耗内存，舍弃
+        [[YYImageCache sharedCache] setImage:nil imageData:imageData forKey:QN_FullURL(imageName) withType:YYImageCacheTypeAll]; // 设置缓存，重要！！！！
         [self sendSingleMessage:message withObject:original];
-        BACK(^{
-            CGFloat quality = 0.9;
-            NSData *data = UIImageJPEGRepresentation(original, quality);
-            if (data.length >= 768 * 1024) quality = 0.7;
-            NSData *imageData = [YYImageEncoder encodeImage:original type:YYImageTypeWebP quality:quality];
-            [[YYImageCache sharedCache] setImage:nil imageData:imageData forKey:QN_FullURL(imageName) withType:YYImageCacheTypeAll]; // 设置缓存，重要！！！！
-            __weak typeof(self) weakSelf = self;
-            [[HYNetworkManager sharedInstance] uploadImage:imageData imageName:imageName successBlock:^(BOOL success) {
-                if(success){ // 上传照片成功
-                    BOOL sendSuccess = [[HYXMPPManager sharedInstance] sendText:[message jsonString] toJid:weakSelf.chatJid];
-                    if (sendSuccess) {
-                        message.sendStatus = HYChatSendMessageStatusSuccess;
-                    } else {
-                        message.sendStatus = HYChatSendMessageStatusFaild;
-                    }
+        __weak typeof(self) weakSelf = self;
+        [[HYNetworkManager sharedInstance] uploadImage:imageData imageName:imageName successBlock:^(BOOL success) {
+            if(success){ // 上传照片成功
+                BOOL sendSuccess = [[HYXMPPManager sharedInstance] sendText:[message jsonString] toJid:weakSelf.chatJid];
+                if (sendSuccess) {
+                    message.sendStatus = HYChatSendMessageStatusSuccess;
                 } else {
                     message.sendStatus = HYChatSendMessageStatusFaild;
                 }
-                [weakSelf refreshMessage:message];
-            }];
-        });
+            } else {
+                message.sendStatus = HYChatSendMessageStatusFaild;
+            }
+            [weakSelf refreshMessage:message];
+        }];
         
     }]; // dismiss
     
@@ -318,13 +325,14 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     //发送消息
     HYChatMessage *message = [[HYChatMessage alloc] init];
     
-    NSString *imageName = [NSString stringWithFormat:@"%@.webP",message.messageID];
+    NSString *imageName = [NSString stringWithFormat:@"%@.jpg",message.messageID];
     NSString *videoName = [filePath lastPathComponent];
     HYVideoModel *videoModel = [[HYVideoModel alloc] init];
     videoModel.videoThumbImageUrl = QN_FullURL(imageName);
     videoModel.videoUrl = QN_FullURL(videoName);
     videoModel.videoSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil] fileSize]; // 视频大小
-    NSData *imageData = [YYImageEncoder encodeImage:screenShot type:YYImageTypeWebP quality:0.9];
+    // NSData *imageData = [YYImageEncoder encodeImage:original type:YYImageTypeWebP quality:quality];// webP格式，但是由于太消耗内存，舍弃
+    NSData *imageData = UIImageJPEGRepresentation(screenShot, 0.9);
     [[YYImageCache sharedCache] setImage:nil imageData:imageData forKey:QN_FullURL(imageName) withType:YYImageCacheTypeAll]; // 设置缓存，重要！！！！
     [self sendSingleMessage:message withObject:videoModel];
     // 上传到七牛云
@@ -504,7 +512,9 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
 // 转发
 - (void)chatViewCellForward:(HYBaseChatViewCell *)chatViewCell
 {
-    
+    HYForwardingViewController *forwardingVC = [[HYForwardingViewController alloc] init];
+    forwardingVC.message = chatViewCell.messageFrame.chatMessage;
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:forwardingVC] animated:YES completion:nil];
 }
 
 // 重发
@@ -524,7 +534,7 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
             break;
         }
         case HYChatMessageTypeImage:{ // 图片
-            NSString *imageName = [NSString stringWithFormat:@"%@.webP",message.messageID];
+            NSString *imageName = [NSString stringWithFormat:@"%@.jpg",message.messageID];
             NSData *imageData = [[YYImageCache sharedCache] getImageDataForKey:QN_FullURL(imageName)]; // 从缓存读取图片
             message.sendStatus = HYChatSendMessageStatusSending;
             [self refreshMessage:message]; // 刷新
@@ -565,7 +575,7 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
         }
         
         case HYChatMessageTypeVideo:{ // 视频
-            NSString *imageName = [NSString stringWithFormat:@"%@.webP",message.messageID];
+            NSString *imageName = [NSString stringWithFormat:@"%@.jpg",message.messageID];
             NSData *imageData = [[YYImageCache sharedCache] getImageDataForKey:QN_FullURL(imageName)]; // 从缓存读取图片
             NSString *filePath = message.videoModel.videoLocalPath;
             NSString *videoName = [filePath lastPathComponent];
@@ -630,7 +640,6 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     } else if ([obj isKindOfClass:[UIImage class]]) { // 图片
         UIImage *image = (UIImage *)obj;
         chatMessage.type = HYChatMessageTypeImage;
-        chatMessage.image = image;
         chatMessage.imageWidth = image.size.width;
         chatMessage.imageHeight = image.size.height;
         chatMessage.sendStatus = HYChatSendMessageStatusSending;

@@ -15,6 +15,6 @@ typedef void(^HYdecodeFinished)(BOOL finished);
 @property (nonatomic, strong) NSMutableArray *images;
 
 - (instancetype)initWithFile:(NSString *)filePath;
-- (void)decode:(HYdecodeFinished)finished;
+- (void)decodeVideo:(HYdecodeFinished)finished;
 
 @end

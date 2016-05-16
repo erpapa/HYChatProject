@@ -62,7 +62,7 @@
             [bookmarkedRooms enumerateObjectsUsingBlock:^(XMPPRoom *room, NSUInteger idx, BOOL * _Nonnull stop) {
                 HYContactsModel *model = [[HYContactsModel alloc] init];
                 model.jid = room.roomJID;
-                model.displayName = room.roomJID.user;
+                model.nickName = room.roomJID.user;
                 model.isGroup = YES;
                 [self.dataSource addObject:model];
             }];
@@ -121,44 +121,6 @@
     [self.navigationController pushViewController:groupChat animated:YES];
 }
 
-/*
-- (void)loadRooms
-{
-    //1.上下文   XMPPRoster.xcdatamodel
-    NSManagedObjectContext *context = [[HYXMPPRoomManager sharedInstance] managedObjectContext_room];
-    if (context == nil) { // 防止xmppStream没有连接会崩溃
-        return;
-    }
-    //2.Fetch请求
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"XMPPRoomOccupantCoreDataStorageObject"];
-    //3.排序和过滤
-    NSPredicate *pre=[NSPredicate predicateWithFormat:@"streamBareJidStr == %@",[HYXMPPRoomManager sharedInstance].xmppStream.myJID.bare];
-    fetchRequest.predicate=pre;
-    //
-    NSSortDescriptor *sort=[NSSortDescriptor sortDescriptorWithKey:@"roomJIDStr" ascending:YES];
-    fetchRequest.sortDescriptors=@[sort];
-    
-    //4.执行查询获取数据
-    _resultController = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
-    _resultController.delegate=self;
-    //执行
-    NSError *error=nil;
-    if(![_resultController performFetch:&error]){
-        HYLog(@"%s---%@",__func__,error);
-    } else {
-        [self.dataSource removeAllObjects];
-        [_resultController.fetchedObjects enumerateObjectsUsingBlock:^(XMPPRoomOccupantCoreDataStorageObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
-            HYContactsModel *model = [[HYContactsModel alloc] init];
-            model.jid = object.roomJID;
-            model.displayName = object.roomJID.user;
-            model.isGroup = YES;
-            [self.dataSource addObject:model];
-        }];
-    }
-    
-}
-*/
-
 #pragma mark - 创建/加入房间
 - (void)createRoom:(id)sender
 {
@@ -188,7 +150,7 @@
     [bookmarkedRooms enumerateObjectsUsingBlock:^(XMPPRoom *room, NSUInteger idx, BOOL * _Nonnull stop) {
         HYContactsModel *model = [[HYContactsModel alloc] init];
         model.jid = room.roomJID;
-        model.displayName = room.roomJID.user;
+        model.nickName = room.roomJID.user;
         model.isGroup = YES;
         [self.dataSource addObject:model];
     }];
@@ -231,5 +193,43 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+/*
+ - (void)loadRooms
+ {
+ //1.上下文   XMPPRoster.xcdatamodel
+ NSManagedObjectContext *context = [[HYXMPPRoomManager sharedInstance] managedObjectContext_room];
+ if (context == nil) { // 防止xmppStream没有连接会崩溃
+ return;
+ }
+ //2.Fetch请求
+ NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"XMPPRoomOccupantCoreDataStorageObject"];
+ //3.排序和过滤
+ NSPredicate *pre=[NSPredicate predicateWithFormat:@"streamBareJidStr == %@",[HYXMPPRoomManager sharedInstance].xmppStream.myJID.bare];
+ fetchRequest.predicate=pre;
+ //
+ NSSortDescriptor *sort=[NSSortDescriptor sortDescriptorWithKey:@"roomJIDStr" ascending:YES];
+ fetchRequest.sortDescriptors=@[sort];
+ 
+ //4.执行查询获取数据
+ _resultController = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+ _resultController.delegate=self;
+ //执行
+ NSError *error=nil;
+ if(![_resultController performFetch:&error]){
+ HYLog(@"%s---%@",__func__,error);
+ } else {
+ [self.dataSource removeAllObjects];
+ [_resultController.fetchedObjects enumerateObjectsUsingBlock:^(XMPPRoomOccupantCoreDataStorageObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
+ HYContactsModel *model = [[HYContactsModel alloc] init];
+ model.jid = object.roomJID;
+ model.displayName = object.roomJID.user;
+ model.isGroup = YES;
+ [self.dataSource addObject:model];
+ }];
+ }
+ 
+ }
+ */
 
 @end

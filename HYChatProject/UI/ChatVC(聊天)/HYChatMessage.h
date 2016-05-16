@@ -48,7 +48,6 @@ typedef NS_ENUM(NSInteger, HYChatMessageType) {
 
 #pragma mark - 图片消息
 @property (nonatomic, strong) NSString *imageUrl;         // 图片url(发送消息需要在本地图片另存为一份)
-@property (nonatomic, strong) UIImage *image;             // 图片
 @property (nonatomic, assign) float imageWidth;           // 高度
 @property (nonatomic, assign) float imageHeight;          // 宽度
 

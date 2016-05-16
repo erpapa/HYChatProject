@@ -12,6 +12,7 @@
 #import "HYXMPPManager.h"
 #import "HYDatabaseHandler+HY.h"
 #import "HYUtils.h"
+#import "HYLoginInfo.h"
 #import "HYSingleChatViewController.h"
 #import "HYGroupChatViewController.h"
 #import "HYSearchController.h"
@@ -69,7 +70,7 @@
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     NSMutableArray *searchResults = [NSMutableArray array];
     [self.dataSource enumerateObjectsUsingBlock:^(HYRecentChatModel *chatModel, NSUInteger idx, BOOL *stop) {
-        if ([chatModel.jid.user containsString:self.searchController.searchBar.text]) {
+        if ([chatModel.jid.user containsString:self.searchController.searchBar.text] || [chatModel.nickName containsString:self.searchController.searchBar.text]) {
             [searchResults addObject:chatModel];
         }
     }];
@@ -155,10 +156,11 @@
 - (void)receiveRecentMessage:(NSNotification *)noti
 {
     HYRecentChatModel *chatModel = noti.object;
-    NSInteger count = self.dataSource.count;
+    NSString *nickName = [[HYLoginInfo sharedInstance].nickNameDict objectForKey:chatModel.jid.bare];
+    chatModel.nickName = nickName.length ? nickName : chatModel.jid.user;
     NSInteger found = NSNotFound;
     NSString *chatBare = [[HYXMPPManager sharedInstance].chatJID bare];
-    for (NSInteger index = 0; index < count; index++) {
+    for (NSInteger index = 0; index < self.dataSource.count; index++) {
         HYRecentChatModel *model = [self.dataSource objectAtIndex:index];
         if (chatBare.length && [[model.jid bare] isEqualToString:chatBare]) {
             found = index;
@@ -169,7 +171,9 @@
             break;
         } else if ([[model.jid bare] isEqualToString:[chatModel.jid bare]]) { // 已在列表中
             found = index;
-            self.unreadCount += 1; // 未读数+1
+            if (chatModel.unreadCount != 0) { // 如果等于0,说明是自己发送的消息
+                self.unreadCount += 1; // 未读数+1
+            }
             NSIndexPath *currentIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
             NSIndexPath *toIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
             [self moveChatModel:chatModel fromIndexPath:currentIndexPath toIndexPath:toIndexPath]; // 更新数据
@@ -180,7 +184,9 @@
         if (chatBare.length && [[chatModel.jid bare] isEqualToString:chatBare]) {
             [self insertChatModel:chatModel atIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];// 插入数据
         } else {
-            self.unreadCount += 1; // 未读数+1
+            if (chatModel.unreadCount != 0) { // 如果等于0,说明是自己发送的消息
+                self.unreadCount += 1; // 未读数+1
+            }
             [self insertChatModel:chatModel atIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];// 插入数据
         }
     }
@@ -250,8 +256,11 @@
 {
     [[HYDatabaseHandler sharedInstance] recentChatModels:self.dataSource];
     [self.dataSource enumerateObjectsUsingBlock:^(HYRecentChatModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *nickName = [[HYLoginInfo sharedInstance].nickNameDict objectForKey:obj.jid.bare];
+        obj.nickName = nickName.length ? nickName : obj.jid.user;
         self.unreadCount += obj.unreadCount; // 获得所有未读消息数
     }];
+
 }
 
 #pragma mark - 接收进入聊天界面通知

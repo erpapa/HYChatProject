@@ -596,6 +596,16 @@ NSString *const kXMPPvCardTempElement = @"vCard";
     XMPP_VCARD_SET_STRING_CHILD(birthDay, @"BDAY");
 }
 
+- (NSString *)signature
+{
+    return [[self elementForName:@"SIGNATURE"] stringValue];
+}
+
+- (void)setSignature:(NSString *)signature
+{
+    XMPP_VCARD_SET_STRING_CHILD(signature, @"SIGNATURE");
+}
+
 - (NSArray *)orgUnits {
 	NSArray *result = nil;
 	NSXMLElement *org = [self elementForName:@"ORG"];

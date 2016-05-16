@@ -15,9 +15,9 @@
 @property (nonatomic, assign) NSInteger hostPort;//端口
 @property (nonatomic, assign) BOOL logon;// 未注销(在线)
 @property (strong, nonatomic) XMPPJID *jid;
-/**
- *  单例
- */
+/* jid:nickName */
+@property (nonatomic, strong) NSMutableDictionary *nickNameDict;
+/* 单例 */
 + (instancetype)sharedInstance;
 /**
  *  从沙盒里获取用户数据
@@ -28,4 +28,10 @@
  *  保存用户数据到沙盒
  */
 - (void)saveUserInfoToSanbox;
+
+/**
+ *  保存nickName字典
+ */
+- (void)saveNickNameDictToSanbox;
+
 @end

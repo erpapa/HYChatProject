@@ -29,7 +29,6 @@
 {
     // 图片
     self.photoView = [[UIImageView alloc] init];
-    self.photoView.layer.cornerRadius = 4;
     self.photoView.layer.masksToBounds = YES;
     self.photoView.contentMode = UIViewContentModeScaleAspectFill;
     self.photoView.backgroundColor = [UIColor colorWithRed:211/255.0 green:211/255.0 blue:211/255.0 alpha:1.0f];
@@ -53,14 +52,7 @@
         normalImage = [[UIImage imageNamed:@"chat_receive_nor"] resizableImageWithCapInsets:UIEdgeInsetsMake(25, 40, 30, 70) resizingMode:UIImageResizingModeStretch];
     }
     [self makeMaskView:self.photoView withImage:normalImage]; // 设置mask，遮盖
-    if (message.image) {
-        self.photoView.image = message.image;
-    } else {
-        [self.photoView yy_setImageWithURL:[NSURL URLWithString:message.imageUrl] placeholder:[UIImage imageNamed:@"chat_images_failed"] options:YYWebImageOptionProgressive completion:nil];
-    }
-    
-    
-    
+    [self.photoView yy_setImageWithURL:[NSURL URLWithString:message.imageUrl] placeholder:[UIImage imageNamed:@"chat_images_failed"] options:YYWebImageOptionShowNetworkActivity completion:nil];
 }
 
 - (void)makeMaskView:(UIView *)view withImage:(UIImage *)image

@@ -10,7 +10,7 @@
 
 @interface HYContactsModel : NSObject
 @property (nonatomic, strong) XMPPJID *jid;
-@property (nonatomic, copy) NSString *displayName;    // 好友名称
+@property (nonatomic, copy) NSString *nickName;       // 好友昵称
 @property (nonatomic, copy) NSString *firstLetterStr; // 首字母字符串
 @property (nonatomic, assign) NSInteger sectionNum; // 好友状态 0-[在线] 1-[忙碌] 2-[离线]
 @property (nonatomic, assign) BOOL isGroup; // 是否是群组

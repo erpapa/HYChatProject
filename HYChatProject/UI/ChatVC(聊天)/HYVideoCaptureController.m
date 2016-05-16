@@ -54,16 +54,16 @@
     
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [_session startRunning];
     [UIView animateWithDuration:0.25f animations:^{
         self.footerView.transform = CGAffineTransformMakeTranslation(0, -CGRectGetHeight(self.footerView.bounds));
     }];
 }
 
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     [_session stopRunning];
 }
 

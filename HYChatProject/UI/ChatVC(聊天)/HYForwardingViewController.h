@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class HYChatMessage;
 @interface HYForwardingViewController : UIViewController
 
+@property (nonatomic, strong) HYChatMessage *message;
 @end

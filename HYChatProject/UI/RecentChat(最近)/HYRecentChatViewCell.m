@@ -84,7 +84,7 @@
     CGFloat nameLabelH = timeLabelH;
     self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH)];
     self.nameLabel.textColor = [UIColor blackColor];
-    self.nameLabel.font = [UIFont systemFontOfSize:20];
+    self.nameLabel.font = [UIFont systemFontOfSize:18];
     [self.contentView addSubview:self.nameLabel];
     
     // 3.消息内容
@@ -120,7 +120,7 @@
 {
     _chatModel = chatModel;
     self.headView.image = chatModel.isGroup ? [UIImage imageNamed:@"defaultGroupHead"] : [UIImage imageNamed:@"defaultHead"];
-    self.nameLabel.text = chatModel.jid.user;
+    self.nameLabel.text = chatModel.nickName;
     self.detailLabel.attributedText = chatModel.attText; // 赋值属性字符串
     self.timeLabel.text = [HYUtils sampleTimeStringSince1970:chatModel.time];
     // 未读消息数

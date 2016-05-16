@@ -13,6 +13,7 @@
 #import "HYContactsHeaderView.h"
 #import "HYContacts.h"
 #import "HYContactsModel.h"
+#import "HYLoginInfo.h"
 #import "HYXMPPManager.h"
 #import "HYSingleChatViewController.h"
 #import "HYNewFriendViewController.h"
@@ -73,7 +74,7 @@
     NSMutableArray *searchResults = [NSMutableArray array];
     [self.dataSource enumerateObjectsUsingBlock:^(HYContacts *contacts, NSUInteger idx, BOOL *stop) {
         [contacts.infoArray enumerateObjectsUsingBlock:^(HYContactsModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([model.displayName containsString:self.searchController.searchBar.text]) {
+            if ([model.jid.user containsString:self.searchController.searchBar.text] ||[model.nickName containsString:self.searchController.searchBar.text]) {
                 [searchResults addObject:model];
             }
         }];
@@ -218,7 +219,7 @@
         
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"设置好友昵称" message:nil preferredStyle:UIAlertControllerStyleAlert];
         [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField){
-            textField.text = model.displayName;
+            textField.text = model.nickName;
         }];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -265,17 +266,7 @@
     if(![_resultController performFetch:&error]){
         HYLog(@"%s---%@",__func__,error);
     } else {
-        BACK(^{ // 后台处理数据
-            [self.dataSource removeAllObjects];
-            [_resultController.fetchedObjects enumerateObjectsUsingBlock:^(XMPPUserCoreDataStorageObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
-                [self addContacsObject:object];
-            }];
-            [self sortWithContacts]; // 排序
-            MAIN(^{
-                [self.tableView reloadData]; // 刷新数据
-            });
-        });
-        
+        [self reloadDataSource];
     }
     
 }
@@ -340,9 +331,7 @@
     switch (type) {
         case NSFetchedResultsChangeInsert:{
             // 插入数据
-            [self addContacsObject:object];
-            [self sortWithContacts];
-            [self.tableView reloadData];
+            [self reloadDataSource];
             break;
         }
         case NSFetchedResultsChangeDelete:{
@@ -362,16 +351,7 @@
             break;
         }
         case NSFetchedResultsChangeMove:{
-            BACK(^{ // 后台处理数据
-                [self.dataSource removeAllObjects];
-                [_resultController.fetchedObjects enumerateObjectsUsingBlock:^(XMPPUserCoreDataStorageObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
-                    [self addContacsObject:object];
-                }];
-                [self sortWithContacts]; // 排序
-                MAIN(^{
-                    [self.tableView reloadData]; // 刷新数据
-                });
-            });
+            [self reloadDataSource];
             break;
         }
         case NSFetchedResultsChangeUpdate:{
@@ -381,11 +361,16 @@
                 for (NSInteger j = 0; j < contact.infoArray.count; j++) {
                     HYContactsModel *model = [contact.infoArray objectAtIndex:j];
                     if ([model.jid.bare isEqualToString:object.jid.bare]) {
+                        // 如果更改昵称后还是在当前index，不会更新header, 在这里比较nickname,如果昵称改变就重新reload
+                        if (![model.nickName isEqualToString:object.nickname]) {
+                            [self reloadDataSource];
+                            return;
+                        }
                         HYContactsModel *currentModel = [self modelWithStorageObject:object];
                         [contact.infoArray removeObjectAtIndex:j];
                         [contact.infoArray insertObject:currentModel atIndex:j];
-                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i+1];
-                        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                        NSIndexPath *path = [NSIndexPath indexPathForRow:j inSection:i+1];
+                        [self.tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
                         return;
                     }
                 }
@@ -402,7 +387,7 @@
  */
 - (HYContactsModel *)modelWithStorageObject:(XMPPUserCoreDataStorageObject *)object
 {
-    NSString *userName = object.displayName.length ? object.displayName : object.jid.user; // 昵称
+    NSString *userName = object.nickname.length ? object.nickname : object.jid.user; // 昵称
     NSString *firstLetterStr = [NSString new];
     if (userName.length) {
         CFMutableStringRef string = CFStringCreateMutableCopy(NULL, 0, (__bridge CFStringRef)userName);
@@ -417,7 +402,7 @@
     
     HYContactsModel *contactsModel = [[HYContactsModel alloc] init];
     contactsModel.jid = object.jid;
-    contactsModel.displayName = userName;
+    contactsModel.nickName = userName;
     contactsModel.firstLetterStr = firstLetterStr;
     contactsModel.sectionNum = [object.sectionNum integerValue];
     contactsModel.isGroup = NO;
@@ -445,6 +430,30 @@
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
     
+}
+
+#pragma mark - 更新数据
+
+- (void)reloadDataSource
+{
+    BACK(^{ // 后台处理数据
+        [self.dataSource removeAllObjects];
+        [_resultController.fetchedObjects enumerateObjectsUsingBlock:^(XMPPUserCoreDataStorageObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
+            NSString *nickName = object.nickname;
+            if (nickName.length == 0) {
+                nickName = object.jid.user;
+            }
+            if (object.jid) {
+                [[HYLoginInfo sharedInstance].nickNameDict setObject:nickName forKey:object.jid.bare]; // 储存到字典
+            }
+            [self addContacsObject:object];
+        }];
+        [[HYLoginInfo sharedInstance] saveNickNameDictToSanbox];
+        [self sortWithContacts]; // 排序
+        MAIN(^{
+            [self.tableView reloadData]; // 刷新数据
+        });
+    });
 }
 
 #pragma mark - 懒加载

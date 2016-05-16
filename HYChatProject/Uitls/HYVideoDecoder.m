@@ -23,7 +23,7 @@
 }
 
 
-- (void)decode:(HYdecodeFinished)finished;
+- (void)decodeVideo:(HYdecodeFinished)finished;
 {
     NSURL *url = [NSURL fileURLWithPath:_filePath];
     AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:url options:nil];

@@ -30,7 +30,6 @@
 {
     // 视频
     self.videoView = [[UIImageView alloc] init];
-    self.videoView.layer.cornerRadius = 4;
     self.videoView.layer.masksToBounds = YES;
     self.videoView.contentMode = UIViewContentModeScaleAspectFill;
     self.videoView.backgroundColor = [UIColor colorWithRed:211/255.0 green:211/255.0 blue:211/255.0 alpha:1.0f];
@@ -54,7 +53,7 @@
         normalImage = [[UIImage imageNamed:@"chat_receive_nor"] resizableImageWithCapInsets:UIEdgeInsetsMake(25, 40, 30, 70) resizingMode:UIImageResizingModeStretch];
     }
     [self makeMaskView:self.videoView withImage:normalImage]; // 设置mask，遮盖
-    [self.videoView yy_setImageWithURL:[NSURL URLWithString:message.videoModel.videoThumbImageUrl] options:YYWebImageOptionProgressive];
+    self.videoView.yy_imageURL = [NSURL URLWithString:message.videoModel.videoThumbImageUrl];
     
     if (message.videoModel.videoLocalPath) { // 本地文件存在
         [self decodeVideo]; // 解码
@@ -78,11 +77,11 @@
 - (void)decodeVideo
 {
     if (self.messageFrame.chatMessage.videoModel.videoDecoder == nil) {
-        
+        __weak typeof(self) weakSelf = self;
+        NSString *filePath = self.messageFrame.chatMessage.videoModel.videoLocalPath;
+        self.messageFrame.chatMessage.videoModel.videoDecoder = [[HYVideoDecoder alloc] initWithFile:filePath];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            self.messageFrame.chatMessage.videoModel.videoDecoder = [[HYVideoDecoder alloc] initWithFile:self.messageFrame.chatMessage.videoModel.videoLocalPath];
-            __weak typeof(self) weakSelf = self;
-            [weakSelf.messageFrame.chatMessage.videoModel.videoDecoder decode:^(BOOL finished) {
+            [weakSelf.messageFrame.chatMessage.videoModel.videoDecoder decodeVideo:^(BOOL finished) {
                 if (finished) {
                     [weakSelf videoDecodeFinished:weakSelf.messageFrame.chatMessage.videoModel.videoDecoder];
                 }

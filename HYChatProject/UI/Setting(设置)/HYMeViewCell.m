@@ -81,8 +81,8 @@
 - (void)setVCard:(XMPPvCardTemp *)vCard
 {
     _vCard = vCard;
-    self.iconView.image = [UIImage imageWithData:vCard.photo];
-    NSString *user = [HYLoginInfo sharedInstance].user;
+    self.iconView.image = vCard.photo ? [UIImage imageWithData:vCard.photo] : [UIImage imageNamed:@"defaultHead"];
+    NSString *user = [HYLoginInfo sharedInstance].jid.user;
     self.nameLabel.text = vCard.nickname.length ? vCard.nickname : user;
     self.detailLabel.text = [NSString stringWithFormat:@"帐号: %@",user];
 }

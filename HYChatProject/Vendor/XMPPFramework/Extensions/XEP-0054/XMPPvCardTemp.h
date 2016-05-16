@@ -73,6 +73,7 @@ extern NSString *const kXMPPvCardTempElement;
 @property (nonatomic, strong) NSString *sex;
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *birthDay;
+@property (nonatomic, strong) NSString *signature;
 /*
  * ORGUNITs can only be set if there is already an ORGNAME. Otherwise, changes are ignored.
  */

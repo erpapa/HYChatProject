@@ -78,4 +78,22 @@ static HYLoginInfo *instance;
     return [XMPPJID jidWithUser:_user domain:_hostName resource:kResource];
 }
 
+- (void)saveNickNameDictToSanbox
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:_nickNameDict forKey:@"nickNameDict"];
+    [defaults synchronize];
+}
+
+- (NSMutableDictionary *)nickNameDict
+{
+    if (_nickNameDict == nil) {
+        _nickNameDict = [[[NSUserDefaults standardUserDefaults] objectForKey:@"nickNameDict"] mutableCopy];
+        if (_nickNameDict == nil) {
+            _nickNameDict = [NSMutableDictionary dictionary];
+        }
+    }
+    return _nickNameDict;
+}
+
 @end
