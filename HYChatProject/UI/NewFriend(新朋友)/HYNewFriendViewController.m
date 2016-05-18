@@ -29,7 +29,7 @@
     [[HYDatabaseHandler sharedInstance] allNewFriends:self.dataSource];// 获取数据
     if (self.dataSource.count == 0) { // 没有记录，显添加好友
         UIView *moreView = [[UIView alloc] initWithFrame:self.view.bounds];
-        moreView.backgroundColor = COLOR(241, 241, 241, 1.0);
+        moreView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:moreView];
         
         UILabel *tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 100, CGRectGetWidth(moreView.bounds) - 40, 28)];

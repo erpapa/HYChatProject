@@ -9,11 +9,13 @@
 #import "HYFirstLoginViewController.h"
 #import "HYLoginViewController.h"
 #import "HYRegisterViewController.h"
+#import "YYImage.h"
 
 @interface HYFirstLoginViewController ()
 
 @property (weak, nonatomic) IBOutlet UIButton *LoginBtn;
 @property (weak, nonatomic) IBOutlet UIButton *registerBtn;
+@property (strong, nonatomic) YYAnimatedImageView *imageView;
 
 @end
 
@@ -36,6 +38,12 @@
     self.LoginBtn.layer.masksToBounds = YES;
     self.registerBtn.layer.cornerRadius = 5;
     self.registerBtn.layer.masksToBounds = YES;
+    
+    self.imageView = [[YYAnimatedImageView alloc] initWithFrame:CGRectMake(0, 64, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds) * 0.75)];
+    YYImage *image = [YYImage imageNamed:@"firstLogin"];
+    self.imageView.image = image;
+    [self.view addSubview:self.imageView];
+    
 }
 
 - (void)didReceiveMemoryWarning {

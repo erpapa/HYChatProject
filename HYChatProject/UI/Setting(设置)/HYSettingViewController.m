@@ -12,11 +12,12 @@
 #import "XMPPvCardTemp.h"
 #import "HYUtils.h"
 #import "HYXMPPManager.h"
-#import "HYMyvCardViewController.h"
+#import <MessageUI/MessageUI.h>
 
 static NSString *kMeViewCellIdentifier = @"kMeViewCellIdentifier";
 static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
-@interface HYSettingViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface HYSettingViewController ()<UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
+
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) XMPPvCardTemp *vCard;
 @property (nonatomic, strong) NSArray *dataSource;
@@ -28,8 +29,17 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:self.tableView];
     
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    self.tableView.sectionFooterHeight = 0.0f;
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    [self.view addSubview:self.tableView];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     self.vCard = [HYUtils currentUservCard]; // 从本地读取名片
     if (self.vCard == nil) {
         __weak typeof(self) weakSelf = self;
@@ -39,7 +49,6 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
             [strongSellf.tableView reloadData];
         }];
     }
-    
 }
 
 #pragma mark - UITableViewDataSource
@@ -71,6 +80,7 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
     NSArray *array = [self.dataSource objectAtIndex:indexPath.section];
     NSDictionary *dict = [array objectAtIndex:indexPath.row];
     settingCell.textLabel.text = [dict objectForKey:@"text"];
+    settingCell.imageView.image = [UIImage imageNamed:dict[@"image"]];
     return settingCell;
     
 }
@@ -96,44 +106,71 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
-    if (indexPath.section == 0) {
-        HYMyvCardViewController *myvCardVC = [[HYMyvCardViewController alloc] init];
-        myvCardVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:myvCardVC animated:YES];
+    
+    if (indexPath.section == 2 && indexPath.row == 0) { // 反馈（发送邮件）
+        if ([MFMailComposeViewController canSendMail]) {
+            MFMailComposeViewController* mailController = [[MFMailComposeViewController alloc] init];
+            mailController.mailComposeDelegate = self;
+            [mailController setToRecipients:@[@"hyplcf@163.com"]];
+            [mailController setSubject:[NSString stringWithFormat:@"%@的反馈",[HYXMPPManager sharedInstance].myJID.user]];
+            [mailController setMessageBody:@"" isHTML:NO];
+            [self presentViewController:mailController animated:YES completion:nil];
+        }
+        
     } else {
-        [[HYXMPPManager sharedInstance] xmppUserlogout];
+        NSArray *array = [self.dataSource objectAtIndex:indexPath.section];
+        NSDictionary *dict = [array objectAtIndex:indexPath.row];
+        UIViewController *VC = [[NSClassFromString(dict[@"class"]) alloc] init];
+        VC.title = dict[@"text"];
+        VC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:VC animated:YES];
     }
+    
+}
+
+#pragma mark - MFMailComposeViewControllerDelegate
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    /*
+     enum MFMailComposeResult {
+     MFMailComposeResultCancelled, //取消发送
+     MFMailComposeResultSaved, //保存草稿
+     MFMailComposeResultSent, //发送成功
+     MFMailComposeResultFailed, //发送失败
+     };
+     */
+    [controller dismissViewControllerAnimated:YES completion:^{
+        switch (result) {
+            case MFMailComposeResultSent:{
+                [HYUtils alertWithSuccessMsg:@"发送成功!"];
+                break;
+            } case MFMailComposeResultFailed:{
+                [HYUtils alertWithSuccessMsg:@"发送失败!"];
+                break;
+            }
+            default:
+                break;
+        }
+    }];
 }
 
 #pragma mark - 懒加载
-- (UITableView *)tableView
-{
-    if (_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-        _tableView.showsHorizontalScrollIndicator = NO;
-        _tableView.showsVerticalScrollIndicator = NO;
-        _tableView.sectionFooterHeight = 0.0f;
-        _tableView.dataSource = self;
-        _tableView.delegate = self;
-    }
-    return _tableView;
-}
 
 - (NSArray *)dataSource
 {
     if (_dataSource == nil) {
         _dataSource = @[@[
-                              @{@"image":@"",@"text":@""}
+                              @{@"image":@"",@"text":@"",@"class":@"HYMyvCardViewController"}
                           ],
                         @[
-                              @{@"image":@"",@"text":@"通知"},
-                              @{@"image":@"",@"text":@"好友请求"},
-                              @{@"image":@"",@"text":@"照片和媒体文件"}
+                              @{@"image":@"notifaction",@"text":@"通知",@"class":@"HYNotifactionViewController"},
+                              @{@"image":@"friendRequest",@"text":@"好友请求",@"class":@"HYFreindRequestViewController"},
+                              @{@"image":@"videos",@"text":@"照片和媒体文件",@"class":@"HYPhotoSettingViewController"}
                           ],
                         @[
-                              @{@"image":@"",@"text":@"报告问题"},
-                              @{@"image":@"",@"text":@"帮助"},
-                              @{@"image":@"",@"text":@"关于"}
+                              @{@"image":@"feedback",@"text":@"报告问题",@"class":@"UIViewController"},
+                              @{@"image":@"help",@"text":@"帮助",@"class":@"HYHelpViewController"},
+                              @{@"image":@"about",@"text":@"关于",@"class":@"HYAboutViewController"}
                         ]];
     }
     return _dataSource;

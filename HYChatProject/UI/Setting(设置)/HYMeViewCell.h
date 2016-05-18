@@ -12,4 +12,5 @@
 @class XMPPvCardTemp;
 @interface HYMeViewCell : UITableViewCell
 @property (nonatomic, strong) XMPPvCardTemp *vCard;
+@property (nonatomic, strong) UIImageView *QRView; // 二维码
 @end

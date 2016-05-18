@@ -55,6 +55,11 @@
  */
 + (NSString *)stringFromSectionNum:(NSInteger)sectionNum;
 /**
+ *  显示的消息内容
+ */
++ (NSString *)bodyFromJsonString:(NSString *)jsonStr;
+
+/**
  *  时间
  */
 + (NSString *)sampleTimeStringSince1970:(double)secs;

@@ -215,7 +215,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Odo-UU-8Ee">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="firstLoginBg.png" translatesAutoresizingMaskIntoConstraints="NO" id="Odo-UU-8Ee">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sjp-YR-kVl">
@@ -248,11 +248,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="leU-uW-8JX" firstAttribute="top" secondItem="6dL-K0-Ln3" secondAttribute="bottom" constant="30" id="EGy-Wz-Bgj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Odo-UU-8Ee" secondAttribute="trailing" constant="-20" id="HX4-Z3-HMi"/>
+                            <constraint firstItem="Odo-UU-8Ee" firstAttribute="leading" secondItem="wHk-N8-Kc9" secondAttribute="leadingMargin" constant="-20" id="IE4-0K-sLR"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6dL-K0-Ln3" secondAttribute="trailing" constant="10" id="Kpi-Dg-GZo"/>
                             <constraint firstItem="leU-uW-8JX" firstAttribute="top" secondItem="sjp-YR-kVl" secondAttribute="bottom" constant="30" id="QPz-xV-HZh"/>
                             <constraint firstItem="sjp-YR-kVl" firstAttribute="leading" secondItem="wHk-N8-Kc9" secondAttribute="leadingMargin" constant="10" id="TjO-3c-6RK"/>
                             <constraint firstItem="6dL-K0-Ln3" firstAttribute="leading" secondItem="sjp-YR-kVl" secondAttribute="trailing" constant="30" id="YRx-Gt-mXu"/>
+                            <constraint firstItem="Odo-UU-8Ee" firstAttribute="top" secondItem="wHk-N8-Kc9" secondAttribute="topMargin" id="cGp-O4-9FW"/>
                             <constraint firstItem="sjp-YR-kVl" firstAttribute="width" secondItem="6dL-K0-Ln3" secondAttribute="width" id="eHS-Q8-wOs"/>
+                            <constraint firstItem="leU-uW-8JX" firstAttribute="top" secondItem="Odo-UU-8Ee" secondAttribute="bottom" id="yWs-fE-3qt"/>
                         </constraints>
                     </view>
                     <connections>
@@ -414,4 +418,7 @@
             <point key="canvasLocation" x="845" y="1103"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="firstLoginBg.png" width="320" height="480"/>
+    </resources>
 </document>

@@ -246,6 +246,7 @@ NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChang
 {
     if (jid == nil) {
         vCardBlock(nil);
+        return;
     }
     // 如果本地为空，自动从网络获取好友名片
     XMPPvCardTemp *vCardTemp = [_vCardTempModule vCardTempForJID:jid shouldFetch:YES];
@@ -594,6 +595,7 @@ trusted_network:
             chatModel.unreadCount++;
             [HYNotification postNotificationName:HYChatDidReceiveMessage object:chatModel];
             
+            
             // 2.
             HYChatMessage *chatMessage = [[HYChatMessage alloc] initWithJsonString:[message body]];
             chatMessage.jid = message.from;
@@ -607,7 +609,46 @@ trusted_network:
                 chatMessage.receiveStatus = HYChatReceiveMessageStatusReceiving;
             }
             [[HYDatabaseHandler sharedInstance] addChatMessage:chatMessage]; // 储存
-            [HYNotification postNotificationName:HYChatDidReceiveSingleMessage object:chatMessage];
+            if (_isBackGround == NO) {
+                [HYNotification postNotificationName:HYChatDidReceiveSingleMessage object:chatMessage];
+            }
+            
+            // 3.本地通知
+            if (_isBackGround == YES) {
+                // 消息免打扰
+                BOOL isShield = [[NSUserDefaults standardUserDefaults] boolForKey:HYChatShieldNotifaction];
+                if (isShield) {
+                    return;
+                }
+                // 不显示内容
+                BOOL notShowBody = [[NSUserDefaults standardUserDefaults] boolForKey:HYChatNotShowBody];
+                
+                UILocalNotification *notification = [[UILocalNotification alloc] init];
+                // 设置触发通知的时间(立即触发，不需要设置)
+                // notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1.0];
+                // 时区
+                notification.timeZone = [NSTimeZone defaultTimeZone];
+                // 设置重复的间隔
+                notification.repeatInterval = kCFCalendarUnitSecond;
+                
+                NSString *nickName = [[HYLoginInfo sharedInstance] nickNameForJid:message.from];
+                // 通知内容
+                NSString *bodyString = [HYUtils bodyFromJsonString:[message body]];
+                NSString *body = [NSString stringWithFormat:@"%@:%@",nickName,bodyString];
+                if (notShowBody) {
+                    body = [NSString stringWithFormat:@"来自%@的新消息",nickName];
+                }
+                notification.alertBody = body;
+                notification.alertAction = @"查看"; // 锁屏界面，显示-->滑动XXX
+                // 通知被触发时播放的声音
+                notification.soundName = UILocalNotificationDefaultSoundName;
+                // 通知参数
+                NSDictionary *userDict = [NSDictionary dictionaryWithObjectsAndKeys:[message.from full],@"chatJid",@(0),@"isGroup", nil];
+                notification.userInfo = userDict;
+                // 执行通知注册  
+                [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+            }
+            
         }
     }
 }

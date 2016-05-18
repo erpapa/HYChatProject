@@ -11,3 +11,16 @@
 @interface HYMyvCardViewController : UIViewController
 
 @end
+
+
+@class HYSexSelectioViewController;
+@protocol HYSexSelectioViewControllerDelegate <NSObject>
+@optional
+- (void)sexSelectioDidFinished:(HYSexSelectioViewController *)sexSelectioVC;
+@end
+
+@interface HYSexSelectioViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@property (nonatomic, weak) id<HYSexSelectioViewControllerDelegate> delegate;
+@property (nonatomic, strong) NSString *sex;
+@property (nonatomic, strong) UITableView *tableView;
+@end

@@ -75,11 +75,14 @@
     [self.contentView addSubview:self.nameLabel];
     
     // 3.[状态]
-    CGFloat statusViewW = 6;
-    CGFloat statusViewX = CGRectGetMaxX(self.headView.frame) - statusViewW;
-    CGFloat statusViewY = CGRectGetMaxY(self.headView.frame) - statusViewW;
+    CGFloat statusViewW = 8;
+    CGFloat statusViewX = CGRectGetMaxX(self.headView.frame) - statusViewW - 2;
+    CGFloat statusViewY = CGRectGetMaxY(self.headView.frame) - statusViewW - 2;
     self.statusView = [[UIImageView alloc] initWithFrame:CGRectMake(statusViewX, statusViewY, statusViewW, statusViewW)];
-    self.statusView.image = [UIImage circleImageWithColor:[UIColor colorWithRed:239/255.0 green:239/255.0 blue:244/255.0 alpha:1.0f] size:CGSizeMake(12, 12)];
+    self.statusView.layer.cornerRadius = 4;
+    self.statusView.layer.masksToBounds = YES;
+    self.statusView.layer.borderWidth = 1.2;
+    self.statusView.layer.borderColor = [UIColor whiteColor].CGColor;
     [self.contentView addSubview:self.statusView];
     
     
@@ -108,15 +111,15 @@
     UIImage *image = nil;
     switch (sectionNum) {
         case 0:{
-            image = [UIImage circleImageWithColor:[UIColor colorWithRed:41/255.0 green:196/255.0 blue:50/255.0 alpha:1.0f] size:CGSizeMake(12, 12)];
+            image = [UIImage imageWithColor:[UIColor colorWithRed:41/255.0 green:196/255.0 blue:50/255.0 alpha:1.0f] size:CGSizeMake(16, 16)];
             break;
         }
         case 1:{
-            image = [UIImage circleImageWithColor:[UIColor colorWithRed:254/255.0 green:186/255.0 blue:20/255.0 alpha:1.0f] size:CGSizeMake(12, 12)];
+            image = [UIImage imageWithColor:[UIColor colorWithRed:254/255.0 green:186/255.0 blue:20/255.0 alpha:1.0f] size:CGSizeMake(16, 16)];
             break;
         }
         case 2:{
-            image = [UIImage circleImageWithColor:[UIColor colorWithRed:176/255.0 green:176/255.0 blue:176/255.0 alpha:1.0f] size:CGSizeMake(12, 12)];
+            image = [UIImage imageWithColor:[UIColor colorWithRed:176/255.0 green:176/255.0 blue:176/255.0 alpha:1.0f] size:CGSizeMake(16, 16)];
             break;
         }
             

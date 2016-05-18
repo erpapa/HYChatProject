@@ -118,7 +118,9 @@
     HYGroupChatViewController *groupChat = [[HYGroupChatViewController alloc] init];
     HYContactsModel *model = [self.dataSource objectAtIndex:indexPath.row];
     groupChat.roomJid = model.jid;
-    [self.navigationController pushViewController:groupChat animated:YES];
+    groupChat.hidesBottomBarWhenPushed = YES;
+    UIViewController *firstVC = [self.navigationController.viewControllers firstObject]; // 第一个
+    [self.navigationController setViewControllers:@[firstVC,groupChat] animated:YES];
 }
 
 #pragma mark - 创建/加入房间

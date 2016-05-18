@@ -15,7 +15,9 @@ NSString* const HYChatDidReceiveSingleMessage = @"HYChatDidReceiveSingleMessage"
 NSString* const HYChatDidReceiveGroupMessage = @"HYChatDidReceiveGroupMessage";
 NSString* const HYChatStartPlayAudio = @"HYChatStartPlayAudio";
 NSString* const HYChatStopPlayAudio = @"HYChatStopPlayAudio";
-
+NSString* const HYChatShieldNotifaction = @"HYChatShieldNotifaction";
+NSString* const HYChatNotShowBody = @"HYChatNotShowBody";
+NSString* const HYChatSaveWhenTakePhoto = @"HYChatSaveWhenTakePhoto";
 @implementation HYConstant
 
 @end

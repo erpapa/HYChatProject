@@ -15,6 +15,10 @@ extern NSString* const HYChatDidReceiveSingleMessage;   // 接收消息
 extern NSString* const HYChatDidReceiveGroupMessage;   // 接收消息
 extern NSString* const HYChatStartPlayAudio;      // 开始播放音频
 extern NSString* const HYChatStopPlayAudio;       // 停止播放音频
+extern NSString* const HYChatShieldNotifaction;   // 屏蔽通知
+extern NSString* const HYChatNotShowBody;         // 不预览消息
+extern NSString* const HYChatSaveWhenTakePhoto;   // 保存拍照
+
 @interface HYConstant : NSObject
 
 @end

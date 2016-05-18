@@ -30,6 +30,11 @@
 - (void)saveUserInfoToSanbox;
 
 /**
+ *  昵称
+ */
+- (NSString *)nickNameForJid:(XMPPJID *)jid;
+
+/**
  *  保存nickName字典
  */
 - (void)saveNickNameDictToSanbox;

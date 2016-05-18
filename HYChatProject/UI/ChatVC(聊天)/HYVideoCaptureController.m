@@ -422,6 +422,8 @@
             case AVAssetExportSessionStatusCompleted:{
                 CGFloat fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:savePath error:nil] fileSize];
                 NSLog(@"处理成功，压缩后文件大小: %luKB", (unsigned long)(fileSize/1024));
+                NSString *document = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+                [[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%@/videoCache/temp.mov",document] error:nil]; // 删除temp.mov
                 MAIN(^{
                     [HYUtils clearWaitingMsg];
                     [self handleViedo:savePath];

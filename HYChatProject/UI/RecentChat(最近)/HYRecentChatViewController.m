@@ -42,8 +42,7 @@
     self.definesPresentationContext = YES;// know where you want UISearchController to be displayed
     self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.view addSubview:self.tableView];
-    // 加载最近联系人
-    [self loadRecentChatDataSource];
+    
     // 注册通知
     [HYNotification addObserver:self selector:@selector(receiveRecentMessage:) name:HYChatDidReceiveMessage object:nil];
     [HYNotification addObserver:self selector:@selector(chatWithSomebody:) name:HYChatWithSomebody object:nil];
@@ -52,11 +51,18 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    // 加载最近联系人
+    [self loadRecentChatDataSource];
+    
     XMPPStream *stream = [HYXMPPManager sharedInstance].xmppStream;
     if ([stream isConnected] || [stream isConnecting]) {
         return;
     } else {
-        [[HYXMPPManager sharedInstance] xmppUserLogin:nil];
+        [[HYXMPPManager sharedInstance] xmppUserLogin:^(HYXMPPConnectStatus status) {
+            if (status == HYXMPPConnectStatusDisConnect) {
+                [HYUtils alertWithErrorMsg:@"已断开连接"];
+            }
+        }];
     }
 }
 
@@ -156,13 +162,12 @@
 - (void)receiveRecentMessage:(NSNotification *)noti
 {
     HYRecentChatModel *chatModel = noti.object;
-    NSString *nickName = [[HYLoginInfo sharedInstance].nickNameDict objectForKey:chatModel.jid.bare];
-    chatModel.nickName = nickName.length ? nickName : chatModel.jid.user;
+    chatModel.nickName = [[HYLoginInfo sharedInstance] nickNameForJid:chatModel.jid];
     NSInteger found = NSNotFound;
     NSString *chatBare = [[HYXMPPManager sharedInstance].chatJID bare];
     for (NSInteger index = 0; index < self.dataSource.count; index++) {
         HYRecentChatModel *model = [self.dataSource objectAtIndex:index];
-        if (chatBare.length && [[model.jid bare] isEqualToString:chatBare]) {
+        if (chatBare.length && [[model.jid bare] isEqualToString:chatBare] && [HYXMPPManager sharedInstance].isBackGround == NO) { // 1.有当前会话人 2.程序不在后台
             found = index;
             chatModel.unreadCount = 0;
             NSIndexPath *currentIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
@@ -254,12 +259,14 @@
  */
 - (void)loadRecentChatDataSource
 {
+    [self.dataSource removeAllObjects];
+    self.unreadCount = 0;
     [[HYDatabaseHandler sharedInstance] recentChatModels:self.dataSource];
     [self.dataSource enumerateObjectsUsingBlock:^(HYRecentChatModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSString *nickName = [[HYLoginInfo sharedInstance].nickNameDict objectForKey:obj.jid.bare];
-        obj.nickName = nickName.length ? nickName : obj.jid.user;
+        obj.nickName = [[HYLoginInfo sharedInstance] nickNameForJid:obj.jid];
         self.unreadCount += obj.unreadCount; // 获得所有未读消息数
     }];
+    [self.tableView reloadData];
 
 }
 

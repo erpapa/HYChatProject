@@ -24,6 +24,7 @@
 #import "HYVideoPlayController.h"
 #import "HYPhotoBrowserController.h"
 #import "HYUservCardViewController.h"
+#import "HYGroupInfoViewController.h"
 
 #import "HYBaseChatViewCell.h"
 #import "HYTextChatViewCell.h"
@@ -52,8 +53,11 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.title = self.roomJid.user;
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"anon_group_header"] style:UIBarButtonItemStylePlain target:self action:@selector(roomInfo:)];
+    
     // 1.tableView
     [self.tableView registerClass:[HYTextChatViewCell class] forCellReuseIdentifier:kTextChatViewCellIdentifier];
     [self.tableView registerClass:[HYImageChatViewCell class] forCellReuseIdentifier:kImageChatViewCellIdentifier];
@@ -92,6 +96,8 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     
     // 8.注册通知
     [HYNotification addObserver:self selector:@selector(receiveGroupMessage:) name:HYChatDidReceiveGroupMessage object:nil];
+    [HYNotification addObserver:self selector:@selector(resignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+    [HYNotification addObserver:self selector:@selector(becomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -191,6 +197,7 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
 - (void)getChatHistory
 {
     NSMutableArray *chatMessages = [NSMutableArray array];
+    [self.dataSource removeAllObjects];
     [[HYDatabaseHandler sharedInstance] recentGroupChatMessages:chatMessages fromRoomJID:self.roomJid];
     // 处理数据
     [chatMessages enumerateObjectsUsingBlock:^(HYChatMessage *message, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -285,6 +292,13 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
         
         //获取照片的原图
         UIImage* original = [info objectForKey:UIImagePickerControllerOriginalImage];
+        if (picker.sourceType == UIImagePickerControllerSourceTypeCamera)
+        {
+            BOOL saveImage = [[NSUserDefaults standardUserDefaults] boolForKey:HYChatSaveWhenTakePhoto];
+            if (saveImage) {
+                UIImageWriteToSavedPhotosAlbum(original, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+            }
+        }
         //发送消息
         HYChatMessage *message = [[HYChatMessage alloc] init];
         NSString *imageName = [NSString stringWithFormat:@"%@.jpg",message.messageID];
@@ -313,6 +327,16 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     
 }
 
+// 指定回调方法
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    if (error) {
+        HYLog(@"保存相片失败");
+    } else {
+        HYLog(@"保存相片成功");
+    }
+}
+
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
@@ -325,8 +349,8 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     //发送消息
     HYChatMessage *message = [[HYChatMessage alloc] init];
     
-    NSString *imageName = [NSString stringWithFormat:@"%@.jpg",message.messageID];
     NSString *videoName = [filePath lastPathComponent];
+    NSString *imageName = [NSString stringWithFormat:@"%@.jpg",[videoName stringByDeletingPathExtension]];
     HYVideoModel *videoModel = [[HYVideoModel alloc] init];
     videoModel.videoThumbImageUrl = QN_FullURL(imageName);
     videoModel.videoUrl = QN_FullURL(videoName);
@@ -575,10 +599,11 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
         }
             
         case HYChatMessageTypeVideo:{ // 视频
-            NSString *imageName = [NSString stringWithFormat:@"%@.jpg",message.messageID];
-            NSData *imageData = [[YYImageCache sharedCache] getImageDataForKey:QN_FullURL(imageName)]; // 从缓存读取图片
+            
             NSString *filePath = message.videoModel.videoLocalPath;
             NSString *videoName = [filePath lastPathComponent];
+            NSString *imageName = [NSString stringWithFormat:@"%@.jpg",[videoName stringByDeletingPathExtension]];
+            NSData *imageData = [[YYImageCache sharedCache] getImageDataForKey:QN_FullURL(imageName)]; // 从缓存读取图片
             message.sendStatus = HYChatSendMessageStatusSending;
             [self refreshMessage:message]; // 刷新
             // 上传到七牛云
@@ -742,6 +767,26 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
             return;
         }
     }
+}
+
+- (void)resignActive:(NSNotification *)noti
+{
+    [HYXMPPManager sharedInstance].chatJID = nil;
+    [self.inputVC resignFirstResponder];
+}
+
+- (void)becomeActive:(NSNotification *)noti
+{
+    [HYXMPPManager sharedInstance].chatJID = self.roomJid;
+    [self getChatHistory];
+    [self.tableView reloadData];
+}
+
+- (void)roomInfo:(id)sender
+{
+    HYGroupInfoViewController *groupInfo = [[HYGroupInfoViewController alloc] init];
+    groupInfo.roomJid = self.roomJid;
+    [self.navigationController pushViewController:groupInfo animated:YES];
 }
 
 #pragma mark - 懒加载

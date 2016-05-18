@@ -11,49 +11,14 @@
 #import "HYEmoticonTool.h"
 #import "YYImage.h"
 #import "YYText.h"
+#import "HYUtils.h"
 
 @implementation HYRecentChatModel
 
 - (void)setBody:(NSString *)body
 {
     _body = [body copy];
-    [self setupLayout];
-}
-
-- (void)setupLayout
-{
-    NSData *jsonData = [self.body dataUsingEncoding:NSUTF8StringEncoding];
-    // NSJSONReadingOptions -> 不可变（NSArray/NSDictionary）
-    // NSJSONReadingMutableContainers -> 可变（NSMutableArray/NSMutableDictionary）
-    // NSJSONReadingAllowFragments：允许JSON字符串最外层既不是NSArray也不是NSDictionary，但必须是有效的JSON Fragment
-    NSError *error = nil;
-    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
-    if (error) { // 如果解析失败
-        _attText = [self attributedString:self.body];
-        return;
-    }
-    HYChatMessageType type = [self typeFromString:dict[@"type"]]; // 默认返回HYChatMessageTypeText
-    NSString *bodyString = nil;
-    switch (type) {
-        case HYChatMessageTypeText:{
-            bodyString = dict[@"data"];
-            break;
-        }
-        case HYChatMessageTypeImage:{
-            bodyString = @"[图片]";
-            break;
-        }
-        case HYChatMessageTypeAudio:{
-            bodyString = @"[语音]";
-            break;
-        }
-        case HYChatMessageTypeVideo:{
-            bodyString = @"[视频]";
-            break;
-        }
-        default:
-            break;
-    }
+    NSString *bodyString = [HYUtils bodyFromJsonString:_body];
     _attText = [self attributedString:bodyString];
 }
 
@@ -82,18 +47,6 @@
         emoClipLength += range.length - 1;
     }
     return text;
-}
-
-- (HYChatMessageType)typeFromString:(NSString *)string
-{
-    if ([string isEqualToString:@"image"]) {
-        return HYChatMessageTypeImage;
-    } else if ([string isEqualToString:@"audio"]) {
-        return HYChatMessageTypeAudio;
-    } else if ([string isEqualToString:@"video"]) {
-        return HYChatMessageTypeVideo;
-    }
-    return HYChatMessageTypeText;
 }
 
 @end

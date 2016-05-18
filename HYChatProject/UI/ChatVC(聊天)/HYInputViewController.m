@@ -21,7 +21,7 @@
 
 #define kNormalButtonBottom 7
 #define kTextViewMargin 6
-#define kTextViewBottom 10
+#define kTextViewBottom 9
 //输入框最小高度
 #define kTextViewMinHeight (kInputBarHeight - kTextViewBottom * 2)
 //输入框最大高度

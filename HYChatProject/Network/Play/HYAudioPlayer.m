@@ -131,15 +131,20 @@
         return;
     }
     
-    if (![[NSFileManager defaultManager] fileExistsAtPath:audioFile.localStorePath]) {
-        __weak typeof(self) weakSelf = self;
-        [[HYNetworkManager sharedInstance] downloadAudioModel:audioFile successBlock:^(BOOL success) {
-            if (success) { // 下载成功，播放
-                weakSelf.currentPlayAudioFile = audioFile;
-                [weakSelf createPlayer];
-            }
-        }];
+    if (self.currentPlayAudioFile != audioFile) { // 不是当前下载(播放)对象
+        if (![[NSFileManager defaultManager] fileExistsAtPath:audioFile.localStorePath]) {
+            self.currentPlayAudioFile = audioFile;
+            __weak typeof(self) weakSelf = self;
+            [[HYNetworkManager sharedInstance] downloadAudioModel:audioFile successBlock:^(BOOL success) {
+                if (success) { // 下载成功，播放
+                    if (weakSelf.currentPlayAudioFile == audioFile) { // 只有是当前播放对象，才播放
+                        [weakSelf createPlayer];
+                    }
+                }
+            }];
+        }
     }
+    
     
     if (self.currentPlayAudioFile) {
         self.currentPlayAudioFile = nil;

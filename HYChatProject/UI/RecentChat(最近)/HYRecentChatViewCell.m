@@ -14,6 +14,7 @@
 #import "YYText.h"
 #import "UIView+SW.h"
 #import "HYUservCardViewController.h"
+#import "HYGroupInfoViewController.h"
 
 #define kPanding 10
 
@@ -163,9 +164,17 @@
 - (void)headViewClick:(UITapGestureRecognizer *)gesture
 {
     UIViewController *vc = [self parentController];
-    HYUservCardViewController *vCardVC = [[HYUservCardViewController alloc] init];
-    vCardVC.userJid = self.chatModel.jid;
-    [vc.navigationController pushViewController:vCardVC animated:YES];
+    if (self.chatModel.isGroup) {
+        HYGroupInfoViewController *groupInfoVC = [[HYGroupInfoViewController alloc] init];
+        groupInfoVC.roomJid = [XMPPJID jidWithString:self.chatModel.jid.bare];
+        [vc.navigationController pushViewController:groupInfoVC animated:YES];
+    } else {
+        HYUservCardViewController *vCardVC = [[HYUservCardViewController alloc] init];
+        vCardVC.userJid = self.chatModel.jid;
+        [vc.navigationController pushViewController:vCardVC animated:YES];
+    }
+    
+    
 }
 
 @end

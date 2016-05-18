@@ -48,7 +48,7 @@ static NSString *kForwardingIconViewCellIdentifier = @"kForwardingIconViewCellId
     self.selectedArray = [NSMutableArray array];
     self.normalArray = [NSMutableArray array];
     self.repeatArray = [NSMutableArray array];
-    [self setupContentView]; // UI
+    [self setupFooterView]; // UI
     [self setupDataSource];  // 数据
     
 }
@@ -63,8 +63,7 @@ static NSString *kForwardingIconViewCellIdentifier = @"kForwardingIconViewCellId
         if (![recentModel.jid.bare isEqualToString:self.message.jid.bare]) { // 去掉当前聊天对象
             HYContactsModel *model = [[HYContactsModel alloc] init];
             model.jid = recentModel.jid;
-            NSString *nickName = [[HYLoginInfo sharedInstance].nickNameDict objectForKey:recentModel.jid.bare];
-            model.nickName = nickName.length ? nickName : recentModel.jid.user;
+            model.nickName = [[HYLoginInfo sharedInstance] nickNameForJid:recentModel.jid];
             model.sectionNum = 0;                   // 规定sectionNum为1时为选中
             model.isGroup = recentModel.isGroup;
             [currentContacts addObject:model];
@@ -112,7 +111,7 @@ static NSString *kForwardingIconViewCellIdentifier = @"kForwardingIconViewCellId
 
 
 
-- (void)setupContentView
+- (void)setupFooterView
 {
     // 1.底部view
     self.footerView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds) - kFooterHeight, CGRectGetWidth(self.view.bounds), kFooterHeight)];

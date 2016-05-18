@@ -106,7 +106,13 @@
         __weak typeof(self) weakSelf = self; // 获取头像
         XMPPJID *jid = message.jid;
         if (message.isGroup) { // 如果是群组消息
-            jid = [XMPPJID jidWithString:[NSString stringWithFormat:@"%@@%@",jid.resource,[HYXMPPManager sharedInstance].xmppStream.myJID.domain]];
+            NSRange atRange = [jid.resource rangeOfString:@"@"];
+            if (atRange.location == NSNotFound) {
+                jid = [XMPPJID jidWithString:[NSString stringWithFormat:@"%@@%@",jid.resource,[HYXMPPManager sharedInstance].xmppStream.myJID.domain]];
+            } else {
+                jid = [XMPPJID jidWithString:jid.resource];
+            }
+            
         }
         [[HYXMPPManager sharedInstance] getAvatarFromJID:jid avatarBlock:^(NSData *avatar) {
             if (avatar.length) {
@@ -149,8 +155,21 @@
 // 单击
 - (void)headViewClick:(UITapGestureRecognizer *)sender
 {
+    XMPPJID *jid = self.messageFrame.chatMessage.jid;
+    if (self.messageFrame.chatMessage.isGroup) {
+        NSRange atRange = [jid.resource rangeOfString:@"@"];
+        if (atRange.location == NSNotFound) {
+            jid = [XMPPJID jidWithString:[NSString stringWithFormat:@"%@@%@",jid.resource,[HYXMPPManager sharedInstance].xmppStream.myJID.domain]];
+        } else {
+            jid = [XMPPJID jidWithString:jid.resource];
+        }
+    } else {
+        if (self.messageFrame.chatMessage.isOutgoing) {
+            jid = [HYXMPPManager sharedInstance].myJID;
+        }
+    }
     if ([self.delegate respondsToSelector:@selector(chatViewCell:didClickHeaderWithJid:)]) {
-        [self.delegate chatViewCell:self didClickHeaderWithJid:self.messageFrame.chatMessage.jid];
+        [self.delegate chatViewCell:self didClickHeaderWithJid:jid];
     }
 }
 

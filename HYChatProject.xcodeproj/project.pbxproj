@@ -11,6 +11,11 @@
 		EA0CEADD1CE30ADF00D7E80C /* HYDatabaseHandler+NewFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0CEADC1CE30ADF00D7E80C /* HYDatabaseHandler+NewFriend.m */; };
 		EA0F22751CC7BEE9007AB887 /* HYUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0F22741CC7BEE9007AB887 /* HYUtils.m */; };
 		EA139F331CC9D0F600E1E085 /* HYFirstLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA139F321CC9D0F600E1E085 /* HYFirstLoginViewController.m */; };
+		EA172DA21CE9A0C1007009C6 /* defaultGroupHead@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA172DA11CE9A0C1007009C6 /* defaultGroupHead@2x.png */; };
+		EA172DA91CE9BAC8007009C6 /* HYGroupInviteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA172DA81CE9BAC8007009C6 /* HYGroupInviteViewController.m */; };
+		EA172DAC1CEA0105007009C6 /* HYVideosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA172DAB1CEA0105007009C6 /* HYVideosViewController.m */; };
+		EA172DB21CEA05FF007009C6 /* HYVideoViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA172DB11CEA05FF007009C6 /* HYVideoViewCell.m */; };
+		EA172DBF1CEA2540007009C6 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA172DBE1CEA2540007009C6 /* MessageUI.framework */; };
 		EA2204111CE6C823007FBBCF /* HYFileDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2203F61CE6C823007FBBCF /* HYFileDownloadManager.m */; };
 		EA2204121CE6C823007FBBCF /* HYFileDownloadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2203F81CE6C823007FBBCF /* HYFileDownloadTask.m */; };
 		EA2204131CE6C823007FBBCF /* HYEncodeAndDecode.m in Sources */ = {isa = PBXBuildFile; fileRef = EA2203FB1CE6C823007FBBCF /* HYEncodeAndDecode.m */; };
@@ -87,7 +92,6 @@
 		EA50094B1CDE26A30094095B /* HYRecordProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = EA50094A1CDE26A30094095B /* HYRecordProgressHUD.m */; };
 		EA50094D1CDE28A30094095B /* Chat_record_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = EA50094C1CDE28A30094095B /* Chat_record_circle.png */; };
 		EA6A0C6E1CDB2001009C8C72 /* HYGroupListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6A0C6D1CDB2001009C8C72 /* HYGroupListViewCell.m */; };
-		EA6A0C781CDB28F1009C8C72 /* defaultGroupHead@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA6A0C771CDB28F1009C8C72 /* defaultGroupHead@2x.png */; };
 		EA6A0C7F1CDB37AA009C8C72 /* HYContactsCustomViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6A0C7E1CDB37AA009C8C72 /* HYContactsCustomViewCell.m */; };
 		EA6A0C851CDB477D009C8C72 /* HYRecentSearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6A0C841CDB477D009C8C72 /* HYRecentSearchResultsController.m */; };
 		EA6A0C881CDB4B0C009C8C72 /* HYContactsSearchResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6A0C871CDB4B0C009C8C72 /* HYContactsSearchResultsController.m */; };
@@ -138,7 +142,6 @@
 		EAC97C111CE89D3500CD9294 /* HYNotifactionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC97C101CE89D3500CD9294 /* HYNotifactionViewController.m */; };
 		EAC97C151CE89D8E00CD9294 /* HYPhotoSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC97C141CE89D8E00CD9294 /* HYPhotoSettingViewController.m */; };
 		EAC97C191CE89DA300CD9294 /* HYHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC97C181CE89DA300CD9294 /* HYHelpViewController.m */; };
-		EAC97C1D1CE89DE800CD9294 /* HYFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC97C1C1CE89DE800CD9294 /* HYFeedbackViewController.m */; };
 		EAC97C211CE89DFC00CD9294 /* HYAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC97C201CE89DFC00CD9294 /* HYAboutViewController.m */; };
 		EAC97C241CE8D94600CD9294 /* HYChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAC97C231CE8D94600CD9294 /* HYChangePasswordViewController.m */; };
 		EAD7BEE01CC539F30089873C /* amrFileCodec.mm in Sources */ = {isa = PBXBuildFile; fileRef = EAD7BED51CC539F30089873C /* amrFileCodec.mm */; };
@@ -147,7 +150,6 @@
 		EAD7BEE31CC539F30089873C /* VoiceConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = EAD7BEDD1CC539F30089873C /* VoiceConverter.mm */; };
 		EAD7BEE41CC539F30089873C /* wav.mm in Sources */ = {isa = PBXBuildFile; fileRef = EAD7BEDF1CC539F30089873C /* wav.mm */; };
 		EADD16FE1C9ED2E100E22D2B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EADD16FD1C9ED2E100E22D2B /* Assets.xcassets */; };
-		EADD17011C9ED2E100E22D2B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EADD16FF1C9ED2E100E22D2B /* LaunchScreen.storyboard */; };
 		EADD170C1C9ED2E100E22D2B /* HYChatProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD170B1C9ED2E100E22D2B /* HYChatProjectTests.m */; };
 		EADD17171C9ED2E100E22D2B /* HYChatProjectUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD17161C9ED2E100E22D2B /* HYChatProjectUITests.m */; };
 		EADD17431C9ED64300E22D2B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD17371C9ED64300E22D2B /* AppDelegate.m */; };
@@ -385,6 +387,20 @@
 		EAF705C51CE1D54800B03EC4 /* voice_send_icon_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAF705BF1CE1D54800B03EC4 /* voice_send_icon_3@2x.png */; };
 		EAF705C71CE1DA3A00B03EC4 /* icon_loading_white.gif in Resources */ = {isa = PBXBuildFile; fileRef = EAF705C61CE1DA3A00B03EC4 /* icon_loading_white.gif */; };
 		EAF705C91CE1DB2A00B03EC4 /* commonFail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAF705C81CE1DB2A00B03EC4 /* commonFail@2x.png */; };
+		EAF7067C1CEAE1D4002D5C51 /* about@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAF706731CEAE1D4002D5C51 /* about@2x.png */; };
+		EAF7067D1CEAE1D4002D5C51 /* feedback@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAF706741CEAE1D4002D5C51 /* feedback@2x.png */; };
+		EAF7067E1CEAE1D4002D5C51 /* friendRequest@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAF706751CEAE1D4002D5C51 /* friendRequest@2x.png */; };
+		EAF7067F1CEAE1D4002D5C51 /* help@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAF706761CEAE1D4002D5C51 /* help@2x.png */; };
+		EAF706801CEAE1D4002D5C51 /* notifaction@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAF706771CEAE1D4002D5C51 /* notifaction@2x.png */; };
+		EAF706811CEAE1D4002D5C51 /* tabBar_contacts@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAF706781CEAE1D4002D5C51 /* tabBar_contacts@2x.png */; };
+		EAF706841CEAE1D4002D5C51 /* videos@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAF7067B1CEAE1D4002D5C51 /* videos@2x.png */; };
+		EAF7068A1CEAE857002D5C51 /* tabBar_setting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAF706891CEAE857002D5C51 /* tabBar_setting@2x.png */; };
+		EAF7068C1CEAF442002D5C51 /* tabBar_recent@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAF7068B1CEAF442002D5C51 /* tabBar_recent@2x.png */; };
+		EAF7068F1CEB0FAD002D5C51 /* menu_newfriend@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAF7068D1CEB0FAD002D5C51 /* menu_newfriend@2x.png */; };
+		EAF706941CEB11AE002D5C51 /* menu_group@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAF706931CEB11AE002D5C51 /* menu_group@2x.png */; };
+		EAF7069F1CEB5D8A002D5C51 /* firstLogin@2x.gif in Resources */ = {isa = PBXBuildFile; fileRef = EAF7069D1CEB5D8A002D5C51 /* firstLogin@2x.gif */; };
+		EAF706A21CEB5E89002D5C51 /* firstLoginBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAF706A11CEB5E89002D5C51 /* firstLoginBg@2x.png */; };
+		EAF706A41CEB69A0002D5C51 /* anon_group_header@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EAF706A31CEB69A0002D5C51 /* anon_group_header@2x.png */; };
 		EAF834BC1CDCA39700C73CB9 /* UIView+SW.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF834BB1CDCA39700C73CB9 /* UIView+SW.m */; };
 		EAF834BF1CDCA65B00C73CB9 /* HYGroupInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF834BE1CDCA65B00C73CB9 /* HYGroupInfoViewController.m */; };
 		EAF834C21CDCA98200C73CB9 /* HYAddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAF834C11CDCA98200C73CB9 /* HYAddFriendViewController.m */; };
@@ -420,6 +436,14 @@
 		EA0F22741CC7BEE9007AB887 /* HYUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYUtils.m; sourceTree = "<group>"; };
 		EA139F311CC9D0F600E1E085 /* HYFirstLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYFirstLoginViewController.h; sourceTree = "<group>"; };
 		EA139F321CC9D0F600E1E085 /* HYFirstLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYFirstLoginViewController.m; sourceTree = "<group>"; };
+		EA172DA11CE9A0C1007009C6 /* defaultGroupHead@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "defaultGroupHead@2x.png"; sourceTree = "<group>"; };
+		EA172DA71CE9BAC8007009C6 /* HYGroupInviteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYGroupInviteViewController.h; sourceTree = "<group>"; };
+		EA172DA81CE9BAC8007009C6 /* HYGroupInviteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYGroupInviteViewController.m; sourceTree = "<group>"; };
+		EA172DAA1CEA0105007009C6 /* HYVideosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYVideosViewController.h; sourceTree = "<group>"; };
+		EA172DAB1CEA0105007009C6 /* HYVideosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYVideosViewController.m; sourceTree = "<group>"; };
+		EA172DB01CEA05FF007009C6 /* HYVideoViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYVideoViewCell.h; sourceTree = "<group>"; };
+		EA172DB11CEA05FF007009C6 /* HYVideoViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYVideoViewCell.m; sourceTree = "<group>"; };
+		EA172DBE1CEA2540007009C6 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		EA2203F51CE6C823007FBBCF /* HYFileDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYFileDownloadManager.h; sourceTree = "<group>"; };
 		EA2203F61CE6C823007FBBCF /* HYFileDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYFileDownloadManager.m; sourceTree = "<group>"; };
 		EA2203F71CE6C823007FBBCF /* HYFileDownloadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYFileDownloadTask.h; sourceTree = "<group>"; };
@@ -535,7 +559,6 @@
 		EA50094C1CDE28A30094095B /* Chat_record_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Chat_record_circle.png; sourceTree = "<group>"; };
 		EA6A0C6C1CDB2001009C8C72 /* HYGroupListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYGroupListViewCell.h; sourceTree = "<group>"; };
 		EA6A0C6D1CDB2001009C8C72 /* HYGroupListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYGroupListViewCell.m; sourceTree = "<group>"; };
-		EA6A0C771CDB28F1009C8C72 /* defaultGroupHead@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "defaultGroupHead@2x.png"; sourceTree = "<group>"; };
 		EA6A0C7D1CDB37AA009C8C72 /* HYContactsCustomViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYContactsCustomViewCell.h; sourceTree = "<group>"; };
 		EA6A0C7E1CDB37AA009C8C72 /* HYContactsCustomViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYContactsCustomViewCell.m; sourceTree = "<group>"; };
 		EA6A0C831CDB477D009C8C72 /* HYRecentSearchResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYRecentSearchResultsController.h; sourceTree = "<group>"; };
@@ -636,8 +659,6 @@
 		EAC97C141CE89D8E00CD9294 /* HYPhotoSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYPhotoSettingViewController.m; sourceTree = "<group>"; };
 		EAC97C171CE89DA300CD9294 /* HYHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYHelpViewController.h; sourceTree = "<group>"; };
 		EAC97C181CE89DA300CD9294 /* HYHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYHelpViewController.m; sourceTree = "<group>"; };
-		EAC97C1B1CE89DE800CD9294 /* HYFeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYFeedbackViewController.h; sourceTree = "<group>"; };
-		EAC97C1C1CE89DE800CD9294 /* HYFeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYFeedbackViewController.m; sourceTree = "<group>"; };
 		EAC97C1F1CE89DFC00CD9294 /* HYAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYAboutViewController.h; sourceTree = "<group>"; };
 		EAC97C201CE89DFC00CD9294 /* HYAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYAboutViewController.m; sourceTree = "<group>"; };
 		EAC97C221CE8D94600CD9294 /* HYChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYChangePasswordViewController.h; sourceTree = "<group>"; };
@@ -656,7 +677,6 @@
 		EAD7BEDF1CC539F30089873C /* wav.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = wav.mm; sourceTree = "<group>"; };
 		EADD16EE1C9ED2E100E22D2B /* HYChatProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HYChatProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EADD16FD1C9ED2E100E22D2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		EADD17001C9ED2E100E22D2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EADD17021C9ED2E100E22D2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EADD17071C9ED2E100E22D2B /* HYChatProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HYChatProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EADD170B1C9ED2E100E22D2B /* HYChatProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HYChatProjectTests.m; sourceTree = "<group>"; };
@@ -1118,6 +1138,20 @@
 		EAF705BF1CE1D54800B03EC4 /* voice_send_icon_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "voice_send_icon_3@2x.png"; sourceTree = "<group>"; };
 		EAF705C61CE1DA3A00B03EC4 /* icon_loading_white.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = icon_loading_white.gif; sourceTree = "<group>"; };
 		EAF705C81CE1DB2A00B03EC4 /* commonFail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "commonFail@2x.png"; sourceTree = "<group>"; };
+		EAF706731CEAE1D4002D5C51 /* about@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "about@2x.png"; sourceTree = "<group>"; };
+		EAF706741CEAE1D4002D5C51 /* feedback@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "feedback@2x.png"; sourceTree = "<group>"; };
+		EAF706751CEAE1D4002D5C51 /* friendRequest@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friendRequest@2x.png"; sourceTree = "<group>"; };
+		EAF706761CEAE1D4002D5C51 /* help@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "help@2x.png"; sourceTree = "<group>"; };
+		EAF706771CEAE1D4002D5C51 /* notifaction@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notifaction@2x.png"; sourceTree = "<group>"; };
+		EAF706781CEAE1D4002D5C51 /* tabBar_contacts@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBar_contacts@2x.png"; sourceTree = "<group>"; };
+		EAF7067B1CEAE1D4002D5C51 /* videos@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "videos@2x.png"; sourceTree = "<group>"; };
+		EAF706891CEAE857002D5C51 /* tabBar_setting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBar_setting@2x.png"; sourceTree = "<group>"; };
+		EAF7068B1CEAF442002D5C51 /* tabBar_recent@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabBar_recent@2x.png"; sourceTree = "<group>"; };
+		EAF7068D1CEB0FAD002D5C51 /* menu_newfriend@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_newfriend@2x.png"; sourceTree = "<group>"; };
+		EAF706931CEB11AE002D5C51 /* menu_group@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_group@2x.png"; sourceTree = "<group>"; };
+		EAF7069D1CEB5D8A002D5C51 /* firstLogin@2x.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "firstLogin@2x.gif"; sourceTree = "<group>"; };
+		EAF706A11CEB5E89002D5C51 /* firstLoginBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "firstLoginBg@2x.png"; sourceTree = "<group>"; };
+		EAF706A31CEB69A0002D5C51 /* anon_group_header@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "anon_group_header@2x.png"; sourceTree = "<group>"; };
 		EAF834BA1CDCA39700C73CB9 /* UIView+SW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SW.h"; sourceTree = "<group>"; };
 		EAF834BB1CDCA39700C73CB9 /* UIView+SW.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SW.m"; sourceTree = "<group>"; };
 		EAF834BD1CDCA65B00C73CB9 /* HYGroupInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYGroupInfoViewController.h; sourceTree = "<group>"; };
@@ -1139,6 +1173,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA172DBF1CEA2540007009C6 /* MessageUI.framework in Frameworks */,
 				EA32FEAD1CCF803D00FE8D39 /* CoreData.framework in Frameworks */,
 				EAC05B431CC50F3400ABA3C5 /* WebP.framework in Frameworks */,
 				EAC05B451CC5109600ABA3C5 /* libz.tbd in Frameworks */,
@@ -1322,6 +1357,19 @@
 		EA26ADC31CD0C67C000DB77C /* tabBar */ = {
 			isa = PBXGroup;
 			children = (
+				EAF7069D1CEB5D8A002D5C51 /* firstLogin@2x.gif */,
+				EAF706A11CEB5E89002D5C51 /* firstLoginBg@2x.png */,
+				EAF706931CEB11AE002D5C51 /* menu_group@2x.png */,
+				EAF7068D1CEB0FAD002D5C51 /* menu_newfriend@2x.png */,
+				EAF706731CEAE1D4002D5C51 /* about@2x.png */,
+				EAF706741CEAE1D4002D5C51 /* feedback@2x.png */,
+				EAF706751CEAE1D4002D5C51 /* friendRequest@2x.png */,
+				EAF7067B1CEAE1D4002D5C51 /* videos@2x.png */,
+				EAF706761CEAE1D4002D5C51 /* help@2x.png */,
+				EAF706771CEAE1D4002D5C51 /* notifaction@2x.png */,
+				EAF706781CEAE1D4002D5C51 /* tabBar_contacts@2x.png */,
+				EAF706891CEAE857002D5C51 /* tabBar_setting@2x.png */,
+				EAF7068B1CEAF442002D5C51 /* tabBar_recent@2x.png */,
 			);
 			path = tabBar;
 			sourceTree = "<group>";
@@ -1543,6 +1591,8 @@
 				EAF834BE1CDCA65B00C73CB9 /* HYGroupInfoViewController.m */,
 				EAC97C221CE8D94600CD9294 /* HYChangePasswordViewController.h */,
 				EAC97C231CE8D94600CD9294 /* HYChangePasswordViewController.m */,
+				EA172DA71CE9BAC8007009C6 /* HYGroupInviteViewController.h */,
+				EA172DA81CE9BAC8007009C6 /* HYGroupInviteViewController.m */,
 			);
 			path = "vCard(名片)";
 			sourceTree = "<group>";
@@ -1554,9 +1604,9 @@
 				EAC97C0D1CE89CE400CD9294 /* 通知 */,
 				EAFB8E7D1CE61D0D00BBAAC1 /* 好友请求 */,
 				EAC97C121CE89D4B00CD9294 /* 照片和媒体文件 */,
-				EAC97C1E1CE89DED00CD9294 /* 关于 */,
 				EAC97C1A1CE89DAE00CD9294 /* 报告问题 */,
 				EAC97C161CE89D9400CD9294 /* 帮助 */,
+				EAC97C1E1CE89DED00CD9294 /* 关于 */,
 			);
 			path = "Setting(设置)";
 			sourceTree = "<group>";
@@ -1729,6 +1779,10 @@
 			children = (
 				EAC97C131CE89D8E00CD9294 /* HYPhotoSettingViewController.h */,
 				EAC97C141CE89D8E00CD9294 /* HYPhotoSettingViewController.m */,
+				EA172DAA1CEA0105007009C6 /* HYVideosViewController.h */,
+				EA172DAB1CEA0105007009C6 /* HYVideosViewController.m */,
+				EA172DB01CEA05FF007009C6 /* HYVideoViewCell.h */,
+				EA172DB11CEA05FF007009C6 /* HYVideoViewCell.m */,
 			);
 			name = "照片和媒体文件";
 			sourceTree = "<group>";
@@ -1745,8 +1799,6 @@
 		EAC97C1A1CE89DAE00CD9294 /* 报告问题 */ = {
 			isa = PBXGroup;
 			children = (
-				EAC97C1B1CE89DE800CD9294 /* HYFeedbackViewController.h */,
-				EAC97C1C1CE89DE800CD9294 /* HYFeedbackViewController.m */,
 			);
 			name = "报告问题";
 			sourceTree = "<group>";
@@ -1813,7 +1865,6 @@
 				EADD17391C9ED64300E22D2B /* UI */,
 				EA26ADB71CD0C67C000DB77C /* Resource */,
 				EADD1D9A1C9EE95700E22D2B /* Login.storyboard */,
-				EADD16FF1C9ED2E100E22D2B /* LaunchScreen.storyboard */,
 				EADD16F11C9ED2E100E22D2B /* Supporting Files */,
 			);
 			name = HYChat;
@@ -1941,6 +1992,7 @@
 		EADD19711C9EDDAD00E22D2B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EA172DBE1CEA2540007009C6 /* MessageUI.framework */,
 				EA32FEAC1CCF803D00FE8D39 /* CoreData.framework */,
 				EAC05B441CC5109600ABA3C5 /* libz.tbd */,
 				EAC05A8A1CC50B5700ABA3C5 /* libsqlite3.tbd */,
@@ -2968,6 +3020,7 @@
 		EAE342E71CD214A40020DF2B /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				EAF706A31CEB69A0002D5C51 /* anon_group_header@2x.png */,
 				EA27A9611CE480A60043D0FA /* expand_icons_camera@2x.png */,
 				EA27A9621CE480A60043D0FA /* expand_icons_folder@2x.png */,
 				EA27A9631CE480A60043D0FA /* expand_icons_pic@2x.png */,
@@ -2988,7 +3041,7 @@
 				EA5009451CDDF03C0094095B /* emoticon_keyboard_magnifier@2x.png */,
 				EA5009461CDDF03C0094095B /* emoticon_keyboard_magnifier@3x.png */,
 				EA3D9B4D1CD2F669004461C4 /* defaultHead@2x.png */,
-				EA6A0C771CDB28F1009C8C72 /* defaultGroupHead@2x.png */,
+				EA172DA11CE9A0C1007009C6 /* defaultGroupHead@2x.png */,
 				EAF4862C1CD4FA0C0096B1F1 /* chat_bottom_textfield@2x.png */,
 				EA3D9B851CD36DA3004461C4 /* chat_receive_nor@2x.png */,
 				EA3D9B861CD36DA3004461C4 /* chat_receive_press@2x.png */,
@@ -3271,6 +3324,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EADD1D921C9EE3F500E22D2B /* build-libidn.sh in Resources */,
+				EAF706941CEB11AE002D5C51 /* menu_group@2x.png in Resources */,
 				EA27A9601CE4794B0043D0FA /* chat_images_failed@3x.png in Resources */,
 				EA26ADC71CD0C67C000DB77C /* contacts_network_3g@2x.png in Resources */,
 				EAF486261CD4F7C10096B1F1 /* chat_bottom_voice_nor@2x.png in Resources */,
@@ -3279,6 +3333,7 @@
 				EA27A9651CE480A60043D0FA /* expand_icons_camera@2x.png in Resources */,
 				EA27A9661CE480A60043D0FA /* expand_icons_folder@2x.png in Resources */,
 				EA5009471CDDF03C0094095B /* emoticon_keyboard_magnifier@2x.png in Resources */,
+				EAF706801CEAE1D4002D5C51 /* notifaction@2x.png in Resources */,
 				EAF705C31CE1D54800B03EC4 /* voice_send_icon_1@2x.png in Resources */,
 				EA4666D01CDC73D900C5431D /* qrcode_scan_btn_flash_down@2x.png in Resources */,
 				EA50094D1CDE28A30094095B /* Chat_record_circle.png in Resources */,
@@ -3287,57 +3342,68 @@
 				EAF486291CD4F7C10096B1F1 /* chat_bottom_voice_press@3x.png in Resources */,
 				EAE054F41CC8C2C500E57710 /* SVProgressHUD.bundle in Resources */,
 				EAF486271CD4F7C10096B1F1 /* chat_bottom_voice_nor@3x.png in Resources */,
+				EAF7068F1CEB0FAD002D5C51 /* menu_newfriend@2x.png in Resources */,
+				EAF7067D1CEAE1D4002D5C51 /* feedback@2x.png in Resources */,
 				EA26ADCE1CD0C67C000DB77C /* contacts_network_wifi_press@2x.png in Resources */,
 				EAF705C41CE1D54800B03EC4 /* voice_send_icon_2@2x.png in Resources */,
 				EA27A9681CE480A60043D0FA /* expand_icons_video@2x.png in Resources */,
+				EAF706A21CEB5E89002D5C51 /* firstLoginBg@2x.png in Resources */,
 				EA4666CA1CDC71FC00C5431D /* qrcode_scan_btn_photo_down@2x.png in Resources */,
 				EAF4861C1CD4F7C10096B1F1 /* chat_bottom_keyboard_press@2x.png in Resources */,
 				EA4666D11CDC73D900C5431D /* qrcode_scan_btn_flash_nor@2x.png in Resources */,
 				EA26ADC91CD0C67C000DB77C /* contacts_network_4g@2x.png in Resources */,
 				EA27A95D1CE4794B0043D0FA /* chat_images_default@2x.png in Resources */,
+				EAF7068A1CEAE857002D5C51 /* tabBar_setting@2x.png in Resources */,
+				EAF7067F1CEAE1D4002D5C51 /* help@2x.png in Resources */,
 				EA27A9811CE4DE630043D0FA /* press_btn_green@2x.png in Resources */,
 				EAF705C71CE1DA3A00B03EC4 /* icon_loading_white.gif in Resources */,
-				EA6A0C781CDB28F1009C8C72 /* defaultGroupHead@2x.png in Resources */,
 				EA3D9B891CD36DA3004461C4 /* chat_receive_nor@2x.png in Resources */,
 				EA3D9B8C1CD36DA3004461C4 /* chat_send_press@2x.png in Resources */,
 				EAF4861E1CD4F7C10096B1F1 /* chat_bottom_smile_nor@2x.png in Resources */,
 				EA27A95E1CE4794B0043D0FA /* chat_images_default@3x.png in Resources */,
 				EAF705C91CE1DB2A00B03EC4 /* commonFail@2x.png in Resources */,
-				EADD17011C9ED2E100E22D2B /* LaunchScreen.storyboard in Resources */,
 				EAF4861A1CD4F7C10096B1F1 /* chat_bottom_keyboard_nor@2x.png in Resources */,
 				EA4666CC1CDC71FC00C5431D /* setting_QRcode_nor@2x.png in Resources */,
 				EAF705C11CE1D54800B03EC4 /* voice_receive_icon_2@2x.png in Resources */,
 				EA26ADC81CD0C67C000DB77C /* contacts_network_3g_press@2x.png in Resources */,
 				EAF486231CD4F7C10096B1F1 /* chat_bottom_up_nor@3x.png in Resources */,
 				EADD1D9C1C9EE95700E22D2B /* Login.storyboard in Resources */,
+				EAF7067E1CEAE1D4002D5C51 /* friendRequest@2x.png in Resources */,
 				EA27A9671CE480A60043D0FA /* expand_icons_pic@2x.png in Resources */,
+				EAF7068C1CEAF442002D5C51 /* tabBar_recent@2x.png in Resources */,
 				EA27A9821CE4DE630043D0FA /* press_btn_green@3x.png in Resources */,
 				EAF705C51CE1D54800B03EC4 /* voice_send_icon_3@2x.png in Resources */,
 				EA5009481CDDF03C0094095B /* emoticon_keyboard_magnifier@3x.png in Resources */,
 				EAF486241CD4F7C10096B1F1 /* chat_bottom_up_press@2x.png in Resources */,
 				EA3D9B8B1CD36DA3004461C4 /* chat_send_nor@2x.png in Resources */,
 				EAF486221CD4F7C10096B1F1 /* chat_bottom_up_nor@2x.png in Resources */,
+				EAF706841CEAE1D4002D5C51 /* videos@2x.png in Resources */,
 				EAF486201CD4F7C10096B1F1 /* chat_bottom_smile_press@2x.png in Resources */,
 				EADD16FE1C9ED2E100E22D2B /* Assets.xcassets in Resources */,
 				EAF705C01CE1D54800B03EC4 /* voice_receive_icon_1@2x.png in Resources */,
 				EAF486211CD4F7C10096B1F1 /* chat_bottom_smile_press@3x.png in Resources */,
 				EA4666D41CDC7B6D00C5431D /* qrcode_scan_titlebar_back_nor@2x.png in Resources */,
+				EAF706A41CEB69A0002D5C51 /* anon_group_header@2x.png in Resources */,
 				EAF486031CD49E5C0096B1F1 /* Emoticon.bundle in Resources */,
 				EAF4862D1CD4FA0C0096B1F1 /* chat_bottom_textfield@2x.png in Resources */,
+				EA172DA21CE9A0C1007009C6 /* defaultGroupHead@2x.png in Resources */,
 				EA27A95F1CE4794B0043D0FA /* chat_images_failed@2x.png in Resources */,
 				EAF4861F1CD4F7C10096B1F1 /* chat_bottom_smile_nor@3x.png in Resources */,
 				EAF4861D1CD4F7C10096B1F1 /* chat_bottom_keyboard_press@3x.png in Resources */,
 				EAF705C21CE1D54800B03EC4 /* voice_receive_icon_3@2x.png in Resources */,
 				EA26ADCB1CD0C67C000DB77C /* contacts_network_pad@2x.png in Resources */,
 				EAF486281CD4F7C10096B1F1 /* chat_bottom_voice_press@2x.png in Resources */,
+				EAF7067C1CEAE1D4002D5C51 /* about@2x.png in Resources */,
 				EAF486251CD4F7C10096B1F1 /* chat_bottom_up_press@3x.png in Resources */,
 				EA26ADCA1CD0C67C000DB77C /* contacts_network_4g_press@2x.png in Resources */,
 				EAF4861B1CD4F7C10096B1F1 /* chat_bottom_keyboard_nor@3x.png in Resources */,
 				EA4666C81CDC71FC00C5431D /* qrcode_scan_btn_myqrcode_down@2x.png in Resources */,
 				EA26ADCC1CD0C67C000DB77C /* contacts_network_pad_press@2x.png in Resources */,
+				EAF7069F1CEB5D8A002D5C51 /* firstLogin@2x.gif in Resources */,
 				EA4666D51CDC7B6D00C5431D /* qrcode_scan_titlebar_back_pressed@2x.png in Resources */,
 				EADD1D851C9EE1D300E22D2B /* README.txt in Resources */,
 				EA4666C91CDC71FC00C5431D /* qrcode_scan_btn_myqrcode_nor@2x.png in Resources */,
+				EAF706811CEAE1D4002D5C51 /* tabBar_contacts@2x.png in Resources */,
 				EA4666CB1CDC71FC00C5431D /* qrcode_scan_btn_photo_nor@2x.png in Resources */,
 				EA26ADCD1CD0C67C000DB77C /* contacts_network_wifi@2x.png in Resources */,
 				EA4666CD1CDC71FC00C5431D /* setting_QRcode_press@2x.png in Resources */,
@@ -3408,7 +3474,6 @@
 				EADD1D661C9EE1D300E22D2B /* XMPPStreamManagement.m in Sources */,
 				EAC05B231CC50B7900ABA3C5 /* YYImage.m in Sources */,
 				EADD1D2E1C9EE1D300E22D2B /* XMPPRoomHybrid.xcdatamodeld in Sources */,
-				EAC97C1D1CE89DE800CD9294 /* HYFeedbackViewController.m in Sources */,
 				EADD1D871C9EE1D300E22D2B /* DDXMLDocument.m in Sources */,
 				EAC05B1F1CC50B7900ABA3C5 /* UIImage+YYWebImage.m in Sources */,
 				EADD1D861C9EE1D300E22D2B /* NSString+DDXML.m in Sources */,
@@ -3432,6 +3497,7 @@
 				EAFB8E7C1CE6185500BBAAC1 /* HYNewFriendViewCell.m in Sources */,
 				EA139F331CC9D0F600E1E085 /* HYFirstLoginViewController.m in Sources */,
 				EADD1D201C9EE1D300E22D2B /* XMPPRosterMemoryStorage.m in Sources */,
+				EA172DAC1CEA0105007009C6 /* HYVideosViewController.m in Sources */,
 				EAE054FE1CC90F1700E57710 /* HYCurrentLoginViewController.m in Sources */,
 				EA412C041CCA6F15009C071B /* HYContactsModel.m in Sources */,
 				EADD1D651C9EE1D300E22D2B /* XMPPStreamManagementStanzas.m in Sources */,
@@ -3489,6 +3555,7 @@
 				EADD1D071C9EE1D300E22D2B /* NSNumber+XMPP.m in Sources */,
 				EADD1D2B1C9EE1D300E22D2B /* XMPPRoomCoreDataStorage.m in Sources */,
 				EADD1D1B1C9EE1D300E22D2B /* XMPPResourceCoreDataStorageObject.m in Sources */,
+				EA172DB21CEA05FF007009C6 /* HYVideoViewCell.m in Sources */,
 				EADD1D7C1C9EE1D300E22D2B /* GCDAsyncSocket.m in Sources */,
 				EAF486091CD4B0130096B1F1 /* HYExpandKeyboardView.m in Sources */,
 				EADD1D3E1C9EE1D300E22D2B /* XMPPvCardTempAdr.m in Sources */,
@@ -3593,6 +3660,7 @@
 				EAE342DF1CD1E9510020DF2B /* Base64.m in Sources */,
 				EADD1D6D1C9EE1D300E22D2B /* XMPPAttentionModule.m in Sources */,
 				EADD1D431C9EE1D300E22D2B /* XMPPvCardTempModule.m in Sources */,
+				EA172DA91CE9BAC8007009C6 /* HYGroupInviteViewController.m in Sources */,
 				EADD1D3B1C9EE1D300E22D2B /* XMPPvCardCoreDataStorageObject.m in Sources */,
 				EAC97C241CE8D94600CD9294 /* HYChangePasswordViewController.m in Sources */,
 				EA0CEADD1CE30ADF00D7E80C /* HYDatabaseHandler+NewFriend.m in Sources */,
@@ -3703,14 +3771,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		EADD16FF1C9ED2E100E22D2B /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EADD17001C9ED2E100E22D2B /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
 		EADD1D9A1C9EE95700E22D2B /* Login.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -3806,6 +3866,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3833,6 +3894,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

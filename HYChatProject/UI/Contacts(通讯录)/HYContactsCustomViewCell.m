@@ -55,6 +55,10 @@
     self.nameLabel.textColor = [UIColor blackColor];
     self.nameLabel.font = [UIFont systemFontOfSize:18];
     [self.contentView addSubview:self.nameLabel];
+    
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, kContactsViewCellHeight - 1, CGRectGetWidth(self.bounds), 1)];
+    line.backgroundColor = [UIColor colorWithRed:241/255.0 green:241/255.0 blue:241/255.0 alpha:1.0f];
+    [self.contentView addSubview:line];
 }
 
 @end

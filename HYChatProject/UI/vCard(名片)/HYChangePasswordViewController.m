@@ -35,7 +35,7 @@
     [self.view addSubview:oldPwdLabel];
     
     self.oldPwdTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(oldPwdLabel.frame) + 12, CGRectGetMinY(oldPwdLabel.frame), kScreenW - 32 - CGRectGetMaxX(oldPwdLabel.frame), 44)];
-    self.oldPwdTextField.font = [UIFont systemFontOfSize:17];
+    self.oldPwdTextField.font = [UIFont systemFontOfSize:16];
     self.oldPwdTextField.placeholder = @"请输入原密码";
     self.oldPwdTextField.keyboardType = UIKeyboardTypeASCIICapable;
     self.oldPwdTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -47,13 +47,13 @@
     line0.backgroundColor = COLOR(239, 239, 244, 1.0f);
     [self.view addSubview:line0];
     
-    UILabel *newPwdLabel = [[UILabel alloc] initWithFrame:CGRectMake(labelX, CGRectGetMaxY(line0.frame) + 10, 68, 44)];
+    UILabel *newPwdLabel = [[UILabel alloc] initWithFrame:CGRectMake(labelX, CGRectGetMaxY(line0.frame), 68, 44)];
     newPwdLabel.text = @"新密码";
     newPwdLabel.textAlignment = NSTextAlignmentRight;
     [self.view addSubview:newPwdLabel];
     
     self.aNewPwdTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(newPwdLabel.frame) + 12, CGRectGetMinY(newPwdLabel.frame), kScreenW - 32 - CGRectGetMaxX(newPwdLabel.frame), 44)];
-    self.aNewPwdTextField.font = [UIFont systemFontOfSize:17];
+    self.aNewPwdTextField.font = [UIFont systemFontOfSize:16];
     self.aNewPwdTextField.placeholder = @"请输入新密码";
     self.aNewPwdTextField.secureTextEntry = YES; // 密码输入
     self.aNewPwdTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -65,13 +65,13 @@
     line1.backgroundColor = COLOR(239, 239, 244, 1.0f);
     [self.view addSubview:line1];
     
-    UILabel *repeatPwdLabel = [[UILabel alloc] initWithFrame:CGRectMake(labelX, CGRectGetMaxY(line1.frame) + 10, 68, 44)];
+    UILabel *repeatPwdLabel = [[UILabel alloc] initWithFrame:CGRectMake(labelX, CGRectGetMaxY(line1.frame), 68, 44)];
     repeatPwdLabel.text = @"确认密码";
     repeatPwdLabel.textAlignment = NSTextAlignmentRight;
     [self.view addSubview:repeatPwdLabel];
     
     self.repeatPwdTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(repeatPwdLabel.frame) + 12, CGRectGetMinY(repeatPwdLabel.frame), kScreenW - 32 - CGRectGetMaxX(repeatPwdLabel.frame), 44)];
-    self.repeatPwdTextField.font = [UIFont systemFontOfSize:17];
+    self.repeatPwdTextField.font = [UIFont systemFontOfSize:16];
     self.repeatPwdTextField.placeholder = @"请再次输入密码";
     self.repeatPwdTextField.secureTextEntry = YES; // 密码输入
     self.repeatPwdTextField.clearButtonMode = UITextFieldViewModeWhileEditing;

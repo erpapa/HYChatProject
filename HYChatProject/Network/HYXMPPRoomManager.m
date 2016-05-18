@@ -13,6 +13,8 @@
 #import "HYXMPPManager.h"
 #import "HYChatMessage.h"
 #import "XMPP+IM.h"
+#import "HYUtils.h"
+#import "HYLoginInfo.h"
 #import "HYRecentChatModel.h"
 #import "HYDatabaseHandler+HY.h"
 
@@ -440,6 +442,27 @@
 }
 
 #pragma mark - 获取指定群组详细信息
+/*
+ <feature var="http://jabber.org/protocol/disco#info"/>
+ <x xmlns="jabber:x:data" type="result">
+ <field var="FORM_TYPE" type="hidden">
+ <value>http://jabber.org/protocol/muc#roominfo</value>
+ </field>
+ <field var="muc#roominfo_description" label="描述">
+ <value>测试2</value>
+ </field>
+ <field var="muc#roominfo_subject" label="主题">
+ <value></value>
+ </field>
+ <field var="muc#roominfo_occupants" label="占有者人数">
+ <value>1</value>
+ </field>
+ <field var="x-muc#roominfo_creationdate" label="创建日期">
+ <value>20131202T02:22:08</value>
+ </field>
+ </x>
+ */
+
 - (void)fetchRoom:(XMPPJID *)roomJid info:(HYRoomInfoBlock)roomInfo;
 {
     HYLog(@"获取群组:%@信息...", roomJid);
@@ -466,9 +489,6 @@
 {
     self.roomMembersBlock = members;
     XMPPRoom *room = [self roomFromJid:roomJid];
-    
-    [self fetchOwnersList:roomJid];     // 获取创建者列表
-    [self fetchAdminsList:roomJid];     // 获取管理员列表
     [room fetchMembersList];       // 获取成员列表
 }
 
@@ -937,7 +957,55 @@
             chatMessage.isOutgoing = NO;
             chatMessage.isGroup = YES;
             [[HYDatabaseHandler sharedInstance] addGroupChatMessage:chatMessage]; // 储存
-            [HYNotification postNotificationName:HYChatDidReceiveGroupMessage object:chatMessage];
+            if ([HYXMPPManager sharedInstance].isBackGround == NO) {
+                [HYNotification postNotificationName:HYChatDidReceiveGroupMessage object:chatMessage];
+            }
+            
+            // 3.本地通知
+            if ([HYXMPPManager sharedInstance].isBackGround == YES) {
+                
+                // 消息免打扰
+                BOOL isShield = [[NSUserDefaults standardUserDefaults] boolForKey:HYChatShieldNotifaction];
+                if (isShield) {
+                    return;
+                }
+                // 不显示内容
+                BOOL notShowBody = [[NSUserDefaults standardUserDefaults] boolForKey:HYChatNotShowBody];
+                
+                UILocalNotification *notification = [[UILocalNotification alloc] init];
+                // 设置触发通知的时间(立即触发，不需要设置)
+                // notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1.0];
+                // 时区
+                notification.timeZone = [NSTimeZone defaultTimeZone];
+                // 设置重复的间隔
+                notification.repeatInterval = kCFCalendarUnitSecond;
+                
+                NSRange atRange = [message.from.resource rangeOfString:@"@"];
+                XMPPJID *userJid;
+                if (atRange.location == NSNotFound) {
+                    userJid = [XMPPJID jidWithString:[NSString stringWithFormat:@"%@@%@",message.from.resource,_xmppStream.myJID.domain]];
+                } else {
+                    userJid = [XMPPJID jidWithString:message.from.resource];
+                }
+                
+                NSString *nickName = [[HYLoginInfo sharedInstance] nickNameForJid:userJid];
+                // 通知内容
+                 NSString *bodyString = [HYUtils bodyFromJsonString:[message body]];
+                NSString *body = [NSString stringWithFormat:@"%@(%@):%@",nickName,message.from.user,bodyString];
+                if (notShowBody) {
+                    body = [NSString stringWithFormat:@"来自%@聊天室的新消息",message.from.user];
+                }
+                notification.alertBody = body;
+                notification.alertAction = @"查看"; // 锁屏界面，显示-->滑动XXX
+                // 通知被触发时播放的声音
+                notification.soundName = UILocalNotificationDefaultSoundName;
+                // 通知参数
+                NSDictionary *userDict = [NSDictionary dictionaryWithObjectsAndKeys:[message.from full],@"chatJid",@(1),@"isGroup", nil];
+                notification.userInfo = userDict;
+                // 执行通知注册
+                [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+            }
+            
         }
     }
     
@@ -991,10 +1059,31 @@
 
 #pragma mark - XMPPMUCDelegate
 
+/**
+ *  接收到群邀请
+ */
 - (void)xmppMUC:(XMPPMUC *)sender roomJID:(XMPPJID *)roomJID didReceiveInvitation:(XMPPMessage *)message
 {
     HYLog(@"xmppMUCDidReceiveInvitation:roomJID = %@, message = %@", roomJID.bare, [message body]);
+    
+    XMPPRoom *room = [self roomFromJid:roomJID];
+    if (room) { // 已经是聊天室成员
+        return;
+    }
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"%@邀请你加入聊天室",message.from.user] message:[NSString stringWithFormat:@"%@",[message body]] preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"拒绝" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [self rejectInviteRoom:roomJID withReason:@"没有兴趣..."]; // 拒绝邀请
+    }];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"接受" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self acceptInviteRoom:roomJID]; // 接受邀请
+        [self joinRoomWithRoomJID:roomJID withNickName:_xmppStream.myJID.user success:nil];
+    }];
+    [alertController addAction:cancelAction];
+    [alertController addAction:okAction];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
 }
+
 - (void)xmppMUC:(XMPPMUC *)sender roomJID:(XMPPJID *)roomJID didReceiveInvitationDecline:(XMPPMessage *)message
 {
     HYLog(@"xmppMUCDidReceiveInvitationDecline:roomJID = %@, message = %@", roomJID.bare, [message body]);

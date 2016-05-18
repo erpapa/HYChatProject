@@ -14,13 +14,14 @@
 #import "HYChangePasswordViewController.h"
 
 
-@interface HYMyvCardViewController ()<UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface HYMyvCardViewController ()<UITableViewDataSource,UITableViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,HYSexSelectioViewControllerDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *dataSource;
 @property (nonatomic, strong) XMPPvCardTemp *vCard;
 @property (nonatomic, assign) BOOL shouldUpdate;
 @property (nonatomic, weak) UIImageView *headView;
 @property (nonatomic, weak) UIImageView *QRView;
+@property (nonatomic, weak) UILabel *logoutLabel;
 
 @end
 
@@ -41,10 +42,8 @@
     self.tableView.sectionFooterHeight = 0.0f;
     [self.view addSubview:self.tableView];
     
-    
-    
     // 2.
-    self.dataSource = @[@[@"头像",@"帐号",@"昵称",@"二维码"],@[@"性别",@"邮箱",@"个性签名"]];
+    self.dataSource = @[@[@"头像",@"帐号",@"昵称",@"二维码"],@[@"性别",@"邮箱",@"个性签名"],@[@""]];
     // 3.
     self.vCard = [HYUtils currentUservCard]; // 从本地读取名片
     if (self.vCard == nil) {
@@ -77,9 +76,6 @@
     if(cell == nil){
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kCellIdentifier];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        UIView *bgView = [[UIView alloc] init];
-        bgView.backgroundColor = [UIColor colorWithRed:222/255.0 green:222/255.0 blue:222/255.0 alpha:1.0];
-        cell.selectedBackgroundView = bgView;
     }
     NSArray *array = [self.dataSource objectAtIndex:indexPath.section];
     NSString *title = [array objectAtIndex:indexPath.row];
@@ -138,6 +134,16 @@
                 
             default:
                 break;
+        }
+    } else if (indexPath.section == 2) {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        if (!self.logoutLabel.superview) {
+            UILabel *logoutLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 44)];
+            logoutLabel.text = @"退出登录";
+            logoutLabel.textColor = [UIColor blackColor];
+            logoutLabel.textAlignment = NSTextAlignmentCenter;
+            [cell.contentView addSubview:logoutLabel];
+            self.logoutLabel = logoutLabel;
         }
     }
     return cell;
@@ -232,8 +238,10 @@
     } else if (indexPath.section == 1) {
         switch (indexPath.row) {
             case 0:{ // 性别
-                
-                
+                HYSexSelectioViewController *sexSelectioVC = [[HYSexSelectioViewController alloc] init];
+                sexSelectioVC.sex = self.vCard.sex;
+                sexSelectioVC.delegate = self;
+                [self.navigationController pushViewController:sexSelectioVC animated:YES];
                 break;
             }
             case 1:{ // 邮箱
@@ -283,11 +291,28 @@
             default:
                 break;
         }
+    } else {
+        [HYUtils showWaitingMsg:@"请稍候..."];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [HYUtils clearWaitingMsg];
+            [[HYXMPPManager sharedInstance] xmppUserlogout]; // 退出登录
+        });
     }
     
 }
 
-#pragma mark UIImagePickerControllerDelegate
+#pragma mark - HYSexSelectioViewControllerDelegate
+
+- (void)sexSelectioDidFinished:(HYSexSelectioViewController *)sexSelectioVC
+{
+    if (![sexSelectioVC.sex isEqualToString:self.vCard.sex]) {
+        self.vCard.sex = sexSelectioVC.sex;
+        [self.tableView reloadData];
+        self.shouldUpdate = YES;
+    }
+}
+
+#pragma mark - UIImagePickerControllerDelegate
 
 /**
  *  设置头像
@@ -319,6 +344,7 @@
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [[HYXMPPManager sharedInstance] updateMyvCard:self.vCard successBlock:^(BOOL success) {
                 if (success) {
+                    [HYUtils saveCurrentUservCard:self.vCard]; // 保存名片
                     [HYUtils alertWithSuccessMsg:@"保存成功！"];
                 } else {
                     [HYUtils alertWithSuccessMsg:@"保存失败！"];
@@ -347,5 +373,72 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+
+@end
+
+
+@implementation HYSexSelectioViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.title = @"性别选择";
+    // 1.tableView
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    self.tableView.sectionFooterHeight = 0.0f;
+    [self.view addSubview:self.tableView];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    if ([self.delegate respondsToSelector:@selector(sexSelectioDidFinished:)]) {
+        [self.delegate sexSelectioDidFinished:self];
+    }
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 2;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *kSexSelectioIdentifier=@"kSexSelectioIdentifier";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kSexSelectioIdentifier];
+    if(cell == nil){
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kSexSelectioIdentifier];
+    }
+    if (indexPath.row == 0) {
+        cell.textLabel.text = @"男";
+    } else if (indexPath.row == 1) {
+        cell.textLabel.text = @"女";
+    }
+    if ([cell.textLabel.text isEqualToString:self.sex]) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    return cell;
+    
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    self.sex = cell.textLabel.text;
+    [tableView reloadData];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 12.0;
+}
 
 @end

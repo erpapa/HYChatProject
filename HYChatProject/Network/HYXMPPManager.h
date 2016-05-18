@@ -29,6 +29,7 @@ typedef void(^HYSendTextSuccess)(BOOL success);//发送消息成功/失败
 @interface HYXMPPManager : NSObject
 @property (nonatomic, strong,readonly)XMPPStream *xmppStream; // xmpp基础服务类
 @property (nonatomic, assign,readonly)HYXMPPConnectStatus status; // 连接状态
+@property (nonatomic, assign) BOOL isBackGround; // 后台
 @property (nonatomic, strong) XMPPJID *myJID;
 @property (nonatomic, strong) XMPPJID *chatJID;
 

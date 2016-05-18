@@ -8,6 +8,7 @@
 
 #import "HYUtils.h"
 #import "HYLoginInfo.h"
+#import "HYChatMessageFrame.h"
 #import "XMPPvCardTemp.h"
 #import "NSFileManager+SW.h"
 #import "SVProgressHUD.h"
@@ -203,6 +204,7 @@
 {
     NSString *badgeValue = nil;
     if (count == 0) {
+        return nil;
     } else if (count > 99) {
         badgeValue = @"99+";
     } else {
@@ -233,6 +235,56 @@
             break;
     }
     return sectionStr;
+}
+/**
+ *  显示的消息内容
+ */
++ (NSString *)bodyFromJsonString:(NSString *)jsonStr
+{
+    NSData *jsonData = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+    // NSJSONReadingOptions -> 不可变（NSArray/NSDictionary）
+    // NSJSONReadingMutableContainers -> 可变（NSMutableArray/NSMutableDictionary）
+    // NSJSONReadingAllowFragments：允许JSON字符串最外层既不是NSArray也不是NSDictionary，但必须是有效的JSON Fragment
+    NSError *error = nil;
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:&error];
+    if (error) { // 如果解析失败
+        return jsonStr;
+    }
+    HYChatMessageType type = [self typeFromString:dict[@"type"]]; // 默认返回HYChatMessageTypeText
+    NSString *bodyString = nil;
+    switch (type) {
+        case HYChatMessageTypeText:{
+            bodyString = dict[@"data"];
+            break;
+        }
+        case HYChatMessageTypeImage:{
+            bodyString = @"[图片]";
+            break;
+        }
+        case HYChatMessageTypeAudio:{
+            bodyString = @"[语音]";
+            break;
+        }
+        case HYChatMessageTypeVideo:{
+            bodyString = @"[视频]";
+            break;
+        }
+        default:
+            break;
+    }
+    return bodyString;
+}
+
++ (HYChatMessageType)typeFromString:(NSString *)string
+{
+    if ([string isEqualToString:@"image"]) {
+        return HYChatMessageTypeImage;
+    } else if ([string isEqualToString:@"audio"]) {
+        return HYChatMessageTypeAudio;
+    } else if ([string isEqualToString:@"video"]) {
+        return HYChatMessageTypeVideo;
+    }
+    return HYChatMessageTypeText;
 }
 
 + (NSString *)sampleTimeStringSince1970:(double)secs

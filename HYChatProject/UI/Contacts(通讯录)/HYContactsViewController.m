@@ -109,13 +109,13 @@
 {
     if (indexPath.section == 0) {
         HYContactsCustomViewCell *customCell = [HYContactsCustomViewCell cellWithTableView:tableView];
-        NSString *text = nil;
         if (indexPath.row == 0) { // 新朋友
-            text = @"新朋友";
+            customCell.nameLabel.text = @"新朋友";
+            customCell.headView.image = [UIImage imageNamed:@"menu_newfriend"];
         } else if (indexPath.row == 1) { // 聊天室
-            text = @"聊天室";
+            customCell.nameLabel.text = @"聊天室";
+            customCell.headView.image = [UIImage imageNamed:@"menu_group"];
         }
-        customCell.nameLabel.text = text;
         return customCell;
     }
     HYContacts *contacts = [self.dataSource objectAtIndex:indexPath.section - 1];

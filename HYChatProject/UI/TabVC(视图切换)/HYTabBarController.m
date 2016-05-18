@@ -11,6 +11,7 @@
 #import "HYRecentChatViewController.h"
 #import "HYContactsViewController.h"
 #import "HYSettingViewController.h"
+#import "AppDelegate.h"
 
 @interface HYTabBarController ()
 
@@ -43,12 +44,25 @@
 //    self.tabBar.tintColor = [UIColor orangeColor];// 选中状态下的文字颜色
     self.viewControllers = @[recentNVC, contactsNVC, settingNVC];
     NSArray *titles = @[recentVC.title, contactsVC.title, settingVC.title];
+    NSArray *images = @[@"tabBar_recent", @"tabBar_contacts", @"tabBar_setting"];
     [self.tabBar.items enumerateObjectsUsingBlock:^(UITabBarItem *item, NSUInteger idx, BOOL *stop) {
+        item.tag = idx;
         [item setTitle:titles[idx]];
-//        [item setImage:[UIImage imageNamed:images[idx]]];
+        [item setImage:[UIImage imageNamed:images[idx]]];
+        [item setSelectedImage:[UIImage imageNamed:images[idx]]];
 //        UIImage *selectedImage = [UIImage imageNamed:[images[idx] stringByAppendingString:@"_selected"]];
 //        [item setSelectedImage:[selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     }];
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    delegate.navController = recentNVC; // 赋值
+}
+
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
+{
+    UINavigationController *navController = [self.viewControllers objectAtIndex:item.tag];
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    delegate.navController = navController;
 }
 
 - (void)didReceiveMemoryWarning {

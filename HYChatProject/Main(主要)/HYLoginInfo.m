@@ -78,6 +78,15 @@ static HYLoginInfo *instance;
     return [XMPPJID jidWithUser:_user domain:_hostName resource:kResource];
 }
 
+- (NSString *)nickNameForJid:(XMPPJID *)jid
+{
+    NSString *str = [self.nickNameDict objectForKey:jid.bare];
+    if (str.length == 0) {
+        str = jid.user;
+    }
+    return str;
+}
+
 - (void)saveNickNameDictToSanbox
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
