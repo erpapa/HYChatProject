@@ -12,10 +12,11 @@
 #import "HYXMPPRoomManager.h"
 #import "HYRecentChatModel.h"
 #import "HYChatMessage.h"
-#import "HYNewFriendModel.h"
+#import "HYRequestModel.h"
 #import "HYDatabaseHandler+HY.h"
 #import "XMPPMUC.h"
 #import "XMPP+IM.h"
+#import "XMPPvCardTemp.h"
 #import "XMPPRoomCoreDataStorage.h"
 #import "XMPPCapabilitiesCoreDataStorage.h"
 
@@ -287,7 +288,8 @@ NSString *const HYConnectStatusDidChangeNotification = @"HYConnectStatusDidChang
     if (contains) {
         return 0;
     }
-    [_xmppRoster subscribePresenceToUser:userID];
+//    [_xmppRoster subscribePresenceToUser:userID];
+    [_xmppRoster addUser:userID withNickname:nil];
     return 1;
 }
 /**
@@ -624,29 +626,20 @@ trusted_network:
                 BOOL notShowBody = [[NSUserDefaults standardUserDefaults] boolForKey:HYChatNotShowBody];
                 
                 UILocalNotification *notification = [[UILocalNotification alloc] init];
-                // 设置触发通知的时间(立即触发，不需要设置)
-                // notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1.0];
-                // 时区
-                notification.timeZone = [NSTimeZone defaultTimeZone];
-                // 设置重复的间隔
-                notification.repeatInterval = kCFCalendarUnitSecond;
-                
+                notification.timeZone = [NSTimeZone defaultTimeZone];// 时区
+                notification.repeatInterval = kCFCalendarUnitSecond;// 设置重复的间隔
                 NSString *nickName = [[HYLoginInfo sharedInstance] nickNameForJid:message.from];
-                // 通知内容
-                NSString *bodyString = [HYUtils bodyFromJsonString:[message body]];
+                NSString *bodyString = [HYUtils bodyFromJsonString:[message body]];// 通知内容
                 NSString *body = [NSString stringWithFormat:@"%@:%@",nickName,bodyString];
                 if (notShowBody) {
                     body = [NSString stringWithFormat:@"来自%@的新消息",nickName];
                 }
                 notification.alertBody = body;
                 notification.alertAction = @"查看"; // 锁屏界面，显示-->滑动XXX
-                // 通知被触发时播放的声音
-                notification.soundName = UILocalNotificationDefaultSoundName;
-                // 通知参数
+                notification.soundName = UILocalNotificationDefaultSoundName;// 通知被触发时播放的声音
                 NSDictionary *userDict = [NSDictionary dictionaryWithObjectsAndKeys:[message.from full],@"chatJid",@(0),@"isGroup", nil];
-                notification.userInfo = userDict;
-                // 执行通知注册  
-                [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+                notification.userInfo = userDict;// 通知参数
+                [[UIApplication sharedApplication] scheduleLocalNotification:notification];// 执行通知
             }
             
         }
@@ -666,14 +659,13 @@ trusted_network:
     //    NSString *presenceFromUser =[NSString stringWithFormat:@"%@", [[presence from] user]];
     //这里再次加好友
     if ([presenceType isEqualToString:@"subscribed"]) { // 对方同意添加好友回执
-        XMPPJID *jid = [XMPPJID jidWithString:[NSString stringWithFormat:@"%@",[presence from]]];
+        XMPPJID *jid = [presence from];
         [_xmppRoster acceptPresenceSubscriptionRequestFrom:jid andAddToRoster:YES];
-        
-        HYNewFriendModel *friendModel = [[HYNewFriendModel alloc] init];
+        HYRequestModel *friendModel = [[HYRequestModel alloc] init];
         friendModel.jid = jid;
         friendModel.body = [NSString stringWithFormat:@"已添加%@为好友",jid.user];
         friendModel.time = [[NSDate date] timeIntervalSince1970];
-        friendModel.isFriendRequest = NO;
+        friendModel.requestType = 0; // 已添加好友
         [[HYDatabaseHandler sharedInstance] addFriend:friendModel];// 储存到数据库
     }
 }
@@ -788,6 +780,7 @@ trusted_network:
     
     // 储存自己的名片
     if ([jid.bare isEqualToString:[_myJID bare]]) {
+        vCardTemp.jid = _myJID;
         [HYUtils saveCurrentUservCard:vCardTemp];
     }
     
@@ -830,15 +823,14 @@ trusted_network:
 - (void)xmppRoster:(XMPPRoster *)sender didReceivePresenceSubscriptionRequest:(XMPPPresence *)presence
 {
     HYLog(@"接收到%@的好友请求：%@",[presence from], presence);
-    XMPPJID *jid = [XMPPJID jidWithString:[NSString stringWithFormat:@"%@",[presence from]]];
-    NSString *message = [NSString stringWithFormat:@"\n%@请求添加好友！", jid.user];
-    HYNewFriendModel *friendModel = [[HYNewFriendModel alloc] init];
-    friendModel.jid = jid;
-    friendModel.body = message;
-    friendModel.time = [[NSDate date] timeIntervalSince1970];
-    friendModel.isFriendRequest = YES;
-    [[HYDatabaseHandler sharedInstance] addFriend:friendModel]; // 储存到数据库
     
+    NSString *body = [NSString stringWithFormat:@"请求添加您为好友"];
+    HYRequestModel *requestModel = [[HYRequestModel alloc] init];
+    requestModel.jid = [presence from];
+    requestModel.body = body;
+    requestModel.time = [[NSDate date] timeIntervalSince1970];
+    requestModel.requestType = 1; // 好友请求
+    [[HYDatabaseHandler sharedInstance] addFriend:requestModel]; // 储存到数据库
 }
 
 /**

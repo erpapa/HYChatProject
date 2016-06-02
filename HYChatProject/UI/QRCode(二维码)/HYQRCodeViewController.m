@@ -66,7 +66,7 @@
         UIImage *iconImage = [UIImage imageWithData:vCardTemp.photo];
         UIImage *circleImage = [iconImage circleImage];
         strongSelf.iconView.image = circleImage;
-        strongSelf.nameLabel.text = vCardTemp.nickname;
+        strongSelf.nameLabel.text = vCardTemp.nickname.length ? vCardTemp.nickname : strongSelf.jid.user;
         
         // 生成二维码
         UIImage *codeImage = [UIImage createQRCodeWithString:self.jid.bare size:CGSizeMake(codeViewWidth - 20, codeViewWidth - 20)];

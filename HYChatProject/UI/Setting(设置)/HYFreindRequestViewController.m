@@ -10,11 +10,12 @@
 #import "HYFriendRequestViewCell.h"
 #import "HYUservCardViewController.h"
 #import "HYXMPPManager.h"
-#import "HYNewFriendModel.h"
+#import "HYXMPPRoomManager.h"
+#import "HYRequestModel.h"
 #import "HYDatabaseHandler+HY.h"
 #import "HYAddFriendViewController.h"
 
-@interface HYFreindRequestViewController ()<UITableViewDataSource,UITableViewDelegate,HYFriendRequestViewCellDelegate>
+@interface HYFreindRequestViewController ()<UITableViewDataSource,UITableViewDelegate,HYFriendRequestViewCellDelegate,HYFriendRequestViewCellDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @end
@@ -61,8 +62,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     HYFriendRequestViewCell *cell = [HYFriendRequestViewCell cellWithTableView:tableView];
-    HYNewFriendModel *model = [self.dataSource objectAtIndex:indexPath.row];
+    HYRequestModel *model = [self.dataSource objectAtIndex:indexPath.row];
     cell.friendModel = model;
+    cell.delegate = self;
     return cell;
 }
 
@@ -70,7 +72,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    HYNewFriendModel *model = [self.dataSource objectAtIndex:indexPath.row];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    HYRequestModel *model = [self.dataSource objectAtIndex:indexPath.row];
     HYUservCardViewController *userInfoVC = [[HYUservCardViewController alloc] init];
     userInfoVC.userJid = model.jid;
     [self.navigationController pushViewController:userInfoVC animated:YES];
@@ -78,20 +81,25 @@
 }
 
 // 接受
-- (void)friendRequestAccept:(HYFriendRequestViewCell *)friendRequestViewCell
+- (void)friendRequestClick:(HYFriendRequestViewCell *)friendRequestViewCell
 {
-    HYNewFriendModel *friendModel = friendRequestViewCell.friendModel;
-    NSString *message = [NSString stringWithFormat:@"您确定要添加%@为好友吗？",friendModel.jid.user];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"拒绝" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        [[HYXMPPManager sharedInstance] rejectUserRequest:friendModel.jid];
-    }];
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"同意" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [[HYXMPPManager sharedInstance] agreeUserRequest:friendModel.jid];
-    }];
-    [alert addAction:cancelAction];
-    [alert addAction:okAction];
-    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+    HYRequestModel *friendModel = friendRequestViewCell.friendModel;
+    if (friendModel.requestType == 1) { // 好友请求
+        if (friendModel.option == 1) { // 同意
+            [[HYXMPPManager sharedInstance] agreeUserRequest:friendModel.jid];
+        } else if (friendModel.option == 2) { // 拒绝
+            [[HYXMPPManager sharedInstance] rejectUserRequest:friendModel.jid];
+        }
+    } else if (friendModel.requestType == 2) { // 群邀请
+        if (friendModel.option == 1) { // 同意群邀请
+            [[HYXMPPRoomManager sharedInstance] acceptInviteRoom:friendModel.roomJid];
+            [[HYXMPPRoomManager sharedInstance] joinRoomWithRoomJID:friendModel.roomJid withNickName:[HYXMPPManager sharedInstance].xmppStream.myJID.user success:nil];
+        } else if (friendModel.option == 2) { // 拒绝邀请
+            [[HYXMPPRoomManager sharedInstance] rejectInviteRoom:friendModel.roomJid withReason:@"没有兴趣"];
+        }
+    }
+    [[HYDatabaseHandler sharedInstance] updateFriend:friendModel]; // 更新数据库
+    [self.tableView reloadData];
 }
 
 - (void)addButtonClick:(UIButton *)sender

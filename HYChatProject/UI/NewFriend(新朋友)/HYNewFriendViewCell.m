@@ -7,7 +7,7 @@
 //
 
 #import "HYNewFriendViewCell.h"
-#import "HYNewFriendModel.h"
+#import "HYRequestModel.h"
 #import "UIView+SW.h"
 #import "HYUtils.h"
 #import "HYXMPPManager.h"
@@ -89,7 +89,7 @@
     [self.contentView addSubview:self.line];
 }
 
-- (void)setFriendModel:(HYNewFriendModel *)friendModel
+- (void)setFriendModel:(HYRequestModel *)friendModel
 {
     _friendModel = friendModel;
     self.nameLabel.text = friendModel.jid.user;

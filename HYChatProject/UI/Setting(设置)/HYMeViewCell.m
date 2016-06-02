@@ -81,9 +81,8 @@
 {
     _vCard = vCard;
     self.iconView.image = vCard.photo ? [UIImage imageWithData:vCard.photo] : [UIImage imageNamed:@"defaultHead"];
-    NSString *user = [HYLoginInfo sharedInstance].jid.user;
-    self.nameLabel.text = vCard.nickname.length ? vCard.nickname : user;
-    self.detailLabel.text = [NSString stringWithFormat:@"帐号: %@",user];
+    self.nameLabel.text = vCard.nickname.length ? vCard.nickname : vCard.jid.user;
+    self.detailLabel.text = [NSString stringWithFormat:@"帐号: %@",vCard.jid.user];
 }
 
 @end

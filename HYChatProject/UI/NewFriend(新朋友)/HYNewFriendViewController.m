@@ -8,7 +8,7 @@
 
 #import "HYNewFriendViewController.h"
 #import "HYNewFriendViewCell.h"
-#import "HYNewFriendModel.h"
+#import "HYRequestModel.h"
 #import "HYDatabaseHandler+HY.h"
 #import "HYSingleChatViewController.h"
 #import "HYAddFriendViewController.h"
@@ -61,7 +61,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     HYNewFriendViewCell *cell = [HYNewFriendViewCell cellWithTableView:tableView];
-    HYNewFriendModel *model = [self.dataSource objectAtIndex:indexPath.row];
+    HYRequestModel *model = [self.dataSource objectAtIndex:indexPath.row];
     cell.friendModel = model;
     return cell;
 }
@@ -70,8 +70,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     HYSingleChatViewController *singleChat = [[HYSingleChatViewController alloc] init];
-    HYNewFriendModel *model = [self.dataSource objectAtIndex:indexPath.row];
+    HYRequestModel *model = [self.dataSource objectAtIndex:indexPath.row];
     singleChat.chatJid = model.jid;
     [self.navigationController pushViewController:singleChat animated:YES];
 }

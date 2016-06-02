@@ -10,4 +10,5 @@
 
 @interface HYUservCardViewController : UIViewController
 @property (nonatomic, strong) XMPPJID *userJid;
+@property (nonatomic, assign) BOOL isAddFriend;
 @end

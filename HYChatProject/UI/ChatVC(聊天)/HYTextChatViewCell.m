@@ -52,13 +52,12 @@
     if (popMenu.isMenuVisible) {
         return;
     }
-    
     UIMenuItem *item1 = [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyMesssage:)];
     UIMenuItem *item2 = [[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteMessage:)];
     UIMenuItem *item3;
     if (self.messageFrame.chatMessage.sendStatus == HYChatSendMessageStatusFaild) {
         item3 = [[UIMenuItem alloc] initWithTitle:@"重发" action:@selector(reSendMessage:)];
-    } else {
+    } else if (self.messageFrame.chatMessage.sendStatus == HYChatSendMessageStatusSuccess) {
         item3 = [[UIMenuItem alloc] initWithTitle:@"转发" action:@selector(forwardMessage:)];
     }
     

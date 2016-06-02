@@ -9,15 +9,15 @@
 #import <UIKit/UIKit.h>
 #define kFriendRequestViewCellHeight 54.0
 
-@class HYFriendRequestViewCell,HYNewFriendModel;
+@class HYFriendRequestViewCell,HYRequestModel;
 @protocol HYFriendRequestViewCellDelegate <NSObject>
 @optional
-- (void)friendRequestAccept:(HYFriendRequestViewCell *)friendRequestViewCell;
+- (void)friendRequestClick:(HYFriendRequestViewCell *)friendRequestViewCell;
 
 @end
 
 @interface HYFriendRequestViewCell : UITableViewCell
 @property (nonatomic, weak) id<HYFriendRequestViewCellDelegate> delegate;
-@property (nonatomic, strong) HYNewFriendModel *friendModel;
+@property (nonatomic, strong) HYRequestModel *friendModel;
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 @end

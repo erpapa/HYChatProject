@@ -342,9 +342,9 @@
             [self.navigationController popViewControllerAnimated:YES];
         }];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [HYUtils saveCurrentUservCard:self.vCard]; // 保存名片
             [[HYXMPPManager sharedInstance] updateMyvCard:self.vCard successBlock:^(BOOL success) {
                 if (success) {
-                    [HYUtils saveCurrentUservCard:self.vCard]; // 保存名片
                     [HYUtils alertWithSuccessMsg:@"保存成功！"];
                 } else {
                     [HYUtils alertWithSuccessMsg:@"保存失败！"];

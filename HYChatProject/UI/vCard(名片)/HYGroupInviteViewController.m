@@ -33,6 +33,7 @@ static NSString *kForwardingIconViewCellIdentifier = @"kForwardingIconViewCellId
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.title = @"邀请好友";
     self.view.backgroundColor = [UIColor whiteColor];
     [self.tableView registerClass:[HYForwardingViewCell class] forCellReuseIdentifier:kForwardingViewCellIdentifier];
     [self.view addSubview:self.tableView];

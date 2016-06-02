@@ -30,6 +30,7 @@
 @property (nonatomic,strong) NSFetchedResultsController *resultController;//查询结果集合
 @property (nonatomic, strong) HYSearchController *searchController;
 @property (nonatomic, strong) HYContactsSearchResultsController *resultsController;
+@property (nonatomic, assign) BOOL shouldRefresh;
 
 @end
 
@@ -60,6 +61,9 @@
     if (self.dataSource.count == 0) {
         // 加载好友列表
         [self loadContacts];
+    }
+    if (self.shouldRefresh == YES) {
+        [self reloadDataSource]; // 刷新
     }
 }
 
@@ -322,64 +326,44 @@
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
-/**
- *  数据更新
- */
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(nullable NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(nullable NSIndexPath *)newIndexPath
 {
-    XMPPUserCoreDataStorageObject *object = anObject; // 当前改变的object
-    switch (type) {
-        case NSFetchedResultsChangeInsert:{
-            // 插入数据
-            [self reloadDataSource];
-            break;
-        }
-        case NSFetchedResultsChangeDelete:{
-            // 删除数据
-            for (NSInteger i = 0; i < self.dataSource.count; i++) {// 查找当前联系人
-                HYContacts *contact = [self.dataSource objectAtIndex:i];
-                for (NSInteger j = 0; j < contact.infoArray.count; j++) {
-                    HYContactsModel *model = [contact.infoArray objectAtIndex:j];
-                    if ([model.jid.bare isEqualToString:object.jid.bare]) {
-                        [contact.infoArray removeObjectAtIndex:j];
-                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i+1];
-                        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-                        return;
-                    }
-                }
-            }
-            break;
-        }
-        case NSFetchedResultsChangeMove:{
-            [self reloadDataSource];
-            break;
-        }
-        case NSFetchedResultsChangeUpdate:{
-            // 更新当前联系人
-            for (NSInteger i = 0; i < self.dataSource.count; i++) {
-                HYContacts *contact = [self.dataSource objectAtIndex:i];
-                for (NSInteger j = 0; j < contact.infoArray.count; j++) {
-                    HYContactsModel *model = [contact.infoArray objectAtIndex:j];
-                    if ([model.jid.bare isEqualToString:object.jid.bare]) {
-                        // 如果更改昵称后还是在当前index，不会更新header, 在这里比较nickname,如果昵称改变就重新reload
-                        if (![model.nickName isEqualToString:object.nickname]) {
-                            [self reloadDataSource];
-                            return;
-                        }
-                        HYContactsModel *currentModel = [self modelWithStorageObject:object];
-                        [contact.infoArray removeObjectAtIndex:j];
-                        [contact.infoArray insertObject:currentModel atIndex:j];
-                        NSIndexPath *path = [NSIndexPath indexPathForRow:j inSection:i+1];
-                        [self.tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
-                        return;
-                    }
-                }
-            }
-            break;
-        }
-        default:
-            break;
+    if (type == NSFetchedResultsChangeUpdate || type == NSFetchedResultsChangeMove) {
+        [self reloadDataSource];
+    } else {
+        self.shouldRefresh = YES;
     }
+}
+
+#pragma mark - 更新数据
+
+- (void)reloadDataSource
+{
+    BACK(^{
+        [self.dataSource removeAllObjects];
+        [_resultController.fetchedObjects enumerateObjectsUsingBlock:^(XMPPUserCoreDataStorageObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
+            // 如果是none表示对方还没有确认   // to 我关注对方  // from 对方关注我  // both 互粉
+            if ([object.subscription isEqualToString:@"both"]) {
+                NSString *nickName = object.nickname;
+                if (nickName.length == 0) {
+                    nickName = object.jid.user;
+                }
+                if (object.jid) {
+                    [[HYLoginInfo sharedInstance].nickNameDict setObject:nickName forKey:object.jid.bare]; // 储存到字典
+                }
+                [self addContacsObject:object];
+            }
+        }];
+        [[HYLoginInfo sharedInstance] saveNickNameDictToSanbox];
+        [self sortWithContacts]; // 排序
+        MAIN(^{
+            [self.tableView reloadData]; // 刷新数据
+            self.shouldRefresh = NO;
+        });
+        
+        
+    });
+    
 }
 
 /**
@@ -388,18 +372,17 @@
 - (HYContactsModel *)modelWithStorageObject:(XMPPUserCoreDataStorageObject *)object
 {
     NSString *userName = object.nickname.length ? object.nickname : object.jid.user; // 昵称
-    NSString *firstLetterStr = [NSString new];
+    NSString *firstLetterStr = object.sectionName;
     if (userName.length) {
-        CFMutableStringRef string = CFStringCreateMutableCopy(NULL, 0, (__bridge CFStringRef)userName);
-        CFStringTransform(string, NULL, kCFStringTransformMandarinLatin, NO);// 拼音
-        CFStringTransform(string, NULL, kCFStringTransformStripDiacritics, NO);// 没有音标
-        NSString *name = (__bridge NSString *)string;// 姓名拼音
-        NSArray *letterArray = [name componentsSeparatedByString:@" "];
-        for (NSString *str in letterArray) {
-            firstLetterStr =[firstLetterStr stringByAppendingString:[[str substringToIndex:1] uppercaseString]];// 截取首字母(并转换为大写)
-        }
+        //转成了可变字符串
+        NSMutableString *str = [NSMutableString stringWithString:firstLetterStr];
+        //先转换为带音标的拼音
+        CFStringTransform((CFMutableStringRef)str,NULL, kCFStringTransformMandarinLatin,NO);
+        //再转换为没有音标的拼音
+        CFStringTransform((CFMutableStringRef)str,NULL, kCFStringTransformStripDiacritics,NO);
+        //转化为大写拼音
+        firstLetterStr = [str capitalizedString];
     }
-    
     HYContactsModel *contactsModel = [[HYContactsModel alloc] init];
     contactsModel.jid = object.jid;
     contactsModel.nickName = userName;
@@ -432,36 +415,13 @@
     
 }
 
-#pragma mark - 更新数据
-
-- (void)reloadDataSource
-{
-    BACK(^{ // 后台处理数据
-        [self.dataSource removeAllObjects];
-        [_resultController.fetchedObjects enumerateObjectsUsingBlock:^(XMPPUserCoreDataStorageObject *object, NSUInteger idx, BOOL * _Nonnull stop) {
-            NSString *nickName = object.nickname;
-            if (nickName.length == 0) {
-                nickName = object.jid.user;
-            }
-            if (object.jid) {
-                [[HYLoginInfo sharedInstance].nickNameDict setObject:nickName forKey:object.jid.bare]; // 储存到字典
-            }
-            [self addContacsObject:object];
-        }];
-        [[HYLoginInfo sharedInstance] saveNickNameDictToSanbox];
-        [self sortWithContacts]; // 排序
-        MAIN(^{
-            [self.tableView reloadData]; // 刷新数据
-        });
-    });
-}
 
 #pragma mark - 懒加载
 
 - (UITableView *)tableView
 {
     if (_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - CGRectGetHeight(self.tabBarController.tabBar.frame))];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.showsHorizontalScrollIndicator = NO;
         _tableView.showsVerticalScrollIndicator = NO;
@@ -488,5 +448,61 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+/**
+ *  数据更新
+ */
+//- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(nullable NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(nullable NSIndexPath *)newIndexPath
+//{
+//    XMPPUserCoreDataStorageObject *object = anObject; // 当前改变的object
+//    switch (type) {
+//        case NSFetchedResultsChangeDelete:{
+//            // 删除数据
+//            for (NSInteger i = 0; i < self.dataSource.count; i++) {// 查找当前联系人
+//                HYContacts *contact = [self.dataSource objectAtIndex:i];
+//                for (NSInteger j = 0; j < contact.infoArray.count; j++) {
+//                    HYContactsModel *model = [contact.infoArray objectAtIndex:j];
+//                    if ([model.jid.bare isEqualToString:object.jid.bare]) {
+//                        [contact.infoArray removeObjectAtIndex:j];
+//                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i+1];
+//                        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//                        return;
+//                    }
+//                }
+//            }
+//            break;
+//        }
+//        case NSFetchedResultsChangeMove:{
+//            [self reloadDataSource];
+//            break;
+//        }
+//        case NSFetchedResultsChangeUpdate:{
+//            // 更新当前联系人
+//            for (NSInteger i = 0; i < self.dataSource.count; i++) {
+//                HYContacts *contact = [self.dataSource objectAtIndex:i];
+//                for (NSInteger j = 0; j < contact.infoArray.count; j++) {
+//                    HYContactsModel *model = [contact.infoArray objectAtIndex:j];
+//                    if ([model.jid.bare isEqualToString:object.jid.bare]) {
+//                        // 如果更改昵称后还是在当前index，不会更新header, 在这里比较nickname,如果昵称改变就重新reload
+//                        if (![model.nickName isEqualToString:object.nickname]) {
+//                            [self reloadDataSource];
+//                            return;
+//                        }
+//                        HYContactsModel *currentModel = [self modelWithStorageObject:object];
+//                        [contact.infoArray removeObjectAtIndex:j];
+//                        [contact.infoArray insertObject:currentModel atIndex:j];
+//                        NSIndexPath *path = [NSIndexPath indexPathForRow:j inSection:i+1];
+//                        [self.tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
+//                        return;
+//                    }
+//                }
+//            }
+//            break;
+//        }
+//        default:
+//            break;
+//    }
+//}
 
 @end

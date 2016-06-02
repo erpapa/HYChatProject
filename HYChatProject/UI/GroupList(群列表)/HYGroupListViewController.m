@@ -13,6 +13,7 @@
 #import "HYContactsModel.h"
 #import "HYGroupListViewCell.h"
 #import "XMPPRoom.h"
+#import "HYUtils.h"
 #import "HYGroupSearchListController.h"
 #import "HYSearchController.h"
 #import "HYAddFriendViewController.h"
@@ -42,32 +43,19 @@
     self.definesPresentationContext = YES;// know where you want UISearchController to be displayed
     self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.view addSubview:self.tableView];
-    // 获得房间列表
-    [self reloadData:nil];
     // 创建/添加房间
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createRoom:)];
-    // 通知
-    [HYNotification addObserver:self selector:@selector(reloadData:) name:HYChatJoinOrCreateGroup object:nil];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    // 获得房间列表
+    [self loadBookmarkedRooms];
     
     if (self.dataSource.count == 0) {
-        // 加载房间列表
-        __weak typeof(self) weakSelf = self;
-        [[HYXMPPRoomManager sharedInstance] fetchBookmarkedRooms:^(NSArray *bookmarkedRooms) {
-            [bookmarkedRooms enumerateObjectsUsingBlock:^(XMPPRoom *room, NSUInteger idx, BOOL * _Nonnull stop) {
-                HYContactsModel *model = [[HYContactsModel alloc] init];
-                model.jid = room.roomJID;
-                model.nickName = room.roomJID.user;
-                model.isGroup = YES;
-                [self.dataSource addObject:model];
-            }];
-            [weakSelf.tableView reloadData];
-        }];
+        [HYUtils alertWithNormalMsg:@"你还没有加入聊天室！"];
     }
 }
 
@@ -144,7 +132,7 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)reloadData:(NSNotification *)noti
+- (void)loadBookmarkedRooms
 {
     // 获取数据
     NSArray *bookmarkedRooms = [HYXMPPRoomManager sharedInstance].bookmarkedRooms;
@@ -156,9 +144,7 @@
         model.isGroup = YES;
         [self.dataSource addObject:model];
     }];
-    if (noti) { // 如果获得通知
-        [self.tableView reloadData];
-    }
+    [self.tableView reloadData];
 }
 
 #pragma mark - 懒加载
@@ -184,11 +170,6 @@
         _dataSource = [NSMutableArray array];
     }
     return _dataSource;
-}
-
-- (void)dealloc
-{
-    [HYNotification removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {

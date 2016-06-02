@@ -117,7 +117,7 @@
     UIMenuItem *item2;
     if (self.messageFrame.chatMessage.sendStatus == HYChatSendMessageStatusFaild) {
         item2 = [[UIMenuItem alloc] initWithTitle:@"重发" action:@selector(reSendMessage:)];
-    } else {
+    } else if (self.messageFrame.chatMessage.sendStatus == HYChatSendMessageStatusSuccess) {
         item2 = [[UIMenuItem alloc] initWithTitle:@"转发" action:@selector(forwardMessage:)];
     }
     [popMenu setMenuItems:@[item1,item2]];

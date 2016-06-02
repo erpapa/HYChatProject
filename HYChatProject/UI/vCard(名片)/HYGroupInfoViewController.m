@@ -90,7 +90,8 @@
     } else if (indexPath.section == 3) { // 退出聊天室
         UILabel *logoutLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 44)];
         logoutLabel.text = @"退出聊天室";
-        logoutLabel.textColor = [UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f];        logoutLabel.textAlignment = NSTextAlignmentCenter;
+        logoutLabel.textColor = [UIColor colorWithRed:1.0f green:0.231f blue:0.188 alpha:1.0f];
+        logoutLabel.textAlignment = NSTextAlignmentCenter;
         [cell.contentView addSubview:logoutLabel];
     }
     

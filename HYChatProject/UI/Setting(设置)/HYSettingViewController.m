@@ -12,6 +12,8 @@
 #import "XMPPvCardTemp.h"
 #import "HYUtils.h"
 #import "HYXMPPManager.h"
+#import "HYRequestModel.h"
+#import "HYDatabaseHandler+HY.h"
 #import <MessageUI/MessageUI.h>
 
 static NSString *kMeViewCellIdentifier = @"kMeViewCellIdentifier";
@@ -41,12 +43,14 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
 {
     [super viewWillAppear:animated];
     self.vCard = [HYUtils currentUservCard]; // 从本地读取名片
+    [self.tableView reloadData]; // 刷新数据
+    
     if (self.vCard == nil) {
         __weak typeof(self) weakSelf = self;
         [[HYXMPPManager sharedInstance] getMyvCard:^(XMPPvCardTemp *vCardTemp) { // 获取个人名片
-            __strong typeof(weakSelf) strongSellf = weakSelf;
-            strongSellf.vCard = vCardTemp;
-            [strongSellf.tableView reloadData];
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            strongSelf.vCard = vCardTemp;
+            [strongSelf.tableView reloadData];
         }];
     }
 }
@@ -76,6 +80,19 @@ static NSString *kSettingViewCellIdentifier = @"kSettingViewCellIdentifier";
     HYSettingViewCell *settingCell = [tableView dequeueReusableCellWithIdentifier:kSettingViewCellIdentifier];
     if (settingCell == nil) {
         settingCell = [[HYSettingViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kSettingViewCellIdentifier];
+    }
+    settingCell.badgeView.hidden = YES;
+    settingCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator; // 箭头
+    if (indexPath.section == 1 && indexPath.row == 1) {
+        NSMutableArray *requests = [NSMutableArray array];
+        [[HYDatabaseHandler sharedInstance] allRequestFriends:requests];// 获取数据
+        for (HYRequestModel *model in requests) {
+            if (model.option == 0) { // 没有处理
+                settingCell.badgeView.hidden = NO;
+                settingCell.accessoryType = UITableViewCellAccessoryNone;
+                break;
+            }
+        }
     }
     NSArray *array = [self.dataSource objectAtIndex:indexPath.section];
     NSDictionary *dict = [array objectAtIndex:indexPath.row];

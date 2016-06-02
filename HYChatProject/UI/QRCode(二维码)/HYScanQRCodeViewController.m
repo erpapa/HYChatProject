@@ -13,7 +13,7 @@
 #import "HYUtils.h"
 #import "HYXMPPManager.h"
 
-@interface HYScanQRCodeViewController ()<AVCaptureMetadataOutputObjectsDelegate, UIAlertViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface HYScanQRCodeViewController ()<AVCaptureMetadataOutputObjectsDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic, strong) UIView *scanRectView;      // 扫描区域
 @property (nonatomic, strong) UIView *headerView;        // 头部
@@ -21,8 +21,6 @@
 @property (nonatomic, strong) UIButton *readButton;      // 从相册读取
 @property (nonatomic, strong) UIButton *flashButton;     // 闪光灯
 @property (nonatomic, strong) UIButton *codeButton;      // 生成我的二维码
-@property (nonatomic, strong) XMPPJID *userJid;
-
 @property (nonatomic, strong) AVCaptureDevice            *device;
 @property (nonatomic, strong) AVCaptureDeviceInput       *input;
 @property (nonatomic, strong) AVCaptureMetadataOutput    *output;
@@ -158,26 +156,21 @@
 }
 
 #pragma mark - 二维码识别
-
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection
 {
-    if ((metadataObjects.count==0) )
-    {
-        return;
-    }
+    if (metadataObjects.count==0) return;
     [self.session stopRunning];
     AVMetadataMachineReadableCodeObject *metadataObject = metadataObjects.firstObject;
     //输出扫描字符串
     NSString *string = metadataObject.stringValue;
     XMPPJID *jid = [XMPPJID jidWithString:string];
     if (jid.user.length && jid.domain.length) {
-        self.userJid = jid;
-        NSString *message = [NSString stringWithFormat:@"\n你确定要添加%@为好友吗？",jid.user];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        alert.tag = 1001;
-        [alert show];
+        HYUservCardViewController *vCardVC = [[HYUservCardViewController alloc] init];
+        vCardVC.isAddFriend = YES;
+        vCardVC.userJid = jid;
+        [self.navigationController pushViewController:vCardVC animated:YES];
     } else {
-        [HYUtils alertWithErrorMsg:@"帐号不合法！"];
+        [HYUtils alertWithErrorMsg:[NSString stringWithFormat:@"帐号不合法！\n%@",string]];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.session startRunning];
         });
@@ -210,27 +203,30 @@
         CIImage *ciImage = [CIImage imageWithCGImage:image.CGImage];
         NSArray *features = [detector featuresInImage:ciImage];
         CIQRCodeFeature *feature = [features firstObject];
-        
-        NSString *result = feature.messageString;
+        NSString *result = feature.messageString; // 获取扫描结果
         
         if (result.length == 0) {
-            [HYUtils alertWithErrorMsg:@"没有扫描到二维码！"];
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:^{
+                [HYUtils alertWithErrorMsg:@"没有扫描到二维码！"];
+            }];
+            
         } else {
-            //输出扫描字符串
-            XMPPJID *jid = [XMPPJID jidWithString:result];
-            if (jid.user.length && jid.domain.length) {
-                [HYUtils clearWaitingMsg];
-                self.userJid = jid;
-                NSString *message = [NSString stringWithFormat:@"\n你确定要添加%@为好友吗？",jid.user];
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-                alert.tag = 1002;
-                [alert show];
-            } else {
-                [HYUtils alertWithErrorMsg:@"帐号不合法！"];
-                [self dismissViewControllerAnimated:YES completion:nil];
-            }
+            [self dismissViewControllerAnimated:YES completion:^{
+                //输出扫描字符串
+                XMPPJID *jid = [XMPPJID jidWithString:result];
+                if (jid.user.length && jid.domain.length) {
+                    [HYUtils clearWaitingMsg];
+                    HYUservCardViewController *vCardVC = [[HYUservCardViewController alloc] init];
+                    vCardVC.isAddFriend = YES;
+                    vCardVC.userJid = jid;
+                    [self.navigationController pushViewController:vCardVC animated:YES];
+                } else {
+                    [HYUtils alertWithErrorMsg:[NSString stringWithFormat:@"帐号不合法！\n%@",result]];
+                }
+            }];
+            
         }
+        
         
     });
     
@@ -272,24 +268,6 @@
 - (void)backButtonClick:(UIButton *)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-#pragma mark - alertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1) { // 添加好友，进入好友名片页
-        HYUservCardViewController *vCardVC = [[HYUservCardViewController alloc] init];
-        vCardVC.userJid = self.userJid;
-        [self.navigationController pushViewController:vCardVC animated:YES];
-        
-    } else if (buttonIndex == 0) { // 取消添加好友
-        if (alertView.tag == 1001) {
-            [self.session startRunning];
-        } else if (alertView.tag == 1002) {
-            [self dismissViewControllerAnimated:YES completion:nil]; // 去掉imagePicker
-        }
-    }
 }
 
 - (void)didReceiveMemoryWarning {

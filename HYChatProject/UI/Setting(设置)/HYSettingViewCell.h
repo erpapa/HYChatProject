@@ -10,5 +10,5 @@
 #define kSettingViewCellHeight 44.0
 
 @interface HYSettingViewCell : UITableViewCell
-@property (nonatomic, assign) BOOL showBadge;
+@property (nonatomic, strong) UIImageView *badgeView;
 @end

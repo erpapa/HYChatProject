@@ -139,7 +139,6 @@
                     [[HYXMPPRoomManager sharedInstance] joinRoomWithRoomJID:self.roomJid withNickName:[HYXMPPManager sharedInstance].myJID.user success:^(BOOL success) {
                         if (success) {
                             [HYUtils alertWithSuccessMsg:@"加入房间成功 !"];
-                            [weakSelf postSuccessNotifaction];
                         } else {
                             [HYUtils alertWithSuccessMsg:@"加入房间失败 !"];
                         }
@@ -158,7 +157,6 @@
                     [[HYXMPPRoomManager sharedInstance] createRoomWithRoomName:self.roomJid.user success:^(BOOL success) {
                         if (success) {
                             [HYUtils alertWithSuccessMsg:@"创建房间成功 !"];
-                            [weakSelf postSuccessNotifaction];
                         } else {
                             [HYUtils alertWithSuccessMsg:@"创建房间失败 !"];
                         }
@@ -188,7 +186,6 @@
             [[HYXMPPRoomManager sharedInstance] createRoomWithRoomName:self.roomJid.user success:^(BOOL success) {
                 if (success) {
                     [HYUtils alertWithSuccessMsg:@"创建房间成功 !"];
-                    [self postSuccessNotifaction];
                 } else {
                     [HYUtils alertWithSuccessMsg:@"创建房间失败 !"];
                 }
@@ -197,7 +194,6 @@
             [[HYXMPPRoomManager sharedInstance] joinRoomWithRoomJID:self.roomJid withNickName:[HYXMPPManager sharedInstance].myJID.user success:^(BOOL success) {
                 if (success) {
                     [HYUtils alertWithSuccessMsg:@"加入房间成功 !"];
-                    [self postSuccessNotifaction];
                 } else {
                     [HYUtils alertWithSuccessMsg:@"加入房间失败 !"];
                 }
@@ -230,11 +226,6 @@
     return title;
 }
 
-- (void)postSuccessNotifaction
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:HYChatJoinOrCreateGroup object:self.roomJid];
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {

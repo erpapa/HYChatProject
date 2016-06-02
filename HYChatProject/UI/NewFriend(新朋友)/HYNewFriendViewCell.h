@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #define kNewFriendViewCellHeight 54.0
 
-@class HYNewFriendModel;
+@class HYRequestModel;
 @interface HYNewFriendViewCell : UITableViewCell
-@property (nonatomic, strong) HYNewFriendModel *friendModel;
+@property (nonatomic, strong) HYRequestModel *friendModel;
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 @end

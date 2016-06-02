@@ -15,6 +15,7 @@
 #import "XMPP+IM.h"
 #import "HYUtils.h"
 #import "HYLoginInfo.h"
+#import "HYRequestModel.h"
 #import "HYRecentChatModel.h"
 #import "HYDatabaseHandler+HY.h"
 
@@ -150,8 +151,7 @@
     [xmppRoom addDelegate:self delegateQueue:dispatch_get_main_queue()];
     NSXMLElement *history = [NSXMLElement elementWithName:@"history"];
     [history addAttributeWithName:@"maxstanzas" stringValue:@"20"]; // 设置历史消息记录条数
-    // [history addAttributeWithName:@"seconds" stringValue:@"10"]; // 设置最后10s消息
-    [xmppRoom joinRoomUsingNickname:nickName history:history password:password]; // 密码设置为空
+    [xmppRoom joinRoomUsingNickname:nickName history:history password:password]; // 加入聊天室
     //    [_xmppRoom configureRoomUsingOptions:nil]; // 默认设置
     [xmppRoom fetchConfigurationForm];
     // 为加入的房间创建标签
@@ -1061,6 +1061,13 @@
 
 /**
  *  接收到群邀请
+ <message xmlns="jabber:client" from="haha@conference.erpapa.cn" to="qwerty@erpapa.cn" type="normal">
+     <x xmlns="http://jabber.org/protocol/muc#user">
+        <invite from="erpapa@erpapa.cn/iPhone"><reason>快来加入吧！</reason></invite></x>
+     <x xmlns="jabber:x:conference" jid="haha@conference.erpapa.cn">快来加入吧！</x>
+     <body>erpapa@erpapa.cn/iPhone invites you to the room haha@conference.erpapa.cn (快来加入吧！) </body>
+     <delay xmlns="urn:xmpp:delay" from="erpapa.cn" stamp="2016-05-20T05:53:44.265Z">Offline Storage</delay>
+ </message>
  */
 - (void)xmppMUC:(XMPPMUC *)sender roomJID:(XMPPJID *)roomJID didReceiveInvitation:(XMPPMessage *)message
 {
@@ -1070,18 +1077,24 @@
     if (room) { // 已经是聊天室成员
         return;
     }
-    
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"%@邀请你加入聊天室",message.from.user] message:[NSString stringWithFormat:@"%@",[message body]] preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"拒绝" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        [self rejectInviteRoom:roomJID withReason:@"没有兴趣..."]; // 拒绝邀请
-    }];
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"接受" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self acceptInviteRoom:roomJID]; // 接受邀请
-        [self joinRoomWithRoomJID:roomJID withNickName:_xmppStream.myJID.user success:nil];
-    }];
-    [alertController addAction:cancelAction];
-    [alertController addAction:okAction];
-    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
+    NSXMLElement *x = [message elementForName:@"x" xmlns:XMPPMUCUserNamespace];
+    NSXMLElement *invite = [x elementForName:@"invite"];
+    NSString *inviteJID = [[[message body] componentsSeparatedByString:@" "] firstObject];
+    NSString *reason;
+    if (invite)
+    {
+        inviteJID = [[invite attributeForName:@"from"] stringValue]; // 邀请人
+        reason = [[invite elementForName:@"reason"] stringValue]; // 邀请理由
+    }
+    NSString *body = [NSString stringWithFormat:@"邀请你加入聊天室:%@",roomJID.user];
+    HYRequestModel *requestModel = [[HYRequestModel alloc] init];
+    requestModel.jid = [XMPPJID jidWithString:inviteJID];
+    requestModel.roomJid = roomJID;
+    requestModel.reason = reason;
+    requestModel.body = body;
+    requestModel.time = [[NSDate date] timeIntervalSince1970];
+    requestModel.requestType = 2; // 群邀请
+    [[HYDatabaseHandler sharedInstance] addFriend:requestModel]; // 储存到数据库
 }
 
 - (void)xmppMUC:(XMPPMUC *)sender roomJID:(XMPPJID *)roomJID didReceiveInvitationDecline:(XMPPMessage *)message
