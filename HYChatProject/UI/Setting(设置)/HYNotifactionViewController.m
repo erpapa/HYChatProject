@@ -44,7 +44,7 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier];
         UISwitch *switchView = [[UISwitch alloc] init];
         [switchView addTarget:self action:@selector(switchChange:) forControlEvents:UIControlEventValueChanged];
-        switchView.tag = indexPath.section;
+        switchView.tag = indexPath.row;
         cell.accessoryView = switchView;
     }
     if (indexPath.section == 0) {
