@@ -44,14 +44,14 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier];
         UISwitch *switchView = [[UISwitch alloc] init];
         [switchView addTarget:self action:@selector(switchChange:) forControlEvents:UIControlEventValueChanged];
-        switchView.tag = indexPath.row;
+        switchView.tag = indexPath.section;
         cell.accessoryView = switchView;
     }
     if (indexPath.section == 0) {
         cell.textLabel.text = @"消息免打扰";
         UISwitch *switchView = (UISwitch *)cell.accessoryView;
         switchView.on = [[NSUserDefaults standardUserDefaults] boolForKey:HYChatShieldNotifaction];
-    } else {
+    } else if (indexPath.section == 1) {
         cell.textLabel.text = @"显示预览";
         UISwitch *switchView = (UISwitch *)cell.accessoryView;
         switchView.on = ![[NSUserDefaults standardUserDefaults] boolForKey:HYChatNotShowBody];
@@ -88,7 +88,7 @@
     if (sender.tag == 0) {
         [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:HYChatShieldNotifaction];
     } else if (sender.tag == 1) {
-        [[NSUserDefaults standardUserDefaults] setBool:sender.on forKey:HYChatNotShowBody];
+        [[NSUserDefaults standardUserDefaults] setBool:!sender.on forKey:HYChatNotShowBody];
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
