@@ -54,10 +54,6 @@
     }
     [self makeMaskView:self.videoView withImage:normalImage]; // 设置mask，遮盖
     self.videoView.yy_imageURL = [NSURL URLWithString:message.videoModel.videoThumbImageUrl];
-    
-    if (message.videoModel.videoLocalPath) { // 本地文件存在
-        [self decodeVideo]; // 解码
-    }
 }
 
 - (void)makeMaskView:(UIView *)view withImage:(UIImage *)image
@@ -76,19 +72,19 @@
 
 - (void)decodeVideo
 {
-    if (self.messageFrame.chatMessage.videoModel.videoDecoder == nil) {
-        __weak typeof(self) weakSelf = self;
-        NSString *filePath = self.messageFrame.chatMessage.videoModel.videoLocalPath;
-        self.messageFrame.chatMessage.videoModel.videoDecoder = [[HYVideoDecoder alloc] initWithFile:filePath];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [weakSelf.messageFrame.chatMessage.videoModel.videoDecoder decodeVideo:^(BOOL finished) {
+    if (self.messageFrame.chatMessage.videoModel.videoLocalPath) { // 本地文件存在,解码
+        if (self.messageFrame.chatMessage.videoModel.videoDecoder == nil) {
+            __weak typeof(self) weakSelf = self;
+            NSString *filePath = self.messageFrame.chatMessage.videoModel.videoLocalPath;
+            self.messageFrame.chatMessage.videoModel.videoDecoder = [[HYVideoDecoder alloc] initWithFile:filePath];
+            [self.messageFrame.chatMessage.videoModel.videoDecoder decodeVideo:^(BOOL finished) {
                 if (finished) {
                     [weakSelf videoDecodeFinished:weakSelf.messageFrame.chatMessage.videoModel.videoDecoder];
                 }
             }];
-        });
-    } else {
-        [self videoDecodeFinished:self.messageFrame.chatMessage.videoModel.videoDecoder];
+        } else {
+            [self videoDecodeFinished:self.messageFrame.chatMessage.videoModel.videoDecoder];
+        }
     }
 }
 
@@ -100,8 +96,18 @@
             [self.videoView.layer removeAnimationForKey:@"contents"];
             [self.videoView.layer addAnimation:videoDecoder.animation forKey:nil];
         });
+        
     }
     
+}
+
+/**
+ *  结束显示
+ */
+- (void)endDisplay
+{
+    //解码完成 刷新界面
+    [self.videoView.layer removeAnimationForKey:@"contents"];
 }
 
 #pragma mark - 继承方法
@@ -148,4 +154,5 @@
         [self.delegate chatViewCellReSend:self];
     }
 }
+
 @end

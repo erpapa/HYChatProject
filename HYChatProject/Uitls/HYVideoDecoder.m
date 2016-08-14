@@ -16,7 +16,6 @@
 {
     self = [super init];
     if (self) {
-        _images = [NSMutableArray array];
         _filePath = filePath;
     }
     return self;
@@ -25,53 +24,52 @@
 
 - (void)decodeVideo:(HYdecodeFinished)finished;
 {
-    NSURL *url = [NSURL fileURLWithPath:_filePath];
-    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:url options:nil];
-    
-    NSError *error = nil;
-    AVAssetReader *reader = [[AVAssetReader alloc] initWithAsset:asset error:&error];
-    if ( error) {
-        NSLog(@"解码错误");
-        finished(NO);
-        return;
-    }
-    
-    NSArray *videoTracks = [asset tracksWithMediaType:AVMediaTypeVideo];
-    AVAssetTrack *videoTrack =[videoTracks objectAtIndex:0];
-    
-    NSMutableDictionary *options = [NSMutableDictionary dictionary];
-    [options setObject:@(kCVPixelFormatType_32BGRA) forKey:(id)kCVPixelBufferPixelFormatTypeKey];
-    AVAssetReaderTrackOutput *videoReaderOutput = [[AVAssetReaderTrackOutput alloc] initWithTrack:videoTrack outputSettings:options];
-    
-    [reader addOutput:videoReaderOutput];
-    [reader startReading];
-    
-    
-    while ([reader status] == AVAssetReaderStatusReading && videoTrack.nominalFrameRate > 0) {
-        CMSampleBufferRef buffer = [videoReaderOutput copyNextSampleBuffer];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSURL *url = [NSURL fileURLWithPath:_filePath];
+        AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:url options:nil];
         
-        CGImageRef cgimage = [self imageFromSampleBufferRef:buffer];
-        if (!(__bridge id)(cgimage)) { continue; }
-        [_images addObject:((__bridge id)(cgimage))];
-        CGImageRelease(cgimage);
-        
-        //[NSThread sleepForTimeInterval:0.001];
-    }
-    
-    _animation = [CAKeyframeAnimation animationWithKeyPath:@"contents"];
-    _animation.duration = asset.duration.value/asset.duration.timescale;
-    _animation.values = _images;
-    _animation.repeatCount = MAXFLOAT;
-    
-    
-    // 确保内存能及时释放掉
-    [_images enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (obj) {
-            obj = nil;
+        NSError *error = nil;
+        AVAssetReader *reader = [[AVAssetReader alloc] initWithAsset:asset error:&error];
+        if (error) {
+            finished(NO);
+            return;
         }
-    }];
-    
-    finished(YES);
+        
+        NSArray *videoTracks = [asset tracksWithMediaType:AVMediaTypeVideo];
+        AVAssetTrack *videoTrack =[videoTracks objectAtIndex:0];
+        
+        NSMutableDictionary *options = [NSMutableDictionary dictionary];
+        [options setObject:@(kCVPixelFormatType_32BGRA) forKey:(id)kCVPixelBufferPixelFormatTypeKey];
+        AVAssetReaderTrackOutput *videoReaderOutput = [[AVAssetReaderTrackOutput alloc] initWithTrack:videoTrack outputSettings:options];
+        [reader addOutput:videoReaderOutput];
+        [reader startReading];
+        
+        @autoreleasepool {
+            NSMutableArray *images = [NSMutableArray array];
+            while ([reader status] == AVAssetReaderStatusReading && videoTrack.nominalFrameRate > 0) {
+                CMSampleBufferRef sampleBufferRef = [videoReaderOutput copyNextSampleBuffer];
+                if (sampleBufferRef) {
+                    CGImageRef cgimage = [self imageFromSampleBufferRef:sampleBufferRef];
+                    if (!(__bridge id)(cgimage)) {
+                        CMSampleBufferInvalidate(sampleBufferRef);
+                        CFRelease(sampleBufferRef);
+                        continue;
+                    }
+                    [images addObject:((__bridge id)(cgimage))];
+                    CGImageRelease(cgimage);
+                    CMSampleBufferInvalidate(sampleBufferRef);
+                    CFRelease(sampleBufferRef);
+                }
+                //[NSThread sleepForTimeInterval:0.001];
+            }
+            _animation = [CAKeyframeAnimation animationWithKeyPath:@"contents"];
+            _animation.duration = asset.duration.value/asset.duration.timescale;
+            _animation.values = images;
+            _animation.repeatCount = MAXFLOAT;
+            _animation.autoreverses = YES;
+        }
+        finished(YES);
+    });
 }
 
 

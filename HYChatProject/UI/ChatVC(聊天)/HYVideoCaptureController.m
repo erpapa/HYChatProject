@@ -387,7 +387,7 @@
     AVAsset *asset = [AVAsset assetWithURL:url];
     AVAssetTrack *clipVideoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
     AVMutableVideoComposition* videoComposition = [AVMutableVideoComposition videoComposition];
-    videoComposition.frameDuration = CMTimeMake(1, 30);
+    videoComposition.frameDuration = CMTimeMake(1, 15);// 15帧/s
     
     CGRect rect = CGRectMake(0, 0, clipVideoTrack.naturalSize.height, clipVideoTrack.naturalSize.height);
     
@@ -409,7 +409,7 @@
     instruction.layerInstructions = [NSArray arrayWithObject:layerInstruction];
     videoComposition.instructions = [NSArray arrayWithObject: instruction];
     
-    AVAssetExportSession *avAssetExportSession = [[AVAssetExportSession alloc] initWithAsset:asset presetName:AVAssetExportPresetLowQuality];
+    AVAssetExportSession *avAssetExportSession = [[AVAssetExportSession alloc] initWithAsset:asset presetName:AVAssetExportPresetMediumQuality];
     [avAssetExportSession setVideoComposition:videoComposition];
     [avAssetExportSession setOutputURL:[NSURL fileURLWithPath:savePath]];
     [avAssetExportSession setOutputFileType:AVFileTypeQuickTimeMovie];

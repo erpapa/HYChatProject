@@ -9,5 +9,7 @@
 #import "HYBaseChatViewCell.h"
 
 @interface HYVideoChatViewCell : HYBaseChatViewCell
+- (void)decodeVideo;
+- (void)endDisplay;
 
 @end

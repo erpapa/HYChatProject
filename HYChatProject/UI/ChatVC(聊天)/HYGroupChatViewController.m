@@ -171,6 +171,30 @@ static NSString *kVideoChatViewCellIdentifier = @"kVideoChatViewCellIdentifier";
     return cell;
 }
 
+/**
+ *  cell即将显示
+ */
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    HYBaseChatViewCell *displayCell = (HYBaseChatViewCell *)cell;
+    if (displayCell.messageFrame.chatMessage.type == HYChatMessageTypeVideo) {
+        HYVideoChatViewCell *videoCell = (HYVideoChatViewCell *)displayCell;
+        [videoCell decodeVideo];
+    }
+}
+
+/**
+ *  cell离开显示范围
+ */
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    HYBaseChatViewCell *displayCell = (HYBaseChatViewCell *)cell;
+    if (displayCell.messageFrame.chatMessage.type == HYChatMessageTypeVideo) {
+        HYVideoChatViewCell *videoCell = (HYVideoChatViewCell *)displayCell;
+        [videoCell endDisplay];
+    }
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     HYChatMessageFrame *messageFrame = [self.dataSource objectAtIndex:indexPath.row];

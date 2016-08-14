@@ -12,7 +12,6 @@ typedef void(^HYdecodeFinished)(BOOL finished);
 @interface HYVideoDecoder : NSObject
 @property (nonatomic, strong) NSString *filePath;
 @property (nonatomic, strong) CAKeyframeAnimation *animation;
-@property (nonatomic, strong) NSMutableArray *images;
 
 - (instancetype)initWithFile:(NSString *)filePath;
 - (void)decodeVideo:(HYdecodeFinished)finished;
