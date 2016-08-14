@@ -22,13 +22,13 @@
     
     NSMutableAttributedString *text = [NSMutableAttributedString new];
     if ([self.title isEqualToString:@"聊天服务器"]) {
-        NSMutableAttributedString *server = [[NSMutableAttributedString alloc] initWithString:@"客户端默认服务器地址：erpapa.cn。"];
+        NSMutableAttributedString *server = [[NSMutableAttributedString alloc] initWithString:@"客户端默认服务器地址：xmpp.jp。"];
         server.yy_font = [UIFont systemFontOfSize:17];
         server.yy_color = [UIColor blackColor];
         [text appendAttributedString:server];
         
     } else if ([self.title isEqualToString:@"用户帐号"]) {
-        NSMutableAttributedString *account = [[NSMutableAttributedString alloc] initWithString:@"客户端支持两种帐号格式：\n\t1.node;\n\t2.node@domain。\n\t其中，node是节点，domain为域名。\n\t在不指定domain(域名)的情况下，使用默认服务器地址：erpapa.cn。\n\t如果需要使用自己的聊天服务器，则需要指定domain。"];
+        NSMutableAttributedString *account = [[NSMutableAttributedString alloc] initWithString:@"客户端支持两种帐号格式：\n\t1.node;\n\t2.node@domain。\n\t其中，node是节点，domain为域名。\n\t在不指定domain(域名)的情况下，使用默认服务器地址：xmpp.jp。\n\t如果需要使用自己的聊天服务器，则需要指定domain。"];
         account.yy_font = [UIFont systemFontOfSize:17];
         account.yy_color = [UIColor blackColor];
         [text appendAttributedString:account];

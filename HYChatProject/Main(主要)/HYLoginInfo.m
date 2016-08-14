@@ -13,7 +13,7 @@
 #define kHostName @"hostName"
 #define kHostPort @"hostPort"
 #define kLogon @"logon"
-#define kDomain @"erpapa.cn" // 域名
+#define kDomain @"xmpp.tk" // 域名
 #define kPort 5222          // 端口
 #define kResource @"iPhone" //resource
 
