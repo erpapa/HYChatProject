@@ -99,7 +99,7 @@
     }
     
     {
-        NSMutableAttributedString *weibo = [[NSMutableAttributedString alloc] initWithString:@"微博: 贴吧破浪online"];
+        NSMutableAttributedString *weibo = [[NSMutableAttributedString alloc] initWithString:@"微博: __UPUPUP__"];
         weibo.yy_font = [UIFont boldSystemFontOfSize:30];
         weibo.yy_color = [UIColor whiteColor];
         
