@@ -46,8 +46,8 @@ Build()
 
 	#"${xcodePath}/xcodebuild" -target "${target}" -configuration "${configuration}" -sdk "${sdk}" clean || Failed "Clean Run Target"
 	#"${xcodePath}/xcodebuild" -target "${target}" -configuration "${configuration}" -sdk "${sdk}" CONFIGURATION_BUILD_DIR="${build_output_dir}" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" PROVISIONING_PROFILE_SPECIFIER="${PROVISIONING_PROFILE}" || Failed "Build Run Target"
-	"${xcodePath}/xcodebuild" clean -target "${target}" -configuration "${configuration}" -sdk "${sdk}" || Failed "Clean Run Target"
-	"${xcodePath}/xcodebuild" archive -archivePath  "${build_app_archive_path}" -target "${target}" -configuration "${configuration}" -sdk "${sdk}" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" PROVISIONING_PROFILE="${PROVISIONING_PROFILE}" || Failed "Build Run Target"
+	"${xcodePath}/xcodebuild" clean -scheme "${scheme}" -target "${target}" -configuration "${configuration}" -sdk "${sdk}" || Failed "Clean Run Target"
+	"${xcodePath}/xcodebuild" archive -scheme "${scheme}" -target "${target}" -archivePath "${build_app_archive_path}" -configuration "${configuration}" -sdk "${sdk}" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" PROVISIONING_PROFILE="${PROVISIONING_PROFILE}" || Failed "Build Run Target"
 
 	#mv "${build_app_file_path}" "${app_file_path}"
 	#mv "${build_sym_file_path}" "${sym_file_path}"
@@ -112,6 +112,7 @@ build_sym_file_path="${build_output_dir}/HYChatProject.app.dSYM"
 build_app_archive_path="${build_output_dir}/HYChatProject.archive"
 
 sdk="iphoneos"
+scheme="HYChatProject"
 target="HYChatProject"
 
 adhoc_pp_uuid=`/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(/usr/bin/security cms -D -i ${cert_path}/adhoc.mobileprovision)`
