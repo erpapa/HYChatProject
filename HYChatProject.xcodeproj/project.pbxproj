@@ -11,9 +11,6 @@
 		EA0CEADD1CE30ADF00D7E80C /* HYDatabaseHandler+NewFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0CEADC1CE30ADF00D7E80C /* HYDatabaseHandler+NewFriend.m */; };
 		EA0F22751CC7BEE9007AB887 /* HYUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0F22741CC7BEE9007AB887 /* HYUtils.m */; };
 		EA139F331CC9D0F600E1E085 /* HYFirstLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA139F321CC9D0F600E1E085 /* HYFirstLoginViewController.m */; };
-		EA13ADA61F4026F100253F0F /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA13ADA41F4026F100253F0F /* Login.storyboard */; };
-		EA13ADA81F4026FE00253F0F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA13ADA71F4026FE00253F0F /* Info.plist */; };
-		EA13ADB91F4028EE00253F0F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA13ADB71F4028EE00253F0F /* InfoPlist.strings */; };
 		EA172DA21CE9A0C1007009C6 /* defaultGroupHead@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA172DA11CE9A0C1007009C6 /* defaultGroupHead@2x.png */; };
 		EA172DA91CE9BAC8007009C6 /* HYGroupInviteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA172DA81CE9BAC8007009C6 /* HYGroupInviteViewController.m */; };
 		EA172DAC1CEA0105007009C6 /* HYVideosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA172DAB1CEA0105007009C6 /* HYVideosViewController.m */; };
@@ -3378,7 +3375,6 @@
 				EAF705C11CE1D54800B03EC4 /* voice_receive_icon_2@2x.png in Resources */,
 				EA26ADC81CD0C67C000DB77C /* contacts_network_3g_press@2x.png in Resources */,
 				EAF486231CD4F7C10096B1F1 /* chat_bottom_up_nor@3x.png in Resources */,
-				EA13ADA61F4026F100253F0F /* Login.storyboard in Resources */,
 				EAF7067E1CEAE1D4002D5C51 /* friendRequest@2x.png in Resources */,
 				EA27A9671CE480A60043D0FA /* expand_icons_pic@2x.png in Resources */,
 				EAF7068C1CEAF442002D5C51 /* tabBar_recent@2x.png in Resources */,
@@ -3401,7 +3397,6 @@
 				EA27A95F1CE4794B0043D0FA /* chat_images_failed@2x.png in Resources */,
 				EAF4861F1CD4F7C10096B1F1 /* chat_bottom_smile_nor@3x.png in Resources */,
 				EAF4861D1CD4F7C10096B1F1 /* chat_bottom_keyboard_press@3x.png in Resources */,
-				EA13ADB91F4028EE00253F0F /* InfoPlist.strings in Resources */,
 				EAF705C21CE1D54800B03EC4 /* voice_receive_icon_3@2x.png in Resources */,
 				EA26ADCB1CD0C67C000DB77C /* contacts_network_pad@2x.png in Resources */,
 				EAF486281CD4F7C10096B1F1 /* chat_bottom_voice_press@2x.png in Resources */,
@@ -3413,7 +3408,6 @@
 				EA26ADCC1CD0C67C000DB77C /* contacts_network_pad_press@2x.png in Resources */,
 				EAF7069F1CEB5D8A002D5C51 /* firstLogin@2x.gif in Resources */,
 				EA4666D51CDC7B6D00C5431D /* qrcode_scan_titlebar_back_pressed@2x.png in Resources */,
-				EA13ADA81F4026FE00253F0F /* Info.plist in Resources */,
 				EADD1D851C9EE1D300E22D2B /* README.txt in Resources */,
 				EA4666C91CDC71FC00C5431D /* qrcode_scan_btn_myqrcode_nor@2x.png in Resources */,
 				EAF706811CEAE1D4002D5C51 /* tabBar_contacts@2x.png in Resources */,
