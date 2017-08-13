@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>teamID</key>    
-	<string>iPhone Developer: hyplcf@163.com (6QBWM96MK3)</string>
+	<string>cn.erpapa.HYChatProject</string>
     <key>method</key>
     <string>development</string>
     <key>uploadBitcode</key>
