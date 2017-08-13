@@ -51,7 +51,7 @@ Build()
 
 	#mv "${build_app_file_path}" "${app_file_path}"
 	#mv "${build_sym_file_path}" "${sym_file_path}"
-	mv "${app_archive_path" "${sym_file_path}"
+	mv "${app_archive_path}" "${sym_file_path}"
 	mv "${sym_archive_path}" "${sym_file_path}"
 
 	echo "Build and Archive Run Target end"
