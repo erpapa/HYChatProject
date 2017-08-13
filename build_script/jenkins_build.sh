@@ -61,19 +61,7 @@ Build()
 
 	#"${xcodePath}/xcrun" -sdk "$sdk" PackageApplication "${app_file_path}" -o "${ipa_file_path}" || Failed "Package ipa"
 	"${xcodePath}/xcodebuild" -exportArchive -archivePath "${app_archive_path}" -exportPath "${app_file_path}" -exportOptionsPlist "${export_plist_path}"
-	
-	mv "${app_archive_path}" "${sym_file_path}"
-	mv "${sym_archive_path}" "${sym_file_path}"
 
-	if [[ ! -z "$final_output_dir" ]]  && [[ ! -z "$root_path" ]]; then
-		rm -rf ${final_output_dir}
-	fi
-
-	if [[ ! -z "$build_output_dir" ]]  && [[ ! -z "$root_path" ]]; then
-		rm -rf ${build_output_dir}
-	fi
-
-	mv "${output_dir}" "${final_output_dir}" || Failed "Rename"
 
 	RestorePlistFile
 }
