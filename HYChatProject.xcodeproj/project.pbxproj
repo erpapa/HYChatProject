@@ -11,6 +11,9 @@
 		EA0CEADD1CE30ADF00D7E80C /* HYDatabaseHandler+NewFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0CEADC1CE30ADF00D7E80C /* HYDatabaseHandler+NewFriend.m */; };
 		EA0F22751CC7BEE9007AB887 /* HYUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EA0F22741CC7BEE9007AB887 /* HYUtils.m */; };
 		EA139F331CC9D0F600E1E085 /* HYFirstLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA139F321CC9D0F600E1E085 /* HYFirstLoginViewController.m */; };
+		EA13ADA61F4026F100253F0F /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA13ADA41F4026F100253F0F /* Login.storyboard */; };
+		EA13ADA81F4026FE00253F0F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA13ADA71F4026FE00253F0F /* Info.plist */; };
+		EA13ADB91F4028EE00253F0F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EA13ADB71F4028EE00253F0F /* InfoPlist.strings */; };
 		EA172DA21CE9A0C1007009C6 /* defaultGroupHead@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EA172DA11CE9A0C1007009C6 /* defaultGroupHead@2x.png */; };
 		EA172DA91CE9BAC8007009C6 /* HYGroupInviteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA172DA81CE9BAC8007009C6 /* HYGroupInviteViewController.m */; };
 		EA172DAC1CEA0105007009C6 /* HYVideosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA172DAB1CEA0105007009C6 /* HYVideosViewController.m */; };
@@ -302,7 +305,6 @@
 		EADD1D891C9EE1D300E22D2B /* DDXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD1CF51C9EE1D300E22D2B /* DDXMLNode.m */; };
 		EADD1D921C9EE3F500E22D2B /* build-libidn.sh in Resources */ = {isa = PBXBuildFile; fileRef = EADD1D8E1C9EE3F500E22D2B /* build-libidn.sh */; };
 		EADD1D931C9EE3F500E22D2B /* libidn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EADD1D901C9EE3F500E22D2B /* libidn.a */; };
-		EADD1D9C1C9EE95700E22D2B /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EADD1D9A1C9EE95700E22D2B /* Login.storyboard */; };
 		EADD1D9F1C9EED6B00E22D2B /* HYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD1D9E1C9EED6B00E22D2B /* HYNavigationController.m */; };
 		EADD1DA31C9EEF1100E22D2B /* UIImage+SW.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD1DA21C9EEF1100E22D2B /* UIImage+SW.m */; };
 		EADD1DA81C9EF0A700E22D2B /* NSArray+format.m in Sources */ = {isa = PBXBuildFile; fileRef = EADD1DA51C9EF0A700E22D2B /* NSArray+format.m */; };
@@ -437,6 +439,11 @@
 		EA0F22741CC7BEE9007AB887 /* HYUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYUtils.m; sourceTree = "<group>"; };
 		EA139F311CC9D0F600E1E085 /* HYFirstLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYFirstLoginViewController.h; sourceTree = "<group>"; };
 		EA139F321CC9D0F600E1E085 /* HYFirstLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYFirstLoginViewController.m; sourceTree = "<group>"; };
+		EA13ADA51F4026F100253F0F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
+		EA13ADA71F4026FE00253F0F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA13ADB81F4028EE00253F0F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		EA13ADBA1F40292500253F0F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Login.strings"; sourceTree = "<group>"; };
+		EA13ADBB1F40292600253F0F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		EA172DA11CE9A0C1007009C6 /* defaultGroupHead@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "defaultGroupHead@2x.png"; sourceTree = "<group>"; };
 		EA172DA71CE9BAC8007009C6 /* HYGroupInviteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYGroupInviteViewController.h; sourceTree = "<group>"; };
 		EA172DA81CE9BAC8007009C6 /* HYGroupInviteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYGroupInviteViewController.m; sourceTree = "<group>"; };
@@ -680,7 +687,6 @@
 		EAD7BEDF1CC539F30089873C /* wav.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = wav.mm; sourceTree = "<group>"; };
 		EADD16EE1C9ED2E100E22D2B /* HYChatProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HYChatProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EADD16FD1C9ED2E100E22D2B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		EADD17021C9ED2E100E22D2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EADD17071C9ED2E100E22D2B /* HYChatProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HYChatProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EADD170B1C9ED2E100E22D2B /* HYChatProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HYChatProjectTests.m; sourceTree = "<group>"; };
 		EADD170D1C9ED2E100E22D2B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -994,7 +1000,6 @@
 		EADD1D8F1C9EE3F500E22D2B /* idn-int.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "idn-int.h"; sourceTree = "<group>"; };
 		EADD1D901C9EE3F500E22D2B /* libidn.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libidn.a; sourceTree = "<group>"; };
 		EADD1D911C9EE3F500E22D2B /* stringprep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringprep.h; sourceTree = "<group>"; };
-		EADD1D9B1C9EE95700E22D2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Login.storyboard; sourceTree = "<group>"; };
 		EADD1D9D1C9EED6B00E22D2B /* HYNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYNavigationController.h; sourceTree = "<group>"; };
 		EADD1D9E1C9EED6B00E22D2B /* HYNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYNavigationController.m; sourceTree = "<group>"; };
 		EADD1DA11C9EEF1100E22D2B /* UIImage+SW.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SW.h"; sourceTree = "<group>"; };
@@ -1869,7 +1874,6 @@
 				EADD17351C9ED64300E22D2B /* Other(其它) */,
 				EADD17391C9ED64300E22D2B /* UI */,
 				EA26ADB71CD0C67C000DB77C /* Resource */,
-				EADD1D9A1C9EE95700E22D2B /* Login.storyboard */,
 				EADD16F11C9ED2E100E22D2B /* Supporting Files */,
 			);
 			name = HYChat;
@@ -1879,8 +1883,10 @@
 		EADD16F11C9ED2E100E22D2B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EA13ADA71F4026FE00253F0F /* Info.plist */,
+				EA13ADB71F4028EE00253F0F /* InfoPlist.strings */,
+				EA13ADA41F4026F100253F0F /* Login.storyboard */,
 				EADD16FD1C9ED2E100E22D2B /* Assets.xcassets */,
-				EADD17021C9ED2E100E22D2B /* Info.plist */,
 				EADD1D8C1C9EE27300E22D2B /* HYChat-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -3291,7 +3297,7 @@
 				TargetAttributes = {
 					EADD16ED1C9ED2E100E22D2B = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = B9R99P26KZ;
+						DevelopmentTeam = P5T5EGX8G8;
 					};
 					EADD17061C9ED2E100E22D2B = {
 						CreatedOnToolsVersion = 7.2;
@@ -3308,7 +3314,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
+				"zh-Hans",
 				Base,
 			);
 			mainGroup = EADD16E51C9ED2E100E22D2B;
@@ -3372,7 +3378,7 @@
 				EAF705C11CE1D54800B03EC4 /* voice_receive_icon_2@2x.png in Resources */,
 				EA26ADC81CD0C67C000DB77C /* contacts_network_3g_press@2x.png in Resources */,
 				EAF486231CD4F7C10096B1F1 /* chat_bottom_up_nor@3x.png in Resources */,
-				EADD1D9C1C9EE95700E22D2B /* Login.storyboard in Resources */,
+				EA13ADA61F4026F100253F0F /* Login.storyboard in Resources */,
 				EAF7067E1CEAE1D4002D5C51 /* friendRequest@2x.png in Resources */,
 				EA27A9671CE480A60043D0FA /* expand_icons_pic@2x.png in Resources */,
 				EAF7068C1CEAF442002D5C51 /* tabBar_recent@2x.png in Resources */,
@@ -3395,6 +3401,7 @@
 				EA27A95F1CE4794B0043D0FA /* chat_images_failed@2x.png in Resources */,
 				EAF4861F1CD4F7C10096B1F1 /* chat_bottom_smile_nor@3x.png in Resources */,
 				EAF4861D1CD4F7C10096B1F1 /* chat_bottom_keyboard_press@3x.png in Resources */,
+				EA13ADB91F4028EE00253F0F /* InfoPlist.strings in Resources */,
 				EAF705C21CE1D54800B03EC4 /* voice_receive_icon_3@2x.png in Resources */,
 				EA26ADCB1CD0C67C000DB77C /* contacts_network_pad@2x.png in Resources */,
 				EAF486281CD4F7C10096B1F1 /* chat_bottom_voice_press@2x.png in Resources */,
@@ -3406,6 +3413,7 @@
 				EA26ADCC1CD0C67C000DB77C /* contacts_network_pad_press@2x.png in Resources */,
 				EAF7069F1CEB5D8A002D5C51 /* firstLogin@2x.gif in Resources */,
 				EA4666D51CDC7B6D00C5431D /* qrcode_scan_titlebar_back_pressed@2x.png in Resources */,
+				EA13ADA81F4026FE00253F0F /* Info.plist in Resources */,
 				EADD1D851C9EE1D300E22D2B /* README.txt in Resources */,
 				EA4666C91CDC71FC00C5431D /* qrcode_scan_btn_myqrcode_nor@2x.png in Resources */,
 				EAF706811CEAE1D4002D5C51 /* tabBar_contacts@2x.png in Resources */,
@@ -3777,18 +3785,28 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		EADD1D9A1C9EE95700E22D2B /* Login.storyboard */ = {
+		EA13ADA41F4026F100253F0F /* Login.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				EADD1D9B1C9EE95700E22D2B /* Base */,
+				EA13ADA51F4026F100253F0F /* Base */,
+				EA13ADBA1F40292500253F0F /* zh-Hans */,
 			);
 			name = Login.storyboard;
+			sourceTree = "<group>";
+		};
+		EA13ADB71F4028EE00253F0F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EA13ADB81F4028EE00253F0F /* Base */,
+				EA13ADBB1F40292600253F0F /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		EADD17191C9ED2E100E22D2B /* Debug */ = {
+		EAA4F5F61F400C2D00D5EB41 /* TestDebug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -3805,6 +3823,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -3829,9 +3848,68 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
-			name = Debug;
+			name = TestDebug;
 		};
-		EADD171A1C9ED2E100E22D2B /* Release */ = {
+		EAA4F5F71F400C2D00D5EB41 /* TestDebug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HYChatProject/Vendor/YYWebImage",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/HYChatProject/HYChat-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"COLORV_TEST=1",
+					"DEBUG=1",
+				);
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				INFOPLIST_FILE = HYChatProject/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HYChatProject/Vendor/XMPPFramework/Vendor/libidn",
+					"$(PROJECT_DIR)/HYChatProject/Vendor/AudioCoder",
+				);
+				MTL_ENABLE_DEBUG_INFO = dev;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.erpapa.HYChatProject;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "db18afb6-258f-44a5-b023-a7da6ecafa88";
+				USER_HEADER_SEARCH_PATHS = "";
+				VALID_ARCHS = "arm64 armv7";
+			};
+			name = TestDebug;
+		};
+		EAA4F5F81F400C2D00D5EB41 /* TestDebug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = HYChatProjectTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = cn.erpapa.HYChatProjectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HYChatProject.app/HYChatProject";
+			};
+			name = TestDebug;
+		};
+		EAA4F5F91F400C2D00D5EB41 /* TestDebug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = HYChatProjectUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = cn.erpapa.HYChatProjectUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = HYChatProject;
+				USES_XCTRUNNER = YES;
+			};
+			name = TestDebug;
+		};
+		EAA4F5FA1F400C4900D5EB41 /* TestRelease */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -3848,8 +3926,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: hyplcf@163.com (6QBWM96MK3)";
+				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -3866,9 +3944,113 @@
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
-			name = Release;
+			name = TestRelease;
 		};
-		EADD171C1C9ED2E100E22D2B /* Debug */ = {
+		EAA4F5FB1F400C4900D5EB41 /* TestRelease */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HYChatProject/Vendor/YYWebImage",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/HYChatProject/HYChat-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"COLORV_TEST=1",
+					"ONLINE=1",
+				);
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				INFOPLIST_FILE = HYChatProject/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HYChatProject/Vendor/XMPPFramework/Vendor/libidn",
+					"$(PROJECT_DIR)/HYChatProject/Vendor/AudioCoder",
+				);
+				MTL_ENABLE_DEBUG_INFO = adhoc;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.erpapa.HYChatProject;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "db18afb6-258f-44a5-b023-a7da6ecafa88";
+				USER_HEADER_SEARCH_PATHS = "";
+				VALID_ARCHS = "arm64 armv7";
+			};
+			name = TestRelease;
+		};
+		EAA4F5FC1F400C4900D5EB41 /* TestRelease */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = HYChatProjectTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = cn.erpapa.HYChatProjectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HYChatProject.app/HYChatProject";
+			};
+			name = TestRelease;
+		};
+		EAA4F5FD1F400C4900D5EB41 /* TestRelease */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = HYChatProjectUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = cn.erpapa.HYChatProjectUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = HYChatProject;
+				USES_XCTRUNNER = YES;
+			};
+			name = TestRelease;
+		};
+		EAA4F5FE1F400C5900D5EB41 /* DevDebug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = DevDebug;
+		};
+		EAA4F5FF1F400C5900D5EB41 /* DevDebug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -3881,6 +4063,10 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/HYChatProject/HYChat-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"COLORV_DEV=1",
+					"DEBUG=1",
+				);
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = HYChatProject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -3890,13 +4076,218 @@
 					"$(PROJECT_DIR)/HYChatProject/Vendor/XMPPFramework/Vendor/libidn",
 					"$(PROJECT_DIR)/HYChatProject/Vendor/AudioCoder",
 				);
+				MTL_ENABLE_DEBUG_INFO = dev;
 				PRODUCT_BUNDLE_IDENTIFIER = cn.erpapa.HYChatProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "db18afb6-258f-44a5-b023-a7da6ecafa88";
 				USER_HEADER_SEARCH_PATHS = "";
+				VALID_ARCHS = "arm64 armv7";
 			};
-			name = Debug;
+			name = DevDebug;
 		};
-		EADD171D1C9ED2E100E22D2B /* Release */ = {
+		EAA4F6001F400C5900D5EB41 /* DevDebug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = HYChatProjectTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = cn.erpapa.HYChatProjectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HYChatProject.app/HYChatProject";
+			};
+			name = DevDebug;
+		};
+		EAA4F6011F400C5900D5EB41 /* DevDebug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = HYChatProjectUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = cn.erpapa.HYChatProjectUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = HYChatProject;
+				USES_XCTRUNNER = YES;
+			};
+			name = DevDebug;
+		};
+		EAA4F6021F400C7700D5EB41 /* DevRelease */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: hyplcf@163.com (6QBWM96MK3)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = DevRelease;
+		};
+		EAA4F6031F400C7700D5EB41 /* DevRelease */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HYChatProject/Vendor/YYWebImage",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/HYChatProject/HYChat-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"COLORV_DEV=1",
+					"RELEASE=1",
+				);
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				INFOPLIST_FILE = HYChatProject/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HYChatProject/Vendor/XMPPFramework/Vendor/libidn",
+					"$(PROJECT_DIR)/HYChatProject/Vendor/AudioCoder",
+				);
+				MTL_ENABLE_DEBUG_INFO = adhoc;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.erpapa.HYChatProject;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "db18afb6-258f-44a5-b023-a7da6ecafa88";
+				USER_HEADER_SEARCH_PATHS = "";
+				VALID_ARCHS = "arm64 armv7";
+			};
+			name = DevRelease;
+		};
+		EAA4F6041F400C7700D5EB41 /* DevRelease */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = HYChatProjectTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = cn.erpapa.HYChatProjectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HYChatProject.app/HYChatProject";
+			};
+			name = DevRelease;
+		};
+		EAA4F6051F400C7700D5EB41 /* DevRelease */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = HYChatProjectUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = cn.erpapa.HYChatProjectUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = HYChatProject;
+				USES_XCTRUNNER = YES;
+			};
+			name = DevRelease;
+		};
+		EADD17191C9ED2E100E22D2B /* OnlineDebug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = OnlineDebug;
+		};
+		EADD171A1C9ED2E100E22D2B /* OnlineRelease */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: hyplcf@163.com (6QBWM96MK3)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = OnlineRelease;
+		};
+		EADD171C1C9ED2E100E22D2B /* OnlineDebug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -3909,6 +4300,10 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/HYChatProject/HYChat-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"COLORV_ONLINE=1",
+					"DEBUG=1",
+				);
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = HYChatProject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -3918,13 +4313,52 @@
 					"$(PROJECT_DIR)/HYChatProject/Vendor/XMPPFramework/Vendor/libidn",
 					"$(PROJECT_DIR)/HYChatProject/Vendor/AudioCoder",
 				);
+				MTL_ENABLE_DEBUG_INFO = dev;
 				PRODUCT_BUNDLE_IDENTIFIER = cn.erpapa.HYChatProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "db18afb6-258f-44a5-b023-a7da6ecafa88";
 				USER_HEADER_SEARCH_PATHS = "";
+				VALID_ARCHS = "arm64 armv7";
 			};
-			name = Release;
+			name = OnlineDebug;
 		};
-		EADD171F1C9ED2E100E22D2B /* Debug */ = {
+		EADD171D1C9ED2E100E22D2B /* OnlineRelease */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HYChatProject/Vendor/YYWebImage",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/HYChatProject/HYChat-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"COLORV_ONLINE=1",
+					"RELEASE=1",
+				);
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				INFOPLIST_FILE = HYChatProject/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HYChatProject/Vendor/XMPPFramework/Vendor/libidn",
+					"$(PROJECT_DIR)/HYChatProject/Vendor/AudioCoder",
+				);
+				MTL_ENABLE_DEBUG_INFO = adhoc;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.erpapa.HYChatProject;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "db18afb6-258f-44a5-b023-a7da6ecafa88";
+				USER_HEADER_SEARCH_PATHS = "";
+				VALID_ARCHS = "arm64 armv7";
+			};
+			name = OnlineRelease;
+		};
+		EADD171F1C9ED2E100E22D2B /* OnlineDebug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -3934,9 +4368,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HYChatProject.app/HYChatProject";
 			};
-			name = Debug;
+			name = OnlineDebug;
 		};
-		EADD17201C9ED2E100E22D2B /* Release */ = {
+		EADD17201C9ED2E100E22D2B /* OnlineRelease */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -3946,9 +4380,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HYChatProject.app/HYChatProject";
 			};
-			name = Release;
+			name = OnlineRelease;
 		};
-		EADD17221C9ED2E100E22D2B /* Debug */ = {
+		EADD17221C9ED2E100E22D2B /* OnlineDebug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = HYChatProjectUITests/Info.plist;
@@ -3958,9 +4392,9 @@
 				TEST_TARGET_NAME = HYChatProject;
 				USES_XCTRUNNER = YES;
 			};
-			name = Debug;
+			name = OnlineDebug;
 		};
-		EADD17231C9ED2E100E22D2B /* Release */ = {
+		EADD17231C9ED2E100E22D2B /* OnlineRelease */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = HYChatProjectUITests/Info.plist;
@@ -3970,7 +4404,7 @@
 				TEST_TARGET_NAME = HYChatProject;
 				USES_XCTRUNNER = YES;
 			};
-			name = Release;
+			name = OnlineRelease;
 		};
 /* End XCBuildConfiguration section */
 
@@ -3978,38 +4412,54 @@
 		EADD16E91C9ED2E100E22D2B /* Build configuration list for PBXProject "HYChatProject" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				EADD17191C9ED2E100E22D2B /* Debug */,
-				EADD171A1C9ED2E100E22D2B /* Release */,
+				EADD17191C9ED2E100E22D2B /* OnlineDebug */,
+				EAA4F5FE1F400C5900D5EB41 /* DevDebug */,
+				EAA4F5F61F400C2D00D5EB41 /* TestDebug */,
+				EADD171A1C9ED2E100E22D2B /* OnlineRelease */,
+				EAA4F6021F400C7700D5EB41 /* DevRelease */,
+				EAA4F5FA1F400C4900D5EB41 /* TestRelease */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = OnlineRelease;
 		};
 		EADD171B1C9ED2E100E22D2B /* Build configuration list for PBXNativeTarget "HYChatProject" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				EADD171C1C9ED2E100E22D2B /* Debug */,
-				EADD171D1C9ED2E100E22D2B /* Release */,
+				EADD171C1C9ED2E100E22D2B /* OnlineDebug */,
+				EAA4F5FF1F400C5900D5EB41 /* DevDebug */,
+				EAA4F5F71F400C2D00D5EB41 /* TestDebug */,
+				EADD171D1C9ED2E100E22D2B /* OnlineRelease */,
+				EAA4F6031F400C7700D5EB41 /* DevRelease */,
+				EAA4F5FB1F400C4900D5EB41 /* TestRelease */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = OnlineRelease;
 		};
 		EADD171E1C9ED2E100E22D2B /* Build configuration list for PBXNativeTarget "HYChatProjectTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				EADD171F1C9ED2E100E22D2B /* Debug */,
-				EADD17201C9ED2E100E22D2B /* Release */,
+				EADD171F1C9ED2E100E22D2B /* OnlineDebug */,
+				EAA4F6001F400C5900D5EB41 /* DevDebug */,
+				EAA4F5F81F400C2D00D5EB41 /* TestDebug */,
+				EADD17201C9ED2E100E22D2B /* OnlineRelease */,
+				EAA4F6041F400C7700D5EB41 /* DevRelease */,
+				EAA4F5FC1F400C4900D5EB41 /* TestRelease */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = OnlineRelease;
 		};
 		EADD17211C9ED2E100E22D2B /* Build configuration list for PBXNativeTarget "HYChatProjectUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				EADD17221C9ED2E100E22D2B /* Debug */,
-				EADD17231C9ED2E100E22D2B /* Release */,
+				EADD17221C9ED2E100E22D2B /* OnlineDebug */,
+				EAA4F6011F400C5900D5EB41 /* DevDebug */,
+				EAA4F5F91F400C2D00D5EB41 /* TestDebug */,
+				EADD17231C9ED2E100E22D2B /* OnlineRelease */,
+				EAA4F6051F400C7700D5EB41 /* DevRelease */,
+				EAA4F5FD1F400C4900D5EB41 /* TestRelease */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = OnlineRelease;
 		};
 /* End XCConfigurationList section */
 

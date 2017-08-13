@@ -1,0 +1,51 @@
+
+/* Class = "UILabel"; text = "密码"; ObjectID = "266-Cm-r2Z"; */
+"266-Cm-r2Z.text" = "密码";
+
+/* Class = "UITextField"; placeholder = "请填写密码"; ObjectID = "4mU-7n-uGZ"; */
+"4mU-7n-uGZ.placeholder" = "请填写密码";
+
+/* Class = "UIButton"; normalTitle = "注册"; ObjectID = "4oe-MQ-kOe"; */
+"4oe-MQ-kOe.normalTitle" = "注册";
+
+/* Class = "UIButton"; normalTitle = "注册"; ObjectID = "6dL-K0-Ln3"; */
+"6dL-K0-Ln3.normalTitle" = "注册";
+
+/* Class = "UILabel"; text = "帐号"; ObjectID = "6tV-4A-Hdr"; */
+"6tV-4A-Hdr.text" = "帐号";
+
+/* Class = "UITextField"; placeholder = "请填写帐号"; ObjectID = "CEw-ld-d3h"; */
+"CEw-ld-d3h.placeholder" = "请填写帐号";
+
+/* Class = "UIButton"; normalTitle = "取消"; ObjectID = "DNB-7T-e3U"; */
+"DNB-7T-e3U.normalTitle" = "取消";
+
+/* Class = "UIButton"; normalTitle = "取消"; ObjectID = "JRI-N4-ckl"; */
+"JRI-N4-ckl.normalTitle" = "取消";
+
+/* Class = "UILabel"; text = "帐号"; ObjectID = "LL4-cK-U16"; */
+"LL4-cK-U16.text" = "帐号";
+
+/* Class = "UILabel"; text = "使用帐号和密码登录"; ObjectID = "f61-8c-Mje"; */
+"f61-8c-Mje.text" = "使用帐号和密码登录";
+
+/* Class = "UITextField"; placeholder = "请填写密码(不小于6位)"; ObjectID = "fWb-4W-D1F"; */
+"fWb-4W-D1F.placeholder" = "请填写密码(不小于6位)";
+
+/* Class = "UIButton"; normalTitle = "更多"; ObjectID = "gxA-0P-mUb"; */
+"gxA-0P-mUb.normalTitle" = "更多";
+
+/* Class = "UILabel"; text = "注册聊天帐号"; ObjectID = "llw-oa-Grg"; */
+"llw-oa-Grg.text" = "注册聊天帐号";
+
+/* Class = "UILabel"; text = "密码"; ObjectID = "pK6-H3-hZ1"; */
+"pK6-H3-hZ1.text" = "密码";
+
+/* Class = "UIButton"; normalTitle = "登录"; ObjectID = "sjp-YR-kVl"; */
+"sjp-YR-kVl.normalTitle" = "登录";
+
+/* Class = "UITextField"; placeholder = "请填写帐号"; ObjectID = "vil-aX-ZCm"; */
+"vil-aX-ZCm.placeholder" = "请填写帐号";
+
+/* Class = "UIButton"; normalTitle = "登录"; ObjectID = "wW9-nf-Ub4"; */
+"wW9-nf-Ub4.normalTitle" = "登录";
