@@ -61,7 +61,7 @@ Build()
 	#开始打包操作
 
 	#"${xcodePath}/xcrun" -sdk "$sdk" PackageApplication "${app_file_path}" -o "${ipa_file_path}" || Failed "Package ipa"
-	"${xcodePath}/xcodebuild" -exportArchive -archivePath "${archive_file_path}" -exportPath "${ipa_name_path}" -exportOptionsPlist "${export_plist_path}"
+	"${xcodePath}/xcodebuild" -exportArchive -archivePath "${archive_file_path}" -exportPath "${ipa_name_path}" -exportOptionsPlist "${export_plist_path}" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" PROVISIONING_PROFILE="${PROVISIONING_PROFILE}"
 
 	if [[ ! -z "$final_output_dir" ]]  && [[ ! -z "$root_path" ]]; then
 		rm -rf ${final_output_dir}
