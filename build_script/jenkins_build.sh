@@ -105,13 +105,9 @@ build_sym_file_path="${build_output_dir}/HYChatProject.app.dSYM"
 sdk="iphoneos"
 target="HYChatProject"
 
-echo "==================PROVISIONING_PROFILE====================="
 adhoc_pp_uuid=`/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(/usr/bin/security cms -D -i ${cert_path}/adhoc.mobileprovision)`
-echo "adhoc_pp_uuid=${adhoc_pp_uuid}"
 dis_pp_uuid=`/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(/usr/bin/security cms -D -i ${cert_path}/dis.mobileprovision)`
-echo "dis_pp_uuid=${dis_pp_uuid}"
 dev_pp_uuid=`/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(/usr/bin/security cms -D -i ${cert_path}/dev.mobileprovision)`
-echo "dev_pp_uuid=${dev_pp_uuid}"
 
 #删除之前的产出
 
