@@ -52,9 +52,9 @@ Build()
 	#mv "${build_sym_file_path}" "${sym_file_path}"
 	echo "Build and Archive Run Target end"
 
-	if [ ! -d "${output_dir}" ];then
-	    Failed "No build directory"
-	fi
+	#if [ ! -d "${output_dir}" ];then
+	    #Failed "No build directory"
+	#fi
 
 	#开始打包操作
 
