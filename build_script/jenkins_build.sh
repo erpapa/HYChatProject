@@ -32,7 +32,7 @@ Build()
 	ipa_file_path="${output_dir}/${app_name}.ipa"
 	sym_file_path="${output_dir}/${app_name}.app.dSYM"
     app_archive_path="${output_dir}/${app_name}.archive"
-
+    ipa_archive_path="${output_dir}/${app_name}"
 	final_output_dir="${build_root_path}/${app_name}"
 
 	#进入工程目录
@@ -59,17 +59,7 @@ Build()
 	#开始打包操作
 
 	#"${xcodePath}/xcrun" -sdk "$sdk" PackageApplication "${app_file_path}" -o "${ipa_file_path}" || Failed "Package ipa"
-	"${xcodePath}/xcodebuild" -exportArchive -archivePath "${app_archive_path}" -exportPath "${output_dir}" -exportOptionsPlist "${export_plist_path}"
-
-	if [[ ! -z "$final_output_dir" ]]  && [[ ! -z "$root_path" ]]; then
-		rm -rf ${final_output_dir}
-	fi
-
-	if [[ ! -z "$build_output_dir" ]]  && [[ ! -z "$root_path" ]]; then
-		rm -rf ${build_output_dir}
-	fi
-
-	mv "${output_dir}" "${final_output_dir}" || Failed "Rename"
+	"${xcodePath}/xcodebuild" -exportArchive -archivePath "${app_archive_path}" -exportPath "${ipa_archive_path}" -exportOptionsPlist "${export_plist_path}"
 
 	RestorePlistFile
 }
