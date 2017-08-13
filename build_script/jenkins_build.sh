@@ -46,8 +46,8 @@ Build()
 
 	#"${xcodePath}/xcodebuild" -target "${target}" -configuration "${configuration}" -sdk "${sdk}" clean || Failed "Clean Run Target"
 	#"${xcodePath}/xcodebuild" -target "${target}" -configuration "${configuration}" -sdk "${sdk}" CONFIGURATION_BUILD_DIR="${build_output_dir}" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" PROVISIONING_PROFILE_SPECIFIER="${PROVISIONING_PROFILE}" || Failed "Build Run Target"
-	"${xcbuild_file_path}" clean -target "${target}" -configuration "${configuration}" -sdk "${sdk}" || Failed "Clean Run Target"
-	"${xcbuild_file_path}" archive -archivePath  "${build_app_archive_path}" -target "${target}" -configuration "${configuration}" -sdk "${sdk}" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" PROVISIONING_PROFILE="${PROVISIONING_PROFILE}" || Failed "Build Run Target"
+	xcbuild.sh clean -target "${target}" -configuration "${configuration}" -sdk "${sdk}" || Failed "Clean Run Target"
+	xcbuild.sh archive -archivePath  "${build_app_archive_path}" -target "${target}" -configuration "${configuration}" -sdk "${sdk}" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" PROVISIONING_PROFILE="${PROVISIONING_PROFILE}" || Failed "Build Run Target"
 
 	#mv "${build_app_file_path}" "${app_file_path}"
 	#mv "${build_sym_file_path}" "${sym_file_path}"
@@ -63,7 +63,7 @@ Build()
 	#开始打包操作
 
 	#"${xcodePath}/xcrun" -sdk "$sdk" PackageApplication "${app_file_path}" -o "${ipa_file_path}" || Failed "Package ipa"
-	"${xcbuild_file_path}" -exportArchive -archivePath "${app_archive_path}" -exportPath "${app_file_path}"
+	xcbuild.sh -exportArchive -archivePath "${app_archive_path}" -exportPath "${app_file_path}"
 
 	if [[ ! -z "$final_output_dir" ]]  && [[ ! -z "$root_path" ]]; then
 		rm -rf ${final_output_dir}
@@ -100,7 +100,6 @@ xcodePath=/usr/bin
 
 src_path="${root_path}"
 cert_path="${root_path}/cert"
-xcbuild_file_path="${root_path}/build_script/xcbuild.sh"
 comment_file_path="${root_path}/comment.txt"
 info_plist_path="${src_path}/HYChatProject/Info.plist"
 info_string_path="${src_path}/HYChatProject/zh-Hans.lproj/InfoPlist.strings"
