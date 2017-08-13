@@ -27,7 +27,7 @@ Build()
 	origin_bundle_version=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "${info_plist_path}")
 	/usr/libexec/PlistBuddy -c "Set :CFBundleVersion ${version}.${build_number}" "${info_plist_path}"
 
-	app_name="ColorV-${server_env}-${build_type}-${version}.${build_number}"
+	app_name="HYChatProject-${server_env}-${build_type}-${version}.${build_number}"
 	app_file_path="${output_dir}/${app_name}.app"
 	ipa_file_path="${output_dir}/${app_name}.ipa"
 	sym_file_path="${output_dir}/${app_name}.app.dSYM"
@@ -103,7 +103,7 @@ build_app_file_path="${build_output_dir}/HYChatProject.app"
 build_sym_file_path="${build_output_dir}/HYChatProject.app.dSYM"
 
 sdk="iphoneos"
-target="colorv"
+target="HYChatProject"
 
 adhoc_pp_uuid=`/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(/usr/bin/security cms -D -i ${cert_path}/adhoc.mobileprovision)`
 dis_pp_uuid=`/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(/usr/bin/security cms -D -i ${cert_path}/dis.mobileprovision)`
