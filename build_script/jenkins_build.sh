@@ -113,9 +113,9 @@ sdk="iphoneos"
 scheme="HYChatProject"
 target="HYChatProject"
 
-adhoc_pp_uuid=`/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(/usr/bin/security cms -D -i ${cert_path}/adhoc.mobileprovision)`
-dis_pp_uuid=`/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(/usr/bin/security cms -D -i ${cert_path}/dis.mobileprovision)`
-dev_pp_uuid=`/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(/usr/bin/security cms -D -i ${cert_path}/dev.mobileprovision)`
+adhoc_pp_uuid="db18afb6-258f-44a5-b023-a7da6ecafa88" #`/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(/usr/bin/security cms -D -i ${cert_path}/adhoc.mobileprovision)`
+dis_pp_uuid="db18afb6-258f-44a5-b023-a7da6ecafa88" #`/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(/usr/bin/security cms -D -i ${cert_path}/dis.mobileprovision)`
+dev_pp_uuid="db18afb6-258f-44a5-b023-a7da6ecafa88" #`/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(/usr/bin/security cms -D -i ${cert_path}/dev.mobileprovision)`
 
 #删除之前的产出
 
