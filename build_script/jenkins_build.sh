@@ -51,9 +51,6 @@ Build()
 
 	#mv "${build_app_file_path}" "${app_file_path}"
 	#mv "${build_sym_file_path}" "${sym_file_path}"
-	mv "${app_archive_path}" "${sym_file_path}"
-	mv "${sym_archive_path}" "${sym_file_path}"
-
 	echo "Build and Archive Run Target end"
 
 	if [ ! -d "${output_dir}" ];then
@@ -63,7 +60,10 @@ Build()
 	#开始打包操作
 
 	#"${xcodePath}/xcrun" -sdk "$sdk" PackageApplication "${app_file_path}" -o "${ipa_file_path}" || Failed "Package ipa"
-	"${xcodePath}/xcodebuild" -exportArchive -archivePath "${app_archive_path}" -exportPath "${app_file_path}"
+	"${xcodePath}/xcodebuild" -exportArchive -archivePath "${app_archive_path}" -exportPath "${app_file_path}" -exportOptionsPlist "${export_plist_path}"
+	
+	mv "${app_archive_path}" "${sym_file_path}"
+	mv "${sym_archive_path}" "${sym_file_path}"
 
 	if [[ ! -z "$final_output_dir" ]]  && [[ ! -z "$root_path" ]]; then
 		rm -rf ${final_output_dir}
@@ -110,6 +110,7 @@ output_dir="${build_root_path}/tmp"
 build_app_file_path="${build_output_dir}/HYChatProject.app"
 build_sym_file_path="${build_output_dir}/HYChatProject.app.dSYM"
 build_app_archive_path="${build_output_dir}/HYChatProject.archive"
+export_plist_path="${root_path}/build_script/exportPlist.plist"
 
 sdk="iphoneos"
 scheme="HYChatProject"
