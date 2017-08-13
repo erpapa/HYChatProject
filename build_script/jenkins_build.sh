@@ -60,8 +60,17 @@ Build()
 	#开始打包操作
 
 	#"${xcodePath}/xcrun" -sdk "$sdk" PackageApplication "${app_file_path}" -o "${ipa_file_path}" || Failed "Package ipa"
-	"${xcodePath}/xcodebuild" -exportArchive -archivePath "${app_archive_path}" -exportPath "${app_file_path}" -exportOptionsPlist "${export_plist_path}"
+	"${xcodePath}/xcodebuild" -exportArchive -archivePath "${app_archive_path}" -exportPath "${ipa_file_path}" -exportOptionsPlist "${export_plist_path}"
 
+	if [[ ! -z "$final_output_dir" ]]  && [[ ! -z "$root_path" ]]; then
+		rm -rf ${final_output_dir}
+	fi
+
+	if [[ ! -z "$build_output_dir" ]]  && [[ ! -z "$root_path" ]]; then
+		rm -rf ${build_output_dir}
+	fi
+
+	mv "${output_dir}" "${final_output_dir}" || Failed "Rename"
 
 	RestorePlistFile
 }
@@ -89,16 +98,17 @@ xcodePath=/usr/bin
 src_path="${root_path}"
 cert_path="${root_path}/cert"
 comment_file_path="${root_path}/comment.txt"
+export_plist_path="${root_path}/build_script/exportPlist.plist"
 info_plist_path="${src_path}/HYChatProject/Info.plist"
 info_string_path="${src_path}/HYChatProject/zh-Hans.lproj/InfoPlist.strings"
 
 build_root_path="${root_path}/output/Build_${build_number}"
 build_output_dir="${build_root_path}/build"
+build_app_archive_path="${build_root_path}/HYChatProject.archive"
+
 output_dir="${build_root_path}/tmp"
 build_app_file_path="${build_output_dir}/HYChatProject.app"
 build_sym_file_path="${build_output_dir}/HYChatProject.app.dSYM"
-build_app_archive_path="${build_output_dir}/HYChatProject.archive"
-export_plist_path="${root_path}/build_script/exportPlist.plist"
 
 sdk="iphoneos"
 scheme="HYChatProject"
