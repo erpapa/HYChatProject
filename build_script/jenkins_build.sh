@@ -29,11 +29,10 @@ Build()
 
 	app_name="HYChatProject-${server_env}-${build_type}-${version}.${build_number}"
 	app_file_path="${output_dir}/${app_name}.app"
-	app_archive_path="${build_app_archive_path}/Products/Applications/${app_name}.app"
-	sym_archive_path="${build_app_archive_path}/dSYMs/${app_name}.app.dSYM"
-
 	ipa_file_path="${output_dir}/${app_name}.ipa"
 	sym_file_path="${output_dir}/${app_name}.app.dSYM"
+    app_archive_path="${output_dir}/${app_name}.archive"
+
 	final_output_dir="${build_root_path}/${app_name}"
 
 	#进入工程目录
@@ -47,7 +46,7 @@ Build()
 	#"${xcodePath}/xcodebuild" -target "${target}" -configuration "${configuration}" -sdk "${sdk}" clean || Failed "Clean Run Target"
 	#"${xcodePath}/xcodebuild" -target "${target}" -configuration "${configuration}" -sdk "${sdk}" CONFIGURATION_BUILD_DIR="${build_output_dir}" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" PROVISIONING_PROFILE_SPECIFIER="${PROVISIONING_PROFILE}" || Failed "Build Run Target"
 	"${xcodePath}/xcodebuild" clean -scheme "${scheme}" -target "${target}" -configuration "${configuration}" -sdk "${sdk}" || Failed "Clean Run Target"
-	"${xcodePath}/xcodebuild" archive -scheme "${scheme}" -target "${target}" -archivePath "${build_app_archive_path}" -configuration "${configuration}" -sdk "${sdk}" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" PROVISIONING_PROFILE="${PROVISIONING_PROFILE}" || Failed "Build Run Target"
+	"${xcodePath}/xcodebuild" archive -scheme "${scheme}" -target "${target}" -archivePath "${app_archive_path}" -configuration "${configuration}" -sdk "${sdk}" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" PROVISIONING_PROFILE="${PROVISIONING_PROFILE}" || Failed "Build Run Target"
 
 	#mv "${build_app_file_path}" "${app_file_path}"
 	#mv "${build_sym_file_path}" "${sym_file_path}"
@@ -104,8 +103,6 @@ info_string_path="${src_path}/HYChatProject/zh-Hans.lproj/InfoPlist.strings"
 
 build_root_path="${root_path}/output/Build_${build_number}"
 build_output_dir="${build_root_path}/build"
-build_app_archive_path="${build_root_path}/HYChatProject.archive"
-
 output_dir="${build_root_path}/tmp"
 build_app_file_path="${build_output_dir}/HYChatProject.app"
 build_sym_file_path="${build_output_dir}/HYChatProject.app.dSYM"
