@@ -31,8 +31,10 @@ Build()
 	app_file_path="${output_dir}/${app_name}.app"
 	ipa_file_path="${output_dir}/${app_name}.ipa"
 	sym_file_path="${output_dir}/${app_name}.app.dSYM"
-    app_archive_path="${output_dir}/${app_name}.archive"
-    ipa_archive_path="${output_dir}/${app_name}"
+    archive_name_path="${output_dir}/${app_name}"
+    archive_file_path="${output_dir}/${app_name}.xcarchive"
+    ipa_name_path="${output_dir}/${app_name}"
+
 	final_output_dir="${build_root_path}/${app_name}"
 
 	#进入工程目录
@@ -46,20 +48,30 @@ Build()
 	#"${xcodePath}/xcodebuild" -target "${target}" -configuration "${configuration}" -sdk "${sdk}" clean || Failed "Clean Run Target"
 	#"${xcodePath}/xcodebuild" -target "${target}" -configuration "${configuration}" -sdk "${sdk}" CONFIGURATION_BUILD_DIR="${build_output_dir}" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" PROVISIONING_PROFILE_SPECIFIER="${PROVISIONING_PROFILE}" || Failed "Build Run Target"
 	"${xcodePath}/xcodebuild" clean -scheme "${scheme}" -target "${target}" -configuration "${configuration}" -sdk "${sdk}" || Failed "Clean Run Target"
-	"${xcodePath}/xcodebuild" archive -scheme "${scheme}" -target "${target}" -archivePath "${app_archive_path}" -configuration "${configuration}" -sdk "${sdk}" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" PROVISIONING_PROFILE="${PROVISIONING_PROFILE}" || Failed "Build Run Target"
+	"${xcodePath}/xcodebuild" archive -scheme "${scheme}" -target "${target}" -archivePath "${archive_name_path}" -configuration "${configuration}" -sdk "${sdk}" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" PROVISIONING_PROFILE="${PROVISIONING_PROFILE}" || Failed "Build Run Target"
 
 	#mv "${build_app_file_path}" "${app_file_path}"
 	#mv "${build_sym_file_path}" "${sym_file_path}"
 	echo "Build and Archive Run Target end"
 
-	#if [ ! -d "${output_dir}" ];then
-	    #Failed "No build directory"
-	#fi
+	if [ ! -d "${output_dir}" ];then
+	    Failed "No build directory"
+	fi
 
 	#开始打包操作
 
 	#"${xcodePath}/xcrun" -sdk "$sdk" PackageApplication "${app_file_path}" -o "${ipa_file_path}" || Failed "Package ipa"
-	"${xcodePath}/xcodebuild" -exportArchive -archivePath "${app_archive_path}" -exportPath "${ipa_archive_path}" -exportOptionsPlist "${export_plist_path}"
+	"${xcodePath}/xcodebuild" -exportArchive -archivePath "${archive_file_path}" -exportPath "${ipa_name_path}" -exportOptionsPlist "${export_plist_path}"
+
+	if [[ ! -z "$final_output_dir" ]]  && [[ ! -z "$root_path" ]]; then
+		rm -rf ${final_output_dir}
+	fi
+
+	if [[ ! -z "$build_output_dir" ]]  && [[ ! -z "$root_path" ]]; then
+		rm -rf ${build_output_dir}
+	fi
+
+	mv "${output_dir}" "${final_output_dir}" || Failed "Rename"
 
 	RestorePlistFile
 }
