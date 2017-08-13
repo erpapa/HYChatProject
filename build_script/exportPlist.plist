@@ -2,8 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>teamID</key>    
+	<string>iPhone Developer: hyplcf@163.com (6QBWM96MK3)</string>
     <key>method</key>
-    <string>app-store</string>
+    <string>development</string>
     <key>uploadBitcode</key>
     <false/>
     <key>uploadSymbols</key>
