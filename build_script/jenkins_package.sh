@@ -23,14 +23,14 @@ fi
 
 check_result_path="${WORKSPACE}/check_result.plist"
 
-security unlock-keychain -p h /Users/erpapa/Library/Keychains/login.keychain || exit -1
+security unlock-keychain -p h /Users/Shared/Jenkins/Library/Keychains/login.keychain || exit -1
 
 if [[ -e "$check_result_path" ]]; then
 	rm -f ${check_result_path}
 fi
 
-${WORKSPACE}/../../SourceChecker ${build_type} ${WORKSPACE} iOS ${check_result_path} || exit -1
+#${WORKSPACE}/../../SourceChecker ${build_type} ${WORKSPACE} iOS ${check_result_path} || exit -1
 
 sh ${WORKSPACE}/build_script/jenkins_build.sh ${build_type} ${BUILD_NUMBER} || exit -1
 
-${WORKSPACE}/../../EmailWriter ${WORKSPACE}/output/Build_${BUILD_NUMBER} ${JOB_URL}ws/output/Build_${BUILD_NUMBER} iOS ${check_result_path}
+#${WORKSPACE}/../../EmailWriter ${WORKSPACE}/output/Build_${BUILD_NUMBER} ${JOB_URL}ws/output/Build_${BUILD_NUMBER} iOS ${check_result_path}
