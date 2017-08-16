@@ -28,13 +28,11 @@ Build()
 	/usr/libexec/PlistBuddy -c "Set :CFBundleVersion ${version}.${build_number}" "${info_plist_path}"
 
 	app_name="HYChatProject-${server_env}-${build_type}-${version}.${build_number}"
-	app_file_path="${output_dir}/${app_name}.app"
+	archive_file_path="${output_dir}/${app_name}.xcarchive"
+	export_ipa_file_path="${output_dir}/${scheme}.ipa"
 	ipa_file_path="${output_dir}/${app_name}.ipa"
 	sym_file_path="${output_dir}/${app_name}.app.dSYM"
-    archive_name_path="${output_dir}/${app_name}"
-    archive_file_path="${output_dir}/${app_name}.xcarchive"
-    ipa_name_path="${output_dir}/${app_name}"
-
+	export_options_plist="${root_path}/build_script/export_${export_type}.plist"
 	final_output_dir="${build_root_path}/${app_name}"
 
 	#进入工程目录
@@ -45,13 +43,12 @@ Build()
 	echo "Build and Archive Run Target..."
 
 
-	#"${xcodePath}/xcodebuild" -target "${target}" -configuration "${configuration}" -sdk "${sdk}" clean || Failed "Clean Run Target"
-	#"${xcodePath}/xcodebuild" -target "${target}" -configuration "${configuration}" -sdk "${sdk}" CONFIGURATION_BUILD_DIR="${build_output_dir}" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" PROVISIONING_PROFILE_SPECIFIER="${PROVISIONING_PROFILE}" || Failed "Build Run Target"
-	"${xcodePath}/xcodebuild" clean -scheme "${scheme}" -target "${target}" -configuration "${configuration}" -sdk "${sdk}" || Failed "Clean Run Target"
-	"${xcodePath}/xcodebuild" archive -scheme "${scheme}" -target "${target}" -archivePath "${archive_name_path}" -configuration "${configuration}" -sdk "${sdk}" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" PROVISIONING_PROFILE="${PROVISIONING_PROFILE}" || Failed "Build Run Target"
+	"${xcodePath}/xcodebuild" clean -scheme "${scheme}" -configuration "${configuration}" -sdk "${sdk}" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" PROVISIONING_PROFILE_SPECIFIER="${PROVISIONING_PROFILE}" || Failed "Clean Run Target"
+	"${xcodePath}/xcodebuild" archive -scheme "${scheme}" -configuration "${configuration}" -sdk "${sdk}" -archivePath "${build_archive_file_path}" CONFIGURATION_BUILD_DIR="${build_output_dir}" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" PROVISIONING_PROFILE_SPECIFIER="${PROVISIONING_PROFILE}" || Failed "Build Run Target"
 
-	#mv "${build_app_file_path}" "${app_file_path}"
-	#mv "${build_sym_file_path}" "${sym_file_path}"
+	mv "${build_archive_file_path}" "${archive_file_path}"
+	mv "${build_sym_file_path}" "${sym_file_path}"
+
 	echo "Build and Archive Run Target end"
 
 	if [ ! -d "${output_dir}" ];then
@@ -60,9 +57,9 @@ Build()
 
 	#开始打包操作
 
-	#"${xcodePath}/xcrun" -sdk "$sdk" PackageApplication "${app_file_path}" -o "${ipa_file_path}" || Failed "Package ipa"
-	"${xcodePath}/xcodebuild" -exportArchive -archivePath "${archive_file_path}" -exportPath "${ipa_name_path}" -exportOptionsPlist "${export_plist_path}" CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}" PROVISIONING_PROFILE="${PROVISIONING_PROFILE}"
+	"${xcodePath}/xcodebuild" -exportArchive -archivePath "${archive_file_path}" -exportOptionsPlist "${export_options_plist}" -exportPath "${output_dir}" || Failed "Package ipa"
 
+	mv "${export_ipa_file_path}" "${ipa_file_path}"
 	if [[ ! -z "$final_output_dir" ]]  && [[ ! -z "$root_path" ]]; then
 		rm -rf ${final_output_dir}
 	fi
@@ -99,23 +96,21 @@ xcodePath=/usr/bin
 src_path="${root_path}"
 cert_path="${root_path}/cert"
 comment_file_path="${root_path}/comment.txt"
-export_plist_path="${root_path}/build_script/exportPlist.plist"
 info_plist_path="${src_path}/HYChatProject/Info.plist"
 info_string_path="${src_path}/HYChatProject/zh-Hans.lproj/InfoPlist.strings"
 
 build_root_path="${root_path}/output/Build_${build_number}"
 build_output_dir="${build_root_path}/build"
 output_dir="${build_root_path}/tmp"
-build_app_file_path="${build_output_dir}/HYChatProject.app"
 build_sym_file_path="${build_output_dir}/HYChatProject.app.dSYM"
+build_archive_file_path="${build_output_dir}/HYChatProject.xcarchive"
 
 sdk="iphoneos"
 scheme="HYChatProject"
-target="HYChatProject"
 
-adhoc_pp_uuid="db18afb6-258f-44a5-b023-a7da6ecafa88" #`/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(/usr/bin/security cms -D -i ${cert_path}/adhoc.mobileprovision)`
-dis_pp_uuid="db18afb6-258f-44a5-b023-a7da6ecafa88" #`/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(/usr/bin/security cms -D -i ${cert_path}/dis.mobileprovision)`
-dev_pp_uuid="db18afb6-258f-44a5-b023-a7da6ecafa88" #`/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(/usr/bin/security cms -D -i ${cert_path}/dev.mobileprovision)`
+adhoc_pp_uuid=`/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(/usr/bin/security cms -D -i ${cert_path}/adhoc.mobileprovision)`
+dis_pp_uuid=`/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(/usr/bin/security cms -D -i ${cert_path}/dis.mobileprovision)`
+dev_pp_uuid=`/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(/usr/bin/security cms -D -i ${cert_path}/dev.mobileprovision)`
 
 #删除之前的产出
 
@@ -133,6 +128,7 @@ if [[ "$jenkins_build_type" = "Test" ]]; then
 	server_env="Test"
 	build_type="qa"
 	configuration="TestRelease"
+	export_type="development"
 	CODE_SIGN_IDENTITY="iPhone Developer: hyplcf@163.com (6QBWM96MK3)"
 	PROVISIONING_PROFILE="${dev_pp_uuid}"
 
@@ -144,6 +140,7 @@ if [[ "$jenkins_build_type" = "Online" ]]; then
 	server_env="Online"
 	build_type="qa"
 	configuration="OnlineRelease"
+	export_type="adhoc"
 	CODE_SIGN_IDENTITY="iPhone Developer: hyplcf@163.com (6QBWM96MK3)"
 	PROVISIONING_PROFILE="${adhoc_pp_uuid}"
 
@@ -155,6 +152,7 @@ if [[ "$jenkins_build_type" = "Release" ]]; then
 	server_env="Online"
 	build_type="release"
 	configuration="OnlineRelease"
+	export_type="appstore"
 	CODE_SIGN_IDENTITY="iPhone Developer: hyplcf@163.com (6QBWM96MK3)"
 	PROVISIONING_PROFILE="${dis_pp_uuid}"
 

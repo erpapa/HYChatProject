@@ -1,0 +1,5 @@
+{
+	method = "app-store";
+	uploadBitcode = NO;
+	uploadSymbols = NO;
+}
