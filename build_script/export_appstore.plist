@@ -1,4 +1,5 @@
 {
+	teamID = "P5T5EGX8G8";
 	method = "app-store";
 	uploadBitcode = NO;
 	uploadSymbols = NO;
