@@ -23,7 +23,7 @@ fi
 
 check_result_path="${WORKSPACE}/check_result.plist"
 
-security unlock-keychain -p h /Users/Shared/Jenkins/Library/Keychains/login.keychain || exit -1
+security unlock-keychain -p h "${WORKSPACE}/login.keychain" || exit -1
 
 if [[ -e "$check_result_path" ]]; then
 	rm -f ${check_result_path}
